@@ -15,31 +15,17 @@
             
             <form action="/create_lobby" method="POST">
                 <div>
-                    <label for="name">Lobby Name</label>
-                    <input name="name" id="lobby-name-input" value="Epic Gamer Momebt">
+                    <label for="nickname">Nickname</label>
+                    <input name="nickname" id="lobby-name-input" placeholder="Mustacho">
+                </div>
+                <div>
+                    <label for="lobbyName">Lobby Name</label>
+                    <input name="lobbyName" id="lobby-name-input" placeholder="Epic Gamer Momebt">
                 </div>
                 <div>
                     <button id="play-button">create lobby</button>
                 </div>
             </form>
-
-            <!-- <script>
-                // lol im not dealing with making a file for this
-                // your problem now
-                const playButton = document.querySelector("#play-button")
-    
-                playButton.addEventListener("click", () => {
-                    fetch("/create_lobby", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            "e": "f"
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => console.log(data))
-                })
-            </script> -->
         </div>
     </body>
 </html>

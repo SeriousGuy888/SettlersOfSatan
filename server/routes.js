@@ -20,10 +20,16 @@ module.exports = (app) => {
 
 
   app.post("/create_lobby", (req, res) => {
-    console.log(req.body)
+    const lobbyData = {}
+    lobbyData.name = req.body.lobbyName
+    lobbyData.players = [req.body.nickname]
 
-    lobbies.createLobby(req.body)
-  
+    if(!lobbyData.name || !lobbyData.players.length) {
+      res.sendStatus(400)
+      return
+    }
+
+    lobbies.createLobby(lobbyData)
     res.redirect("/")
   })
 }
