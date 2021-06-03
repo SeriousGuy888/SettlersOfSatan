@@ -10,8 +10,25 @@
     </head>
     <body>
         <div id="main">
-            <h1 id="home-title">Settlers of Satan</h1>
+            <h1 id="home-title">Selttlers of Satan</h1>
             <button id="play-button">play</button>
+            <script>
+                // lol im not dealing with making a file for this
+                // your problem now
+                const playButton = document.querySelector("#play-button")
+    
+                playButton.addEventListener("click", () => {
+                    fetch("/create_lobby", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: {
+                            "e": "f"
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => console.log(data))
+                })
+            </script>
         </div>
     </body>
 </html>
