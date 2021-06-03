@@ -1,0 +1,23 @@
+{
+  "name": "settlersofsatan",
+  "version": "1.0.0",
+  "description": "offbrand catan",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SeriousGuy888/SettlersOfSatan.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SeriousGuy888/SettlersOfSatan/issues"
+  },
+  "homepage": "https://github.com/SeriousGuy888/SettlersOfSatan#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
