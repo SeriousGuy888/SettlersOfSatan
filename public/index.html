@@ -11,8 +11,18 @@
     <body>
         <div id="main">
             <h1 id="home-title">Selttlers of Satan</h1>
-            <button id="play-button">play</button>
-            <script>
+            
+            <form action="/create_lobby" method="POST">
+                <div>
+                    <label for="name">Lobby Name</label>
+                    <input name="name" id="lobby-name-input" value="Epic Gamer Momebt">
+                </div>
+                <div>
+                    <button id="play-button">create lobby</button>
+                </div>
+            </form>
+
+            <!-- <script>
                 // lol im not dealing with making a file for this
                 // your problem now
                 const playButton = document.querySelector("#play-button")
@@ -28,7 +38,7 @@
                     .then(response => response.json())
                     .then(data => console.log(data))
                 })
-            </script>
+            </script> -->
         </div>
     </body>
 </html>
