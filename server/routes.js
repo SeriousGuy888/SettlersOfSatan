@@ -1,6 +1,7 @@
-
 const express = require("express")
 const path = require("path")
+
+const lobbies = require("./lobbies.js")
 
 module.exports = (app) => {
   app.use(express.json())
@@ -20,6 +21,9 @@ module.exports = (app) => {
 
   app.post("/create_lobby", (req, res) => {
     console.log(req.body)
+
+    lobbies.createLobby(req.body)
+  
     res.redirect("/")
   })
 }
