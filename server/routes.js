@@ -7,12 +7,14 @@ module.exports = (app) => {
   app.use(express.raw())
   app.use(express.urlencoded({ extended: true }))
 
+  const cwd = process.cwd() // directory of where server.js is
+
   app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "/public/index.html"))
+    res.sendFile(path.join(cwd, "/public/index.html"))
   })
 
   app.get("/:path", (req, res) => {
-    res.sendFile(path.join(__dirname, `/public/${req.params.path}`))
+    res.sendFile(path.join(cwd, `/public/${req.params.path}`))
   })
 
 
