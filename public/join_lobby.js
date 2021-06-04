@@ -13,8 +13,14 @@ const leaveLobbyButton = document.querySelector("#leave-lobby")
 
 
 const updateLobbyState = (inLobby) => {
-  loggedInSection.style.display = inLobby ? "none" : "block"
-  inLobbySection.style.display = inLobby ? "block" : "none"
+  if(inLobby) {
+    loggedInSection.style.display = "none"
+    inLobbySection.style.display = null
+  }
+  else {
+    loggedInSection.style.display = null
+    inLobbySection.style.display = "none"
+  }
 }
 
 const socketCallback = (err, data) => {

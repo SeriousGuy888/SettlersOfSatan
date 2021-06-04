@@ -19,9 +19,7 @@ body {
 }
 
 main {
-    margin-left: 25%;
-    margin-right: 25%;
-
+    margin: 0 20%;
     padding: 0 5em 5em;
 
     background-color: #fff;
@@ -67,10 +65,13 @@ input:focus {
 
 .row-layout {
     display: flex;
+    margin: 0 -2em;
+    flex-wrap: wrap;
 }
 .column-layout {
     flex-grow: 1;
     flex-basis: 0;
+    padding: 0 2em;
 }
 
 #lobby-player-list {
