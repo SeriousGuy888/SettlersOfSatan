@@ -21,9 +21,10 @@ body {
 main {
     margin-left: 25%;
     margin-right: 25%;
-    background-color: #fff;
     padding-left: 2.5%;
     padding-bottom: 5%;
+    background-color: #fff;
+    border-radius: 5px;
 }
 
 #home-title {
