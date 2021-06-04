@@ -49,6 +49,9 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
   })
 
   socket.on("create_lobby", (data, callback) => {
+    const user = users[socket.id]
+    if(!user) return callback("not_logged_in")
+    if(user.getLobby()) return callback("already_in_lobby")
     if(!data.name) return callback("no_lobby_name")
 
     const lobbyName = data.name.slice(0, 100)
@@ -62,8 +65,8 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     lobbies[lobbyCode] = createdLobby
     const lobby = lobbies[lobbyCode]
     lobby.join(socket.id)
-    
+    user.setLobby(lobbyCode)
 
-    console.log(lobbies)
+    callback(null, { code: lobbyCode })
   })
 })
