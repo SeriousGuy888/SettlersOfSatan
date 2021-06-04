@@ -64,8 +64,8 @@
                 </div>
             </section>
             <section id="logged-in" style="display: none;">
-                <div id="begin-lobby-panel">
-                    <div id="create-lobby-panel">
+                <div class="row-layout" id="begin-lobby-panel">
+                    <div class="column-layout" id="create-lobby-panel">
                         <h2>Create a Lobby</h2>
                         <p>Choose a name for your lobby.</p>
                         <div class="single-line-input">
@@ -73,14 +73,20 @@
                             <button id="create-lobby-button">create lobby</button>
                         </div>
                     </div>
-                    <p>or...</p>
-                    <div id="join-lobby-panel">
+                    <div class="column-layout" id="join-lobby-panel">
                         <h2>Join a Lobby</h2>
                         <p>Enter a lobby code.</p>
                         <div class="single-line-input">
                             <input id="join-lobby-code-input" placeholder="ARSON">
                             <button id="join-lobby-button">join lobby</button>
                         </div>
+                    </div>
+                </div>
+                <div class="row-layout">
+                    <div class="column-layout">
+                        <h2>Open Lobbies</h2>
+                        <button id="open-lobbies-refresh">Refresh</button>
+                        <div id="open-lobbies"></div>
                     </div>
                 </div>
             </section>

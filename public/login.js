@@ -11,8 +11,14 @@ const playingAs = document.querySelector("#playing-as")
 
 
 const updateLoggedInState = (loggedIn, name, id) => {
-  loggedOutSection.style.display = loggedIn ? "none" : "block"
-  loggedInSection.style.display = loggedIn ? "block" : "none"
+  if(loggedIn) {
+    loggedOutSection.style.display = "none"
+    loggedInSection.style.display = null
+  }
+  else {
+    loggedOutSection.style.display = null
+    loggedInSection.style.display = "none"
+  }
 
   playingAs.style.display = loggedIn ? "block" : "none"
 

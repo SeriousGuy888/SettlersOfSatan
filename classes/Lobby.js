@@ -1,4 +1,5 @@
 const users = require("../server/users.js")
+const lobbies = require("../server/lobbies.js")
 
 class Lobby {
   constructor(name) {
@@ -35,8 +36,19 @@ class Lobby {
     if(this.hasUser(userId)) {
       this.users.delete(userId)
       helpers.userListUpdate(this)
+
+      if(this.getUsers().size === 0) {
+        console.log(`Closed empty lobby ${this.code}`)
+        this.close()
+      }
+
+      return true
     }
     return false
+  }
+
+  close() {
+    lobbies.setLobby(this.code, null)
   }
 
   broadcast(msg, data) {

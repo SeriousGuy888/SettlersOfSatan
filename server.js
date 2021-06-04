@@ -19,7 +19,7 @@ server.listen(port, () => {
 const Lobby = require("./classes/Lobby.js")
 const User = require("./classes/User.js")
 
-const lobbies = {}
+const lobbies = require("./server/lobbies.js")
 const users = require("./server/users.js")
 
 io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-not-the-chat-3l21
@@ -30,7 +30,7 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
       console.log(`${user.name} (${user.id}) disconnected.`)
 
       if(user.getLobby()) {
-        lobbies[user.getLobby()].leave(user.id)
+        lobbies.getLobby(user.getLobby()).leave(user.id)
       }
 
       users.setUser(user.id, null)
@@ -54,7 +54,7 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
       console.log(`${user.name} (${user.id}) logged out.`)
 
       if(user.getLobby()) {
-        lobbies[user.getLobby()].leave(user.id)
+        lobbies.getLobby(user.getLobby()).leave(user.id)
       }
 
       users.setUser(user.id, null)
@@ -73,12 +73,12 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     const createdLobby = new Lobby(lobbyName)
     const lobbyCode = createdLobby.getCode()
 
-    if(lobbies[lobbyCode]) {
+    if(lobbies.getLobby(lobbyCode)) {
       return callback("duplicate_lobby_code")
     }
 
-    lobbies[lobbyCode] = createdLobby
-    const lobby = lobbies[lobbyCode]
+    lobbies.setLobby(lobbyCode, createdLobby)
+    const lobby = lobbies.getLobby(lobbyCode)
     lobby.join(user.id)
     user.setLobby(lobbyCode)
 
@@ -94,7 +94,7 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     if(!data.code) return callback("no_lobby_code")
 
     const lobbyCode = data.code.toUpperCase()
-    const lobby = lobbies[lobbyCode]
+    const lobby = lobbies.getLobby(lobbyCode)
 
     if(!lobby) return callback("lobby_not_found")
     
@@ -113,17 +113,20 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     if(!user.getLobby()) return callback("not_in_lobby")
 
     const lobbyCode = user.getLobby()
-    const lobby = lobbies[lobbyCode]
+    const lobby = lobbies.getLobby(lobbyCode)
     lobby.leave(user.id)
     user.setLobby(null)
 
     console.log(`${user.id} left lobby ${lobbyCode}`)
 
-    if(lobby.getUsers().size === 0) {
-      console.log(`Closing empty lobby ${lobbyCode}`)
-      delete lobbies[lobbyCode]
-    }
-
     callback(null, {})
+  })
+
+
+  socket.on("get_lobbies", (data, callback) => {
+    let max = parseInt(data.max) || 5
+    max = Math.min(Math.max(max, 1), 10)
+
+    callback(null, { lobbies: lobbies.getTopLobbies(max) })
   })
 })

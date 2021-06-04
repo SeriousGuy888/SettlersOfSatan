@@ -5,6 +5,7 @@ html {
 
 body {
     background-image: url("images/background.png");
+    background-attachment: fixed;
     font-family: Trebuchet MS;
 }
 
@@ -20,10 +21,8 @@ body {
 }
 
 main {
-    margin-left: 25%;
+    margin: 0 20%;
     /* margin-right: calc(25% + var(--chat-sidebar-width)); */
-    margin-right: 25%;
-
     padding: 0 5em 5em;
 
     background-color: #fff;
@@ -69,24 +68,32 @@ input:focus {
 
 .row-layout {
     display: flex;
+    margin: 0 -2em;
+    flex-wrap: wrap;
 }
 .column-layout {
     flex-grow: 1;
     flex-basis: 0;
+    padding: 0 2em;
 }
 
-#lobby-player-list {
+
+#open-lobbies {
     display: flex;
     flex-direction: column;
 }
-
-.lobby-player-list-entry {
+.open-lobbies-entry {
+    display: flex;
+    flex-direction: column;
     text-align: center;
     background-color: #dfdfdf;
     margin-top: 0.2em;
     padding: 0.6em;
     border-radius: 5px;
 }
+
+
+
 
 #leave-lobby {
     padding: 1%;
@@ -114,7 +121,15 @@ input:focus {
     border: none;
 }
 
-/* #chat-button img{
-    height: 32px;
-    width: 32px;
-} */
+#lobby-player-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.lobby-player-list-entry {
+    text-align: center;
+    background-color: #dfdfdf;
+    margin-top: 0.2em;
+    padding: 0.6em;
+    border-radius: 5px;
+}

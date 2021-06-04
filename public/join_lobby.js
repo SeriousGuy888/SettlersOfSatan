@@ -8,13 +8,22 @@ const joinLobbyPanel = document.querySelector("#join-lobby-panel")
 const joinLobbyCodeInput = document.querySelector("#join-lobby-code-input")
 const joinLobbyButton = document.querySelector("#join-lobby-button")
 
+const openLobbiesRefreshButton = document.querySelector("#open-lobbies-refresh")
+const openLobbiesDiv = document.querySelector("#open-lobbies")
+
 const leaveLobbyButton = document.querySelector("#leave-lobby")
 
 
 
 const updateLobbyState = (inLobby) => {
-  loggedInSection.style.display = inLobby ? "none" : "block"
-  inLobbySection.style.display = inLobby ? "block" : "none"
+  if(inLobby) {
+    loggedInSection.style.display = "none"
+    inLobbySection.style.display = null
+  }
+  else {
+    loggedInSection.style.display = null
+    inLobbySection.style.display = "none"
+  }
 }
 
 const socketCallback = (err, data) => {
@@ -44,4 +53,39 @@ joinLobbyButton.addEventListener("click", () => {
 
 leaveLobbyButton.addEventListener("click", () => {
   socket.emit("leave_lobby", {}, socketCallback)
+})
+
+openLobbiesRefreshButton.addEventListener("click", () => {
+  socket.emit("get_lobbies", { max: 5 }, (err, data) => {
+    if(err) alert(err)
+    else {
+      openLobbiesDiv.innerHTML = ""
+
+      const { lobbies } = data
+      if(lobbies.length) {
+        for(let lobbyInfo of lobbies) {
+          const listEntryDiv = document.createElement("div")
+
+          const lobbyNameH4 = document.createElement("h4")
+          lobbyNameH4.appendChild(document.createTextNode(lobbyInfo.name))
+
+          const lobbyCodeP = document.createElement("p")
+          lobbyCodeP.appendChild(document.createTextNode(lobbyInfo.code))
+
+          const lobbyPlayerCountP = document.createElement("p")
+          lobbyPlayerCountP.appendChild(document.createTextNode(lobbyInfo.playerCount))
+
+          listEntryDiv.appendChild(lobbyNameH4)
+          listEntryDiv.appendChild(lobbyCodeP)
+          listEntryDiv.appendChild(lobbyPlayerCountP)
+      
+          listEntryDiv.classList.add(["open-lobbies-entry"])
+          openLobbiesDiv.appendChild(listEntryDiv)
+        }
+      }
+      else {
+        openLobbiesDiv.textContent = "There are no open lobbies right now :("
+      }
+    }
+  })
 })
