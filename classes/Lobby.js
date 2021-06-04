@@ -27,6 +27,7 @@ class Lobby {
     if(this.hasUser(userId)) return false
 
     this.users.add(userId)
+    this.broadcast("oeuf")
     return true
   }
 
