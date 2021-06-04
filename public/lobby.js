@@ -8,7 +8,14 @@ const joinLobbyButton = document.querySelector("#join-lobby-button")
 
 
 createLobbyButton.addEventListener("click", () => {
-  alert("create lobby button")
+  const lobbyName = createLobbyNameInput.value
+  
+  socket.emit("create_lobby", {
+    name: lobbyName
+  }, (err, data) => {
+    if(err) alert(err)
+    else alert("yay")
+  })
 })
 
 joinLobbyButton.addEventListener("click", () => {

@@ -49,7 +49,21 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
   })
 
   socket.on("create_lobby", (data, callback) => {
-    if(!data.userId) return callback("no_id")
+    if(!data.name) return callback("no_lobby_name")
 
+    const lobbyName = data.name.slice(0, 100)
+    const createdLobby = new Lobby(lobbyName)
+    const lobbyCode = createdLobby.getCode()
+
+    if(lobbies[lobbyCode]) {
+      return callback("duplicate_lobby_code")
+    }
+
+    lobbies[lobbyCode] = createdLobby
+    const lobby = lobbies[lobbyCode]
+    lobby.join(socket.id)
+    
+
+    console.log(lobbies)
   })
 })
