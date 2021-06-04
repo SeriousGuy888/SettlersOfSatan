@@ -1,5 +1,3 @@
-const socket = io()
-
 const loggedOutDiv = document.querySelector("#logged-out")
 const nicknameInput = document.querySelector("#nickname-input")
 const loginButton = document.querySelector("#login-button")

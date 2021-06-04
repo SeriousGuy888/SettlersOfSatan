@@ -49,7 +49,7 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
   })
 
   socket.on("create_lobby", (data, callback) => {
-    if(!data.userId) return callback("no_id")
+    if(!data.name) return callback("no_lobby_name")
 
   })
 })
