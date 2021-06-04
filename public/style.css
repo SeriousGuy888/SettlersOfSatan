@@ -1,5 +1,6 @@
 html {
     height: 100%;
+    --chat-sidebar-width: 10%;
 }
 
 body {
@@ -20,6 +21,7 @@ body {
 
 main {
     margin-left: 25%;
+    /* margin-right: calc(25% + var(--chat-sidebar-width)); */
     margin-right: 25%;
 
     padding: 0 5em 5em;
@@ -100,3 +102,19 @@ input:focus {
     width: 16px;
     vertical-align: middle;
 }
+
+#chat-button {
+    float: right;
+    /* padding: 0px; */
+    background-image: url("images/chat.png");
+    display: flex;
+    height: 72px;
+    width: 72px;
+    cursor: pointer;
+    border: none;
+}
+
+/* #chat-button img{
+    height: 32px;
+    width: 32px;
+} */
