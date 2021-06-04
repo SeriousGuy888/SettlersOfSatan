@@ -27,15 +27,14 @@ class Lobby {
     if(this.hasUser(userId)) return false
 
     this.users.add(userId)
-    this.broadcast("chat", {
-      lines: [`${users.getUser(userId).name} joined the lobby`]
-    })
+    helpers.userListUpdate(this)
     return true
   }
 
   leave(userId) {
     if(this.hasUser(userId)) {
       this.users.delete(userId)
+      helpers.userListUpdate(this)
     }
     return false
   }
@@ -53,6 +52,14 @@ class Lobby {
 
   getCode() {
     return this.code
+  }
+}
+
+const helpers = {
+  userListUpdate: (self) => {
+    self.broadcast("user_list_update", {
+      users: Array.from(self.users).map(uid => users.getUser(uid).name)
+    })
   }
 }
 
