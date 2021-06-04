@@ -1,8 +1,6 @@
 const express = require("express")
 const path = require("path")
 
-const lobbies = require("./lobbies.js")
-
 module.exports = (app) => {
   app.use(express.json())
   app.use(express.raw())
@@ -25,20 +23,5 @@ module.exports = (app) => {
 
   app.get("/:path", (req, res) => {
     res.sendFile(path.join(publicDir, `/${req.params.path}`))
-  })
-
-
-  app.post("/create_lobby", (req, res) => {
-    const lobbyData = {}
-    lobbyData.name = req.body.lobbyName
-    lobbyData.players = [req.body.nickname]
-
-    if(!lobbyData.name || !lobbyData.players.length) {
-      res.sendStatus(400)
-      return
-    }
-
-    lobbies.createLobby(lobbyData)
-    res.redirect("/")
   })
 }
