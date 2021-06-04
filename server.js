@@ -20,14 +20,15 @@ const Lobby = require("./classes/Lobby.js")
 const User = require("./classes/User.js")
 
 const lobbies = {}
-const users = {}
+const users = require("./server/users.js")
 
 io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-not-the-chat-3l21
   console.log("A user has connected to via a socket.")
   socket.on("disconnect", () => {
-    if(users[socket.id]) {
-      console.log(`${users[socket.id].name} (${socket.id}) disconnected.`)
-      delete users[socket.id]
+    const user = users.getUser(socket.id)
+    if(user) {
+      console.log(`${user.name} (${user.id}) disconnected.`)
+      users.setUser(user.id, null)
     }
     else console.log("An anonymous user has disconnected.")
   })
@@ -36,21 +37,24 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     if(!data.name) data.name = `Mustacho${Math.round(Math.random() * 1000)}`
     data.name = data.name.slice(0, 100)
     
-    users[socket.id] = new User(socket.id, data.name, socket)
-    console.log(`${data.name} (${socket.id}) has logged in.`)
+    const user = users.setUser(socket.id, new User(socket.id, data.name, socket))
+
+    console.log(`${user.name} (${user.id}) has logged in.`)
     callback(null, data)
   })
 
   socket.on("logout", (data, callback) => {
-    if(users[socket.id]) {
-      console.log(`${users[socket.id].name} (${socket.id}) logged out.`)
-      delete users[socket.id]
+    const user = users.getUser(socket.id)
+    if(user) {
+      console.log(`${user.name} (${user.id}) logged out.`)
+      users.setUser(user.id, null)
     }
     callback(null, data)
   })
 
   socket.on("create_lobby", (data, callback) => {
-    const user = users[socket.id]
+    const user = users.getUser(socket.id)
+
     if(!user) return callback("not_logged_in")
     if(user.getLobby()) return callback("already_in_lobby")
     if(!data.name) return callback("no_lobby_name")
@@ -73,7 +77,8 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
   })
 
   socket.on("join_lobby", (data, callback) => {
-    const user = users[socket.id]
+    const user = users.getUser(socket.id)
+
     if(!user) return callback("not_logged_in")
     if(user.getLobby()) return callback("already_in_lobby")
     if(!data.code) return callback("no_lobby_code")
@@ -92,7 +97,8 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
 
 
   socket.on("leave_lobby", (data, callback) => {
-    const user = users[socket.id]
+    const user = users.getUser(socket.id)
+    
     if(!user) return callback("not_logged_in")
     if(!user.getLobby()) return callback("not_in_lobby")
 
