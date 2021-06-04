@@ -13,14 +13,43 @@ server.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`)
 })
 
+
+
+
+const Lobby = require("./classes/Lobby.js")
+const User = require("./classes/User.js")
+
+const lobbies = {}
+const users = {}
+
 io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-not-the-chat-3l21
   console.log("A user has connected to via a socket.")
   socket.on("disconnect", () => {
-    console.log("A user has disconnected.")
+    if(users[socket.id]) {
+      console.log(`${users[socket.id].name} (${socket.id}) disconnected.`)
+      delete users[socket.id]
+    }
+    else console.log("An anonymous user has disconnected.")
   })
 
-  socket.on("oeuf", data => {
-    io.emit("egg", data)
-    console.log("oeuf")
+  socket.on("login", (data, callback) => {
+    if(!data.name) data.name = `Mustacho${Math.round(Math.random() * 1000)}`
+    
+    users[socket.id] = new User(socket.id, data.name, socket)
+    console.log(`${data.name} (${socket.id}) has logged in.`)
+    callback(null, data)
+  })
+
+  socket.on("logout", (data, callback) => {
+    if(users[socket.id]) {
+      console.log(`${users[socket.id].name} (${socket.id}) logged out.`)
+      delete users[socket.id]
+    }
+    callback(null, data)
+  })
+
+  socket.on("create_lobby", (data, callback) => {
+    if(!data.userId) return callback("no_id")
+
   })
 })
