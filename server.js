@@ -28,6 +28,11 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     const user = users.getUser(socket.id)
     if(user) {
       console.log(`${user.name} (${user.id}) disconnected.`)
+
+      if(user.getLobby()) {
+        lobbies[user.getLobby()].leave(user.id)
+      }
+
       users.setUser(user.id, null)
     }
     else console.log("An anonymous user has disconnected.")
@@ -47,6 +52,11 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     const user = users.getUser(socket.id)
     if(user) {
       console.log(`${user.name} (${user.id}) logged out.`)
+
+      if(user.getLobby()) {
+        lobbies[user.getLobby()].leave(user.id)
+      }
+      
       users.setUser(user.id, null)
     }
     callback(null, data)
@@ -98,7 +108,7 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
 
   socket.on("leave_lobby", (data, callback) => {
     const user = users.getUser(socket.id)
-    
+
     if(!user) return callback("not_logged_in")
     if(!user.getLobby()) return callback("not_in_lobby")
 
