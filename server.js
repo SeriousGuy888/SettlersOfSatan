@@ -65,15 +65,31 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
 
     lobbies[lobbyCode] = createdLobby
     const lobby = lobbies[lobbyCode]
-    lobby.join(socket.id)
+    lobby.join(user.id)
     user.setLobby(lobbyCode)
 
     console.log(`${user.id} created lobby ${lobbyCode}`)
-
-    // lobby.emit("user_join")
-
     callback(null, { code: lobbyCode })
   })
+
+  socket.on("join_lobby", (data, callback) => {
+    const user = users[socket.id]
+    if(!user) return callback("not_logged_in")
+    if(user.getLobby()) return callback("already_in_lobby")
+    if(!data.code) return callback("no_lobby_code")
+
+    const lobbyCode = data.code.toUpperCase()
+    const lobby = lobbies[lobbyCode]
+
+    if(!lobby) return callback("lobby_not_found")
+    
+    lobby.join(user.id)
+    user.setLobby(lobbyCode)
+
+    console.log(`${user.id} joined lobby ${lobbyCode}`)
+    callback(null, { code: lobbyCode })
+  })
+
 
   socket.on("leave_lobby", (data, callback) => {
     const user = users[socket.id]
@@ -84,6 +100,8 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     const lobby = lobbies[lobbyCode]
     lobby.leave(user.id)
     user.setLobby(null)
+
+    console.log(`${user.id} left lobby ${lobbyCode}`)
 
     if(lobby.getUsers().size === 0) {
       console.log(`Closing empty lobby ${lobbyCode}`)

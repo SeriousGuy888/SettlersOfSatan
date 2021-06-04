@@ -35,7 +35,11 @@ createLobbyButton.addEventListener("click", () => {
 })
 
 joinLobbyButton.addEventListener("click", () => {
-  alert("join lobby button")
+  const lobbyCode = joinLobbyCodeInput.value
+
+  socket.emit("join_lobby", {
+    code: lobbyCode
+  }, socketCallback)
 })
 
 leaveLobbyButton.addEventListener("click", () => {
