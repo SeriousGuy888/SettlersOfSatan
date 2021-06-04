@@ -1,8 +1,8 @@
-const loggedOutDiv = document.querySelector("#logged-out")
+const loggedOutSection = document.querySelector("#logged-out")
 const nicknameInput = document.querySelector("#nickname-input")
 const loginButton = document.querySelector("#login-button")
 
-const loggedInDiv = document.querySelector("#logged-in")
+const loggedInSection = document.querySelector("#logged-in")
 const loggedInNickname = document.querySelector("#logged-in-nickname")
 const loggedInId = document.querySelector("#logged-in-id")
 const logoutButton = document.querySelector("#logout-button")
@@ -11,8 +11,8 @@ const playingAs = document.querySelector("#playing-as")
 
 
 const updateLoggedInState = (loggedIn, name, id) => {
-  loggedOutDiv.style.display = loggedIn ? "none" : "block"
-  loggedInDiv.style.display = loggedIn ? "block" : "none"
+  loggedOutSection.style.display = loggedIn ? "none" : "block"
+  loggedInSection.style.display = loggedIn ? "block" : "none"
 
   playingAs.style.display = loggedIn ? "block" : "none"
 
