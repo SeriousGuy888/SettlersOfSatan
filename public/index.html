@@ -10,6 +10,7 @@
 
         <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
         <script src="login.js" defer></script>
+        <script src="lobby.js" defer></script>
 
         <title>Settlers of Satan</title>
     </head>
@@ -56,31 +57,36 @@
                     </p>
                     
 
-                    <form action="/create_lobby" method="POST">
-                        <p id="choose-colour">Choose colour</p>
-        
-                        <div class="button-group">
-                            <button type="button" class="colour-button" id="red" style="background-color: red; color:black" >Red</input>
-                            <button type="button" class="colour-button" id="white" style="background-color: white; color:black">White</button>
-                            <button type="button" class="colour-button" id="blue" style="background-color: blue;">Blue</button>
-                            <button type="button" class="colour-button" id="orange" style="background-color: orange; color:black">Orange</button>
-                            <button type="button" class="colour-button" id="green" style="background-color: green;">Green</button>
-                            <button type="button" class="colour-button" id="purple" style="background-color: purple;">Purple</button>
-                            <br>
-                            <br>
-                        </div>
-        
-                        <div>
-                            <label for="lobbyName">Lobby Name</label>
-                            <input name="lobbyName" id="lobby-name-input" placeholder="Epic Gamer Momebt">
-                        </div>
-        
+                    <p id="choose-colour">Choose colour</p>
+    
+                    <div class="button-group">
+                        <button type="button" class="colour-button" id="red" style="background-color: red; color:black" >Red</input>
+                        <button type="button" class="colour-button" id="white" style="background-color: white; color:black">White</button>
+                        <button type="button" class="colour-button" id="blue" style="background-color: blue;">Blue</button>
+                        <button type="button" class="colour-button" id="orange" style="background-color: orange; color:black">Orange</button>
+                        <button type="button" class="colour-button" id="green" style="background-color: green;">Green</button>
+                        <button type="button" class="colour-button" id="purple" style="background-color: purple;">Purple</button>
                         <br>
-        
-                        <div>
-                            <button id="play-button">create lobby</button>
+                        <br>
+                    </div>
+    
+                    <div id="lobby-panel">
+                        <div id="create-lobby-panel">
+                            <h2>Create a Lobby</h2>
+                            <p>Choose a name for your lobby.</p>
+                            <input id="create-lobby-name-input" placeholder="Epic Gamer Momebt">
+
+                            <button id="create-lobby-button">create lobby</button>
                         </div>
-                    </form>
+                        <p>or...</p>
+                        <div id="join-lobby-panel">
+                            <h2>Join a Lobby</h2>
+                            <p>Enter a lobby code.</p>
+                            <input id="join-lobby-code-input" placeholder="ARSON">
+
+                            <button id="join-lobby-button">join lobby</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
