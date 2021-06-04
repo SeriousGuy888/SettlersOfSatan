@@ -3,6 +3,7 @@ class User {
     this.id = id
     this.name = name
     this.socket = socket
+    this.lobbyId = null
   }
 
   getId() {
@@ -15,6 +16,17 @@ class User {
 
   getSocket() {
     return this.socket
+  }
+
+  getLobby() {
+    return this.lobbyId
+  }
+
+  setLobby(lobbyId) {
+    if(!lobbyId) this.lobbyId = null
+    this.lobbyId = lobbyId
+
+    return this.lobbyId
   }
 }
 
