@@ -1,3 +1,5 @@
+const users = require("../server/users.js")
+
 class Lobby {
   constructor(name) {
     let lobbyCode = ""
@@ -33,6 +35,13 @@ class Lobby {
       this.users.delete(userId)
     }
     return false
+  }
+
+  broadcast(message) {
+    this.users.forEach(userId => {
+      const user = users.getUser(userId)
+      user.socket.emit("oeuf")
+    })
   }
 
   getUsers() {
