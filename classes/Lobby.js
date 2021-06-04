@@ -62,6 +62,10 @@ class Lobby {
     return this.users
   }
 
+  getMaxPlayers() {
+    return this.maxPlayers
+  }
+
   getCode() {
     return this.code
   }

@@ -70,10 +70,10 @@ openLobbiesRefreshButton.addEventListener("click", () => {
           lobbyNameH4.appendChild(document.createTextNode(lobbyInfo.name))
 
           const lobbyCodeP = document.createElement("p")
-          lobbyCodeP.appendChild(document.createTextNode(lobbyInfo.code))
+          lobbyCodeP.appendChild(document.createTextNode(`Code: ${lobbyInfo.code}`))
 
           const lobbyPlayerCountP = document.createElement("p")
-          lobbyPlayerCountP.appendChild(document.createTextNode(lobbyInfo.playerCount))
+          lobbyPlayerCountP.appendChild(document.createTextNode(`Players: ${lobbyInfo.playerCount}/${lobbyInfo.maxPlayerCount}`))
 
           listEntryDiv.appendChild(lobbyNameH4)
           listEntryDiv.appendChild(lobbyCodeP)
