@@ -27,7 +27,9 @@ class Lobby {
     if(this.hasUser(userId)) return false
 
     this.users.add(userId)
-    this.broadcast("oeuf")
+    this.broadcast("chat", {
+      lines: [`${users.getUser(userId).name} joined the lobby`]
+    })
     return true
   }
 
@@ -38,10 +40,10 @@ class Lobby {
     return false
   }
 
-  broadcast(message) {
+  broadcast(msg, data) {
     this.users.forEach(userId => {
       const user = users.getUser(userId)
-      user.socket.emit("oeuf")
+      user.socket.emit(msg, data)
     })
   }
 

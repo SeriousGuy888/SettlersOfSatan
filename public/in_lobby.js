@@ -1,3 +1,3 @@
-socket.on("oeuf", data => {
-  alert("oeuf")
+socket.on("chat", data => {
+  alert(`Chat: ${JSON.stringify(data)}`)
 })
