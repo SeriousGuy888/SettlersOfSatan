@@ -126,15 +126,7 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
   socket.on("get_lobbies", (data, callback) => {
     let max = parseInt(data.max) || 5
     max = Math.min(Math.max(max, 1), 10)
-    
-    // let foundLobbies = []
-    // const keys = Object.keys(lobbies)
 
-    // for(let i = 0; i < max; i++) {
-    //   if(!lobbies[keys[lobbies][i]]) break
-    //   foundLobbies.push(lobbies[keys[i]])
-    // }
-
-    // callback(null, { lobbies: lobbies })
+    callback(null, { lobbies: lobbies.getTopLobbies(max) })
   })
 })

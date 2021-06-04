@@ -1,10 +1,24 @@
 const lobbies = {}
 
-exports.getLobby = (userId) => {
-  if(userId in lobbies) {
-    return lobbies[userId]
+exports.getLobby = (lobbyId) => {
+  if(lobbyId in lobbies) {
+    return lobbies[lobbyId]
   }
   return null
+}
+
+exports.getTopLobbies = (max) => {
+  let inc = 0
+  const foundLobbies = []
+  for(let lobbyId in lobbies) {
+    foundLobbies.push(lobbyId)
+    inc++
+    if(inc >= max) {
+      break
+    }
+  }
+
+  return foundLobbies
 }
 
 exports.setLobby = (lobbyId, data) => {

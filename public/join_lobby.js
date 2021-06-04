@@ -8,6 +8,9 @@ const joinLobbyPanel = document.querySelector("#join-lobby-panel")
 const joinLobbyCodeInput = document.querySelector("#join-lobby-code-input")
 const joinLobbyButton = document.querySelector("#join-lobby-button")
 
+const openLobbiesRefreshButton = document.querySelector("#open-lobbies-refresh")
+const openLobbiesDiv = document.querySelector("#open-lobbies")
+
 const leaveLobbyButton = document.querySelector("#leave-lobby")
 
 
@@ -50,4 +53,14 @@ joinLobbyButton.addEventListener("click", () => {
 
 leaveLobbyButton.addEventListener("click", () => {
   socket.emit("leave_lobby", {}, socketCallback)
+})
+
+openLobbiesRefreshButton.addEventListener("click", () => {
+  openLobbiesDiv.innerHTML = ""
+  socket.emit("get_lobbies", { max: 5 }, (err, data) => {
+    if(err) alert(err)
+    else {
+      alert(JSON.stringify(data))
+    }
+  })
 })
