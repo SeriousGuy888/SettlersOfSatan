@@ -11,9 +11,10 @@ socket.on("user_list_update", data => {
   for(let user of users) {
 
     const listEntryDiv = document.createElement("div")
-    const playerNameP = document
-      .createElement("p")
-      .appendChild(document.createTextNode(user))
+
+    const playerNameP = document.createElement("p")
+    playerNameP.appendChild(document.createTextNode(user))
+    
     listEntryDiv.appendChild(playerNameP)
 
     listEntryDiv.classList.add(["lobby-player-list-entry"])
