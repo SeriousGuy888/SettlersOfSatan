@@ -1,16 +1,33 @@
+html {
+    height: 100%;
+}
+
 body {
-    background-image: url(https://i.redd.it/58agra6lynu21.png);
+    background-image: url("../images/background.png");
+    font-family: Trebuchet MS;
+}
+
+.colour-button {
+    position: static;
+    border: 2px solid rgb(0, 0, 0); /* Green border */
+    color: white; /* White text */
+    width: 72px;
+    height: 64px;
+    margin-right: 10px;
+    cursor: pointer; /* Pointer/hand icon */
+    /* float: left; */
 }
 
 #main {
     margin-left: 25%;
     margin-right: 25%;
-    height: 100%;
     background-color: #fff;
+    padding-left: 2.5%;
 }
 
 #home-title {
     padding-top: 5%;
     text-align: center;
-    
+    font-weight: 900;
+    font-size: 72px;
 }
