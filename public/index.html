@@ -47,6 +47,14 @@
 
 
 
+            <p id="playing-as" style="display: none;">
+                You are playing as 
+                <span id="logged-in-nickname"></span>
+                <a href="" id="logout-button">(edit)</a> 
+                <span>with ID</span>
+                <span id="logged-in-id"></span>.
+            </p>
+
             <section id="logged-out">
                 <h2>Please choose a name to start playing!</h2>
                 <div class="single-line-input">
@@ -55,14 +63,6 @@
                 </div>
             </section>
             <section id="logged-in" style="display: none;">
-                <p>
-                    You are playing as 
-                    <span id="logged-in-nickname"></span>
-                    <a href="" id="logout-button">(edit)</a> 
-                    <span>with ID</span>
-                    <span id="logged-in-id"></span>.
-                </p>
-
                 <div id="lobby-panel">
                     <div id="create-lobby-panel">
                         <h2>Create a Lobby</h2>

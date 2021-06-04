@@ -7,10 +7,15 @@ const loggedInNickname = document.querySelector("#logged-in-nickname")
 const loggedInId = document.querySelector("#logged-in-id")
 const logoutButton = document.querySelector("#logout-button")
 
+const playingAs = document.querySelector("#playing-as")
+
 
 const updateLoggedInState = (loggedIn, name, id) => {
   loggedOutDiv.style.display = loggedIn ? "none" : "block"
   loggedInDiv.style.display = loggedIn ? "block" : "none"
+
+  playingAs.style.display = loggedIn ? "block" : "none"
+
   loggedInNickname.textContent = name
   loggedInId.textContent = id
 }
