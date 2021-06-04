@@ -18,6 +18,7 @@ body {
     margin-right: 10px;
     cursor: pointer;
     border-radius: 25%;
+    padding: 1%;
 }
 
 main {
@@ -83,20 +84,40 @@ input:focus {
     flex-direction: column;
 }
 .open-lobbies-entry {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    background-color: #dfdfdf;
-    margin-top: 0.2em;
-    padding: 0.6em;
-    border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  background-color: #dfdfdf;
+  margin-top: 0.2em;
+  padding: 0.6em 1.2em;
+  border-radius: 5px;
+  border: 2px solid #232323;
+}
+.open-lobbies-entry * {
+  margin: 0.2em;
+}
+.open-lobbies-entry-title {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  margin: 0;
+}
+.open-lobbies-entry-title button {
+  padding: 0.1em 0.6em;
+}
+
+code {
+  background-color: #eee;
+  border-radius: 3px;
+  font-family: 'Consolas', monospace;
+  padding: 0 3px;
 }
 
 
 
 
 button {
-    padding: 1%;
+    padding: 0.6em 1.3em;
     background-color: #fff;
     cursor: pointer;
     color: #000;

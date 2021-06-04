@@ -66,16 +66,29 @@ openLobbiesRefreshButton.addEventListener("click", () => {
         for(let lobbyInfo of lobbies) {
           const listEntryDiv = document.createElement("div")
 
-          const lobbyNameH4 = document.createElement("h4")
-          lobbyNameH4.appendChild(document.createTextNode(lobbyInfo.name))
+          const listEntryTitleDiv = document.createElement("div")
+          listEntryTitleDiv.classList.add(["open-lobbies-entry-title"])
+
+          const lobbyNameH = document.createElement("h3")
+          lobbyNameH.appendChild(document.createTextNode(lobbyInfo.name))
+          const joinOpenLobbyButton = document.createElement("button")
+          joinOpenLobbyButton.textContent = "Join"
+          joinOpenLobbyButton.onclick = () => {
+            socket.emit("join_lobby", {
+              code: lobbyInfo.code
+            }, socketCallback)
+          }
+
+          listEntryTitleDiv.appendChild(lobbyNameH)
+          listEntryTitleDiv.appendChild(joinOpenLobbyButton)
 
           const lobbyCodeP = document.createElement("p")
-          lobbyCodeP.appendChild(document.createTextNode(`Code: ${lobbyInfo.code}`))
+          lobbyCodeP.innerHTML = `Code: <code>${lobbyInfo.code}</code>`
 
           const lobbyPlayerCountP = document.createElement("p")
-          lobbyPlayerCountP.appendChild(document.createTextNode(`Players: ${lobbyInfo.playerCount}/${lobbyInfo.maxPlayerCount}`))
+          lobbyPlayerCountP.innerHTML = `Players: <code>${lobbyInfo.playerCount}/${lobbyInfo.maxPlayerCount}</code>`
 
-          listEntryDiv.appendChild(lobbyNameH4)
+          listEntryDiv.appendChild(listEntryTitleDiv)
           listEntryDiv.appendChild(lobbyCodeP)
           listEntryDiv.appendChild(lobbyPlayerCountP)
       
