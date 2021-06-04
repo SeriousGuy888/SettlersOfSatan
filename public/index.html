@@ -47,14 +47,14 @@
 
 
 
-            <div id="logged-out">
+            <section id="logged-out">
                 <h2>Please choose a name to start playing!</h2>
                 <div class="single-line-input">
                     <input name="nickname" id="nickname-input" placeholder="Mustacho">
                     <button id="login-button">✔</button>
                 </div>
-            </div>
-            <div id="logged-in" style="display: none;">
+            </section>
+            <section id="logged-in" style="display: none;">
                 <p>
                     You are playing as 
                     <span id="logged-in-nickname"></span>
@@ -62,20 +62,6 @@
                     <span>with ID</span>
                     <span id="logged-in-id"></span>.
                 </p>
-                
-
-                <p id="choose-colour">Choose colour</p>
-
-                <div class="button-group">
-                    <button type="button" class="colour-button" id="red" style="background-color: red; color:black" >Red</input>
-                    <button type="button" class="colour-button" id="white" style="background-color: white; color:black">White</button>
-                    <button type="button" class="colour-button" id="blue" style="background-color: blue;">Blue</button>
-                    <button type="button" class="colour-button" id="orange" style="background-color: orange; color:black">Orange</button>
-                    <button type="button" class="colour-button" id="green" style="background-color: green;">Green</button>
-                    <button type="button" class="colour-button" id="purple" style="background-color: purple;">Purple</button>
-                    <br>
-                    <br>
-                </div>
 
                 <div id="lobby-panel">
                     <div id="create-lobby-panel">
@@ -96,7 +82,25 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
+            <section id="in-lobby" style="display: none;">
+                <p id="choose-colour">Choose colour</p>
+
+                <div class="button-group">
+                    <button type="button" class="colour-button" id="red" style="background-color: red; color:black" >Red</input>
+                    <button type="button" class="colour-button" id="white" style="background-color: white; color:black">White</button>
+                    <button type="button" class="colour-button" id="blue" style="background-color: blue;">Blue</button>
+                    <button type="button" class="colour-button" id="orange" style="background-color: orange; color:black">Orange</button>
+                    <button type="button" class="colour-button" id="green" style="background-color: green;">Green</button>
+                    <button type="button" class="colour-button" id="purple" style="background-color: purple;">Purple</button>
+                    <br>
+                    <br>
+                </div>
+
+                <div id="lobby-panel">
+
+                </div>
+            </section>
         </main>
     </body>
 </html>
