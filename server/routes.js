@@ -19,6 +19,10 @@ module.exports = (app) => {
     res.sendFile(path.join(publicDir, "/lobby.html"))
   })
 
+  app.get("/images/:path", (req, res) => {
+    res.sendFile(path.join(publicDir, `/images/${req.params.path}`))
+  })
+
   app.get("/:path", (req, res) => {
     res.sendFile(path.join(publicDir, `/${req.params.path}`))
   })
