@@ -80,6 +80,8 @@ input:focus {
     flex-direction: column;
 }
 .open-lobbies-entry {
+    display: flex;
+    flex-direction: column;
     text-align: center;
     background-color: #dfdfdf;
     margin-top: 0.2em;

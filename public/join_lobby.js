@@ -65,10 +65,19 @@ openLobbiesRefreshButton.addEventListener("click", () => {
       if(lobbies.length) {
         for(let lobbyInfo of lobbies) {
           const listEntryDiv = document.createElement("div")
-          const lobbyNameP = document
-            .createElement("p")
-            .appendChild(document.createTextNode(JSON.stringify(lobbyInfo)))
-          listEntryDiv.appendChild(lobbyNameP)
+
+          const lobbyNameH4 = document.createElement("h4")
+          lobbyNameH4.appendChild(document.createTextNode(lobbyInfo.name))
+
+          const lobbyCodeP = document.createElement("p")
+          lobbyCodeP.appendChild(document.createTextNode(lobbyInfo.code))
+
+          const lobbyPlayerCountP = document.createElement("p")
+          lobbyPlayerCountP.appendChild(document.createTextNode(lobbyInfo.playerCount))
+
+          listEntryDiv.appendChild(lobbyNameH4)
+          listEntryDiv.appendChild(lobbyCodeP)
+          listEntryDiv.appendChild(lobbyPlayerCountP)
       
           listEntryDiv.classList.add(["open-lobbies-entry"])
           openLobbiesDiv.appendChild(listEntryDiv)
