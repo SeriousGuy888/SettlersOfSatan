@@ -56,11 +56,27 @@ leaveLobbyButton.addEventListener("click", () => {
 })
 
 openLobbiesRefreshButton.addEventListener("click", () => {
-  openLobbiesDiv.innerHTML = ""
   socket.emit("get_lobbies", { max: 5 }, (err, data) => {
     if(err) alert(err)
     else {
-      alert(JSON.stringify(data))
+      openLobbiesDiv.innerHTML = ""
+
+      const { lobbies } = data
+      if(lobbies.length) {
+        for(let lobbyInfo of lobbies) {
+          const listEntryDiv = document.createElement("div")
+          const lobbyNameP = document
+            .createElement("p")
+            .appendChild(document.createTextNode(JSON.stringify(lobbyInfo)))
+          listEntryDiv.appendChild(lobbyNameP)
+      
+          listEntryDiv.classList.add(["open-lobbies-entry"])
+          openLobbiesDiv.appendChild(listEntryDiv)
+        }
+      }
+      else {
+        openLobbiesDiv.textContent = "There are no open lobbies right now :("
+      }
     }
   })
 })

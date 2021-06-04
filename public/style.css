@@ -74,18 +74,21 @@ input:focus {
     padding: 0 2em;
 }
 
-#lobby-player-list {
+
+#open-lobbies {
     display: flex;
     flex-direction: column;
 }
-
-.lobby-player-list-entry {
+#open-lobbies-entry {
     text-align: center;
     background-color: #dfdfdf;
     margin-top: 0.2em;
     padding: 0.6em;
     border-radius: 5px;
 }
+
+
+
 
 #leave-lobby {
     padding: 1%;
@@ -100,4 +103,18 @@ input:focus {
     height: 16px;
     width: 16px;
     vertical-align: middle;
+}
+
+
+#lobby-player-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.lobby-player-list-entry {
+    text-align: center;
+    background-color: #dfdfdf;
+    margin-top: 0.2em;
+    padding: 0.6em;
+    border-radius: 5px;
 }

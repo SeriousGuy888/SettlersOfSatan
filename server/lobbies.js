@@ -11,7 +11,13 @@ exports.getTopLobbies = (max) => {
   let inc = 0
   const foundLobbies = []
   for(let lobbyId in lobbies) {
-    foundLobbies.push(lobbyId)
+    let lobbyInfo = {
+      name: lobbies[lobbyId].name,
+      code: lobbies[lobbyId].getCode(),
+      playerCount: lobbies[lobbyId].getUsers().size,
+    }
+    foundLobbies.push(lobbyInfo)
+
     inc++
     if(inc >= max) {
       break
