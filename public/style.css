@@ -34,23 +34,33 @@ main {
     font-size: 8vh;
 }
 
+input {
+    border: none;
+    border-bottom: 2px solid #1262e7;
+    transition: 500ms;
+}
+input:focus {
+    outline: none;
+    border-bottom: 2px solid #6ba4ff;
+}
+
 .single-line-input {
     display: flex;
-    align-items: stretch;
-    width: 100%;
+    flex-direction: row;
 }
 
 .single-line-input input {
     padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    flex-grow: 3;
-    width: 90%;
+    margin: 0.2em;
+    flex-grow: 5;
+    flex-basis: 0;
 }
 
 .single-line-input button {
-    padding: 10px;
-    width: 10%;
+    padding: 8px;
+    margin: 0.2em;
+    flex-grow: 1;
+    flex-basis: 0;
 }
 
 
