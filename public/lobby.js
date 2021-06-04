@@ -8,6 +8,8 @@ const joinLobbyPanel = document.querySelector("#join-lobby-panel")
 const joinLobbyCodeInput = document.querySelector("#join-lobby-code-input")
 const joinLobbyButton = document.querySelector("#join-lobby-button")
 
+const leaveLobbyButton = document.querySelector("#leave-lobby")
+
 
 
 const updateLobbyState = (inLobby) => {
@@ -15,20 +17,27 @@ const updateLobbyState = (inLobby) => {
   inLobbySection.style.display = inLobby ? "block" : "none"
 }
 
+const socketCallback = (err, data) => {
+  if(err) alert(err)
+  else {
+    updateLobbyState(!!data.code)
+  }
+}
+
+
 
 createLobbyButton.addEventListener("click", () => {
   const lobbyName = createLobbyNameInput.value
 
   socket.emit("create_lobby", {
     name: lobbyName
-  }, (err, data) => {
-    if(err) alert(err)
-    else {
-      updateLobbyState(true)
-    }
-  })
+  }, socketCallback)
 })
 
 joinLobbyButton.addEventListener("click", () => {
   alert("join lobby button")
+})
+
+leaveLobbyButton.addEventListener("click", () => {
+  socket.emit("leave_lobby", {}, socketCallback)
 })

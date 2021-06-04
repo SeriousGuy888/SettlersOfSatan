@@ -67,6 +67,21 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     lobby.join(socket.id)
     user.setLobby(lobbyCode)
 
+    // lobby.emit("user_join")
+
     callback(null, { code: lobbyCode })
+  })
+
+  socket.on("leave_lobby", (data, callback) => {
+    const user = users[socket.id]
+    if(!user) return callback("not_logged_in")
+    if(!user.getLobby()) return callback("not_in_lobby")
+
+    const lobbyCode = user.getLobby()
+    const lobby = lobbies[lobbyCode]
+    lobby.leave(user.id)
+    user.setLobby(null)
+
+    callback(null, {})
   })
 })
