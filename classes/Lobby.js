@@ -35,6 +35,10 @@ class Lobby {
     return false
   }
 
+  getUsers() {
+    return this.users
+  }
+
   getCode() {
     return this.code
   }

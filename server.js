@@ -67,6 +67,8 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     lobby.join(socket.id)
     user.setLobby(lobbyCode)
 
+    console.log(`${user.id} created lobby ${lobbyCode}`)
+
     // lobby.emit("user_join")
 
     callback(null, { code: lobbyCode })
@@ -81,6 +83,11 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     const lobby = lobbies[lobbyCode]
     lobby.leave(user.id)
     user.setLobby(null)
+
+    if(lobby.getUsers().size === 0) {
+      console.log(`Closing empty lobby ${lobbyCode}`)
+      delete lobbies[lobbyCode]
+    }
 
     callback(null, {})
   })
