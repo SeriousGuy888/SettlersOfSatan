@@ -34,6 +34,7 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
 
   socket.on("login", (data, callback) => {
     if(!data.name) data.name = `Mustacho${Math.round(Math.random() * 1000)}`
+    data.name = data.name.slice(0, 100)
     
     users[socket.id] = new User(socket.id, data.name, socket)
     console.log(`${data.name} (${socket.id}) has logged in.`)
