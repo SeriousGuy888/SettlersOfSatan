@@ -9,13 +9,17 @@ body {
 
 .colour-button {
     position: static;
-    border: 2px solid rgb(0, 0, 0); /* Green border */
+    border: 2px solid rgb(0, 0, 0);
     color: white; /* White text */
     width: 72px;
     height: 64px;
     margin-right: 10px;
-    cursor: pointer; /* Pointer/hand icon */
-    /* float: left; */
+    cursor: pointer;
+    border-radius: 25%;
+}
+
+.colour-button:focus {
+    border: 4px solid rgb(100, 183, 255);
 }
 
 #main {
