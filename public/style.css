@@ -79,7 +79,7 @@ input:focus {
     display: flex;
     flex-direction: column;
 }
-#open-lobbies-entry {
+.open-lobbies-entry {
     text-align: center;
     background-color: #dfdfdf;
     margin-top: 0.2em;
