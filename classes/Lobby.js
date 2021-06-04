@@ -58,7 +58,7 @@ class Lobby {
 const helpers = {
   userListUpdate: (self) => {
     self.broadcast("user_list_update", {
-      users: Array.from(self.users).map(uid => users.getUser(uid).name)
+      users: Array.from(self.users).map(uid => users.getUser(uid)?.name)
     })
   }
 }

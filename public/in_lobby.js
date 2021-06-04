@@ -5,5 +5,20 @@ socket.on("chat", data => {
 })
 
 socket.on("user_list_update", data => {
-  alert(JSON.stringify(data))
+  lobbyPlayerList.innerHTML = ""
+
+  const { users } = data
+  for(let user of users) {
+
+    const listEntryDiv = document.createElement("div")
+    const playerNameP = document
+      .createElement("p")
+      .appendChild(document.createTextNode(user))
+    listEntryDiv.appendChild(playerNameP)
+
+    listEntryDiv.classList.add(["lobby-player-list-entry"])
+    listEntryDiv.style.border = "5px solid red"
+
+    lobbyPlayerList.appendChild(listEntryDiv)
+  }
 })

@@ -56,7 +56,7 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
       if(user.getLobby()) {
         lobbies[user.getLobby()].leave(user.id)
       }
-      
+
       users.setUser(user.id, null)
     }
     callback(null, data)
