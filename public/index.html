@@ -44,8 +44,10 @@
             <div id="login">
                 <div id="logged-out">
                     <h2>Please choose a name to start playing!</h2>
-                    <input name="nickname" id="nickname-input" placeholder="Mustacho">
-                    <button id="login-button">✔</button>
+                    <div class="single-line-input">
+                        <input name="nickname" id="nickname-input" placeholder="Mustacho">
+                        <button id="login-button">✔</button>
+                    </div>
                 </div>
                 <div id="logged-in" style="display: none;">
                     <p>
@@ -74,17 +76,19 @@
                         <div id="create-lobby-panel">
                             <h2>Create a Lobby</h2>
                             <p>Choose a name for your lobby.</p>
-                            <input id="create-lobby-name-input" placeholder="Epic Gamer Momebt">
-
-                            <button id="create-lobby-button">create lobby</button>
+                            <div class="single-line-input">
+                                <input id="create-lobby-name-input" placeholder="Epic Gamer Momebt">
+                                <button id="create-lobby-button">create lobby</button>
+                            </div>
                         </div>
                         <p>or...</p>
                         <div id="join-lobby-panel">
                             <h2>Join a Lobby</h2>
                             <p>Enter a lobby code.</p>
-                            <input id="join-lobby-code-input" placeholder="ARSON">
-
-                            <button id="join-lobby-button">join lobby</button>
+                            <div class="single-line-input">
+                                <input id="join-lobby-code-input" placeholder="ARSON">
+                                <button id="join-lobby-button">join lobby</button>
+                            </div>
                         </div>
                     </div>
                 </div>
