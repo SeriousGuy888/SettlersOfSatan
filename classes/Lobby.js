@@ -52,7 +52,7 @@ class Lobby {
       if(wasHost) { // if the user who left was the lobby host
         let earliestJoinerId
         for(let i in this.users) { // find the user in the lobby who joined earliest
-          if(!earliestJoinerId || users[i].joinTimestamp < users[earliestJoinerId].joinTimestamp) {
+          if(!earliestJoinerId || this.users[i].joinTimestamp < this.users[earliestJoinerId].joinTimestamp) {
             earliestJoinerId = i
           }
         }
