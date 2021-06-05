@@ -18,6 +18,9 @@ const notifyUser = (message) => {
   notificationDismissButton.textContent = "Dismiss"
   notificationDismissButton.onclick = e => {
     document.getElementById(notificationId).remove()
+    if(notificationContainer.childElementCount === 0) {
+      notificationDismissAllButton.style.display = "none"
+    }
   }
 
   notificationDiv.appendChild(notificationText)
