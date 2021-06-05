@@ -119,6 +119,10 @@ button {
 button:hover {
     background-color: #f0f0f0;
 }
+button:disabled {
+    background-color: #aaaaaa;
+    cursor: not-allowed;
+}
 
 #leave-lobby img {
     height: 16px;
