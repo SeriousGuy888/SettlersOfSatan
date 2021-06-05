@@ -1,0 +1,25 @@
+.row-layout {
+  display: flex;
+  margin: 0 -2em;
+  flex-wrap: wrap;
+}
+
+.column-layout {
+  flex-grow: 1;
+  flex-basis: 0;
+  padding: 0 2em;
+}
+
+.flex-layout-3col-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-left: -0.5%;
+}
+
+.flex-layout-3col-grid div {
+  flex-grow: 1;
+  flex-basis: 28%;
+  margin-left: 0.5%;
+}
