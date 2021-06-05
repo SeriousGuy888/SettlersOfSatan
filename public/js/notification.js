@@ -1,4 +1,6 @@
 const notificationContainer = document.querySelector("#notification-container")
+const notificationDismissAllButton = document.querySelector("#notification-dismiss-all-button")
+
 
 const notifyUser = (message) => {
   const notificationId = `notification-${Date.now()}_${Math.round(Math.random() * 1000)}`
@@ -22,4 +24,11 @@ const notifyUser = (message) => {
   notificationDiv.appendChild(notificationDismissButton)
 
   notificationContainer.appendChild(notificationDiv)
+
+  notificationDismissAllButton.style.display = null
 }
+
+notificationDismissAllButton.addEventListener("click", () => {
+  notificationContainer.innerHTML = ""
+  notificationDismissAllButton.style.display = "none"
+})

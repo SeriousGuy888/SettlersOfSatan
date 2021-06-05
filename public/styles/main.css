@@ -52,6 +52,19 @@ main {
 }
 
 
+#notification-dismiss-all-button {
+    position: fixed;
+
+    bottom: 1em;
+    left: 1vw;
+    right: 93vw;
+
+    word-wrap: break-word;
+    width: 8vw;
+    padding: 0.5em 0em;
+}
+
+
 #notification-container {
     position: fixed;
 
