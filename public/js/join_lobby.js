@@ -31,7 +31,7 @@ const updateLobbyState = (data) => {
 }
 
 const socketCallback = (err, data) => {
-  if(err) alert(err)
+  if(err) notifyUser(err)
   else {
     updateLobbyState(data)
   }
@@ -61,7 +61,7 @@ leaveLobbyButton.addEventListener("click", () => {
 
 openLobbiesRefreshButton.addEventListener("click", () => {
   socket.emit("get_lobbies", { max: 9 }, (err, data) => {
-    if(err) alert(err)
+    if(err) notifyUser(err)
     else {
       openLobbiesDiv.innerHTML = ""
 

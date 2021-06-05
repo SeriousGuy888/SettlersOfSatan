@@ -31,14 +31,14 @@ loginButton.addEventListener("click", () => {
   socket.emit("login", {
     name,
   }, (err, data) => {
-    if(err) alert(err)
+    if(err) notifyUser(err)
     else updateLoggedInState(true, data.name, socket.id)
   })
 })
 
 logoutButton.addEventListener("click", () => {
   socket.emit("logout", {}, (err, data) => {
-    if(err) alert(err)
+    if(err) notifyUser(err)
     else updateLoggedInState(false)
   })
 })
