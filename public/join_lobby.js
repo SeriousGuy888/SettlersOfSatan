@@ -56,7 +56,7 @@ leaveLobbyButton.addEventListener("click", () => {
 })
 
 openLobbiesRefreshButton.addEventListener("click", () => {
-  socket.emit("get_lobbies", { max: 5 }, (err, data) => {
+  socket.emit("get_lobbies", { max: 9 }, (err, data) => {
     if(err) alert(err)
     else {
       openLobbiesDiv.innerHTML = ""
