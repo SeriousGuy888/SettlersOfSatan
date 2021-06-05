@@ -82,6 +82,10 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     lobby.join(user.id)
     user.setLobby(lobbyCode)
 
+    lobby.setHost(user.id)
+
+    console.log(lobby)
+
     console.log(`${user.id} created lobby ${lobbyCode}`)
     callback(null, {
       name: lobby.getName(),

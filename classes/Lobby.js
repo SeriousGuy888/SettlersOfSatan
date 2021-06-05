@@ -12,7 +12,7 @@ class Lobby {
     this.name = name
     this.maxPlayers = 6
     this.code = lobbyCode
-    this.users = new Map()
+    this.users = {}
   }
 
   isFull() {
@@ -20,21 +20,21 @@ class Lobby {
   }
 
   hasUser(userId) {
-    return this.users.has(userId)
+    return userId in this.users
   }
 
   join(userId) {
     if(this.isFull()) return false
     if(this.hasUser(userId)) return false
 
-    this.users.set(userId, {})
+    this.users[userId] = {}
     helpers.userListUpdate(this)
     return true
   }
 
   leave(userId) {
     if(this.hasUser(userId)) {
-      this.users.delete(userId)
+      delete this.users[userId]
       helpers.userListUpdate(this)
 
       if(this.getUsers().size === 0) {
@@ -52,10 +52,10 @@ class Lobby {
   }
 
   broadcast(msg, data) {
-    Array.from(this.users.keys()).forEach(userId => {
+    for(let userId in this.users) {
       const user = users.getUser(userId)
       user.socket.emit(msg, data)
-    })
+    }
   }
 
   getUsers() {
@@ -73,12 +73,19 @@ class Lobby {
   getCode() {
     return this.code
   }
+
+  setHost(userId) {
+    for(let loopUserId in this.users) {
+      delete this.users[loopUserId].host
+    }
+    this.users[userId].host = true
+  }
 }
 
 const helpers = {
   userListUpdate: (self) => {
     self.broadcast("user_list_update", {
-      users: Array.from(self.users.keys()).map(uid => users.getUser(uid)?.name)
+      users: Object.keys(self.users).map(uid => users.getUser(uid)?.name)
     })
   }
 }
