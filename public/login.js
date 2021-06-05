@@ -21,9 +21,7 @@ const updateLoggedInState = (loggedIn, name, id) => {
   }
 
   playingAs.style.display = loggedIn ? "block" : "none"
-
   loggedInNickname.textContent = name
-  loggedInId.textContent = id
 }
 
 loginButton.addEventListener("click", () => {
