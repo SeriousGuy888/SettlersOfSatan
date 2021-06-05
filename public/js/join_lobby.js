@@ -21,13 +21,14 @@ const updateLobbyState = (data) => {
   if(inLobby) {
     loggedInSection.style.display = "none"
     inLobbySection.style.display = null
-
     lobbyNameHeader.textContent = data.name
   }
   else {
     loggedInSection.style.display = null
     inLobbySection.style.display = "none"
   }
+  
+  toggleLobbySettingsLocked(false)
 }
 
 const socketCallback = (err, data) => {
