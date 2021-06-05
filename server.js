@@ -80,9 +80,10 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     lobbies.setLobby(lobbyCode, createdLobby)
     const lobby = lobbies.getLobby(lobbyCode)
     lobby.join(user.id)
+    lobby.setHost(user.id)
+    
     user.setLobby(lobbyCode)
 
-    lobby.setHost(user.id)
 
     console.log(lobby)
 

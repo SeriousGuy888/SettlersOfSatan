@@ -158,9 +158,21 @@ button:hover {
 }
 
 .lobby-player-list-entry {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
     background-color: #dfdfdf;
     margin-top: 0.2em;
-    padding: 0.6em;
+    padding: 0.6em 1.2em;
     border-radius: 5px;
+    border: 2px solid #232323;
+}
+.lobby-player-list-entry * {
+  margin: 0.2em;
+}
+.lobby-player-list-entry-title {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  margin: 0;
 }

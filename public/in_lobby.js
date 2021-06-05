@@ -9,13 +9,21 @@ socket.on("user_list_update", data => {
 
   const { users } = data
   for(let user of users) {
-
     const listEntryDiv = document.createElement("div")
 
-    const playerNameP = document.createElement("p")
-    playerNameP.appendChild(document.createTextNode(user))
-    
-    listEntryDiv.appendChild(playerNameP)
+    const listEntryTitleDiv = document.createElement("div")
+    listEntryTitleDiv.classList.add(["lobby-player-list-entry-title"])
+
+    const playerNameH = document.createElement("h4")
+    playerNameH.appendChild(document.createTextNode(user.name))
+
+    const hostBadge = document.createElement("p")
+    hostBadge.appendChild(document.createTextNode(user.host ? "👑" : ""))
+
+    listEntryTitleDiv.appendChild(hostBadge)
+    listEntryTitleDiv.appendChild(playerNameH)
+
+    listEntryDiv.appendChild(listEntryTitleDiv)
 
     listEntryDiv.classList.add(["lobby-player-list-entry"])
     listEntryDiv.style.border = "5px solid red"

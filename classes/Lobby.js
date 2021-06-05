@@ -27,7 +27,10 @@ class Lobby {
     if(this.isFull()) return false
     if(this.hasUser(userId)) return false
 
-    this.users[userId] = {}
+    this.users[userId] = {
+      name: users.getUser(userId).name
+    }
+
     helpers.userListUpdate(this)
     return true
   }
@@ -79,13 +82,14 @@ class Lobby {
       delete this.users[loopUserId].host
     }
     this.users[userId].host = true
+    helpers.userListUpdate(this)
   }
 }
 
 const helpers = {
   userListUpdate: (self) => {
     self.broadcast("user_list_update", {
-      users: Object.keys(self.users).map(uid => users.getUser(uid)?.name)
+      users: Object.values(self.users) // do not reveal user ids
     })
   }
 }
