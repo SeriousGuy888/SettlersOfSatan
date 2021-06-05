@@ -17,8 +17,9 @@ socket.on("user_list_update", data => {
     const playerNameH = document.createElement("h4")
     playerNameH.appendChild(document.createTextNode(user.name))
 
-    const hostBadge = document.createElement("p")
-    hostBadge.appendChild(document.createTextNode(user.host ? "👑" : ""))
+    const hostBadge = document.createElement("img")
+    hostBadge.src = "/images/host.svg"
+    hostBadge.style.height = "2em"
 
     listEntryTitleDiv.appendChild(hostBadge)
     listEntryTitleDiv.appendChild(playerNameH)
