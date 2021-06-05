@@ -12,7 +12,7 @@ class Lobby {
     this.name = name
     this.maxPlayers = 6
     this.code = lobbyCode
-    this.users = new Set()
+    this.users = new Map()
   }
 
   isFull() {
@@ -27,7 +27,7 @@ class Lobby {
     if(this.isFull()) return false
     if(this.hasUser(userId)) return false
 
-    this.users.add(userId)
+    this.users.set(userId, {})
     helpers.userListUpdate(this)
     return true
   }
@@ -52,7 +52,7 @@ class Lobby {
   }
 
   broadcast(msg, data) {
-    this.users.forEach(userId => {
+    Array.from(this.users.keys()).forEach(userId => {
       const user = users.getUser(userId)
       user.socket.emit(msg, data)
     })
@@ -78,7 +78,7 @@ class Lobby {
 const helpers = {
   userListUpdate: (self) => {
     self.broadcast("user_list_update", {
-      users: Array.from(self.users).map(uid => users.getUser(uid)?.name)
+      users: Array.from(self.users.keys()).map(uid => users.getUser(uid)?.name)
     })
   }
 }
