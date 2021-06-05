@@ -66,6 +66,10 @@ class Lobby {
     return this.maxPlayers
   }
 
+  getName() {
+    return this.name
+  }
+
   getCode() {
     return this.code
   }

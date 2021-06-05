@@ -11,14 +11,18 @@ const joinLobbyButton = document.querySelector("#join-lobby-button")
 const openLobbiesRefreshButton = document.querySelector("#open-lobbies-refresh")
 const openLobbiesDiv = document.querySelector("#open-lobbies")
 
+const lobbyNameHeader = document.querySelector("#lobby-name")
 const leaveLobbyButton = document.querySelector("#leave-lobby")
 
 
+const updateLobbyState = (data) => {
+  const inLobby = !!data.code
 
-const updateLobbyState = (inLobby) => {
   if(inLobby) {
     loggedInSection.style.display = "none"
     inLobbySection.style.display = null
+
+    lobbyNameHeader.textContent = data.name
   }
   else {
     loggedInSection.style.display = null
@@ -29,7 +33,7 @@ const updateLobbyState = (inLobby) => {
 const socketCallback = (err, data) => {
   if(err) alert(err)
   else {
-    updateLobbyState(!!data.code)
+    updateLobbyState(data)
   }
 }
 

@@ -83,7 +83,10 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     user.setLobby(lobbyCode)
 
     console.log(`${user.id} created lobby ${lobbyCode}`)
-    callback(null, { code: lobbyCode })
+    callback(null, {
+      name: lobby.getName(),
+      code: lobbyCode
+    })
   })
 
   socket.on("join_lobby", (data, callback) => {
@@ -102,7 +105,10 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     user.setLobby(lobbyCode)
 
     console.log(`${user.id} joined lobby ${lobbyCode}`)
-    callback(null, { code: lobbyCode })
+    callback(null, {
+      name: lobby.getName(),
+      code: lobbyCode
+    })
   })
 
 
