@@ -28,7 +28,8 @@ class Lobby {
     if(this.hasUser(userId)) return false
 
     this.users[userId] = {
-      name: users.getUser(userId).name
+      name: users.getUser(userId).name,
+      joinTimestamp: Date.now()
     }
 
     helpers.userListUpdate(this)
@@ -37,12 +38,26 @@ class Lobby {
 
   leave(userId) {
     if(this.hasUser(userId)) {
+      let wasHost = this.users[userId].host
+
       delete this.users[userId]
       helpers.userListUpdate(this)
 
-      if(Object.keys(this.getUsers()).length === 0) {
+      if(Object.keys(this.getUsers()).length === 0) { // if the lobby is now empty
         console.log(`Closed empty lobby ${this.code}`)
-        this.close()
+        this.close() // close the lobby
+        return true
+      }
+
+      if(wasHost) { // if the user who left was the lobby host
+        let earliestJoinerId
+        for(let i in this.users) { // find the user in the lobby who joined earliest
+          if(!earliestJoinerId || users[i].joinTimestamp < users[earliestJoinerId].joinTimestamp) {
+            earliestJoinerId = i
+          }
+        }
+
+        this.setHost(earliestJoinerId) // give host privileges to that human
       }
 
       return true
