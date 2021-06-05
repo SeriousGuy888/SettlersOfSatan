@@ -16,7 +16,7 @@ class Lobby {
   }
 
   isFull() {
-    return this.users.size >= this.maxPlayers
+    return Object.keys(this.users).length >= this.maxPlayers
   }
 
   hasUser(userId) {
@@ -24,7 +24,6 @@ class Lobby {
   }
 
   join(userId) {
-    if(this.isFull()) return false
     if(this.hasUser(userId)) return false
 
     this.users[userId] = {

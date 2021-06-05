@@ -103,10 +103,15 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
 
     const lobbyCode = data.code.toUpperCase()
     const lobby = lobbies.getLobby(lobbyCode)
-
     if(!lobby) return callback("lobby_not_found")
+
+    if(lobby.isFull()) return callback("lobby_full")
     
-    lobby.join(user.id)
+    const joinedLobby = lobby.join(user.id)
+    if(!joinedLobby) {
+      return callback("lobby_error")
+    }
+
     user.setLobby(lobbyCode)
 
     console.log(`${user.id} joined lobby ${lobbyCode}`)
