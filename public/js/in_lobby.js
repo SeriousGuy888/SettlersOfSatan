@@ -1,4 +1,6 @@
 const lobbyPlayerList = document.querySelector("#lobby-player-list")
+const lobbyPlayerCountSpan = document.querySelector("#lobby-player-count")
+const lobbyMaxPlayerCountSpan = document.querySelector("#lobby-max-player-count")
 
 socket.on("chat", data => {
   notifyUser(`Chat: ${JSON.stringify(data)}`)
@@ -7,7 +9,7 @@ socket.on("chat", data => {
 socket.on("user_list_update", data => {
   lobbyPlayerList.innerHTML = ""
 
-  const { users } = data
+  const { users, maxPlayerCount } = data
   for(let user of users) {
     const listEntryDiv = document.createElement("div")
 
@@ -32,4 +34,7 @@ socket.on("user_list_update", data => {
 
     lobbyPlayerList.appendChild(listEntryDiv)
   }
+
+  lobbyPlayerCountSpan.textContent = users.length
+  lobbyMaxPlayerCountSpan.textContent = maxPlayerCount.toString()
 })

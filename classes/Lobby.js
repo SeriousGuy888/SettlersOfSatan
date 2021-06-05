@@ -104,7 +104,8 @@ class Lobby {
 const helpers = {
   userListUpdate: (self) => {
     self.broadcast("user_list_update", {
-      users: Object.values(self.users) // do not reveal user ids
+      users: Object.values(self.users), // do not reveal user ids
+      maxPlayerCount: self.getMaxPlayers()
     })
   }
 }
