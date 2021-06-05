@@ -51,6 +51,36 @@ main {
     font-size: 4vw;
 }
 
+
+#notification-container {
+    position: fixed;
+
+    bottom: 1em;
+    left: 10vw;
+    right: 10vw;
+}
+.notification {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+
+    background-color: #efefef;
+    border: 2px solid #000;
+
+    max-width: 100%;
+    overflow: hidden;
+    margin-top: 0.2em;
+
+    border-radius: 5px;
+    padding: 0 1em;
+}
+.notification button {
+    padding: 0.1em 0.5em;
+    height: 70%;
+    margin-left: auto;
+}
+
+
 input {
     border: none;
     border-bottom: 2px solid #1262e7;
@@ -114,7 +144,7 @@ code {
 
 
 button {
-    padding: 0.6em 1.3em;
+    padding: 0.4em 1em;
     background-color: #fff;
     cursor: pointer;
     color: #000;
