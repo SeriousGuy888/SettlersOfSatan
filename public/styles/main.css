@@ -33,11 +33,16 @@ body {
 main {
     margin: 0 20%;
     /* margin-right: calc(25% + var(--chat-sidebar-width)); */
-    padding: 0 5em 5em;
+    padding: 0 5vw 4em;
 
     background-color: #fff;
     border-radius: 5px;
 }
+
+@media only screen and (max-width: 480px) {
+    main { margin: 0; }
+}
+
 
 #home-title {
     padding-top: 5%;
