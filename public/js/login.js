@@ -10,7 +10,7 @@ const logoutButton = document.querySelector("#logout-button")
 const playingAs = document.querySelector("#playing-as")
 
 
-const updateLoggedInState = (loggedIn, name, id) => {
+const updateLoggedInState = (loggedIn, name) => {
   if(loggedIn) {
     loggedOutSection.style.display = "none"
     loggedInSection.style.display = null
@@ -32,7 +32,7 @@ loginButton.addEventListener("click", () => {
     name,
   }, (err, data) => {
     if(err) notifyUser(err)
-    else updateLoggedInState(true, data.name, socket.id)
+    else updateLoggedInState(true, data.name)
   })
 })
 
