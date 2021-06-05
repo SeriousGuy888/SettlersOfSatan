@@ -6,6 +6,15 @@ socket.on("chat", data => {
   notifyUser(`Chat: ${JSON.stringify(data)}`)
 })
 
+socket.on("host_change", data => {
+  if(data.lostHost) {
+    notifyUser("You are no longer the host of this lobby.")
+  }
+  if(data.gainedHost) {
+    notifyUser("You are now the host!")
+  }
+})
+
 socket.on("user_list_update", data => {
   lobbyPlayerList.innerHTML = ""
 

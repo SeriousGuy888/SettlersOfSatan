@@ -93,9 +93,17 @@ class Lobby {
 
   setHost(userId) {
     for(let loopUserId in this.users) {
-      delete this.users[loopUserId].host
+      if(this.users[loopUserId].host) {
+        delete this.users[loopUserId].host
+        users.getUser(loopUserId).socket.emit("host_change", {
+          lostHost: true
+        })
+      }
     }
     this.users[userId].host = true
+    users.getUser(userId).socket.emit("host_change", {
+      gainedHost: true
+    })
     helpers.userListUpdate(this)
   }
 }
