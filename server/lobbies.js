@@ -14,7 +14,7 @@ exports.getTopLobbies = (max) => {
     let lobbyInfo = {
       name: lobbies[lobbyId].name,
       code: lobbies[lobbyId].getCode(),
-      playerCount: lobbies[lobbyId].getUsers().size,
+      playerCount: Object.keys(lobbies[lobbyId].getUsers()).length,
       maxPlayerCount: lobbies[lobbyId].getMaxPlayers(),
     }
     foundLobbies.push(lobbyInfo)

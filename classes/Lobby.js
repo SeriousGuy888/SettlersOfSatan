@@ -40,7 +40,7 @@ class Lobby {
       delete this.users[userId]
       helpers.userListUpdate(this)
 
-      if(this.getUsers().size === 0) {
+      if(Object.keys(this.getUsers()).length === 0) {
         console.log(`Closed empty lobby ${this.code}`)
         this.close()
       }
