@@ -72,7 +72,7 @@ openLobbiesRefreshButton.addEventListener("click", () => {
           const listEntryDiv = document.createElement("div")
 
           const listEntryTitleDiv = document.createElement("div")
-          listEntryTitleDiv.classList.add(["open-lobbies-entry-title"])
+          listEntryTitleDiv.classList.add(["list-entry-title"])
 
           const lobbyNameH = document.createElement("h3")
           lobbyNameH.appendChild(document.createTextNode(lobbyInfo.name))
@@ -97,7 +97,7 @@ openLobbiesRefreshButton.addEventListener("click", () => {
           listEntryDiv.appendChild(lobbyCodeP)
           listEntryDiv.appendChild(lobbyPlayerCountP)
       
-          listEntryDiv.classList.add(["open-lobbies-entry"])
+          listEntryDiv.classList.add(["list-entry"])
           openLobbiesDiv.appendChild(listEntryDiv)
         }
       }

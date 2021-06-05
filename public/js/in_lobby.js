@@ -14,7 +14,7 @@ socket.on("user_list_update", data => {
     const listEntryDiv = document.createElement("div")
 
     const listEntryTitleDiv = document.createElement("div")
-    listEntryTitleDiv.classList.add(["lobby-player-list-entry-title"])
+    listEntryTitleDiv.classList.add(["list-entry-title"])
 
     const playerNameH = document.createElement("h4")
     playerNameH.appendChild(document.createTextNode(user.name))
@@ -29,9 +29,8 @@ socket.on("user_list_update", data => {
 
     listEntryDiv.appendChild(listEntryTitleDiv)
 
-    listEntryDiv.classList.add(["lobby-player-list-entry"])
+    listEntryDiv.classList.add(["list-entry"])
     listEntryDiv.style.border = "5px solid red"
-    listEntryDiv.style.backgroundColor = "#fff"
 
     lobbyPlayerList.appendChild(listEntryDiv)
   }

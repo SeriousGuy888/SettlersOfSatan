@@ -123,29 +123,6 @@ input:focus {
     flex-basis: 0;
 }
 
-.open-lobbies-entry {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  background-color: #dfdfdf;
-  margin-top: 0.2em;
-  padding: 0.6em 1.2em;
-  border-radius: 5px;
-  border: 2px solid #232323;
-}
-.open-lobbies-entry * {
-  margin: 0.2em;
-}
-.open-lobbies-entry-title {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  margin: 0;
-}
-.open-lobbies-entry-title button {
-  padding: 0.1em 0.6em;
-}
-
 code {
   background-color: #eee;
   border-radius: 3px;
@@ -194,7 +171,7 @@ button:disabled {
     flex-direction: column;
 }
 
-.lobby-player-list-entry {
+.list-entry {
     display: flex;
     flex-direction: column;
     text-align: left;
@@ -204,12 +181,15 @@ button:disabled {
     border-radius: 5px;
     border: 2px solid #232323;
 }
-.lobby-player-list-entry * {
+.list-entry * {
   margin: 0.2em;
 }
-.lobby-player-list-entry-title {
+.list-entry-title {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
   margin: 0;
+}
+.list-entry-title button {
+  padding: 0.1em 0.6em;
 }
