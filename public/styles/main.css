@@ -10,6 +10,14 @@ body {
     font-family: Trebuchet MS;
 }
 
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+.button-group button {
+    margin: 0.2em;
+}
 .colour-button {
     position: static;
     border: 2px solid rgb(0, 0, 0);
@@ -35,7 +43,7 @@ main {
     padding-top: 5%;
     text-align: center;
     font-weight: 900;
-    font-size: 4em;
+    font-size: 4vw;
 }
 
 input {
