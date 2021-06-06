@@ -22,7 +22,7 @@ socket.on("user_list_update", data => {
     const hostBadge = document.createElement("img")
     hostBadge.src = "/images/icons/host.svg"
     hostBadge.title = "Lobby Host"
-    hostBadge.style.height = "1em"
+    hostBadge.classList.add(["icon-1em"])
 
     listEntryTitleDiv.appendChild(playerNameH)
     user.host && listEntryTitleDiv.appendChild(hostBadge)

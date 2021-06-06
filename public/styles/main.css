@@ -134,7 +134,7 @@ code {
 
 
 button {
-    padding: 0.4em 1em;
+    padding: 0.4em;
     background-color: #fff;
     cursor: pointer;
     color: #000;
@@ -192,4 +192,8 @@ button:disabled {
 }
 .list-entry-title button {
   padding: 0.1em 0.6em;
+}
+
+.icon-1em {
+    height: 1em;
 }
