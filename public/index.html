@@ -20,6 +20,7 @@
         <script src="js/lobby_settings.js" defer></script>
         <script src="js/notification.js" defer></script>
         <script src="js/chooseColour.js" defer></script>
+        <script src="js/chat.js" defer></script>
 
         <title>Settlers of Satan</title>
     </head>
@@ -144,10 +145,14 @@
                     <div class="column-layout">
                         <h3>Chat</h3>
                         <div id="lobby-chat"></div>
+                        <div class="single-line-input">
+                            <input id="lobby-chat-input" placeholder="Send a message">
+                            <button id="lobby-chat-send-button">
+                                <img src="/images/icons/check.svg" alt="Send" class="icon-1em">
+                            </button>
+                        </div>
                     </div>
                 </div>
-
-                <button id="chat-button"></button>
             </section>
         </main>
     </body>

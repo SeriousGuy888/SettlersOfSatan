@@ -4,10 +4,6 @@ const lobbyMaxPlayerCountSpan = document.querySelector("#lobby-max-player-count"
 
 let currentLobbyData
 
-socket.on("chat", data => {
-  notifyUser(`Chat: ${JSON.stringify(data)}`)
-})
-
 socket.on("lobby_update", data => {
   currentLobbyData = data
 
