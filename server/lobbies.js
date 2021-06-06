@@ -7,18 +7,26 @@ exports.getLobby = (lobbyId) => {
   return null
 }
 
+exports.getPublicLobbyInfo = (lobbyId) => {
+  const lobby = lobbies[lobbyId]
+  if(!lobby) return null
+
+  return {
+    name: lobby.getName(),
+    code: lobby.getCode(),
+    users: Object.values(lobby.getUsers()), // do not reveal user ids
+    playerCount: Object.keys(lobby.getUsers()).length,
+    maxPlayerCount: lobby.getMaxPlayers(),
+    inGame: lobby.getInGame()
+  }
+}
+
 exports.getTopLobbies = (max) => {
   let inc = 0
   const foundLobbies = []
   for(let lobbyId in lobbies) {
-    let lobbyInfo = {
-      name: lobbies[lobbyId].name,
-      code: lobbies[lobbyId].getCode(),
-      playerCount: Object.keys(lobbies[lobbyId].getUsers()).length,
-      maxPlayerCount: lobbies[lobbyId].getMaxPlayers(),
-    }
+    let lobbyInfo = this.getPublicLobbyInfo(lobbyId)
     foundLobbies.push(lobbyInfo)
-
     inc++
     if(inc >= max) {
       break
