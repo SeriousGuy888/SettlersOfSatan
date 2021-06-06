@@ -4,7 +4,7 @@ html {
 }
 
 body {
-    background-image: url("/images/background.png");
+    background-image: url("/images/background-min.png");
     background-attachment: fixed;
     background-position: center;
     font-family: Trebuchet MS;

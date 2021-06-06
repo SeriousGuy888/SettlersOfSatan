@@ -14,6 +14,7 @@ class Lobby {
     this.maxPlayers = 6
     this.code = lobbyCode
     this.users = {}
+    this.allowedColours = allowedColours
   }
 
   isFull() {
@@ -30,8 +31,11 @@ class Lobby {
     this.users[userId] = {
       name: users.getUser(userId).name,
       joinTimestamp: Date.now(),
-      colour: allowedColours[Math.floor(Math.random * 6)]
+      colour: allowedColours[Math.floor(Math.random() * allowedColours.length)]
     }
+
+    this.allowedColours.splice(this.allowedColours.indexOf(this.users[userId].colour), 1)
+    console.log(this.allowedColours)
 
     helpers.userListUpdate(this)
     return true

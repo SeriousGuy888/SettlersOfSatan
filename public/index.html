@@ -19,6 +19,7 @@
         <script src="js/join_lobby.js" defer></script>
         <script src="js/lobby_settings.js" defer></script>
         <script src="js/notification.js" defer></script>
+        <script src="js/chooseColour.js" defer></script>
 
         <title>Settlers of Satan</title>
     </head>
@@ -36,15 +37,6 @@
             function colourChoose(button){
                 for (let loopButton of document.getElementsByClassName("colour-button")) loopButton.style.border = "2px solid rgb(0, 0, 0)"
                 button.style.border = "4px solid rgb(100, 183, 255)"
-
-                // fetch("/create_lobby", {
-                //         method: "POST",
-                //         headers: { "Content-Type": "application/json" },
-                //         body: JSON.stringify({
-                //             "colour": button.id
-                //         })
-                //     })
-
                 socket.emit("choose_colour", {
                     colour: "red"
                     }, (err, data) => {
