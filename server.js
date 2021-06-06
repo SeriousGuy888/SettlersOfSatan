@@ -88,7 +88,7 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     user.setLobby(lobbyCode)
 
 
-    console.log(lobby)
+    // console.log(lobby)
 
     console.log(`${user.id} created lobby ${lobbyCode}`)
     callback(null, {
@@ -189,7 +189,7 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
   
   socket.on("choose_colour", (data) => {
     const lobby = lobbies.getLobby(data.lobbyCode)
-    console.log(lobby)
+    // console.log(lobby)
     lobby.changeColour(socket.id, data.colour)
   })
 })

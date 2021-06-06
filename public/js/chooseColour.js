@@ -16,7 +16,10 @@ socket.on("change_allowed_colours", data => {
         if(!allowedColours.includes(loopButton.id)) {
             loopButton.style.backgroundColor = "gray"
         }
-    }x
+        else {
+            loopButton.style.backgroundColor = loopButton.id
+        }
+    }
 })
 
 function colourChoose(button){

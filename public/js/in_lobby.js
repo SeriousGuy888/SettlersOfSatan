@@ -32,6 +32,7 @@ socket.on("lobby_update", data => {
 
     listEntryDiv.classList.add(["list-entry"])
     listEntryDiv.style.border = "5px solid " + user.colour
+    document.getElementById(user.colour).style.border = "4px solid rgb(100, 183, 255)"
 
     
 

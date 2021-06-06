@@ -127,11 +127,12 @@ class Lobby {
   }
 
   changeColour(userId, colour) {
+    console.log("asddddddddddddddddd colour: " + this.users[userId].colour)
     let oldColour = this.users[userId].colour
     this.users[userId].colour = colour
-    console.log(this.users[userId])
+    // console.log(this.users[userId])
     helpers.emitLobbyUpdate(this)
-    console.log(oldColour)
+    // console.log(oldColour)
     this.changeAllowedColours(userId, oldColour, this.users[userId].colour)
   }
 
@@ -139,8 +140,7 @@ class Lobby {
     if (add) {
       console.log(add)
       if (typeof add != "object") add = [add]
-      this.allowedColours.concat(add)
-      // console.log(this.allowedColours)
+      for (let loopAdd of add) this.allowedColours.push(loopAdd)
     }
 
     if (remove) {
@@ -148,7 +148,8 @@ class Lobby {
       this.allowedColours.splice(this.allowedColours.indexOf(remove[0]), remove.length)
     }
 
-    console.log(users.getUser(userId))
+    // console.log(users.getUser(userId))
+    console.log(this.allowedColours)
 
     users.getUser(userId).socket.emit("change_allowed_colours", {
       newAllowedColours: allowedColours
