@@ -1,4 +1,4 @@
-const lobbyChatMessagesDiv = document.querySelector("#lobby-chat")
+const lobbyChatMessagesDiv = document.querySelector("#lobby-chat-messages")
 const lobbyChatInput = document.querySelector("#lobby-chat-input")
 const lobbyChatSendButton = document.querySelector("#lobby-chat-send-button")
 
