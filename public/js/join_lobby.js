@@ -26,9 +26,9 @@ const updateLobbyState = (data) => {
   else {
     loggedInSection.style.display = null
     inLobbySection.style.display = "none"
-  }
   
-  toggleLobbySettingsLocked(false)
+    toggleLobbySettingsLocked(false)
+  }
 }
 
 const socketCallback = (err, data) => {
