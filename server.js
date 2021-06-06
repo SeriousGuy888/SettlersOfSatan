@@ -169,6 +169,24 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
       })
     }
   })
+
+  socket.on("send_chat", (data, callback) => {
+    const user = users.getUser(socket.id)
+    if(!user) return callback("not_logged_in")
+    if(!user.getLobby()) return callback("not_in_lobby")
+    if(!data.content) return callback("chat_message_empty")
+    
+    const lobby = lobbies.getLobby(user.getLobby())
+    if(!lobby) return callback("lobby_not_found")
+
+    lobby.broadcast("receive_chat", {
+      lines: [
+        user.getName(),
+        data.content.slice(0, 250)
+      ]
+    })
+  })
+  
   socket.on("choose_colour", (data) => {
     const lobby = lobbies.getLobby(data.lobbyCode)
     console.log(lobby)

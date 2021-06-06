@@ -1,0 +1,29 @@
+#lobby-chat {
+  border: 2px solid #000;
+  padding: 0.5em;
+}
+
+#lobby-chat > * {
+  margin: 0;
+}
+
+#lobby-chat-messages {
+  height: 20vh;
+  overflow-y: scroll;
+  margin-top: 1em;
+}
+
+#lobby-chat-messages div {
+  margin: 0;
+}
+#lobby-chat-messages div p {
+  margin: 0;
+  padding: 3%;
+}
+
+#lobby-chat-messages > div:nth-last-of-type(odd) {
+  background-color: #efefef;
+}
+#lobby-chat-messages > div:nth-last-of-type(even) {
+  background-color: #dfdfdf;
+}
