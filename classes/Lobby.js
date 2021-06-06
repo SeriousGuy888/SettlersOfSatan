@@ -126,6 +126,12 @@ class Lobby {
     helpers.emitLobbyUpdate(this)
   }
 
+  changeColour(userId, colour) {
+    this.users[userId].colour = colour
+    console.log(this.users[userId])
+      helpers.emitLobbyUpdate(this)
+  }
+
   setInGame(inGame) {
     this.inGame = inGame
     helpers.emitLobbyUpdate(this)
