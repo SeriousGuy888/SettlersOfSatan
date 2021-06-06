@@ -117,10 +117,8 @@ input:focus {
 }
 
 .single-line-input button {
-    padding: 8px;
+    padding: 0.6em;
     margin: 0.2em;
-    flex-grow: 1;
-    flex-basis: 0;
 }
 
 code {
