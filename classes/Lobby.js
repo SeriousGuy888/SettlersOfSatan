@@ -35,7 +35,7 @@ class Lobby {
       colour: allowedColours[Math.floor(Math.random() * allowedColours.length)]
     }
 
-    this.allowedColours.splice(this.allowedColours.indexOf(this.users[userId].colour), 1)
+    this.changeAllowedColours(userId, undefined, [this.users[userId].colour])
     console.log(this.allowedColours)
     helpers.emitLobbyUpdate(this)
     return true
@@ -127,9 +127,32 @@ class Lobby {
   }
 
   changeColour(userId, colour) {
+    let oldColour = this.users[userId].colour
     this.users[userId].colour = colour
     console.log(this.users[userId])
-      helpers.emitLobbyUpdate(this)
+    helpers.emitLobbyUpdate(this)
+    console.log(oldColour)
+    this.changeAllowedColours(userId, oldColour, this.users[userId].colour)
+  }
+
+  changeAllowedColours(userId, add, remove) {
+    if (add) {
+      console.log(add)
+      if (typeof add != "object") add = [add]
+      this.allowedColours.concat(add)
+      // console.log(this.allowedColours)
+    }
+
+    if (remove) {
+      if (typeof remove != "object") remove = [remove]
+      this.allowedColours.splice(this.allowedColours.indexOf(remove[0]), remove.length)
+    }
+
+    console.log(users.getUser(userId))
+
+    users.getUser(userId).socket.emit("change_allowed_colours", {
+      newAllowedColours: allowedColours
+    })
   }
 
   setInGame(inGame) {

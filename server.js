@@ -189,6 +189,7 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
   
   socket.on("choose_colour", (data) => {
     const lobby = lobbies.getLobby(data.lobbyCode)
+    console.log(lobby)
     lobby.changeColour(socket.id, data.colour)
   })
 })
