@@ -14,6 +14,7 @@ class Lobby {
     this.maxPlayers = 6
     this.code = lobbyCode
     this.users = {}
+    this.inGame = false
   }
 
   isFull() {
@@ -93,6 +94,10 @@ class Lobby {
     return this.code
   }
 
+  getInGame() {
+    return this.inGame
+  }
+
   getHost() {
     for(let userId in this.users) {
       if(this.users[userId].host) {
@@ -117,15 +122,16 @@ class Lobby {
     })
     helpers.emitLobbyUpdate(this)
   }
+
+  setInGame(inGame) {
+    this.inGame = inGame
+    helpers.emitLobbyUpdate(this)
+  }
 }
 
 const helpers = {
   emitLobbyUpdate: (lobby) => {
-    lobby.broadcast("lobby_update", {
-      users: Object.values(lobby.users), // do not reveal user ids
-      maxPlayerCount: lobby.getMaxPlayers(),
-      code: lobby.getCode()
-    })
+    lobby.broadcast("lobby_update", lobbies.getPublicLobbyInfo(lobby.getCode()))
   }
 }
 

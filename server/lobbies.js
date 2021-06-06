@@ -8,13 +8,16 @@ exports.getLobby = (lobbyId) => {
 }
 
 exports.getPublicLobbyInfo = (lobbyId) => {
-  if(!lobbies[lobbyId]) return null
+  const lobby = lobbies[lobbyId]
+  if(!lobby) return null
 
   return {
-    name: lobbies[lobbyId].name,
-    code: lobbies[lobbyId].getCode(),
-    playerCount: Object.keys(lobbies[lobbyId].getUsers()).length,
-    maxPlayerCount: lobbies[lobbyId].getMaxPlayers(),
+    name: lobby.getName(),
+    code: lobby.getCode(),
+    users: Object.values(lobby.getUsers()), // do not reveal user ids
+    playerCount: Object.keys(lobby.getUsers()).length,
+    maxPlayerCount: lobby.getMaxPlayers(),
+    inGame: lobby.getInGame()
   }
 }
 

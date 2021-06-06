@@ -153,12 +153,17 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     if(!user.getLobby()) return callback("not_in_lobby")
 
     if(!data.lobbyId) return callback("no_lobby_id")
+    
+    /**
+     * @type {Lobby} lobby
+     */
     const lobby = lobbies.getLobby(data.lobbyId)
     if(!lobby) return callback("lobby_not_found")
 
     if(lobby.getHost() !== user.id) return callback("no_host_permission")
 
     if(data.start) {
+      lobby.setInGame(true)
       callback(null, {
         oeuf: "ok"
       })
