@@ -28,6 +28,7 @@ const updateLobbyState = (data) => {
     inLobbySection.style.display = "none"
   
     toggleLobbySettingsLocked(false)
+    lobbyChatMessagesDiv.innerHTML = ""
   }
 }
 
