@@ -127,7 +127,6 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
 
   socket.on("leave_lobby", (data, callback) => {
     const user = users.getUser(socket.id)
-
     if(!user) return callback("not_logged_in")
     if(!user.getLobby()) return callback("not_in_lobby")
 
@@ -141,11 +140,28 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     callback(null, {})
   })
 
-
   socket.on("get_lobbies", (data, callback) => {
     let max = parseInt(data.max) || 5
     max = Math.min(Math.max(max, 1), 10)
 
     callback(null, { lobbies: lobbies.getTopLobbies(max) })
+  })
+
+  socket.on("edit_lobby_setting", (data, callback) => {
+    const user = users.getUser(socket.id)
+    if(!user) return callback("not_logged_in")
+    if(!user.getLobby()) return callback("not_in_lobby")
+
+    if(!data.lobbyId) return callback("no_lobby_id")
+    const lobby = lobbies.getLobby(data.lobbyId)
+    if(!lobby) return callback("lobby_not_found")
+
+    if(lobby.getHost() !== user.id) return callback("no_host_permission")
+
+    if(data.start) {
+      callback(null, {
+        oeuf: "ok"
+      })
+    }
   })
 })

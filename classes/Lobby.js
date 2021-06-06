@@ -33,7 +33,7 @@ class Lobby {
       colour: allowedColours[Math.floor(Math.random * 6)]
     }
 
-    helpers.userListUpdate(this)
+    helpers.emitLobbyUpdate(this)
     return true
   }
 
@@ -42,7 +42,7 @@ class Lobby {
       let wasHost = this.users[userId].host
 
       delete this.users[userId]
-      helpers.userListUpdate(this)
+      helpers.emitLobbyUpdate(this)
 
       if(Object.keys(this.getUsers()).length === 0) { // if the lobby is now empty
         console.log(`Closed empty lobby ${this.code}`)
@@ -93,6 +93,15 @@ class Lobby {
     return this.code
   }
 
+  getHost() {
+    for(let userId in this.users) {
+      if(this.users[userId].host) {
+        return userId
+      }
+    }
+    return null
+  }
+
   setHost(userId) {
     for(let loopUserId in this.users) {
       if(this.users[loopUserId].host) {
@@ -106,15 +115,16 @@ class Lobby {
     users.getUser(userId).socket.emit("host_change", {
       gainedHost: true
     })
-    helpers.userListUpdate(this)
+    helpers.emitLobbyUpdate(this)
   }
 }
 
 const helpers = {
-  userListUpdate: (self) => {
-    self.broadcast("user_list_update", {
-      users: Object.values(self.users), // do not reveal user ids
-      maxPlayerCount: self.getMaxPlayers()
+  emitLobbyUpdate: (lobby) => {
+    lobby.broadcast("lobby_update", {
+      users: Object.values(lobby.users), // do not reveal user ids
+      maxPlayerCount: lobby.getMaxPlayers(),
+      code: lobby.getCode()
     })
   }
 }
