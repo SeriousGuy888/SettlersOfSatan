@@ -67,7 +67,10 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
 
     if(!user) return callback("not_logged_in")
     if(user.getLobby()) return callback("already_in_lobby")
-    if(!data.name) return callback("no_lobby_name")
+
+    if(!data.name) {
+      data.name = "Epic Gamer Momebt"
+    }
 
     const lobbyName = data.name.slice(0, 100)
     const createdLobby = new Lobby(lobbyName)

@@ -4,6 +4,7 @@
         <title>Settlers of Satan</title>
         <link rel="stylesheet" href="/styles/main.css">
         <link rel="stylesheet" href="/styles/layouts.css">
+        <link rel="stylesheet" href="/styles/icon_animations.css">
         <meta charset="UTF-8">
         <meta name="description" content="Online Settles of Satan">
         <meta name="keywords" content="catan,settlers of catan,board game,online,online catan,satan,settlers of satan">
@@ -77,7 +78,9 @@
                 <h2>Please choose a name to start playing!</h2>
                 <div class="single-line-input">
                     <input name="nickname" id="nickname-input" placeholder="Mustacho">
-                    <button id="login-button">✔</button>
+                    <button id="login-button">
+                        <img src="/images/icons/check.svg" alt="Done" class="icon-1em">
+                    </button>
                 </div>
             </section>
             <section id="logged-in" style="display: none;">
@@ -87,7 +90,9 @@
                         <p>Choose a name for your lobby.</p>
                         <div class="single-line-input">
                             <input id="create-lobby-name-input" placeholder="Epic Gamer Momebt">
-                            <button id="create-lobby-button">Create</button>
+                            <button id="create-lobby-button">
+                                <img src="/images/icons/plus.svg" alt="Create" class="icon-1em">
+                            </button>
                         </div>
                     </div>
                     <div class="column-layout" id="join-lobby-panel">
@@ -95,14 +100,19 @@
                         <p>Enter a lobby code.</p>
                         <div class="single-line-input">
                             <input id="join-lobby-code-input" placeholder="ARSON">
-                            <button id="join-lobby-button">Join</button>
+                            <button id="join-lobby-button">
+                                <img src="/images/icons/plus.svg" alt="Join" class="icon-1em">
+                            </button>
                         </div>
                     </div>
                 </div>
                 <div class="row-layout">
                     <div class="column-layout">
                         <h2>Open Lobbies</h2>
-                        <button id="open-lobbies-refresh">Refresh</button>
+                        <button id="open-lobbies-refresh">
+                            <img src="/images/icons/refresh.svg" alt="Refresh" class="icon-1em">
+                            Refresh
+                        </button>
                         <div id="open-lobbies" class="flex-layout-3col-grid"></div>
                     </div>
                 </div>
