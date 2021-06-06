@@ -29,8 +29,12 @@ socket.on("user_list_update", data => {
 
     listEntryDiv.appendChild(listEntryTitleDiv)
 
+    console.log(user)
+
     listEntryDiv.classList.add(["list-entry"])
-    listEntryDiv.style.border = "5px solid red"
+    listEntryDiv.style.border = "5px solid " + user.colour
+
+    
 
     lobbyPlayerList.appendChild(listEntryDiv)
   }

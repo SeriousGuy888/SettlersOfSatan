@@ -1,5 +1,6 @@
 const users = require("../server/users.js")
 const lobbies = require("../server/lobbies.js")
+const allowedColours = ["red", "white", "blue", "orange", "green", "purple"]
 
 class Lobby {
   constructor(name) {
@@ -28,7 +29,8 @@ class Lobby {
 
     this.users[userId] = {
       name: users.getUser(userId).name,
-      joinTimestamp: Date.now()
+      joinTimestamp: Date.now(),
+      colour: allowedColours[Math.floor(Math.random * 6)]
     }
 
     helpers.userListUpdate(this)

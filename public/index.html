@@ -36,13 +36,20 @@
                 for (let loopButton of document.getElementsByClassName("colour-button")) loopButton.style.border = "2px solid rgb(0, 0, 0)"
                 button.style.border = "4px solid rgb(100, 183, 255)"
 
-                fetch("/create_lobby", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            "colour": button.id
-                        })
-                    })
+                // fetch("/create_lobby", {
+                //         method: "POST",
+                //         headers: { "Content-Type": "application/json" },
+                //         body: JSON.stringify({
+                //             "colour": button.id
+                //         })
+                //     })
+
+                socket.emit("choose_colour", {
+                    colour: "red"
+                    }, (err, data) => {
+                    if(err) notifyUser(err)
+                    else updateLoggedInState(true, data.name)
+                })
             }
         </script>
 
@@ -111,7 +118,7 @@
                     <div class="column-layout">
                         <h3 id="choose-colour">Choose a Colour</h3>
                         <div class="button-group">
-                            <button type="button" class="colour-button" id="red" style="background-color: red; color:black" >Red</input>
+                            <button type="button" class="colour-button hexagon" id="red" style="background-color: red; color:black" >Red</input>
                             <button type="button" class="colour-button" id="white" style="background-color: white; color:black">White</button>
                             <button type="button" class="colour-button" id="blue" style="background-color: blue;">Blue</button>
                             <button type="button" class="colour-button" id="orange" style="background-color: orange; color:black">Orange</button>
