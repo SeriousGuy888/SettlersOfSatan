@@ -2,10 +2,7 @@ const lobbyChatMessagesDiv = document.querySelector("#lobby-chat-messages")
 const lobbyChatInput = document.querySelector("#lobby-chat-input")
 const lobbyChatSendButton = document.querySelector("#lobby-chat-send-button")
 
-const printToChat = (data) => {
-  if(!data.lines) return
-  const { lines } = data
-
+const printToChat = (lines) => {
   const chatMessageDiv = document.createElement("div")
 
   const chatMessageContent = document.createElement("p")
@@ -32,4 +29,4 @@ lobbyChatSendButton.addEventListener("click", () => {
   }
 })
 
-socket.on("receive_chat", printToChat)
+socket.on("receive_chat", data => printToChat(data.lines))
