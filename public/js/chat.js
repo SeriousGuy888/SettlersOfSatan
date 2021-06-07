@@ -25,6 +25,8 @@ lobbyChatSendButton.addEventListener("click", () => {
   if(messageContent) {
     socket.emit("send_chat", {
       content: messageContent
+    }, (err, data) => {
+      if(err) printToChat([err])
     })
   }
 })

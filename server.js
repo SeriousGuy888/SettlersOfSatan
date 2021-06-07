@@ -15,6 +15,7 @@ server.listen(port, () => {
 
 
 
+const helpers = require("./server/helpers.js")
 
 const Lobby = require("./classes/Lobby.js")
 const User = require("./classes/User.js")
@@ -39,10 +40,10 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
   })
 
   socket.on("login", (data, callback) => {
-    if(!data.name) data.name = `Mustacho${Math.round(Math.random() * 1000)}`
-    data.name = data.name.slice(0, 100)
+    let nickname = helpers.goodifyUserInput(data.name, true, 50)
+    if(!nickname) nickname = `Mustacho${Math.round(Math.random() * 1000)}`
     
-    const user = users.setUser(socket.id, new User(socket.id, data.name, socket))
+    const user = users.setUser(socket.id, new User(socket.id, nickname, socket))
 
     console.log(`${user.name} (${user.id}) has logged in.`)
     callback(null, data)
@@ -68,11 +69,12 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     if(!user) return callback("not_logged_in")
     if(user.getLobby()) return callback("already_in_lobby")
 
-    if(!data.name) {
-      data.name = "Epic Gamer Momebt"
+
+    let lobbyName = helpers.goodifyUserInput(data.name, true, 100)
+    if(!lobbyName) {
+      lobbyName = "Epic Gamer Momebt"
     }
 
-    const lobbyName = data.name.slice(0, 100)
     const createdLobby = new Lobby(lobbyName)
     const lobbyCode = createdLobby.getCode()
 
@@ -87,8 +89,6 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     
     user.setLobby(lobbyCode)
 
-
-    // console.log(lobby)
 
     console.log(`${user.id} created lobby ${lobbyCode}`)
     callback(null, {
@@ -174,7 +174,9 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     const user = users.getUser(socket.id)
     if(!user) return callback("not_logged_in")
     if(!user.getLobby()) return callback("not_in_lobby")
-    if(!data.content) return callback("chat_message_empty")
+
+    let content = helpers.goodifyUserInput(data.content, true, 250)
+    if(!content) return callback("chat_message_empty")
     
     const lobby = lobbies.getLobby(user.getLobby())
     if(!lobby) return callback("lobby_not_found")
@@ -182,7 +184,7 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     lobby.broadcast("receive_chat", {
       lines: [
         user.getName(),
-        data.content.slice(0, 250)
+        content
       ]
     })
   })
