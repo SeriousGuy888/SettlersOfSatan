@@ -15,10 +15,11 @@
 
 #lobby-chat-messages div {
   margin: 0;
+  padding: 3%;
 }
 #lobby-chat-messages div p {
   margin: 0;
-  padding: 3%;
+  padding: 0;
 }
 
 #lobby-chat-messages > div:nth-last-of-type(odd) {

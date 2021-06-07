@@ -5,10 +5,12 @@ const lobbyChatSendButton = document.querySelector("#lobby-chat-send-button")
 const printToChat = (lines) => {
   const chatMessageDiv = document.createElement("div")
 
-  const chatMessageContent = document.createElement("p")
-  chatMessageContent.textContent = lines.join("\n")
+  for(let line of lines) {
+    const chatMessageContentLine = document.createElement("p")
+    chatMessageContentLine.textContent = line
+    chatMessageDiv.appendChild(chatMessageContentLine)
+  }
 
-  chatMessageDiv.appendChild(chatMessageContent)
   lobbyChatMessagesDiv.appendChild(chatMessageDiv)
 }
 
