@@ -13,7 +13,7 @@ socket.on("change_allowed_colours", data => {
 
     for (let loopButton of document.getElementsByClassName("colour-button")) {
         console.log(loopButton.id)
-        if(!allowedColours.includes(loopButton.id)) {
+        if(!allowedColours.includes(loopButton.id) && data.userColour != loopButton.id) {
             loopButton.style.backgroundColor = "gray"
         }
         else {
