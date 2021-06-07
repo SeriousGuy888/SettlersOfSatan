@@ -53,7 +53,7 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
 
   socket.on("logout", (data, callback) => {
     if(!callback) return
-    
+
     const user = users.getUser(socket.id)
     if(user) {
       console.log(`${user.name} (${user.id}) logged out.`)
@@ -206,7 +206,7 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
   })
   
   socket.on("choose_colour", (data, callback) => {
-    if(!callback) return
+    // if(!callback) return
 
     const lobby = lobbies.getLobby(data.lobbyCode)
     // console.log(lobby)
