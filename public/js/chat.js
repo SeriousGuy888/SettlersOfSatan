@@ -10,7 +10,7 @@ const printToChat = (lines) => {
 
     if(typeof line === "object") {
       chatMessageContentLine.textContent = line.text
-      chatMessageContentLine.style.bold = line.style.bold
+      chatMessageContentLine.style["font-weight"] = line.style.bold ? "bold" : "normal"
       chatMessageContentLine.style["font-style"] = line.style.italic ? "italic" : "normal"
       chatMessageContentLine.style.color = line.style.colour
     }
