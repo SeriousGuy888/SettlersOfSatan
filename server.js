@@ -199,8 +199,13 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
 
     lobby.broadcast("receive_chat", {
       lines: [
-        user.getName(),
-        content
+        {
+          text: user.getName(),
+          style: {
+            bold: true
+          }
+        },
+        { text: content }
       ]
     })
   })
