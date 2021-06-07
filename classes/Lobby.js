@@ -152,7 +152,8 @@ class Lobby {
     console.log(this.allowedColours)
 
     users.getUser(userId).socket.emit("change_allowed_colours", {
-      newAllowedColours: allowedColours
+      newAllowedColours: allowedColours,
+      userColour: this.users[userId].colour
     })
   }
 
