@@ -7,7 +7,16 @@ const printToChat = (lines) => {
 
   for(let line of lines) {
     const chatMessageContentLine = document.createElement("p")
-    chatMessageContentLine.textContent = line
+
+    if(typeof line === "object") {
+      chatMessageContentLine.textContent = line.text
+      chatMessageContentLine.style.bold = line.style.bold
+      chatMessageContentLine.style["font-style"] = line.style.italic ? "italic" : "normal"
+      chatMessageContentLine.style.color = line.style.colour
+    }
+    else {
+      chatMessageContentLine.textContent = line
+    }
     chatMessageDiv.appendChild(chatMessageContentLine)
   }
 
@@ -28,7 +37,13 @@ lobbyChatSendButton.addEventListener("click", () => {
     socket.emit("send_chat", {
       content: messageContent
     }, (err, data) => {
-      if(err) printToChat([err])
+      if(err) printToChat([{
+        text: err,
+        style: {
+          colour: "red",
+          italic: true,
+        }
+      }])
     })
   }
 })
