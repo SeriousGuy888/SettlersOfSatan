@@ -9,17 +9,20 @@
   padding: 0 2em;
 }
 
-.flex-layout-3col-grid {
+.flex-layout-grid {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
   margin-left: -1%;
 }
-.flex-layout-3col-grid > * {
+.flex-layout-grid > * {
   flex-grow: 1;
-  flex-basis: 28%;
+  flex-basis: 0;
   margin-left: 1%;
+}
+.flex-layout-grid-grow-2 {
+  flex-grow: 2;
 }
 
 .single-line-layout {
