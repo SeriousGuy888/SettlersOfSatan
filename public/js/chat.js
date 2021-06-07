@@ -5,10 +5,26 @@ const lobbyChatSendButton = document.querySelector("#lobby-chat-send-button")
 const printToChat = (lines) => {
   const chatMessageDiv = document.createElement("div")
 
-  const chatMessageContent = document.createElement("p")
-  chatMessageContent.textContent = lines.join("\n")
+  for(let line of lines) {
+    const chatMessageContentLine = document.createElement("p")
 
-  chatMessageDiv.appendChild(chatMessageContent)
+    if(typeof line === "object") {
+      if(!line.text) return
+      
+      chatMessageContentLine.textContent = line.text
+
+      if(line.style) {
+        chatMessageContentLine.style["font-weight"] = line.style?.bold ? "bold" : "normal"
+        chatMessageContentLine.style["font-style"] = line.style?.italic ? "italic" : "normal"
+        chatMessageContentLine.style.color = line.style?.colour
+      }
+    }
+    else {
+      chatMessageContentLine.textContent = line
+    }
+    chatMessageDiv.appendChild(chatMessageContentLine)
+  }
+
   lobbyChatMessagesDiv.appendChild(chatMessageDiv)
 }
 
@@ -25,6 +41,14 @@ lobbyChatSendButton.addEventListener("click", () => {
   if(messageContent) {
     socket.emit("send_chat", {
       content: messageContent
+    }, (err, data) => {
+      if(err) printToChat([{
+        text: err,
+        style: {
+          colour: "red",
+          italic: true,
+        }
+      }])
     })
   }
 })

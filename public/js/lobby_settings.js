@@ -11,11 +11,23 @@ const toggleLobbySettingsLocked = (isHost) => {
 
 socket.on("host_change", data => {
   if(data.lostHost) {
-    printToChat(["You are no longer the host of this lobby."])
+    printToChat([{
+      text: "You are no longer the host.",
+      style: {
+        colour: "red",
+        bold: true
+      }
+    }])
     toggleLobbySettingsLocked(false)
   }
   if(data.gainedHost) {
-    printToChat(["You are now the host!"])
+    printToChat([{
+      text: "You are now the host!",
+      style: {
+        colour: "green",
+        bold: true
+      }
+    }])
     toggleLobbySettingsLocked(true)
   }
 })

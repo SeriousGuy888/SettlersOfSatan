@@ -37,7 +37,7 @@ class Lobby {
 
     this.changeAllowedColours(userId, undefined, [this.users[userId].colour])
     console.log(this.allowedColours)
-    helpers.emitLobbyUpdate(this)
+    lobbyHelpers.emitLobbyUpdate(this)
     return true
   }
 
@@ -46,7 +46,7 @@ class Lobby {
       let wasHost = this.users[userId].host
 
       delete this.users[userId]
-      helpers.emitLobbyUpdate(this)
+      lobbyHelpers.emitLobbyUpdate(this)
 
       if(Object.keys(this.getUsers()).length === 0) { // if the lobby is now empty
         console.log(`Closed empty lobby ${this.code}`)
@@ -123,7 +123,7 @@ class Lobby {
     users.getUser(userId).socket.emit("host_change", {
       gainedHost: true
     })
-    helpers.emitLobbyUpdate(this)
+    lobbyHelpers.emitLobbyUpdate(this)
   }
 
   changeColour(userId, colour) {
@@ -131,7 +131,7 @@ class Lobby {
     let oldColour = this.users[userId].colour
     this.users[userId].colour = colour
     // console.log(this.users[userId])
-    helpers.emitLobbyUpdate(this)
+    lobbyHelpers.emitLobbyUpdate(this)
     // console.log(oldColour)
     this.changeAllowedColours(userId, oldColour, this.users[userId].colour)
   }
@@ -159,11 +159,11 @@ class Lobby {
 
   setInGame(inGame) {
     this.inGame = inGame
-    helpers.emitLobbyUpdate(this)
+    lobbyHelpers.emitLobbyUpdate(this)
   }
 }
 
-const helpers = {
+const lobbyHelpers = {
   emitLobbyUpdate: (lobby) => {
     lobby.broadcast("lobby_update", lobbies.getPublicLobbyInfo(lobby.getCode()))
   }
