@@ -7,6 +7,13 @@ exports.getUser = (userId) => {
   return null
 }
 
+exports.getUsers = () => {
+  let usersArray = []
+
+  for (let loopUserId of Object.keys(users)) usersArray.push(users[loopUserId])
+  return usersArray
+}
+
 exports.setUser = (userId, data) => {
   if(data) {
     users[userId] = data
