@@ -40,6 +40,8 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
   })
 
   socket.on("login", (data, callback) => {
+    if(!callback) return
+
     let nickname = helpers.goodifyUserInput(data.name, true, 50)
     if(!nickname) nickname = `Mustacho${Math.round(Math.random() * 1000)}`
     
@@ -50,6 +52,8 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
   })
 
   socket.on("logout", (data, callback) => {
+    if(!callback) return
+    
     const user = users.getUser(socket.id)
     if(user) {
       console.log(`${user.name} (${user.id}) logged out.`)
@@ -64,6 +68,8 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
   })
 
   socket.on("create_lobby", (data, callback) => {
+    if(!callback) return
+
     const user = users.getUser(socket.id)
 
     if(!user) return callback("not_logged_in")
@@ -98,6 +104,8 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
   })
 
   socket.on("join_lobby", (data, callback) => {
+    if(!callback) return
+
     const user = users.getUser(socket.id)
 
     if(!user) return callback("not_logged_in")
@@ -126,6 +134,8 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
 
 
   socket.on("leave_lobby", (data, callback) => {
+    if(!callback) return
+
     const user = users.getUser(socket.id)
     if(!user) return callback("not_logged_in")
     if(!user.getLobby()) return callback("not_in_lobby")
@@ -141,6 +151,8 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
   })
 
   socket.on("get_lobbies", (data, callback) => {
+    if(!callback) return
+
     let max = parseInt(data.max) || 5
     max = Math.min(Math.max(max, 1), 10)
 
@@ -148,6 +160,8 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
   })
 
   socket.on("edit_lobby_setting", (data, callback) => {
+    if(!callback) return
+
     const user = users.getUser(socket.id)
     if(!user) return callback("not_logged_in")
     if(!user.getLobby()) return callback("not_in_lobby")
@@ -171,6 +185,8 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
   })
 
   socket.on("send_chat", (data, callback) => {
+    if(!callback) return
+
     const user = users.getUser(socket.id)
     if(!user) return callback("not_logged_in")
     if(!user.getLobby()) return callback("not_in_lobby")
@@ -189,7 +205,9 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     })
   })
   
-  socket.on("choose_colour", (data) => {
+  socket.on("choose_colour", (data, callback) => {
+    if(!callback) return
+
     const lobby = lobbies.getLobby(data.lobbyCode)
     // console.log(lobby)
     lobby.changeColour(socket.id, data.colour)
