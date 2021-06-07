@@ -164,14 +164,14 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
 
     const user = users.getUser(socket.id)
     if(!user) return callback("not_logged_in")
-    if(!user.getLobby()) return callback("not_in_lobby")
 
-    if(!data.lobbyId) return callback("no_lobby_id")
+    const lobbyId = user.getLobby()
+    if(!lobbyId) return callback("not_in_lobby")
     
     /**
      * @type {Lobby} lobby
      */
-    const lobby = lobbies.getLobby(data.lobbyId)
+    const lobby = lobbies.getLobby(lobbyId)
     if(!lobby) return callback("lobby_not_found")
 
     if(lobby.getHost() !== user.id) return callback("no_host_permission")

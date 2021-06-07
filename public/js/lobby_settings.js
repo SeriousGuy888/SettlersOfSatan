@@ -34,10 +34,7 @@ socket.on("host_change", data => {
 
 
 lobbyStartButton.addEventListener("click", () => {
-  socket.emit("edit_lobby_setting", {
-    lobbyId: currentLobbyData.code,
-    start: true,
-  }, (err, data) => {
+  socket.emit("edit_lobby_setting", { start: true }, (err, data) => {
     if(err) notifyUser(err)
     else {
       notifyUser(JSON.stringify(data))
