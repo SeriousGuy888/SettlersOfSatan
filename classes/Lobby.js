@@ -45,6 +45,8 @@ class Lobby {
     if(this.hasUser(userId)) {
       let wasHost = this.users[userId].host
 
+      this.allowedColours = allowedColours
+
       delete this.users[userId]
       lobbyHelpers.emitLobbyUpdate(this)
 
@@ -150,8 +152,8 @@ class Lobby {
 
     // console.log(users.getUser(userId))
     console.log(this.allowedColours)
-
-    users.getUser(userId).socket.emit("change_allowed_colours", {
+    for(let loopUser of users.getUsers())
+    loopUser.socket.emit("change_allowed_colours", {
       newAllowedColours: allowedColours,
       userColour: this.users[userId].colour
     })
