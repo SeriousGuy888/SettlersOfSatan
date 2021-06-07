@@ -9,10 +9,15 @@ const printToChat = (lines) => {
     const chatMessageContentLine = document.createElement("p")
 
     if(typeof line === "object") {
+      if(!line.text) return
+      
       chatMessageContentLine.textContent = line.text
-      chatMessageContentLine.style["font-weight"] = line.style.bold ? "bold" : "normal"
-      chatMessageContentLine.style["font-style"] = line.style.italic ? "italic" : "normal"
-      chatMessageContentLine.style.color = line.style.colour
+
+      if(line.style) {
+        chatMessageContentLine.style["font-weight"] = line.style?.bold ? "bold" : "normal"
+        chatMessageContentLine.style["font-style"] = line.style?.italic ? "italic" : "normal"
+        chatMessageContentLine.style.color = line.style?.colour
+      }
     }
     else {
       chatMessageContentLine.textContent = line
