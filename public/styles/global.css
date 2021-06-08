@@ -50,3 +50,18 @@ button:disabled {
   background-color: #aaaaaa;
   cursor: not-allowed;
 }
+
+a {
+  color: #1262e7;
+}
+a:hover {
+  color: #6ba4ff;
+}
+a[target="_blank"]::after {
+  display: inline-block;
+  content: " ";
+  background-image: url("/images/icons/link.svg");
+  background-size: 1em;
+  height: 1em;
+  width: 1em;
+}
