@@ -71,17 +71,6 @@ html {
     margin-left: auto;
 }
 
-
-input {
-    border: none;
-    border-bottom: 2px solid #1262e7;
-    transition: 500ms;
-}
-input:focus {
-    outline: none;
-    border-bottom: 2px solid #6ba4ff;
-}
-
 .single-line-input {
     display: flex;
     flex-direction: row;
@@ -97,32 +86,6 @@ input:focus {
 .single-line-input button {
     padding: 0.6em;
     margin: 0.2em;
-}
-
-code {
-  background-color: #eee;
-  border-radius: 3px;
-  font-family: 'Consolas', monospace;
-  padding: 0 3px;
-}
-
-
-
-
-button {
-    padding: 0.4em;
-    background-color: #fff;
-    cursor: pointer;
-    color: #000;
-    border: 2px solid #7c7c7c;
-    font-size: 16px;
-}
-button:hover {
-    background-color: #f0f0f0;
-}
-button:disabled {
-    background-color: #aaaaaa;
-    cursor: not-allowed;
 }
 
 #leave-lobby img {
