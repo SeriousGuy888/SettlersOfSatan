@@ -23,10 +23,15 @@ html {
     padding: 1%;
 }
 
-#home-title {
+#home-title-container {
+    display: grid;
     text-align: center;
+}
+#home-title {
     font-weight: 900;
     font-size: 4vw;
+
+    margin: 1rem;
 }
 
 
