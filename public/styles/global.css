@@ -1,0 +1,17 @@
+body {
+  background-image: url("/images/background-min.png");
+  background-attachment: fixed;
+  background-position: center;
+  font-family: Trebuchet MS;
+}
+
+main {
+  margin: 0 15%;
+  padding: 2em 5vw 4em;
+
+  background-color: #fff;
+  border-radius: 5px;
+}
+@media only screen and (max-width: 800px) {
+  main { margin: 0; }
+}

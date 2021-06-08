@@ -10,5 +10,11 @@ module.exports = (app) => {
   app.use(express.raw())
   app.use(express.urlencoded({ extended: true }))
 
+  const publicDir = path.join(process.cwd(), "/public")
+  app.get("/credits", (req, res) => {
+    res.sendFile(path.join(publicDir, "/credits.html"))
+  })
+
+
   app.use(express.static("public"))
 }

@@ -3,13 +3,6 @@ html {
     --chat-sidebar-width: 10%;
 }
 
-body {
-    background-image: url("/images/background-min.png");
-    background-attachment: fixed;
-    background-position: center;
-    font-family: Trebuchet MS;
-}
-
 .button-group {
     display: flex;
     flex-wrap: wrap;
@@ -30,22 +23,7 @@ body {
     padding: 1%;
 }
 
-main {
-    margin: 0 15%;
-    /* margin-right: calc(25% + var(--chat-sidebar-width)); */
-    padding: 0 5vw 4em;
-
-    background-color: #fff;
-    border-radius: 5px;
-}
-
-@media only screen and (max-width: 800px) {
-    main { margin: 0; }
-}
-
-
 #home-title {
-    padding-top: 5%;
     text-align: center;
     font-weight: 900;
     font-size: 4vw;
