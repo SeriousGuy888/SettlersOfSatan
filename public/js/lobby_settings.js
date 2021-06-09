@@ -1,7 +1,4 @@
 const lobbyStartButton = document.querySelector("#lobby-settings-start")
-const lobbyWaitingDiv = document.querySelector("#lobby-waiting")
-const lobbyPlayingDiv = document.querySelector("#lobby-playing")
-
 
 const toggleLobbySettingsLocked = (isHost) => {
   if(isHost) {
@@ -37,11 +34,7 @@ socket.on("host_change", data => {
 
 
 lobbyStartButton.addEventListener("click", () => {
-  socket.emit("edit_lobby_setting", { start: true }, (err, data) => {
+  socket.emit("edit_lobby_setting", { started: true }, (err, data) => {
     if(err) notifyUser(err)
-    else {
-      lobbyWaitingDiv.style.display = "none"
-      lobbyPlayingDiv.style.display = null
-    }
   })
 })

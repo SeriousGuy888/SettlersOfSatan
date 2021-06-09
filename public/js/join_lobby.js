@@ -22,6 +22,7 @@ const updateLobbyState = (data) => {
     loggedInSection.style.display = "none"
     inLobbySection.style.display = null
     lobbyNameHeader.textContent = data.name
+    toggleInGameGui(false)
   }
   else {
     loggedInSection.style.display = null

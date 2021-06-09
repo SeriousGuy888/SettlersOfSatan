@@ -152,16 +152,18 @@ class Lobby {
 
     // console.log(users.getUser(userId))
     console.log(this.allowedColours)
-    for(let loopUser of users.getUsers())
-    loopUser.socket.emit("change_allowed_colours", {
-      newAllowedColours: allowedColours,
-      userColour: this.users[userId].colour
-    })
+    for(let loopUser of users.getUsers()) {
+      loopUser.socket.emit("change_allowed_colours", {
+        newAllowedColours: allowedColours,
+        userColour: this.users[userId].colour
+      })
+    }
   }
 
   setInGame(inGame) {
     this.inGame = inGame
     lobbyHelpers.emitLobbyUpdate(this)
+    this.broadcast("game_started_update", { started: true })
   }
 }
 

@@ -176,7 +176,7 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
 
     if(lobby.getHost() !== user.id) return callback("no_host_permission")
 
-    if(data.start) {
+    if(data.started) {
       if(lobby.getInGame()) {
         return callback("already_playing")
       }
