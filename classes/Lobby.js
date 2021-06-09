@@ -1,3 +1,5 @@
+const Satan = require("./Satan.js")
+
 const users = require("../server/users.js")
 const lobbies = require("../server/lobbies.js")
 const allowedColours = ["red", "white", "blue", "orange", "green", "purple"]
@@ -16,6 +18,7 @@ class Lobby {
     this.users = {}
     this.allowedColours = allowedColours
     this.inGame = false
+    this.game = null
   }
 
   isFull() {
@@ -112,6 +115,10 @@ class Lobby {
     return null
   }
 
+  getGame(publicInfoOnly) {
+    return this.game
+  }
+
   setHost(userId) {
     for(let loopUserId in this.users) {
       if(this.users[loopUserId].host) {
@@ -126,6 +133,15 @@ class Lobby {
       gainedHost: true
     })
     lobbyHelpers.emitLobbyUpdate(this)
+  }
+
+  setInGame(inGame) {
+    this.inGame = inGame
+    lobbyHelpers.emitLobbyUpdate(this)
+    this.broadcast("game_started_update", { started: inGame })
+    if(inGame) {
+      this.game = new Satan()
+    }
   }
 
   changeColour(userId, colour) {
@@ -158,12 +174,6 @@ class Lobby {
         userColour: this.users[userId].colour
       })
     }
-  }
-
-  setInGame(inGame) {
-    this.inGame = inGame
-    lobbyHelpers.emitLobbyUpdate(this)
-    this.broadcast("game_started_update", { started: true })
   }
 }
 
