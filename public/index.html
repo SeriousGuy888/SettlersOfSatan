@@ -23,6 +23,7 @@
         <script src="js/chooseColour.js" defer></script>
         <script src="js/chat.js" defer></script>
         <script src="js/game.js" defer></script>
+        <script src="js/canvas.js" defer></script>
 
         <title>Settlers of Satan</title>
     </head>
@@ -122,38 +123,35 @@
                 </div>
 
                 <br><br><br>
+                <div id="game-area-container" class="flex-layout-grid-grow-2">
+                    <div id="lobby-waiting">
+                        <h3>Lobby Settings</h3>
+                        <div class="lobby-settings-panel">
+                            <button id="lobby-settings-start" disabled>Start Game</button>
+                        </div>
+
+                        <div id="colour-choose-container">
+                            <h3 id="choose-colour">Choose a Colour</h3>
+                            <div class="button-group">
+                                <button type="button" class="colour-button" id="red" style="background-color: red; color:black" >Red</input>
+                                <button type="button" class="colour-button" id="white" style="background-color: white; color:black">White</button>
+                                <button type="button" class="colour-button" id="blue" style="background-color: blue;">Blue</button>
+                                <button type="button" class="colour-button" id="orange" style="background-color: orange; color:black">Orange</button>
+                                <button type="button" class="colour-button" id="green" style="background-color: green;">Green</button>
+                                <button type="button" class="colour-button" id="purple" style="background-color: purple;">Purple</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="lobby-playing" style="display: none;">
+                        <canvas id="game-canvas">Oeuf</canvas>
+                    </div>
+                </div>
                 <div class="flex-layout-grid">
                     <div id="lobby-player-list-container">
                         <h3>Players <span id="lobby-player-count">0</span>/<span id="lobby-max-player-count">0</span></h3>
                         <div id="lobby-player-list"></div>
                     </div>
-                            
-                    <div id="game-area-container" class="flex-layout-grid-grow-2">
-                        <div id="lobby-waiting">
-                            <h3>Lobby Settings</h3>
-                            <div class="lobby-settings-panel">
-                                <button id="lobby-settings-start" disabled>Start Game</button>
-                            </div>
-    
-                            <div id="colour-choose-container">
-                                <h3 id="choose-colour">Choose a Colour</h3>
-                                <div class="button-group">
-                                    <button type="button" class="colour-button" id="red" style="background-color: red; color:black" >Red</input>
-                                    <button type="button" class="colour-button" id="white" style="background-color: white; color:black">White</button>
-                                    <button type="button" class="colour-button" id="blue" style="background-color: blue;">Blue</button>
-                                    <button type="button" class="colour-button" id="orange" style="background-color: orange; color:black">Orange</button>
-                                    <button type="button" class="colour-button" id="green" style="background-color: green;">Green</button>
-                                    <button type="button" class="colour-button" id="purple" style="background-color: purple;">Purple</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="lobby-playing" style="display: none;">
-                            <canvas id="game-canvas">Oeuf</canvas>
-                        </div>
-                    </div>
-                    
-    
-    
+
                     <div id="lobby-chat-container">
                         <h3>Chat</h3>
                         <div id="lobby-chat-messages"></div>
