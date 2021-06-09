@@ -177,10 +177,11 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     if(lobby.getHost() !== user.id) return callback("no_host_permission")
 
     if(data.start) {
+      if(lobby.getInGame()) {
+        return callback("already_playing")
+      }
       lobby.setInGame(true)
-      callback(null, {
-        oeuf: "ok"
-      })
+      callback(null, {})
     }
   })
 
