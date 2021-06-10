@@ -28,28 +28,6 @@
         <title>Settlers of Satan</title>
     </head>
     <body>
-
-        <script>
-            window.onload = function (){ 
-                for (let button of document.getElementsByClassName("colour-button")){
-                    button.addEventListener("click", () => {
-                        colourChoose(button)
-                    })
-                }
-            }
-                
-            function colourChoose(button){
-                for (let loopButton of document.getElementsByClassName("colour-button")) loopButton.style.border = "2px solid rgb(0, 0, 0)"
-                button.style.border = "4px solid rgb(100, 183, 255)"
-                socket.emit("choose_colour", {
-                    colour: "red"
-                    }, (err, data) => {
-                    if(err) notifyUser(err)
-                    else updateLoggedInState(true, data.name)
-                })
-            }
-        </script>
-
         <div id="notification-center">
             <button id="notification-dismiss-all-button" style="display: none;">
                 Dismiss All
