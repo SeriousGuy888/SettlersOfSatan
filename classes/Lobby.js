@@ -115,7 +115,7 @@ class Lobby {
     return null
   }
 
-  getGame(publicInfoOnly) {
+  getGame() {
     return this.game
   }
 

@@ -222,7 +222,7 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     if(!lobby) return callback("lobby_not_found")
 
     callback(null, {
-      game: lobby.getGame(true)
+      board: lobby.getGame(true).getBoard()
     })
   })
   

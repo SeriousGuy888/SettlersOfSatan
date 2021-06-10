@@ -1,6 +1,6 @@
 class Satan {
   constructor() {
-    this.grid = [
+    this.board = [
       [false, true, true, true, false],
       [true, true, true, true, false],
       [true, true, true, true, true],
@@ -9,8 +9,8 @@ class Satan {
     ]
   }
 
-  getGrid() {
-    return this.grid
+  getBoard() {
+    return this.board
   }
 }
 

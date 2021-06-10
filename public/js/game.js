@@ -19,6 +19,6 @@ socket.on("game_started_update", data => {
     toggleInGameGui(true)
   }
   else {
-    notifiyUser("game ended")
+    notifyUser("game ended")
   }
 })
