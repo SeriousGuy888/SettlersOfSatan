@@ -44,6 +44,6 @@ logoutButton.addEventListener("click", () => {
 })
 
 socket.on("disconnect", () => {
-  alert("Disconnected from Settlers of Satan servers D:")
+  alert("You were disconnected from the game server! The server may be restarting.\n\nClick OK to reload.")
   window.location.reload()
 })
