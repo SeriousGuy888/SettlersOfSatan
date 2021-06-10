@@ -157,12 +157,12 @@ class Lobby {
   changeAllowedColours(userId, add, remove) {
     if (add) {
       console.log(add)
-      if (typeof add != "object") add = [add]
+      if (!(add instanceof Array)) add = [add]
       for (let loopAdd of add) this.allowedColours.push(loopAdd)
     }
 
     if (remove) {
-      if (typeof remove != "object") remove = [remove]
+      if (!(remove instanceof Array)) remove = [remove]
       this.allowedColours.splice(this.allowedColours.indexOf(remove[0]), remove.length)
     }
 
