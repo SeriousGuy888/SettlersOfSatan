@@ -9,6 +9,8 @@ socket.on("lobby_update", data => {
 
   lobbyPlayerList.innerHTML = ""
   const { users, maxPlayerCount } = currentLobbyData
+
+  redrawColourButtons(users)
   for(let user of users) {
     const listEntryDiv = document.createElement("div")
 
@@ -32,12 +34,17 @@ socket.on("lobby_update", data => {
 
     listEntryDiv.appendChild(listEntryTitleDiv)
 
-    console.log(user)
-
     listEntryDiv.classList.add(["list-entry"])
     listEntryDiv.style.border = "5px solid " + user.colour
-    document.getElementById(user.colour).style.border = "4px solid rgb(100, 183, 255)"
 
+    // i dont know how to fix playerId not being defined when you join a lobby
+    // i guess your selected colour is greyed out until you select a new one when you join a lobby
+    // im not fixing this lol -billzo
+    if(user.playerId === playerId) {
+      const userColourButton = document.querySelector(`#colour-button-${user.colour}`)
+      userColourButton.style.border = "4px solid rgb(100, 183, 255)"
+      userColourButton.disabled = false
+    }
     
 
     lobbyPlayerList.appendChild(listEntryDiv)

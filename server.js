@@ -89,17 +89,19 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     }
 
     lobbies.setLobby(lobbyCode, createdLobby)
+
     const lobby = lobbies.getLobby(lobbyCode)
-    lobby.join(user.id)
+    const lobbyJoined = lobby.join(user.id)
+
     lobby.setHost(user.id)
-    
     user.setLobby(lobbyCode)
 
 
     console.log(`${user.id} created lobby ${lobbyCode}`)
     callback(null, {
       name: lobby.getName(),
-      code: lobbyCode
+      code: lobbyCode,
+      playerId: lobbyJoined.playerId,
     })
   })
 
@@ -118,8 +120,8 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
 
     if(lobby.isFull()) return callback("lobby_full")
     
-    const joinedLobby = lobby.join(user.id)
-    if(!joinedLobby) {
+    const lobbyJoined = lobby.join(user.id)
+    if(!lobbyJoined) {
       return callback("lobby_error")
     }
 
@@ -128,7 +130,8 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     console.log(`${user.id} joined lobby ${lobbyCode}`)
     callback(null, {
       name: lobby.getName(),
-      code: lobbyCode
+      code: lobbyCode,
+      playerId: lobbyJoined.playerId,
     })
   })
 
@@ -225,12 +228,27 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
       board: lobby.getGame(true).getBoard()
     })
   })
-  
+
+  /*
   socket.on("choose_colour", (data, callback) => {
     // if(!callback) return
 
     const lobby = lobbies.getLobby(data.lobbyCode)
     // console.log(lobby)
     lobby.changeColour(socket.id, data.colour)
+  })
+  */
+
+  socket.on("select_colour", (data, callback) => {
+    if(!callback) return
+
+    const user = users.getUser(socket.id)
+    if(!user) return callback("not_logged_in")
+    if(!user.getLobby()) return callback("not_in_lobby")
+    
+    const lobby = lobbies.getLobby(user.getLobby())
+    if(!lobby) return callback("lobby_not_found")
+
+    lobby.setUserColour(user.id, data.colour)
   })
 })

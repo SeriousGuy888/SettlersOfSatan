@@ -16,6 +16,8 @@ const lobbyNameHeader = document.querySelector("#lobby-name")
 const leaveLobbyButton = document.querySelector("#leave-lobby")
 
 
+let playerId = null
+
 const updateLobbyState = (data) => {
   const inLobby = !!data.code
 
@@ -25,13 +27,16 @@ const updateLobbyState = (data) => {
     lobbyNameHeader.textContent = data.name
     toggleInGameGui(false)
     lobbyCodeDisplay.textContent = data.code
+
+    playerId = data.playerId
   }
   else {
     loggedInSection.style.display = null
     inLobbySection.style.display = "none"
-  
     toggleLobbySettingsLocked(false)
     lobbyChatMessagesDiv.innerHTML = ""
+
+    playerId = null
   }
 }
 

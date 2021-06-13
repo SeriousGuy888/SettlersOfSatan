@@ -1,3 +1,4 @@
+/*
 let thisLobbyCode
 
 let allowedColours
@@ -34,3 +35,4 @@ function colourChoose(button){
         console.log(allowedColours)
     }
 }
+*/

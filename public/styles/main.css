@@ -14,13 +14,18 @@ html {
 .colour-button {
     position: static;
     border: 2px solid rgb(0, 0, 0);
-    color: white; /* White text */
     width: 72px;
     height: 64px;
     margin-right: 10px;
     cursor: pointer;
     border-radius: 25%;
     padding: 1%;
+
+    color: white; /* White text */
+    text-align: center;
+}
+.colour-button:disabled {
+    background-color: grey !important;
 }
 
 #home-title-container {

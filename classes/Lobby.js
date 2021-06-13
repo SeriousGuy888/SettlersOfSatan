@@ -2,6 +2,7 @@ const Satan = require("./Satan.js")
 
 const users = require("../server/users.js")
 const lobbies = require("../server/lobbies.js")
+
 const allowedColours = ["red", "white", "blue", "orange", "green", "purple"]
 
 class Lobby {
@@ -16,7 +17,7 @@ class Lobby {
     this.maxPlayers = 6
     this.code = lobbyCode
     this.users = {}
-    this.allowedColours = allowedColours
+    this.takenColours = new Set()
     this.inGame = false
     this.game = null
   }
@@ -30,26 +31,25 @@ class Lobby {
   }
 
   join(userId) {
-    if(this.hasUser(userId)) return false
+    if(this.hasUser(userId)) return
 
     this.users[userId] = {
       name: users.getUser(userId).name,
       joinTimestamp: Date.now(),
       playerId: `${Date.now()}${Math.round(Math.random() * 1000).toString().padStart(3, "0")}`,
-      colour: allowedColours[Math.floor(Math.random() * allowedColours.length)]
     }
 
-    this.changeAllowedColours(userId, undefined, [this.users[userId].colour])
-    console.log(this.allowedColours)
+    this.setUserColour(userId)
+
     lobbyHelpers.emitLobbyUpdate(this)
-    return true
+    return { playerId: this.users[userId].playerId }
   }
 
   leave(userId) {
     if(this.hasUser(userId)) {
       let wasHost = this.users[userId].host
 
-      this.allowedColours = allowedColours
+      this.takenColours.delete(this.users[userId].colour)
 
       delete this.users[userId]
       lobbyHelpers.emitLobbyUpdate(this)
@@ -145,36 +145,21 @@ class Lobby {
     }
   }
 
-  changeColour(userId, colour) {
-    console.log("asddddddddddddddddd colour: " + this.users[userId].colour)
-    let oldColour = this.users[userId].colour
+  setUserColour(userId, colour) {
+    if(this.takenColours.has(colour)) return
+
+    if(!colour) {
+      const availableColours = allowedColours.filter(loopCol => this.takenColours.has(loopCol))
+      colour = allowedColours[Math.round(Math.random() * availableColours.length)]
+    }
+
+    if(!allowedColours.includes(colour)) return
+
+    this.takenColours.delete(this.users[userId].colour)
     this.users[userId].colour = colour
-    // console.log(this.users[userId])
+    this.takenColours.add(colour)
+
     lobbyHelpers.emitLobbyUpdate(this)
-    // console.log(oldColour)
-    this.changeAllowedColours(userId, oldColour, this.users[userId].colour)
-  }
-
-  changeAllowedColours(userId, add, remove) {
-    if (add) {
-      console.log(add)
-      if (!(add instanceof Array)) add = [add]
-      for (let loopAdd of add) this.allowedColours.push(loopAdd)
-    }
-
-    if (remove) {
-      if (!(remove instanceof Array)) remove = [remove]
-      this.allowedColours.splice(this.allowedColours.indexOf(remove[0]), remove.length)
-    }
-
-    // console.log(users.getUser(userId))
-    console.log(this.allowedColours)
-    for(let loopUser of users.getUsers()) {
-      loopUser.socket.emit("change_allowed_colours", {
-        newAllowedColours: allowedColours,
-        userColour: this.users[userId].colour
-      })
-    }
   }
 }
 
