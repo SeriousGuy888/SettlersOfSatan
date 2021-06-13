@@ -20,9 +20,6 @@ socket.on("lobby_update", data => {
     const playerNameH = document.createElement("h4")
     playerNameH.appendChild(document.createTextNode(user.name))
 
-    const playerIdP = document.createElement("p")
-    playerIdP.appendChild(document.createTextNode(user.playerId))
-
     const hostBadge = document.createElement("img")
     hostBadge.src = "/images/icons/host.svg"
     hostBadge.title = "Lobby Host"
@@ -30,6 +27,9 @@ socket.on("lobby_update", data => {
 
     listEntryTitleDiv.appendChild(playerNameH)
     user.host && listEntryTitleDiv.appendChild(hostBadge)
+
+    const playerIdP = document.createElement("p")
+    playerIdP.appendChild(document.createTextNode(user.playerId))
 
     listEntryDiv.appendChild(listEntryTitleDiv)
     listEntryDiv.appendChild(playerIdP)
