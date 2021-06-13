@@ -30,10 +30,12 @@ class Satan {
 
     let numberCounts = {}
 
-    for (let i = 1; i < 13; i++){
+    for (let i = 2; i < 13; i++){
       if (![2,12].includes(i)) numberCounts[i] = 2
       else numberCounts[i] = 1
     }
+
+    console.log(numberCounts)
 
     if ([5,6].includes(players)) {
       for (let key in resourceCounts) { 
@@ -43,25 +45,25 @@ class Satan {
     }
 
     for (let row of boardLayout) {
+      this.board.push([])
       for(let space of row){
         if (space) {
           let hex = new Hex()
 
-          console.log(Object.keys(resourceCounts)[Math.floor(Math.random()*Object.keys(resourceCounts).length)])
-
-          hex.resource = Object.keys(resourceCounts)[Math.floor(Math.random()*Object.keys(resourceCounts).length)]
+          hex.resource = Object.keys(resourceCounts)[Math.floor(Math.random() * Object.keys(resourceCounts).length)]
           resourceCounts[hex.resource] -= 1
           if (!resourceCounts[hex.resource]) delete resourceCounts[hex.resource]
 
-          console.log(hex.resource)
+          // console.log(hex.resource)
 
           hex.number = Object.keys(numberCounts)[Math.floor(Math.random() * Object.keys(numberCounts).length - 1)]
           numberCounts[hex.number] -= 1
           if (!numberCounts[hex.number]) delete numberCounts[hex.number]
 
-          this.board.push(hex)
+          this.board[this.board.length - 1].push(hex)
         }
-        else this.board.push(null)
+        else this.board[this.board.length - 1].push(null)
+        // console.log(this.board[this.board.length - 1])
       }
     }
 
