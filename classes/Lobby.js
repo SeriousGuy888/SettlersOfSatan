@@ -35,6 +35,7 @@ class Lobby {
     this.users[userId] = {
       name: users.getUser(userId).name,
       joinTimestamp: Date.now(),
+      playerId: `${Date.now()}${Math.round(Math.random() * 1000).toString().padStart(3, "0")}`,
       colour: allowedColours[Math.floor(Math.random() * allowedColours.length)]
     }
 
