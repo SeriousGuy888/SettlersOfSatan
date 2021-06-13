@@ -10,12 +10,12 @@ const canvasHeight = 720
 const canvasFunctions = {}
 
 
+
 canvasFunctions.setup = () => {
   gameCanvas.width = canvasWidth
   gameCanvas.height = canvasHeight
 
   canvasFunctions.background()
-  canvasFunctions.drawHexagon(50, 50)
 }
 
 canvasFunctions.background = (colour) => {
@@ -25,7 +25,7 @@ canvasFunctions.background = (colour) => {
   ctx.fill()
 }
 
-canvasFunctions.drawHexagon = (x, y) => { // thieved from https://eperezcosano.github.io/hex-grid/
+canvasFunctions.drawHexagon = (x, y, resource, number) => { // thieved from https://eperezcosano.github.io/hex-grid/
   const angle = 2 * Math.PI / 6
   const r = 50
 
@@ -33,7 +33,17 @@ canvasFunctions.drawHexagon = (x, y) => { // thieved from https://eperezcosano.g
   for (var i = 0; i < 6; i++) {
     ctx.lineTo(x + r * Math.cos(angle * i), y + r * Math.sin(angle * i))
   }
-  ctx.fillStyle = "#0000FF"
+
+  const resourceColours = {
+    "mud": "#753d00",
+    "forest": "#0e5700",
+    "mountain": "#333333",
+    "farm": "#fef177",
+    "pasture": "#94ff8f",
+    "desert": "#a39d5d"
+  }
+
+  ctx.fillStyle = resourceColours[resource]
   ctx.fill()
   ctx.closePath()
   ctx.stroke()

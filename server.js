@@ -184,10 +184,13 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
       if(lobby.getInGame()) {
         return callback("already_playing")
       }
+      
       lobby.setInGame(true)
-      callback(null, {})
       satan = new Satan()
       satan.setUpBoard(4)
+      callback(null, {
+        board: satan.board
+      })
     }
   })
 

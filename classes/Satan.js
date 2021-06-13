@@ -35,7 +35,7 @@ class Satan {
       else numberCounts[i] = 1
     }
 
-    console.log(numberCounts)
+    // console.log(numberCounts)
 
     if ([5,6].includes(players)) {
       for (let key in resourceCounts) { 
@@ -66,8 +66,7 @@ class Satan {
         // console.log(this.board[this.board.length - 1])
       }
     }
-
-    console.log(this.board)
+    // console.log(this.board)
   }
 
 }
