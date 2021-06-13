@@ -15,6 +15,7 @@ canvasFunctions.setup = () => {
   gameCanvas.height = canvasHeight
 
   canvasFunctions.background()
+  canvasFunctions.drawHexagon(50, 50)
 }
 
 canvasFunctions.background = (colour) => {
@@ -32,6 +33,8 @@ canvasFunctions.drawHexagon = (x, y) => { // thieved from https://eperezcosano.g
   for (var i = 0; i < 6; i++) {
     ctx.lineTo(x + r * Math.cos(angle * i), y + r * Math.sin(angle * i))
   }
+  ctx.fillStyle = "#0000FF"
+  ctx.fill()
   ctx.closePath()
   ctx.stroke()
 }
