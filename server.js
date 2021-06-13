@@ -19,6 +19,7 @@ const helpers = require("./server/helpers.js")
 
 const Lobby = require("./classes/Lobby.js")
 const User = require("./classes/User.js")
+const Satan = require("./classes/Satan.js")
 
 const lobbies = require("./server/lobbies.js")
 const users = require("./server/users.js")
@@ -185,6 +186,8 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
       }
       lobby.setInGame(true)
       callback(null, {})
+      satan = new Satan()
+      satan.setUpBoard(4)
     }
   })
 
