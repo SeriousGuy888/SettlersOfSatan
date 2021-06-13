@@ -56,7 +56,7 @@ class Satan {
 
           // console.log(hex.resource)
 
-          hex.number = Object.keys(numberCounts)[Math.floor(Math.random() * Object.keys(numberCounts).length - 1)]
+          hex.number = Object.keys(numberCounts)[Math.floor(Math.random() * Object.keys(numberCounts).length)]
           numberCounts[hex.number] -= 1
           if (!numberCounts[hex.number]) delete numberCounts[hex.number]
 
