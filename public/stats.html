@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Server Stats</title>
+    <link rel="stylesheet" href="/styles/global.css">
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <main class="center">
+      <h1>Server Stats</h1>
+      <button id="refresh-stats">Refresh</button>
+      <hr>
+      <div id="memory-usage-container">
+        <h4>Server Memory Usage</h4>
+        <a href="https://nodejs.org/api/process.html#process_process_memoryusage" target="_blank">
+          hwat ce dukk does any of cis mean?
+        </a>
+        <pre id="memory-usage">Refresh?</pre>
+      </div>
+    </main>
+    <script>
+      const refreshButton = document.querySelector("#refresh-stats")
+      const memoryUsageDiv = document.querySelector("#memory-usage")
+
+      refreshButton.addEventListener("click", async () => {
+        const response = await fetch("/stats/get")
+        if(!response.ok) return alert("something broke lol")
+
+        const serverData = await response.json()
+        console.log(serverData)
+
+        const { memoryUsage } = serverData
+
+        const formatMemoryUsage = (bytes) => `${Math.round(bytes / 1024 / 1024 * 100) / 100} MB`
+        const formattedMemoryUsageData = {
+          rss: formatMemoryUsage(memoryUsage.rss),
+          heapTotal: formatMemoryUsage(memoryUsage.heapTotal),
+          heapUsed: formatMemoryUsage(memoryUsage.heapUsed),
+          external: formatMemoryUsage(memoryUsage.external),
+        }
+
+        memoryUsageDiv.textContent = JSON.stringify(formattedMemoryUsageData, null, 4)
+      })
+    </script>
+  </body>
+</html>
