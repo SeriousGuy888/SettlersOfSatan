@@ -12,6 +12,16 @@ const boardLayout = [
 class Satan {
   constructor() {
     this.board = []
+    this.players = {}
+  }
+
+  getPlayers() {
+    return this.players
+  }
+
+  setPlayer(playerId, data) {
+    if(!data) delete this.players[playerId]
+    else this.players[playerId] = data
   }
 
   getBoard() {
