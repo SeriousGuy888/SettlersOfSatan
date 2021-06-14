@@ -1,4 +1,4 @@
-const e = require("express")
+// const e = require("express")
 
 const lobbyStartButton = document.querySelector("#lobby-settings-start")
 
@@ -38,12 +38,12 @@ socket.on("host_change", data => {
 lobbyStartButton.addEventListener("click", () => {
   socket.emit("edit_lobby_setting", { started: true }, (err, data) => {
     if(err) notifyUser(err)
-    // else {
-    //   console.log("hi")
-    //   console.log(err)
-    //   console.log(data)
-    // }
+    else {
+      console.log("hi")
+      console.log(err)
+      console.log(data)
+    }
 
-    // console.log("hi")
+    console.log("hi")
   })
 })
