@@ -1,5 +1,3 @@
-const e = require("express")
-
 const lobbyStartButton = document.querySelector("#lobby-settings-start")
 
 const toggleLobbySettingsLocked = (isHost) => {
