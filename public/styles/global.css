@@ -59,7 +59,7 @@ a:hover {
 }
 a[target="_blank"]::after {
   display: inline-block;
-  content: " ";
+  content: "";
   background-image: url("/images/icons/link.svg");
   background-size: 1em;
   height: 1em;
