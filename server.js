@@ -4,7 +4,7 @@ const socketIO = require("socket.io")
 const express = require("express")
 const app = express()
 const port = process.env.PORT || 3000
-require("./server/routes.js")(app)
+require("./server/routes/routes.js")(app)
 
 const server = http.createServer(app)
 const io = socketIO(server)
