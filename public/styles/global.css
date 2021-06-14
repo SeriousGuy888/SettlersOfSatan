@@ -27,11 +27,17 @@ input:focus {
   border-bottom: 2px solid #6ba4ff;
 }
 
-code {
-  background-color: #eee;
+code, pre {
+  background-color: #ddd;
   border-radius: 3px;
-  font-family: 'Consolas', monospace;
-  padding: 0 3px;
+  font-family: 'Courier New', 'Courier', 'Consolas', monospace
+}
+code {
+  padding: 0.25em;
+}
+pre {
+  border: 2px solid #aaa;
+  padding: 1em;
 }
 
 
