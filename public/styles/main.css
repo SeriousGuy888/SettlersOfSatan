@@ -44,6 +44,12 @@ html {
     content: "/səˈtæn/";
     font-family: 'Times New Roman', Times, serif;
 }
+#home-title-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5em;
+    flex-wrap: wrap;
+}
 
 
 #notification-dismiss-all-button {
