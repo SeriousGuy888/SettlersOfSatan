@@ -1,4 +1,5 @@
 const Satan = require("./Satan.js")
+const Player = require("./Player.js")
 
 const users = require("../server/users.js")
 const lobbies = require("../server/lobbies.js")
@@ -142,7 +143,11 @@ class Lobby {
     this.broadcast("game_started_update", { started: inGame })
     if(inGame) {
       this.game = new Satan()
+      for(const i in this.users) {
+        this.game.setPlayer(this.users[i].playerId, new Player(this.users[i].colour))
+      }
     }
+    console.log(this.game)
   }
 
   setUserColour(userId, colour) {
