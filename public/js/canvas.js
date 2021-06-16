@@ -19,6 +19,7 @@ canvasFunctions.setup = () => {
 }
 
 canvasFunctions.background = (colour) => {
+  ctx.clearRect(0, 0, canvasWidth, canvasHeight)
   ctx.beginPath()
   ctx.rect(0, 0, canvasWidth, canvasHeight)
   ctx.fillStyle = colour || "#dedede"
