@@ -4,7 +4,7 @@ const Player = require("./Player.js")
 const users = require("../server/users.js")
 const lobbies = require("../server/lobbies.js")
 
-const allowedColours = ["red", "white", "blue", "orange", "green", "purple"]
+const allowedColours = ["red", "white", "blue", "orange", "green", "purple", "brown", "pink"]
 
 class Lobby {
   constructor(name) {

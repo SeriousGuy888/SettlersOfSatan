@@ -1,7 +1,7 @@
 const colourButtonsContainer = document.querySelector("#colour-buttons-container")
 
 const redrawColourButtons = (users) => {
-  const colourChoices = ["red", "white", "blue", "orange", "green", "purple"]
+  const colourChoices = ["red", "white", "blue", "orange", "green", "purple", "brown", "pink"]
   colourButtonsContainer.innerHTML = ""
 
   for(const colour of colourChoices) {
