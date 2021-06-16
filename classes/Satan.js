@@ -1,5 +1,6 @@
-const e = require("express")
 const Hex = require("./Hex.js")
+const lobbies = require("../server/lobbies.js")
+
 
 const boardLayout = [
   [null, true, true, true, null],
@@ -10,13 +11,17 @@ const boardLayout = [
 ]
 
 class Satan {
-  constructor() {
+  constructor(lobbyId) {
+    this.lobbyId = lobbyId
     this.board = []
     this.players = {}
   }
 
   tick() {
-    console.log(`Ticking game!`)
+    const lobby = lobbies.getLobby(this.lobbyId)
+    lobby.broadcast("game_update", {
+      e: "f"
+    })
   }
 
   getPlayers() {

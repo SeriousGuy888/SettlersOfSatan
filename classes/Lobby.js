@@ -147,7 +147,7 @@ class Lobby {
     this.inGame = inGame
     lobbyHelpers.emitLobbyUpdate(this)
     if(inGame) {
-      this.game = new Satan()
+      this.game = new Satan(this.code)
       for(const i in this.users) {
         const user = this.users[i]
         this.game.setPlayer(user.playerId, new Player(user.colour))
