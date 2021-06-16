@@ -161,9 +161,7 @@ class Lobby {
 
     if(!colour) {
       const availableColours = allowedColours.filter(loopCol => !this.takenColours.has(loopCol))
-      console.log("available colours", availableColours)
-
-      colour = availableColours[Math.round(Math.random() * availableColours.length)]
+      colour = availableColours[Math.floor(Math.random() * availableColours.length)]
     }
 
     if(!allowedColours.includes(colour)) return
