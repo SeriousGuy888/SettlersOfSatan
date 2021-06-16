@@ -143,7 +143,7 @@ class Lobby {
     lobbyHelpers.emitLobbyUpdate(this)
   }
 
-  setInGame(inGame) {
+  setInGame(inGame, board) {
     this.inGame = inGame
     lobbyHelpers.emitLobbyUpdate(this)
     if(inGame) {
@@ -153,7 +153,7 @@ class Lobby {
         this.game.setPlayer(user.playerId, new Player(user.colour))
       }
     }
-    this.broadcast("game_started_update", { started: inGame })
+    this.broadcast("game_started_update", { started: inGame, gameBoard: board})
   }
 
   setUserColour(userId, colour) {

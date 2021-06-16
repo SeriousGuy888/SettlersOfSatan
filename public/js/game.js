@@ -6,6 +6,8 @@ const toggleInGameGui = (render) => {
     lobbyWaitingDiv.style.display = "none"
     lobbyPlayingDiv.style.display = null
 
+    canvasFunctions.setup()
+    
   }
   else {
     lobbyWaitingDiv.style.display = null
@@ -18,6 +20,16 @@ const toggleInGameGui = (render) => {
 socket.on("game_started_update", data => {
   if(data.started) {
     toggleInGameGui(true)
+      
+    let top = 50
+    for (let row of data.gameBoard) {
+      let column = 50
+      for (let space of row) {
+        if (space) canvasFunctions.drawHexagon(column, top, space.resource)
+        column += 100
+      }
+      top += 100
+    }
   }
   else {
     notifyUser("game ended")
