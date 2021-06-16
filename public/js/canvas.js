@@ -51,6 +51,6 @@ canvasFunctions.drawHexagon = (x, y, resource, number) => { // thieved from http
 
 canvasFunctions.drawText = (text, x, y) => {
   ctx.fillStyle = "#000"
-  ctx.font = "48px sans-serif"
+  ctx.font = "18px sans-serif"
   ctx.fillText(text, x, y)
 }

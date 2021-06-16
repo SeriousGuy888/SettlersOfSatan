@@ -20,7 +20,8 @@ class Satan {
   tick() {
     const lobby = lobbies.getLobby(this.lobbyId)
     lobby.broadcast("game_update", {
-      e: "f"
+      board: this.board,
+      players: this.players,
     })
   }
 
