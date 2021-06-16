@@ -2,6 +2,8 @@ const lobbyChatMessagesDiv = document.querySelector("#lobby-chat-messages")
 const lobbyChatInput = document.querySelector("#lobby-chat-input")
 const lobbyChatSendButton = document.querySelector("#lobby-chat-send-button")
 
+
+const scrollChatToBottom = () => lobbyChatMessagesDiv.scrollTop = lobbyChatMessagesDiv.scrollHeight
 const printToChat = (lines) => {
   const chatMessageDiv = document.createElement("div")
 
@@ -25,7 +27,10 @@ const printToChat = (lines) => {
     chatMessageDiv.appendChild(chatMessageContentLine)
   }
 
+
+  const shouldScroll = lobbyChatMessagesDiv.scrollTop + lobbyChatMessagesDiv.clientHeight === lobbyChatMessagesDiv.scrollHeight
   lobbyChatMessagesDiv.appendChild(chatMessageDiv)
+  if(shouldScroll) scrollChatToBottom()
 }
 
 
