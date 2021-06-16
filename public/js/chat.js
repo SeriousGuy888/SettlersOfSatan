@@ -4,29 +4,27 @@ const lobbyChatSendButton = document.querySelector("#lobby-chat-send-button")
 
 
 const scrollChatToBottom = () => lobbyChatMessagesDiv.scrollTop = lobbyChatMessagesDiv.scrollHeight
+const parseChatLine = (line) => {
+  const chatMessageContentLine = document.createElement("p")
+  if(typeof line === "object") {
+    if(!line.text) return
+    chatMessageContentLine.textContent = line.text
+    if(line.style) {
+      chatMessageContentLine.style["font-weight"] = line.style?.bold ? "bold" : "normal"
+      chatMessageContentLine.style["font-style"] = line.style?.italic ? "italic" : "normal"
+      chatMessageContentLine.style.color = line.style?.colour
+    }
+  }
+  else chatMessageContentLine.textContent = line
+  return chatMessageContentLine
+}
 const printToChat = (lines) => {
   const chatMessageDiv = document.createElement("div")
 
   for(let line of lines) {
-    const chatMessageContentLine = document.createElement("p")
-
-    if(typeof line === "object") {
-      if(!line.text) return
-      
-      chatMessageContentLine.textContent = line.text
-
-      if(line.style) {
-        chatMessageContentLine.style["font-weight"] = line.style?.bold ? "bold" : "normal"
-        chatMessageContentLine.style["font-style"] = line.style?.italic ? "italic" : "normal"
-        chatMessageContentLine.style.color = line.style?.colour
-      }
-    }
-    else {
-      chatMessageContentLine.textContent = line
-    }
-    chatMessageDiv.appendChild(chatMessageContentLine)
+    const chatMessageContentLine = parseChatLine(line)
+    chatMessageContentLine && chatMessageDiv.appendChild(chatMessageContentLine)
   }
-
 
   const shouldScroll = lobbyChatMessagesDiv.scrollTop + lobbyChatMessagesDiv.clientHeight === lobbyChatMessagesDiv.scrollHeight
   lobbyChatMessagesDiv.appendChild(chatMessageDiv)
