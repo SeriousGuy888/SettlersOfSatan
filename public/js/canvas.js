@@ -48,12 +48,3 @@ canvasFunctions.drawHexagon = (x, y, resource, number) => { // thieved from http
   ctx.closePath()
   ctx.stroke()
 }
-
-canvasFunctions.updateGame = () => {
-  socket.emit("get_lobby_game", {}, (err, data) => {
-    if(err) notifyUser(err)
-    else {
-      console.log(data)
-    }
-  })
-}

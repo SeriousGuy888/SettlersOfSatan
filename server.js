@@ -222,31 +222,6 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     })
   })
 
-  socket.on("get_lobby_game", (data, callback) => {
-    if(!callback) return
-
-    const user = users.getUser(socket.id)
-    if(!user) return callback("not_logged_in")
-    if(!user.getLobby()) return callback("not_in_lobby")
-    
-    const lobby = lobbies.getLobby(user.getLobby())
-    if(!lobby) return callback("lobby_not_found")
-
-    callback(null, {
-      board: lobby.getGame(true).getBoard()
-    })
-  })
-
-  /*
-  socket.on("choose_colour", (data, callback) => {
-    // if(!callback) return
-
-    const lobby = lobbies.getLobby(data.lobbyCode)
-    // console.log(lobby)
-    lobby.changeColour(socket.id, data.colour)
-  })
-  */
-
   socket.on("select_colour", (data, callback) => {
     if(!callback) return
 
