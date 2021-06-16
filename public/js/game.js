@@ -11,6 +11,8 @@ const toggleInGameGui = (render) => {
   else {
     lobbyWaitingDiv.style.display = null
     lobbyPlayingDiv.style.display = "none"
+
+    canvasFunctions.stop()
   }
 }
 
@@ -23,6 +25,8 @@ socket.on("game_started_update", data => {
   }
 })
 
+
+let currentGameData
 socket.on("game_update", data => {
-  canvasFunctions.drawText(JSON.stringify(data), 100, 360)
+  currentGameData = data
 })

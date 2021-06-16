@@ -7,15 +7,33 @@ const ctx = gameCanvas.getContext("2d")
 const canvasWidth = 1280
 const canvasHeight = 720
 
+const canvasElems = []
+
+let drawLoop = false
+setInterval(() => {
+  if(drawLoop) {
+    canvasFunctions.draw()
+  }
+}, 500)
+
 const canvasFunctions = {}
-
-
-
 canvasFunctions.setup = () => {
   gameCanvas.width = canvasWidth
   gameCanvas.height = canvasHeight
-
+  drawLoop = true
+}
+canvasFunctions.stop = () => drawLoop = false
+canvasFunctions.draw = () => {
   canvasFunctions.background()
+
+  for(const elem of canvasElems) {
+    if(elem.render) {
+      elem.render()
+    }
+    if(elem.delete) {
+      canvasElems.splice(canvasElems.indexOf(elem), 1)
+    }
+  }
 }
 
 canvasFunctions.background = (colour) => {
@@ -48,10 +66,4 @@ canvasFunctions.drawHexagon = (x, y, resource, number) => { // thieved from http
   ctx.fill()
   ctx.closePath()
   ctx.stroke()
-}
-
-canvasFunctions.drawText = (text, x, y) => {
-  ctx.fillStyle = "#000"
-  ctx.font = "18px sans-serif"
-  ctx.fillText(text, x, y)
 }
