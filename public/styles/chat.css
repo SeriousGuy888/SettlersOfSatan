@@ -11,6 +11,7 @@
   height: 20vh;
   overflow-y: scroll;
   margin-top: 1em;
+  word-wrap: anywhere;
 }
 
 #lobby-chat-messages div {
