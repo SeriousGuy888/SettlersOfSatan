@@ -10,20 +10,23 @@ const canvasHeight = 720
 const canvasElems = []
 
 let drawLoop = false
+let board
+
 setInterval(() => {
   if(drawLoop) {
-    canvasFunctions.draw()
+    if (board) canvasFunctions.draw(board)
   }
 }, 500)
 
 const canvasFunctions = {}
-canvasFunctions.setup = () => {
+canvasFunctions.setup = (setupBoard) => {
   gameCanvas.width = canvasWidth
   gameCanvas.height = canvasHeight
   drawLoop = true
+  board = setupBoard
 }
 canvasFunctions.stop = () => drawLoop = false
-canvasFunctions.draw = () => {
+canvasFunctions.draw = (board) => {
   canvasFunctions.background()
 
   for(const elem of canvasElems) {
@@ -33,6 +36,16 @@ canvasFunctions.draw = () => {
     if(elem.delete) {
       canvasElems.splice(canvasElems.indexOf(elem), 1)
     }
+  }
+
+  let top = 50
+  for (let row of board) {
+    let column = 50
+    for (let space of row) {
+      if (space) canvasFunctions.drawHexagon(column, top, space.resource)
+      column += 100
+    }
+    top += 100
   }
 }
 
