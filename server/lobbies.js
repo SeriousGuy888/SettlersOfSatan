@@ -46,3 +46,10 @@ exports.setLobby = (lobbyId, data) => {
     return null
   }
 }
+
+exports.tickAllLobbies = () => {
+  for(const i in lobbies) {
+    const lobby = lobbies[i]
+    lobby.tick()
+  }
+}

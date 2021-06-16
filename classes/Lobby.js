@@ -31,6 +31,10 @@ class Lobby {
     return userId in this.users
   }
 
+  tick() {
+    console.log(`Ticking lobby ${this.code}`)
+  }
+
   join(userId) {
     if(this.hasUser(userId)) return
 
