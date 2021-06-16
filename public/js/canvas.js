@@ -48,3 +48,9 @@ canvasFunctions.drawHexagon = (x, y, resource, number) => { // thieved from http
   ctx.closePath()
   ctx.stroke()
 }
+
+canvasFunctions.drawText = (text, x, y) => {
+  ctx.fillStyle = "#000"
+  ctx.font = "48px sans-serif"
+  ctx.fillText(text, x, y)
+}

@@ -22,3 +22,7 @@ socket.on("game_started_update", data => {
     notifyUser("game ended")
   }
 })
+
+socket.on("game_update", data => {
+  canvasFunctions.drawText(JSON.stringify(data), 100, 360)
+})
