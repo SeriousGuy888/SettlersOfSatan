@@ -32,7 +32,9 @@ class Lobby {
   }
 
   tick() {
-    console.log(`Ticking lobby ${this.code}`)
+    if(this.game) {
+      this.game.tick()
+    }
   }
 
   join(userId) {

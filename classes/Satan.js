@@ -15,6 +15,10 @@ class Satan {
     this.players = {}
   }
 
+  tick() {
+    console.log(`Ticking game!`)
+  }
+
   getPlayers() {
     return this.players
   }
