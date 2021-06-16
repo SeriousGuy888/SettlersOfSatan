@@ -6,7 +6,6 @@ const toggleInGameGui = (render) => {
     lobbyWaitingDiv.style.display = "none"
     lobbyPlayingDiv.style.display = null
 
-    canvasFunctions.setup()
   }
   else {
     lobbyWaitingDiv.style.display = null
