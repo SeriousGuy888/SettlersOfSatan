@@ -9,12 +9,14 @@ const canvasHeight = 720
 
 const canvasElems = []
 
+const hexRadius = 50
+
 let drawLoop = false
 let board
 
 setInterval(() => {
   if(drawLoop) {
-    if (board) canvasFunctions.draw(board)
+    if (board) canvasFunctions.draw()
   }
 }, 500)
 
@@ -26,7 +28,8 @@ canvasFunctions.setup = (setupBoard) => {
   board = setupBoard
 }
 canvasFunctions.stop = () => drawLoop = false
-canvasFunctions.draw = (board) => {
+
+canvasFunctions.draw = () => {
   canvasFunctions.background()
 
   for(const elem of canvasElems) {
@@ -38,14 +41,18 @@ canvasFunctions.draw = (board) => {
     }
   }
 
-  let top = 50
-  for (let row of board) {
-    let column = 50
+  let y = 50
+  for (let i in board) {
+    const row = board[i]
+    let x = 50
     for (let space of row) {
-      if (space) canvasFunctions.drawHexagon(column, top, space.resource)
-      column += 100
+      if (space) {
+        const xOffset = i % 2 !== 0 ? hexRadius : 0
+        canvasFunctions.drawHexagon(x + xOffset, y, space.resource)
+      }
+      x += hexRadius * 2
     }
-    top += 100
+    y += 100
   }
 }
 
@@ -59,11 +66,13 @@ canvasFunctions.background = (colour) => {
 
 canvasFunctions.drawHexagon = (x, y, resource, number) => { // thieved from https://eperezcosano.github.io/hex-grid/
   const angle = 2 * Math.PI / 6
-  const r = 50
 
   ctx.beginPath()
   for (var i = 0; i < 6; i++) {
-    ctx.lineTo(x + r * Math.cos(angle * i - angle / 2), y + r * Math.sin(angle * i - angle / 2))
+    ctx.lineTo(
+      x + hexRadius * Math.cos(angle * i - angle / 2),
+      y + hexRadius * Math.sin(angle * i - angle / 2)
+    )
   }
 
   const resourceColours = {
