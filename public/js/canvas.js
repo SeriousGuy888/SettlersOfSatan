@@ -9,7 +9,29 @@ const canvasHeight = 720
 
 const canvasElems = []
 
+
+/*
+  billzo's hexagon notes
+
+  The radius of a regular hexagon = the side length
+  
+  To find apothem
+  a^2 + b^2 = c^2
+  a = apothem
+  b = side length / 2 = radius / 2
+  c = radius
+
+  a^2 + (radius / 2)^2 = radius^2
+  a^2 = radius^2 - (radius / 2)^2
+  a = sqrt(radius^2 - (radius / 2)^2)
+
+  so in javascript:
+  const apothem = Math.sqrt(hexRadius ** 2 - (hexRadius / 2) ** 2)
+*/
+
+
 const hexRadius = 50
+const apothem = Math.sqrt(hexRadius ** 2 - (hexRadius / 2) ** 2)
 
 let drawLoop = false
 let board
@@ -41,18 +63,18 @@ canvasFunctions.draw = () => {
     }
   }
 
-  let y = 50
+  let y = hexRadius
   for (let i in board) {
     const row = board[i]
-    let x = 50
+    let x = hexRadius
     for (let space of row) {
       if (space) {
-        const xOffset = i % 2 !== 0 ? hexRadius : 0
+        const xOffset = i % 2 !== 0 ? apothem : 0
         canvasFunctions.drawHexagon(x + xOffset, y, space.resource)
       }
-      x += hexRadius * 2
+      x += apothem * 2
     }
-    y += 100
+    y += hexRadius * 2 - apothem / 2
   }
 }
 
