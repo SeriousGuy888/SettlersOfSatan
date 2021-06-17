@@ -63,7 +63,7 @@ canvasFunctions.drawHexagon = (x, y, resource, number) => { // thieved from http
 
   ctx.beginPath()
   for (var i = 0; i < 6; i++) {
-    ctx.lineTo(x + r * Math.cos(angle * i), y + r * Math.sin(angle * i))
+    ctx.lineTo(x + r * Math.cos(angle * i - angle / 2), y + r * Math.sin(angle * i - angle / 2))
   }
 
   const resourceColours = {
