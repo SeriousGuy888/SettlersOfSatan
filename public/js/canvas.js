@@ -3,12 +3,17 @@ const gameCanvas = document.querySelector("#game-canvas")
  * @type {RenderingContext} ctx
  */
 const ctx = gameCanvas.getContext("2d")
-
-const canvasWidth = 1280
-const canvasHeight = 720
-
+const canvasWidth = 1920
+const canvasHeight = 1080
 const canvasElems = []
 
+
+const canvasFullscreenButton = document.querySelector("#canvas-fullscreen")
+canvasFullscreenButton.addEventListener("click", () => {
+  if(gameCanvas.requestFullscreen) gameCanvas.requestFullscreen()
+  else if(gameCanvas.webkitRequestFullScreen) gameCanvas.webkitRequestFullScreen()
+  else if(gameCanvas.mozRequestFullScreen) gameCanvas.mozRequestFullScreen()
+})
 
 /*
   billzo's hexagon notes
@@ -30,7 +35,7 @@ const canvasElems = []
 */
 
 
-const hexRadius = 70
+const hexRadius = 100
 const hexApothem = Math.sqrt(hexRadius ** 2 - (hexRadius / 2) ** 2)
 
 let drawLoop = false
