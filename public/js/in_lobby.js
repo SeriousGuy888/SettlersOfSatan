@@ -47,7 +47,7 @@ socket.on("lobby_update", data => {
       kickPlayerButton.onclick = () => {
         socket.emit("kick_player", {
           playerId: user.playerId
-        }, (err, data) => {
+        }, (err, dat) => {
           if(err) notifyUser(err)
         })
       }
