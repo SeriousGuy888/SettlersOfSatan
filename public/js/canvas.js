@@ -31,7 +31,7 @@ const canvasElems = []
 
 
 const hexRadius = 50
-const apothem = Math.sqrt(hexRadius ** 2 - (hexRadius / 2) ** 2)
+const hexApothem = Math.sqrt(hexRadius ** 2 - (hexRadius / 2) ** 2)
 
 let drawLoop = false
 let board
@@ -69,12 +69,12 @@ canvasFunctions.draw = () => {
     let x = hexRadius
     for (let space of row) {
       if (space) {
-        const xOffset = i % 2 !== 0 ? apothem : 0
+        const xOffset = i % 2 !== 0 ? hexApothem : 0
         canvasFunctions.drawHexagon(x + xOffset, y, space.resource)
       }
-      x += apothem * 2
+      x += hexApothem * 2
     }
-    y += hexRadius * 2 - apothem / 2
+    y += hexRadius * 2 - hexApothem / 2
   }
 }
 
