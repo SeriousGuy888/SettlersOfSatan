@@ -47,7 +47,9 @@ const socketCallback = (err, data) => {
   }
 }
 
-
+const joinLobby = (code) => {
+  socket.emit("join_lobby", { code }, socketCallback)
+}
 
 createLobbyButton.addEventListener("click", () => {
   const lobbyName = createLobbyNameInput.value
@@ -59,10 +61,7 @@ createLobbyButton.addEventListener("click", () => {
 
 joinLobbyButton.addEventListener("click", () => {
   const lobbyCode = joinLobbyCodeInput.value
-
-  socket.emit("join_lobby", {
-    code: lobbyCode
-  }, socketCallback)
+  joinLobby(lobbyCode)
 })
 
 leaveLobbyButton.addEventListener("click", () => {
@@ -88,9 +87,7 @@ openLobbiesRefreshButton.addEventListener("click", () => {
           const joinOpenLobbyButton = document.createElement("button")
           joinOpenLobbyButton.textContent = "Join"
           joinOpenLobbyButton.onclick = () => {
-            socket.emit("join_lobby", {
-              code: lobbyInfo.code
-            }, socketCallback)
+            joinLobby(lobbyInfo.code)
           }
 
           listEntryTitleDiv.appendChild(lobbyNameH)
