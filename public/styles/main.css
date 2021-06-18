@@ -42,7 +42,6 @@ html {
 }
 .title-satan:hover::after {
     content: "/səˈtæn/";
-    font-family: 'Times New Roman', Times, serif;
 }
 #home-title-links {
     display: flex;
