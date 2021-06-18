@@ -11,6 +11,15 @@ socket.on("lobby_update", data => {
   const { users, maxPlayerCount } = currentLobbyData
 
   redrawColourButtons(users)
+
+  let isHost = false
+  users.forEach(u => {
+    if(u.playerId === playerId) {
+      isHost = true
+    }
+  })
+
+  const docFrag = document.createDocumentFragment()
   for(let user of users) {
     const listEntryDiv = document.createElement("div")
 
@@ -28,11 +37,22 @@ socket.on("lobby_update", data => {
     listEntryTitleDiv.appendChild(playerNameH)
     user.host && listEntryTitleDiv.appendChild(hostBadge)
 
-    const playerIdP = document.createElement("p")
-    playerIdP.appendChild(document.createTextNode(user.playerId))
+    const listEntryOptionsDiv = document.createElement("div")
+    if(isHost && user.playerId !== playerId) {
+      listEntryOptionsDiv.className = "list-entry-options"
+  
+      const kickPlayerButton = document.createElement("a")
+      kickPlayerButton.textContent = "Kick"
+      kickPlayerButton.href = "#"
+      kickPlayerButton.onclick = () => {
+        alert("dsfjhsd")
+      }
+
+      listEntryOptionsDiv.appendChild(kickPlayerButton)
+    }
 
     listEntryDiv.appendChild(listEntryTitleDiv)
-    listEntryDiv.appendChild(playerIdP)
+    isHost && listEntryDiv.appendChild(listEntryOptionsDiv)
 
     listEntryDiv.classList.add(["list-entry"])
     listEntryDiv.style.border = "5px solid " + user.colour
@@ -47,8 +67,9 @@ socket.on("lobby_update", data => {
     }
     
 
-    lobbyPlayerList.appendChild(listEntryDiv)
+    docFrag.appendChild(listEntryDiv)
   }
+  lobbyPlayerList.appendChild(docFrag)
 
   lobbyPlayerCountSpan.textContent = users.length
   lobbyMaxPlayerCountSpan.textContent = maxPlayerCount.toString()

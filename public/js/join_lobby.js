@@ -23,6 +23,8 @@ const updateLobbyState = (data) => {
   const inLobby = !!data.code
 
   if(inLobby) {
+    playerId = data.playerId
+    
     loggedInSection.style.display = "none"
     inLobbySection.style.display = null
     lobbyNameHeader.textContent = data.name
@@ -34,8 +36,6 @@ const updateLobbyState = (data) => {
     const lobbyLink = `${protocol}//${hostname}${port && ":" + port}#lobby=${data.code}`
     lobbyLinkDisplay.textContent = lobbyLink
     lobbyLinkDisplay.href = lobbyLink
-
-    playerId = data.playerId
   }
   else {
     loggedInSection.style.display = null
