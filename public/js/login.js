@@ -14,6 +14,13 @@ const updateLoggedInState = (loggedIn, name) => {
   if(loggedIn) {
     loggedOutSection.style.display = "none"
     loggedInSection.style.display = null
+    
+    const hashFrag = window.location.hash.slice(1)
+    const lobbyCodeIndicator = "lobby="
+    if(hashFrag.startsWith(lobbyCodeIndicator)) {
+      let lobbyCode = hashFrag.slice(lobbyCodeIndicator.length)
+      joinLobby(lobbyCode)
+    }
   }
   else {
     loggedOutSection.style.display = null
