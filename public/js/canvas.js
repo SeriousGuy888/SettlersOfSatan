@@ -26,11 +26,11 @@ const canvasElems = []
   a = sqrt(radius^2 - (radius / 2)^2)
 
   so in javascript:
-  const apothem = Math.sqrt(hexRadius ** 2 - (hexRadius / 2) ** 2)
+  const hexApothem = Math.sqrt(hexRadius ** 2 - (hexRadius / 2) ** 2)
 */
 
 
-const hexRadius = 50
+const hexRadius = 70
 const hexApothem = Math.sqrt(hexRadius ** 2 - (hexRadius / 2) ** 2)
 
 let drawLoop = false
@@ -54,19 +54,24 @@ canvasFunctions.stop = () => drawLoop = false
 canvasFunctions.draw = () => {
   canvasFunctions.background()
 
-  for(const elem of canvasElems) {
-    if(elem.render) {
-      elem.render()
-    }
-    if(elem.delete) {
-      canvasElems.splice(canvasElems.indexOf(elem), 1)
-    }
-  }
+  // for(const elem of canvasElems) {
+  //   if(elem.render) {
+  //     elem.render()
+  //   }
+  //   if(elem.delete) {
+  //     canvasElems.splice(canvasElems.indexOf(elem), 1)
+  //   }
+  // }
+
 
   let y = hexRadius
   for (let i in board) {
     const row = board[i]
-    let x = hexRadius
+
+    const rowWidth = (row.length - 1) * hexApothem
+    const xCenter = canvasWidth / 2 - rowWidth
+    let x = xCenter
+
     for (let space of row) {
       if (space) {
         const xOffset = i % 2 !== 0 ? hexApothem : 0
