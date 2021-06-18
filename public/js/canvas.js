@@ -74,7 +74,7 @@ canvasFunctions.draw = () => {
       }
       x += hexApothem * 2
     }
-    y += hexRadius * 2 - hexApothem / 2
+    y += hexRadius * 2 - hexRadius / 2
   }
 }
 
