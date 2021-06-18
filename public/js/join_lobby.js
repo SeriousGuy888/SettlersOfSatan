@@ -8,6 +8,7 @@ const joinLobbyPanel = document.querySelector("#join-lobby-panel")
 const joinLobbyCodeInput = document.querySelector("#join-lobby-code-input")
 const joinLobbyButton = document.querySelector("#join-lobby-button")
 const lobbyCodeDisplay = document.querySelector("#lobby-code-display")
+const lobbyLinkDisplay = document.querySelector("#lobby-link-display")
 
 const openLobbiesRefreshButton = document.querySelector("#open-lobbies-refresh")
 const openLobbiesDiv = document.querySelector("#open-lobbies")
@@ -26,7 +27,13 @@ const updateLobbyState = (data) => {
     inLobbySection.style.display = null
     lobbyNameHeader.textContent = data.name
     toggleInGameGui(false)
+    
     lobbyCodeDisplay.textContent = data.code
+
+    const { protocol, hostname, port } = window.location
+    const lobbyLink = `${protocol}//${hostname}${port && ":" + port}#lobby=${data.code}`
+    lobbyLinkDisplay.textContent = lobbyLink
+    lobbyLinkDisplay.href = lobbyLink
 
     playerId = data.playerId
   }
