@@ -214,8 +214,19 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
 
     if(!userId) return callback("user_not_found")
     lobby.leave(userId)
-    users.getUser(userId).setLobby(null)
-    users.getUser(userId).updateLobbyState("You were kicked from the lobby by the host.")
+    const kickedUser = users.getUser(userId)
+    kickedUser.setLobby(null)
+    kickedUser.updateLobbyState("You were kicked from the lobby by the host.")
+    
+    lobby.printToChat([
+      {
+        text: `${kickedUser.name} was kicked by the host.`,
+        style: {
+          italic: true,
+          colour: "blue"
+        }
+      }
+    ])
   })
 
   socket.on("send_chat", (data, callback) => {
