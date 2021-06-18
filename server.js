@@ -71,11 +71,13 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
   })
 
   socket.on("create_lobby", (data, callback) => {
-    if(!callback) return
+    const requestValidation = helpers.validateRequest(callback, socket, {
+      requireCallback: true,
+      requireUser: true,
+    })
+    if(!requestValidation) return
+    const { user } = requestValidation
 
-    const user = users.getUser(socket.id)
-
-    if(!user) return callback("not_logged_in")
     if(user.getLobby()) return callback("already_in_lobby")
 
 
@@ -109,11 +111,13 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
   })
 
   socket.on("join_lobby", (data, callback) => {
-    if(!callback) return
-
-    const user = users.getUser(socket.id)
-
-    if(!user) return callback("not_logged_in")
+    const requestValidation = helpers.validateRequest(callback, socket, {
+      requireCallback: true,
+      requireUser: true,
+    })
+    if(!requestValidation) return
+    const { user } = requestValidation
+    
     if(user.getLobby()) return callback("already_in_lobby")
     if(!data.code) return callback("no_lobby_code")
 
@@ -140,24 +144,25 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
 
 
   socket.on("leave_lobby", (data, callback) => {
-    if(!callback) return
-
-    const user = users.getUser(socket.id)
-    if(!user) return callback("not_logged_in")
-    if(!user.getLobby()) return callback("not_in_lobby")
-
-    const lobbyCode = user.getLobby()
-    const lobby = lobbies.getLobby(lobbyCode)
+    const requestValidation = helpers.validateRequest(callback, socket, {
+      requireCallback: true,
+      requireUser: true,
+      requireLobby: true,
+    })
+    if(!requestValidation) return
+    const { user, lobby } = requestValidation
+    
     lobby.leave(user.id)
     user.setLobby(null)
 
-    console.log(`${user.id} left lobby ${lobbyCode}`)
+    console.log(`${user.id} left lobby ${lobby.code}`)
 
     callback(null, {})
   })
 
   socket.on("get_lobbies", (data, callback) => {
-    if(!callback) return
+    const requestValidation = helpers.validateRequest(callback, socket, { requireCallback: true })
+    if(!requestValidation) return
 
     let max = parseInt(data.max) || 5
     max = Math.min(Math.max(max, 1), 10)
@@ -166,15 +171,14 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
   })
 
   socket.on("edit_lobby_setting", (data, callback) => {
-    if(!callback) return
-    const user = users.getUser(socket.id)
-    if(!user) return callback("not_logged_in")
-    const lobbyId = user.getLobby()
-    if(!lobbyId) return callback("not_in_lobby")
-    const lobby = lobbies.getLobby(lobbyId)
-    if(!lobby) return callback("lobby_not_found")
-
-    if(lobby.getHost() !== user.id) return callback("no_host_permission")
+    const requestValidation = helpers.validateRequest(callback, socket, {
+      requireCallback: true,
+      requireUser: true,
+      requireLobby: true,
+      requireHost: true,
+    })
+    if(!requestValidation) return
+    const { lobby } = requestValidation
 
     if(data.started) {
       if(lobby.getInGame()) {
@@ -187,15 +191,14 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
   })
 
   socket.on("kick_player", (data, callback) => {
-    if(!callback) return
-    const user = users.getUser(socket.id)
-    if(!user) return callback("not_logged_in")
-    const lobbyId = user.getLobby()
-    if(!lobbyId) return callback("not_in_lobby")
-    const lobby = lobbies.getLobby(lobbyId)
-    if(!lobby) return callback("lobby_not_found")
-
-    if(lobby.getHost() !== user.id) return callback("no_host_permission")
+    const requestValidation = helpers.validateRequest(callback, socket, {
+      requireCallback: true,
+      requireUser: true,
+      requireLobby: true,
+      requireHost: true,
+    })
+    if(!requestValidation) return
+    const { lobby } = requestValidation
 
 
     if(!lobby.hasUser(data.playerId, true)) return callback("player_not_found")
@@ -216,17 +219,17 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
   })
 
   socket.on("send_chat", (data, callback) => {
-    if(!callback) return
+    const requestValidation = helpers.validateRequest(callback, socket, {
+      requireCallback: true,
+      requireUser: true,
+      requireLobby: true,
+    })
+    if(!requestValidation) return
+    const { user, lobby } = requestValidation
 
-    const user = users.getUser(socket.id)
-    if(!user) return callback("not_logged_in")
-    if(!user.getLobby()) return callback("not_in_lobby")
 
     let content = helpers.goodifyUserInput(data.content, true, 250)
     if(!content) return callback("chat_message_empty")
-    
-    const lobby = lobbies.getLobby(user.getLobby())
-    if(!lobby) return callback("lobby_not_found")
 
     lobby.broadcast("receive_chat", {
       lines: [
@@ -242,14 +245,13 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
   })
 
   socket.on("select_colour", (data, callback) => {
-    if(!callback) return
-
-    const user = users.getUser(socket.id)
-    if(!user) return callback("not_logged_in")
-    if(!user.getLobby()) return callback("not_in_lobby")
-    
-    const lobby = lobbies.getLobby(user.getLobby())
-    if(!lobby) return callback("lobby_not_found")
+    const requestValidation = helpers.validateRequest(callback, socket, {
+      requireCallback: true,
+      requireUser: true,
+      requireLobby: true,
+    })
+    if(!requestValidation) return
+    const { user, lobby } = requestValidation
 
     lobby.setUserColour(user.id, data.colour)
   })
