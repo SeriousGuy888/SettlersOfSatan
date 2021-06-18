@@ -4,6 +4,7 @@ const redrawColourButtons = (users) => {
   const colourChoices = ["red", "white", "blue", "orange", "green", "purple", "brown", "pink"]
   colourButtonsContainer.innerHTML = ""
 
+  const docFrag = document.createDocumentFragment()
   for(const colour of colourChoices) {
     const colourButton = document.createElement("button")
     colourButton.className = "colour-button"
@@ -19,8 +20,9 @@ const redrawColourButtons = (users) => {
       })
     }
   
-    colourButtonsContainer.appendChild(colourButton)
+    docFrag.appendChild(colourButton)
   }
+  colourButtonsContainer.appendChild(docFrag)
 
   if(!users) users = []
   for(const user of users) {
