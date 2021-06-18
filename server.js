@@ -231,17 +231,15 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     let content = helpers.goodifyUserInput(data.content, true, 250)
     if(!content) return callback("chat_message_empty")
 
-    lobby.broadcast("receive_chat", {
-      lines: [
-        {
-          text: user.getName(),
-          style: {
-            bold: true
-          }
-        },
-        { text: content }
-      ]
-    })
+    lobby.printToChat([
+      {
+        text: user.getName(),
+        style: {
+          bold: true
+        }
+      },
+      { text: content }
+    ])
   })
 
   socket.on("select_colour", (data, callback) => {

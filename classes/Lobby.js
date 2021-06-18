@@ -107,6 +107,10 @@ class Lobby {
     }
   }
 
+  printToChat(lines) {
+    this.broadcast("receive_chat", { lines })
+  }
+
   getUsers() {
     return this.users
   }
