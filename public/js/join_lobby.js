@@ -24,7 +24,7 @@ const updateLobbyState = (data) => {
 
   if(inLobby) {
     playerId = data.playerId
-    
+
     loggedInSection.style.display = "none"
     inLobbySection.style.display = null
     lobbyNameHeader.textContent = data.name
@@ -38,14 +38,22 @@ const updateLobbyState = (data) => {
     lobbyLinkDisplay.href = lobbyLink
   }
   else {
+    playerId = null
+
     loggedInSection.style.display = null
     inLobbySection.style.display = "none"
     toggleLobbySettingsLocked(false)
     lobbyChatMessagesDiv.innerHTML = ""
 
-    playerId = null
+    if(data.notification) {
+      notifyUser(data.notification)
+    }
   }
 }
+
+socket.on("update_lobby_state", (data) => {
+  updateLobbyState(data)
+})
 
 const socketCallback = (err, data) => {
   if(err) notifyUser(err)

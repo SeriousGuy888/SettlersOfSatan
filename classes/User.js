@@ -28,6 +28,12 @@ class User {
 
     return this.lobbyId
   }
+
+  updateLobbyState(message) {
+    this.getSocket().emit("update_lobby_state", {
+      notification: message
+    })
+  }
 }
 
 module.exports = User

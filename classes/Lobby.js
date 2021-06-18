@@ -27,8 +27,21 @@ class Lobby {
     return Object.keys(this.users).length >= this.maxPlayers
   }
 
-  hasUser(userId) {
-    return userId in this.users
+  hasUser(id, byPlayerId) {
+    if(!byPlayerId) {
+      return id in this.users
+    }
+    else {
+      let hasPlayer = false
+      for(let i in this.users) {
+        if(this.users[i].playerId === id) {
+          hasPlayer = true
+          break
+        }
+      }
+
+      return hasPlayer
+    }
   }
 
   tick() {

@@ -167,16 +167,10 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
 
   socket.on("edit_lobby_setting", (data, callback) => {
     if(!callback) return
-
     const user = users.getUser(socket.id)
     if(!user) return callback("not_logged_in")
-
     const lobbyId = user.getLobby()
     if(!lobbyId) return callback("not_in_lobby")
-    
-    /**
-     * @type {Lobby} lobby
-     */
     const lobby = lobbies.getLobby(lobbyId)
     if(!lobby) return callback("lobby_not_found")
 
@@ -186,11 +180,39 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
       if(lobby.getInGame()) {
         return callback("already_playing")
       }
-      
       const satan = new Satan()
       satan.setUpBoard(4)
       lobby.setInGame(true, satan.board)
     }
+  })
+
+  socket.on("kick_player", (data, callback) => {
+    if(!callback) return
+    const user = users.getUser(socket.id)
+    if(!user) return callback("not_logged_in")
+    const lobbyId = user.getLobby()
+    if(!lobbyId) return callback("not_in_lobby")
+    const lobby = lobbies.getLobby(lobbyId)
+    if(!lobby) return callback("lobby_not_found")
+
+    if(lobby.getHost() !== user.id) return callback("no_host_permission")
+
+
+    if(!lobby.hasUser(data.playerId, true)) return callback("player_not_found")
+
+    let userId
+    const lobbyUsers = lobby.getUsers()
+    for(let lobbyUserId in lobbyUsers) {
+      if(lobbyUsers[lobbyUserId].playerId === data.playerId) {
+        userId = lobbyUserId
+        break
+      }
+    }
+
+    if(!userId) return callback("user_not_found")
+    lobby.leave(userId)
+    users.getUser(userId).setLobby(null)
+    users.getUser(userId).updateLobbyState("You were kicked from the lobby by the host.")
   })
 
   socket.on("send_chat", (data, callback) => {
