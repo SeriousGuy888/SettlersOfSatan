@@ -45,11 +45,13 @@ socket.on("lobby_update", data => {
       kickPlayerButton.textContent = "Kick"
       kickPlayerButton.href = "#"
       kickPlayerButton.onclick = () => {
-        socket.emit("kick_player", {
-          playerId: user.playerId
-        }, (err, dat) => {
-          if(err) notifyUser(err)
-        })
+        if(window.confirm(`Are you sure you want to kick ${user.name}?`)) {
+          socket.emit("kick_player", {
+            playerId: user.playerId
+          }, (err, dat) => {
+            if(err) notifyUser(err)
+          })
+        }
       }
 
       listEntryOptionsDiv.appendChild(kickPlayerButton)
