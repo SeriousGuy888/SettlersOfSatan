@@ -80,7 +80,7 @@ canvasFunctions.draw = () => {
     for (let space of row) {
       if (space) {
         const xOffset = i % 2 !== 0 ? hexApothem : 0
-        canvasFunctions.drawHexagon(x + xOffset, y, space.resource)
+        canvasFunctions.drawHex(x + xOffset, y, space.resource, space.number)
       }
       x += hexApothem * 2
     }
@@ -96,11 +96,11 @@ canvasFunctions.background = (colour) => {
   ctx.fill()
 }
 
-canvasFunctions.drawHexagon = (x, y, resource, number) => { // thieved from https://eperezcosano.github.io/hex-grid/
+canvasFunctions.drawHex = (x, y, resource, number) => {
   const angle = 2 * Math.PI / 6
 
   ctx.beginPath()
-  for (var i = 0; i < 6; i++) {
+  for (var i = 0; i < 6; i++) { // thieved from https://eperezcosano.github.io/hex-grid/
     ctx.lineTo(
       x + hexRadius * Math.cos(angle * i - angle / 2),
       y + hexRadius * Math.sin(angle * i - angle / 2)
@@ -118,6 +118,19 @@ canvasFunctions.drawHexagon = (x, y, resource, number) => { // thieved from http
 
   ctx.fillStyle = resourceColours[resource]
   ctx.fill()
-  ctx.closePath()
   ctx.stroke()
+  ctx.closePath()
+
+  ctx.fillStyle = "#fff"
+  ctx.beginPath()
+  ctx.arc(x, y, hexRadius / 3, 0, 2 * Math.PI)
+  ctx.fill()
+  ctx.stroke()
+  ctx.closePath()
+
+  ctx.fillStyle = "#000"
+  ctx.font = `bold ${hexRadius / 4}px sans-serif`
+  ctx.textAlign = "center"
+  ctx.textBaseline = "middle"
+  ctx.fillText(number.toString(), x, y)
 }
