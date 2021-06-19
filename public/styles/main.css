@@ -18,8 +18,7 @@ html {
     height: 64px;
     margin-right: 10px;
     cursor: pointer;
-    border-radius: 25%;
-    padding: 1%;
+    border-radius: 10%;
 
     color: white; /* White text */
     text-align: center;
