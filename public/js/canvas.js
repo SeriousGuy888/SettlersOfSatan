@@ -147,10 +147,24 @@ canvasFunctions.drawHex = (x, y, resource, number) => {
 canvasFunctions.drawInventory = () => {
   const x = 50
   const y = 50
+  const w = 300
+  const h = 500
 
   ctx.fillStyle = "#efef90"
 
   ctx.beginPath()
-  ctx.rect(x, y, 300, 500)
+  ctx.rect(x, y, w, h)
   ctx.fill()
+
+  const { inventory } = currentGameData.players[playerId]
+  let inc = 0
+  for(let item in inventory) {
+    ctx.fillStyle = "#000"
+    ctx.font = `32px sans-serif`
+    ctx.textAlign = "left"
+    ctx.textBaseline = "top"
+    ctx.fillText(`${item.toUpperCase()}: ${inventory[item]}`, x, y + (35 * inc))
+    inc++
+  }
+  ctx.fillText("High Quality Inventory Display", x, y + h - 50)
 }
