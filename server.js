@@ -263,6 +263,7 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     if(!requestValidation) return
     const { user, lobby } = requestValidation
 
+    if(lobby.getInGame()) return callback("You cannot change your colour while a game is ongoing.")
     lobby.setUserColour(user.id, data.colour)
   })
 })
