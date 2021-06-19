@@ -60,8 +60,10 @@ class Satan {
     let numberCounts = {}
 
     for (let i = 2; i < 13; i++){
-      if (![2,12].includes(i)) numberCounts[i] = 2
-      else numberCounts[i] = 1
+      if (i !== 7){
+        if (![2,12].includes(i)) numberCounts[i] = 2
+        else numberCounts[i] = 1
+      }
     }
 
     // console.log(numberCounts)
@@ -84,10 +86,14 @@ class Satan {
           if (!resourceCounts[hex.resource]) delete resourceCounts[hex.resource]
 
           // console.log(hex.resource)
-
-          hex.number = Object.keys(numberCounts)[Math.floor(Math.random() * Object.keys(numberCounts).length)]
-          numberCounts[hex.number] -= 1
-          if (!numberCounts[hex.number]) delete numberCounts[hex.number]
+          if (hex.resource != "desert"){
+            hex.number = Object.keys(numberCounts)[Math.floor(Math.random() * Object.keys(numberCounts).length)]
+            numberCounts[hex.number] -= 1
+            if (!numberCounts[hex.number]) delete numberCounts[hex.number]
+          }
+          else {
+            hex.number = "robber"
+          }
 
           this.board[this.board.length - 1].push(hex)
         }
