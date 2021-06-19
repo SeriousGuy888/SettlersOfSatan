@@ -135,12 +135,6 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
 
     user.setLobby(lobbyCode)
     console.log(`${user.id} joined lobby ${lobbyCode}`)
-    lobby.printToChat([
-      {
-        text: `${user.getName()} joined the lobby`,
-        style: { colour: "blue" }
-      }
-    ])
 
     callback(null, {
       name: lobby.getName(),
@@ -163,13 +157,6 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     user.setLobby(null)
 
     console.log(`${user.id} left lobby ${lobby.code}`)
-    lobby.printToChat([
-      {
-        text: `${user.getName()} left the lobby`,
-        style: { colour: "red" }
-      }
-    ])
-
     callback(null, {})
   })
 

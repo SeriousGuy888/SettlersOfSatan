@@ -59,6 +59,11 @@ class Lobby {
       playerId: `${Date.now()}${Math.round(Math.random() * 1000).toString().padStart(3, "0")}`,
     }
 
+    this.printToChat([{
+      text: `${users.getUser(userId).getName()} joined the lobby`,
+      style: { colour: "blue" }
+    }])
+
     this.setUserColour(userId)
 
     lobbyHelpers.emitLobbyUpdate(this)
@@ -70,6 +75,11 @@ class Lobby {
       let wasHost = this.users[userId].host
 
       this.takenColours.delete(this.users[userId].colour)
+
+      this.printToChat([{
+        text: `${users.getUser(userId).getName()} left the lobby`,
+        style: { colour: "red" }
+      }])
 
       delete this.users[userId]
       lobbyHelpers.emitLobbyUpdate(this)
