@@ -129,9 +129,11 @@ canvasFunctions.drawHex = (x, y, resource, number) => {
   ctx.stroke()
   ctx.closePath()
 
-  ctx.fillStyle = "#000"
-  ctx.font = `bold ${hexRadius / 4}px sans-serif`
-  ctx.textAlign = "center"
-  ctx.textBaseline = "middle"
-  ctx.fillText(number.toString(), x, y)
+  if(number) {
+    ctx.fillStyle = "#000"
+    ctx.font = `bold ${hexRadius / 4}px sans-serif`
+    ctx.textAlign = "center"
+    ctx.textBaseline = "middle"
+    ctx.fillText(number.toString(), x, y)
+  }
 }
