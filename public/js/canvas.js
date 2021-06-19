@@ -43,7 +43,9 @@ let board
 
 setInterval(() => {
   if(drawLoop) {
-    if (board) canvasFunctions.draw()
+    if(board) {
+      canvasFunctions.draw()
+    }
   }
 }, 500)
 

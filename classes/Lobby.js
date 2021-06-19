@@ -160,17 +160,17 @@ class Lobby {
     lobbyHelpers.emitLobbyUpdate(this)
   }
 
-  setInGame(inGame, board) {
+  setInGame(inGame, game) {
     this.inGame = inGame
     lobbyHelpers.emitLobbyUpdate(this)
     if(inGame) {
-      this.game = new Satan(this.code)
+      this.game = game
       for(const i in this.users) {
         const user = this.users[i]
         this.game.setPlayer(user.playerId, new Player(user.colour))
       }
     }
-    this.broadcast("game_started_update", { started: inGame, gameBoard: board})
+    this.broadcast("game_started_update", { started: inGame, gameBoard: game.board })
   }
 
   setUserColour(userId, colour) {

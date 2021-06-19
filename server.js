@@ -184,9 +184,9 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
       if(lobby.getInGame()) {
         return callback("already_playing")
       }
-      const satan = new Satan()
+      const satan = new Satan(lobby.code)
       satan.setUpBoard(4)
-      lobby.setInGame(true, satan.board)
+      lobby.setInGame(true, satan)
     }
   })
 

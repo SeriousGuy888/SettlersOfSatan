@@ -7,7 +7,6 @@ const toggleInGameGui = (render, board) => {
     lobbyPlayingDiv.style.display = null
 
     canvasFunctions.setup(board)
-    
   }
   else {
     lobbyWaitingDiv.style.display = null
@@ -22,6 +21,7 @@ socket.on("game_started_update", data => {
     toggleInGameGui(true, data.gameBoard)
   }
   else {
+    toggleInGameGui(false)
     notifyUser("game ended")
   }
 })
