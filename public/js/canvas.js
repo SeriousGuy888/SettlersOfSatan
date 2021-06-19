@@ -89,6 +89,8 @@ canvasFunctions.draw = () => {
       y += hexRadius * 2 - hexRadius / 2
     }
   }
+
+  canvasFunctions.drawInventory()
 }
 
 canvasFunctions.background = (colour) => {
@@ -140,4 +142,15 @@ canvasFunctions.drawHex = (x, y, resource, number) => {
     ctx.textBaseline = "middle"
     ctx.fillText(number.toString(), x, y)
   }
+}
+
+canvasFunctions.drawInventory = () => {
+  const x = 50
+  const y = 50
+
+  ctx.fillStyle = "#efef90"
+
+  ctx.beginPath()
+  ctx.rect(x, y, 300, 500)
+  ctx.fill()
 }
