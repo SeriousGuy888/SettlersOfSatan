@@ -26,10 +26,12 @@ exports.getTopLobbies = (max) => {
   const foundLobbies = []
   for(let lobbyId in lobbies) {
     let lobbyInfo = this.getPublicLobbyInfo(lobbyId)
-    foundLobbies.push(lobbyInfo)
-    inc++
-    if(inc >= max) {
-      break
+    if(!lobbyInfo.inGame) {
+      foundLobbies.push(lobbyInfo)
+      inc++
+      if(inc >= max) {
+        break
+      }
     }
   }
 

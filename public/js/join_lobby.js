@@ -123,7 +123,7 @@ openLobbiesRefreshButton.addEventListener("click", () => {
         }
       }
       else {
-        openLobbiesDiv.textContent = "There are no open lobbies right now :("
+        openLobbiesDiv.textContent = "There are no lobbies queuing for a game that you can join right now :("
       }
     }
   })
