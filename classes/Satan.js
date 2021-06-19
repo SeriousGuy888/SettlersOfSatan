@@ -19,10 +19,15 @@ class Satan {
 
   tick() {
     const lobby = lobbies.getLobby(this.lobbyId)
-    lobby.broadcast("game_update", {
+
+    const tickData = {
       board: this.board,
       players: this.players,
-    })
+    }
+    if(JSON.stringify(tickData) !== this.prevTickData) {
+      lobby.broadcast("game_update", tickData)
+      this.prevTickData = JSON.stringify(tickData)
+    }
   }
 
   getPlayers() {
