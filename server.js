@@ -51,7 +51,7 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     const user = users.setUser(socket.id, new User(socket.id, nickname, socket))
 
     console.log(`${user.name} (${user.id}) has logged in.`)
-    callback(null, { name: nickname })
+    callback(null, { name: nickname, colourChoices: lobbies.colourChoices })
   })
 
   socket.on("logout", (data, callback) => {

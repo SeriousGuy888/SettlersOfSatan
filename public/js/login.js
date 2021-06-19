@@ -10,7 +10,9 @@ const logoutButton = document.querySelector("#logout-button")
 const playingAs = document.querySelector("#playing-as")
 
 
-const updateLoggedInState = (loggedIn, name) => {
+let colourChoices
+
+const updateLoggedInState = (loggedIn, data) => {
   if(loggedIn) {
     loggedOutSection.style.display = "none"
     loggedInSection.style.display = null
@@ -28,7 +30,8 @@ const updateLoggedInState = (loggedIn, name) => {
   }
 
   playingAs.style.display = loggedIn ? "block" : "none"
-  loggedInNickname.textContent = name
+  loggedInNickname.textContent = data.name
+  colourChoices = data.colourChoices
 }
 
 loginButton.addEventListener("click", () => {
@@ -39,7 +42,7 @@ loginButton.addEventListener("click", () => {
     name,
   }, (err, data) => {
     if(err) notifyUser(err)
-    else updateLoggedInState(true, data.name)
+    else updateLoggedInState(true, data)
   })
 })
 

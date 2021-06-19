@@ -4,7 +4,7 @@ const Player = require("./Player.js")
 const users = require("../server/users.js")
 const lobbies = require("../server/lobbies.js")
 
-const allowedColours = ["red", "blue", "orange", "green", "lime", "purple", "brown", "pink"]
+const { colourChoices } = lobbies
 
 class Lobby {
   constructor(name) {
@@ -177,11 +177,11 @@ class Lobby {
     if(this.takenColours.has(colour)) return
 
     if(!colour) {
-      const availableColours = allowedColours.filter(loopCol => !this.takenColours.has(loopCol))
+      const availableColours = colourChoices.filter(loopCol => !this.takenColours.has(loopCol))
       colour = availableColours[Math.floor(Math.random() * availableColours.length)]
     }
 
-    if(!allowedColours.includes(colour)) return
+    if(!colourChoices.includes(colour)) return
 
     this.takenColours.delete(this.users[userId].colour)
     this.users[userId].colour = colour

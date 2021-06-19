@@ -1,7 +1,6 @@
 const colourButtonsContainer = document.querySelector("#colour-buttons-container")
 
 const redrawColourButtons = (users) => {
-  const colourChoices = ["red", "blue", "orange", "green", "lime", "purple", "brown", "pink"]
   colourButtonsContainer.innerHTML = ""
 
   const docFrag = document.createDocumentFragment()
