@@ -77,10 +77,12 @@ canvasFunctions.draw = () => {
       const xCenter = canvasWidth / 2 - rowWidth
       let x = xCenter
   
-      for (let space of row) {
-        if (space) {
+      for (let hex of row) {
+        if (hex) {
           const xOffset = i % 2 !== 0 ? hexApothem : 0
-          canvasFunctions.drawHex(x + xOffset, y, space.resource, space.number)
+          canvasFunctions.drawHex(x + xOffset, y, hex.resource, hex.number)
+          hex.x = x
+          hex.y = y
         }
         x += hexApothem * 2
       }
@@ -130,7 +132,7 @@ canvasFunctions.drawHex = (x, y, resource, number) => {
     ctx.stroke()
     ctx.closePath()
   }
-  
+
   if(number) {
     ctx.fillStyle = "#000"
     ctx.font = `bold ${hexRadius / 4}px sans-serif`
