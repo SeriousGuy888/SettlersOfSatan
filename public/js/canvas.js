@@ -39,22 +39,18 @@ const hexRadius = 100
 const hexApothem = Math.sqrt(hexRadius ** 2 - (hexRadius / 2) ** 2)
 
 let drawLoop = false
-let board
 
 setInterval(() => {
   if(drawLoop) {
-    if(board) {
-      canvasFunctions.draw()
-    }
+    canvasFunctions.draw()
   }
 }, 500)
 
 const canvasFunctions = {}
-canvasFunctions.setup = (setupBoard) => {
+canvasFunctions.setup = () => {
   gameCanvas.width = canvasWidth
   gameCanvas.height = canvasHeight
   drawLoop = true
-  board = setupBoard
 }
 canvasFunctions.stop = () => drawLoop = false
 
@@ -70,23 +66,26 @@ canvasFunctions.draw = () => {
   //   }
   // }
 
+  let board = currentGameData?.board
 
-  let y = hexRadius
-  for (let i in board) {
-    const row = board[i]
-
-    const rowWidth = (row.length - 1) * hexApothem
-    const xCenter = canvasWidth / 2 - rowWidth
-    let x = xCenter
-
-    for (let space of row) {
-      if (space) {
-        const xOffset = i % 2 !== 0 ? hexApothem : 0
-        canvasFunctions.drawHex(x + xOffset, y, space.resource, space.number)
+  if(board) {
+    let y = hexRadius
+    for (let i in board) {
+      const row = board[i]
+  
+      const rowWidth = (row.length - 1) * hexApothem
+      const xCenter = canvasWidth / 2 - rowWidth
+      let x = xCenter
+  
+      for (let space of row) {
+        if (space) {
+          const xOffset = i % 2 !== 0 ? hexApothem : 0
+          canvasFunctions.drawHex(x + xOffset, y, space.resource, space.number)
+        }
+        x += hexApothem * 2
       }
-      x += hexApothem * 2
+      y += hexRadius * 2 - hexRadius / 2
     }
-    y += hexRadius * 2 - hexRadius / 2
   }
 }
 

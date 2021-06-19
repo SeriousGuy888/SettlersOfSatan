@@ -170,7 +170,7 @@ class Lobby {
         this.game.setPlayer(user.playerId, new Player(user.colour))
       }
     }
-    this.broadcast("game_started_update", { started: inGame, gameBoard: game.board })
+    this.broadcast("game_started_update", { started: inGame })
   }
 
   setUserColour(userId, colour) {

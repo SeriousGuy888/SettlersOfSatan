@@ -1,12 +1,12 @@
 const lobbyWaitingDiv = document.querySelector("#lobby-waiting")
 const lobbyPlayingDiv = document.querySelector("#lobby-playing")
 
-const toggleInGameGui = (render, board) => {
+const toggleInGameGui = (render) => {
   if(render) {
     lobbyWaitingDiv.style.display = "none"
     lobbyPlayingDiv.style.display = null
 
-    canvasFunctions.setup(board)
+    canvasFunctions.setup()
   }
   else {
     lobbyWaitingDiv.style.display = null
@@ -18,7 +18,7 @@ const toggleInGameGui = (render, board) => {
 
 socket.on("game_started_update", data => {
   if(data.started) {
-    toggleInGameGui(true, data.gameBoard)
+    toggleInGameGui(true)
   }
   else {
     toggleInGameGui(false)
