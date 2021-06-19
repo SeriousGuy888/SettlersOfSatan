@@ -138,7 +138,7 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     lobby.printToChat([
       {
         text: `${user.getName()} joined the lobby`,
-        style: { colour: "green" }
+        style: { colour: "blue" }
       }
     ])
 
@@ -233,11 +233,8 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     
     lobby.printToChat([
       {
-        text: `${kickedUser.name} was kicked by the host.`,
-        style: {
-          italic: true,
-          colour: "blue"
-        }
+        text: `${kickedUser.name} was kicked by the host`,
+        style: { colour: "red" }
       }
     ])
   })
