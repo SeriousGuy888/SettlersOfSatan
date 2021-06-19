@@ -78,7 +78,7 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     if(!requestValidation) return
     const { user } = requestValidation
 
-    if(user.getLobby()) return callback("already_in_lobby")
+    if(user.getLobby()) return callback("You are already in a lobby!")
 
 
     let lobbyName = helpers.goodifyUserInput(data.name, true, 100)
@@ -90,7 +90,7 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     const lobbyCode = createdLobby.getCode()
 
     if(lobbies.getLobby(lobbyCode)) {
-      return callback("duplicate_lobby_code")
+      return callback("Could not generate a unique lobby code. Please try again.")
     }
 
     lobbies.setLobby(lobbyCode, createdLobby)
@@ -118,19 +118,19 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     if(!requestValidation) return
     const { user } = requestValidation
     
-    if(user.getLobby()) return callback("already_in_lobby")
-    if(!data.code) return callback("no_lobby_code")
+    if(user.getLobby()) return callback("You are already in a lobby!")
+    if(!data.code) return callback("No lobby code provided.")
 
     const lobbyCode = data.code.toUpperCase()
     const lobby = lobbies.getLobby(lobbyCode)
-    if(!lobby) return callback("lobby_not_found")
+    if(!lobby) return callback("This lobby could not be found.")
 
-    if(lobby.isFull()) return callback("lobby_full")
-    if(lobby.getInGame()) return callback("lobby_in_game")
+    if(lobby.isFull()) return callback("This lobby is full.")
+    if(lobby.getInGame()) return callback("This lobby is already playing.")
     
     const lobbyJoined = lobby.join(user.id)
     if(!lobbyJoined) {
-      return callback("lobby_error")
+      return callback("Lobby error.")
     }
 
     user.setLobby(lobbyCode)
@@ -202,7 +202,7 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     const { lobby } = requestValidation
 
 
-    if(!lobby.hasUser(data.playerId, true)) return callback("player_not_found")
+    if(!lobby.hasUser(data.playerId, true)) return callback("Player not found.")
 
     let userId
     const lobbyUsers = lobby.getUsers()
