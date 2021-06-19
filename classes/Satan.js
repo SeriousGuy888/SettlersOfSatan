@@ -29,6 +29,10 @@ class Satan {
     return this.players
   }
 
+  getPlayer(playerId) {
+    return this.players[playerId]
+  }
+
   setPlayer(playerId, data) {
     if(!data) delete this.players[playerId]
     else this.players[playerId] = data
