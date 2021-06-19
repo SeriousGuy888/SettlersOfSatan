@@ -1,7 +1,7 @@
 const colourButtonsContainer = document.querySelector("#colour-buttons-container")
 
 const redrawColourButtons = (users) => {
-  const colourChoices = ["red", "white", "blue", "orange", "green", "purple", "brown", "pink"]
+  const colourChoices = ["red", "blue", "orange", "green", "lime", "purple", "brown", "pink"]
   colourButtonsContainer.innerHTML = ""
 
   const docFrag = document.createDocumentFragment()
@@ -12,7 +12,7 @@ const redrawColourButtons = (users) => {
     colourButton.style.backgroundColor = colour
     colourButton.textContent = colour
     
-    if(colour === "white") colourButton.style.color = "black"
+    if(colour === "lime" || colour === "pink") colourButton.style.color = "black"
   
     colourButton.onclick = () => {
       socket.emit("select_colour", { colour }, (err, data) => {
