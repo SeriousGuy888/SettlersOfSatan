@@ -126,6 +126,7 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     if(!lobby) return callback("lobby_not_found")
 
     if(lobby.isFull()) return callback("lobby_full")
+    if(lobby.getInGame()) return callback("lobby_in_game")
     
     const lobbyJoined = lobby.join(user.id)
     if(!lobbyJoined) {
