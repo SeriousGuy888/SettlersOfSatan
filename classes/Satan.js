@@ -14,6 +14,21 @@ class Satan {
   constructor(lobbyId) {
     this.lobbyId = lobbyId
     this.board = []
+
+    this.settlementGrid = [
+      [null, true, true, true, null, null],
+      [null, true, true, true, true, null],
+      [null, true, true, true, true, null],
+      [true, true, true, true, true, null],
+      [true, true, true, true, true, null],
+      [true, true, true, true, true, true],
+      [true, true, true, true, true, null],
+      [true, true, true, true, true, null],
+      [null, true, true, true, true, null],
+      [null, true, true, true, true, null],
+      [null, true, true, true, null, null]
+    ]
+    
     this.players = {}
   }
 

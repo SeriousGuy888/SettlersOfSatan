@@ -3,7 +3,7 @@ const Inventory = require("./Inventory.js")
 class Player {
   constructor(colour) {
     this.colour = colour
-    this.inventory = new Inventory(5, 4, 15)
+    this.inventory = new Inventory(2, 0, 2)
     this.cards = []
   }
 
