@@ -14,7 +14,7 @@ socket.on("lobby_update", data => {
 
   let isHost = false
   users.forEach(u => {
-    if(u.playerId === playerId) {
+    if(u.playerId === playerId && u.host) {
       isHost = true
     }
   })
