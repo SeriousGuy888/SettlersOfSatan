@@ -52,7 +52,7 @@ canvasFunctions.setup = () => {
   gameCanvas.width = canvasWidth
   gameCanvas.height = canvasHeight
 
-  canvasElems.push(new canvasClasses.Button("Oeuf", 50, 50))
+  canvasElems.push(new canvasClasses.Button("Oeuf", 50, 50, () => alert("sdkjfnsdkfg")))
 
   drawLoop = true
 }
@@ -176,6 +176,13 @@ canvasFunctions.drawInventory = () => {
   ctx.fillText("High Quality Inventory Display", x, y + h - 50)
 }
 
+gameCanvas.addEventListener("click", e => {
+  for(const elem of canvasElems) {
+    if(elem.onClick) {
+      elem.onClick()
+    }
+  }
+})
 gameCanvas.addEventListener("mousemove", e => mousePos = canvasFunctions.getMousePos(e))
 canvasFunctions.getMousePos = (e) => {
   var rect = gameCanvas.getBoundingClientRect()

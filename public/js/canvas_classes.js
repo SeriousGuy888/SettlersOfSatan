@@ -14,10 +14,11 @@ canvasClasses.Text = class {
   }
 }
 canvasClasses.Button = class {
-  constructor(label, x, y) {
+  constructor(label, x, y, func) {
     this.label = label
     this.x = x
     this.y = y
+    this.func = func
   }
 
   getFontSize() { return 24 }
@@ -60,5 +61,11 @@ canvasClasses.Button = class {
 
     ctx.fillStyle = "#000"
     ctx.fillText(label, x + buttonPadding / 2, y + buttonPadding / 2)
+  }
+
+  onClick() {
+    if(this.isHovered() && this.func) {
+      this.func()
+    }
   }
 }
