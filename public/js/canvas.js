@@ -7,6 +7,7 @@ const canvasWidth = 1920
 const canvasHeight = 1080
 const canvasElems = []
 
+let mousePos = { x: 0, y: 0 }
 
 const canvasFullscreenButton = document.querySelector("#canvas-fullscreen")
 canvasFullscreenButton.addEventListener("click", () => {
@@ -44,27 +45,24 @@ setInterval(() => {
   if(drawLoop) {
     canvasFunctions.draw()
   }
-}, 500)
+}, 1000 / 60)
 
 const canvasFunctions = {}
 canvasFunctions.setup = () => {
   gameCanvas.width = canvasWidth
   gameCanvas.height = canvasHeight
+
+  canvasElems.push(new canvasClasses.Button("Oeuf", 50, 50))
+
   drawLoop = true
 }
-canvasFunctions.stop = () => drawLoop = false
+canvasFunctions.stop = () => {
+  canvasElems.splice(0, canvasElems.length)
+  drawLoop = false
+}
 
 canvasFunctions.draw = () => {
   canvasFunctions.background()
-
-  // for(const elem of canvasElems) {
-  //   if(elem.render) {
-  //     elem.render()
-  //   }
-  //   if(elem.delete) {
-  //     canvasElems.splice(canvasElems.indexOf(elem), 1)
-  //   }
-  // }
 
   let board = currentGameData?.board
 
@@ -91,6 +89,15 @@ canvasFunctions.draw = () => {
   }
 
   canvasFunctions.drawInventory()
+
+  for(const elem of canvasElems) {
+    if(elem.render) {
+      elem.render()
+    }
+    if(elem.delete) {
+      canvasElems.splice(canvasElems.indexOf(elem), 1)
+    }
+  }
 }
 
 canvasFunctions.background = (colour) => {
@@ -167,4 +174,17 @@ canvasFunctions.drawInventory = () => {
     inc++
   }
   ctx.fillText("High Quality Inventory Display", x, y + h - 50)
+}
+
+gameCanvas.addEventListener("mousemove", e => mousePos = canvasFunctions.getMousePos(e))
+canvasFunctions.getMousePos = (e) => {
+  var rect = gameCanvas.getBoundingClientRect()
+
+  const widthRatio = rect.width / canvasWidth
+  const heightRatio = rect.height / canvasHeight
+
+  return {
+    x: (e.clientX - rect.left) / widthRatio,
+    y: (e.clientY - rect.top) / heightRatio,
+  }
 }

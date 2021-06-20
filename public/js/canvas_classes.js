@@ -1,14 +1,7 @@
 const canvasClasses = {}
 
-canvasClasses.BaseElem = class {
-  constructor() {
-    this.spawnTimestamp = Date.now()
-    this.delete = false
-  }
-}
-canvasClasses.Text = class extends canvasClasses.BaseElem {
+canvasClasses.Text = class {
   constructor(text, x, y) {
-    super()
     this.text = text
     this.x = x
     this.y = y
@@ -20,23 +13,52 @@ canvasClasses.Text = class extends canvasClasses.BaseElem {
     ctx.fillText(this.text, this.x, this.y)
   }
 }
-canvasClasses.Button = class extends canvasClasses.BaseElem {
+canvasClasses.Button = class {
   constructor(label, x, y) {
-    super()
     this.label = label
     this.x = x
     this.y = y
   }
 
-  getLabel() {
-    return this.label
+  getFontSize() { return 24 }
+  getPadding() { return 20 }
+
+  getDimensions() {
+    const padding = this.getPadding()
+    const width = ctx.measureText(this.label).width
+    const height = this.getFontSize()
+
+    return {
+      width: width + padding,
+      height: height + padding
+    }
   }
 
-  getX() {
-    return this.x
+  isHovered() {
+    const { x, y } = this
+    const { width, height } = this.getDimensions()
+
+    return (
+      mousePos.x >= x &&
+      mousePos.y >= y &&
+      mousePos.x <= x + width &&
+      mousePos.y <= y + height
+    )
   }
 
-  getY() {
-    return this.y
+  render() {
+    const fontSize = this.getFontSize()
+    ctx.font = `${fontSize}px sans-serif`
+
+    const { label, x, y } = this
+    const { width, height } = this.getDimensions()
+
+    const buttonPadding = this.getPadding()
+
+    ctx.fillStyle = this.isHovered() ? "#94a9ff" : "#3b61ff"
+    ctx.fillRect(x, y, width, height)
+
+    ctx.fillStyle = "#000"
+    ctx.fillText(label, x + buttonPadding / 2, y + buttonPadding / 2)
   }
 }
