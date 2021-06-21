@@ -52,7 +52,9 @@ canvasFunctions.setup = () => {
   gameCanvas.width = canvasWidth
   gameCanvas.height = canvasHeight
 
-  canvasElems.push(new canvasClasses.Button("Oeuf", 50, 50, () => alert("sdkjfnsdkfg")))
+  canvasElems.push(new canvasClasses.Button("Place", 60, 60, () => alert("sdkjfnsdkfg")))
+  canvasElems.push(new canvasClasses.Button("Place", 60, 120, () => alert("sdkjfnsdkfg")))
+  canvasElems.push(new canvasClasses.Button("Place", 60, 180, () => alert("sdkjfnsdkfg")))
 
   drawLoop = true
 }
