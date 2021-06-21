@@ -10,7 +10,7 @@ class Lobby {
   constructor(name) {
     let lobbyCode = ""
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    for(let i = 0; i < 5; i++) {
+    for(let i = 0; i < 6; i++) {
       lobbyCode += chars.charAt(Math.floor(Math.random() * chars.length))
     }
 
