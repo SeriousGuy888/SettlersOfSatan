@@ -10,6 +10,10 @@ class Player {
   getColour() {
     return this.colour
   }
+
+  getInventory() {
+    return this.inventory
+  }
 }
 
 module.exports = Player
