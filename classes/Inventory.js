@@ -13,9 +13,9 @@ class Inventory {
   setCities(count) { this.cities = count }
   setRoads(count) { this.roads = count }
 
-  addSettlement(amt) { this.settlements += amt }
-  addCity(amt) { this.cities += amt }
-  addRoad(amt) { this.roads += amt }
+  addSettlement(amt = 1) { this.settlements += amt }
+  addCity(amt = 1) { this.cities += amt }
+  addRoad(amt = 1) { this.roads += amt }
 }
 
 module.exports = Inventory
