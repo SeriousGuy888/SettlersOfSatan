@@ -52,9 +52,7 @@ canvasFunctions.setup = () => {
   gameCanvas.width = canvasWidth
   gameCanvas.height = canvasHeight
 
-  canvasElems.push(new canvasClasses.Button("Place", 60, 60, () => alert("sdkjfnsdkfg")))
-  canvasElems.push(new canvasClasses.Button("Place", 60, 120, () => alert("sdkjfnsdkfg")))
-  canvasElems.push(new canvasClasses.Button("Place", 60, 180, () => alert("sdkjfnsdkfg")))
+  canvasFunctions.setupInventory()
 
   drawLoop = true
 }
@@ -153,29 +151,38 @@ canvasFunctions.drawHex = (x, y, resource, number) => {
   }
 }
 
+canvasFunctions.setupInventory = () => {
+  // i hate web programming so much
+  // i guess we are having one place button for everything
+  canvasElems.push(new canvasClasses.Button("Place Item", 50, 180, () => {
+    socket.emit("send_game_update", {}, (err, data) => {
+      
+    })
+  }))
+}
 canvasFunctions.drawInventory = () => {
+  const inventory = currentGameData?.players[playerId].inventory
+  if(!inventory) return
+
   const x = 50
   const y = 50
   const w = 300
   const h = 500
 
-  ctx.fillStyle = "#efef90"
+  // ctx.fillStyle = "#efef90"
 
-  ctx.beginPath()
-  ctx.rect(x, y, w, h)
-  ctx.fill()
+  // ctx.beginPath()
+  // ctx.rect(x, y, w, h)
+  // ctx.fill()
 
-  const { inventory } = currentGameData.players[playerId]
-  let inc = 0
-  for(let item in inventory) {
-    ctx.fillStyle = "#000"
-    ctx.font = `32px sans-serif`
-    ctx.textAlign = "left"
-    ctx.textBaseline = "top"
-    ctx.fillText(`${item.toUpperCase()}: ${inventory[item]}`, x, y + (35 * inc))
-    inc++
-  }
-  ctx.fillText("High Quality Inventory Display", x, y + h - 50)
+  ctx.fillStyle = "#000"
+  ctx.font = `32px sans-serif`
+  ctx.textAlign = "left"
+  ctx.textBaseline = "top"
+
+  ctx.fillText(`Settlements: ${inventory.settlements}`, x, y)
+  ctx.fillText(`Cities: ${inventory.cities}`, x, y + 40)
+  ctx.fillText(`Roads: ${inventory.roads}`, x, y + 80)
 }
 
 gameCanvas.addEventListener("click", e => {

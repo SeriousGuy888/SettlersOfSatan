@@ -1,15 +1,21 @@
 const canvasClasses = {}
 
 canvasClasses.Text = class {
-  constructor(text, x, y) {
+  constructor(text, x, y, font, colour, alignment, baseline) {
     this.text = text
     this.x = x
     this.y = y
+    this.font = font
+    this.colour = colour
+    this.alignment = alignment
+    this.baseline = baseline
   }
 
   render() {
-    ctx.fillStyle = "#000"
-    ctx.font = "18px sans-serif"
+    ctx.fillStyle =     this.colour     || "#000"
+    ctx.font =          this.font       || "18px sans-serif"
+    ctx.textAlign =     this.alignment  || "left"
+    ctx.textBaseline =  this.baseline   || "top"
     ctx.fillText(this.text, this.x, this.y)
   }
 }
@@ -56,7 +62,7 @@ canvasClasses.Button = class {
 
     const buttonPadding = this.getPadding()
 
-    ctx.fillStyle = this.isHovered() ? "#94a9ff" : "#3b61ff"
+    ctx.fillStyle = this.isHovered() ? "#94a9ff" : "#617fff"
     ctx.fillRect(x, y, width, height)
 
     ctx.fillStyle = "#000"

@@ -266,4 +266,21 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     if(lobby.getInGame()) return callback("You cannot change your colour while a game is ongoing.")
     lobby.setUserColour(user.id, data.colour)
   })
+
+  socket.on("send_game_update", (data, callback) => {
+    const requestValidation = helpers.validateRequest(callback, socket, {
+      requireCallback: true,
+      requireUser: true,
+      requireLobby: true,
+    })
+    if(!requestValidation) return
+    const { user, lobby } = requestValidation
+
+    if(!lobby.getInGame()) return callback("not_playing")
+
+    const players = lobby.getGame().getPlayers()
+    for(let id in players) {
+      players[id].getInventory().addCity()
+    }
+  })
 })
