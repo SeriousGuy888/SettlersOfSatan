@@ -41,6 +41,8 @@ const hexApothem = Math.sqrt(hexRadius ** 2 - (hexRadius / 2) ** 2)
 
 let drawLoop = false
 
+let placeMode = false
+
 setInterval(() => {
   if(drawLoop) {
     canvasFunctions.draw()
@@ -65,18 +67,21 @@ canvasFunctions.draw = () => {
   canvasFunctions.background()
 
   let board = currentGameData?.board
+  let settlementGrid = currentGameData?.settlementGrid
 
+  const startY = hexRadius
+  const yOffsetPerRow = hexRadius * 2 - hexRadius / 2
   if(board) {
-    let y = hexRadius
-    for (let i in board) {
+    let y = startY
+    for(let i in board) {
       const row = board[i]
   
       const rowWidth = (row.length - 1) * hexApothem
       const xCenter = canvasWidth / 2 - rowWidth
       let x = xCenter
   
-      for (let hex of row) {
-        if (hex) {
+      for(let hex of row) {
+        if(hex) {
           const xOffset = i % 2 !== 0 ? hexApothem : 0
           canvasFunctions.drawHex(x + xOffset, y, hex.resource, hex.number)
           hex.x = x
@@ -84,7 +89,30 @@ canvasFunctions.draw = () => {
         }
         x += hexApothem * 2
       }
-      y += hexRadius * 2 - hexRadius / 2
+      y += yOffsetPerRow
+    }
+  }
+  if(settlementGrid) {
+    let y = startY + hexRadius
+    for(let i in settlementGrid) {
+      const row = settlementGrid[i]
+
+      const rowWidth = (row.length - 1) * hexApothem
+      const xCenter = canvasWidth / 2 - rowWidth
+      let x = xCenter
+
+      for(let settlement of row) {
+        if(settlement) {
+          const xOffset = i % 2 !== 0 ? 0 : hexApothem
+
+          ctx.fillStyle = "#de1616"
+          ctx.beginPath()
+          ctx.arc(x + xOffset, y, hexRadius / 5, 0, 2 * Math.PI)
+          ctx.fill()
+        }
+        x += hexApothem * 2
+      }
+      y += yOffsetPerRow
     }
   }
 
@@ -155,9 +183,11 @@ canvasFunctions.setupInventory = () => {
   // i hate web programming so much
   // i guess we are having one place button for everything
   canvasElems.push(new canvasClasses.Button("Place Item", 50, 180, () => {
-    socket.emit("send_game_update", {}, (err, data) => {
+    placeMode = true
+    // alert(JSON.stringify(currentGameData.settlementGrid))
+    // socket.emit("send_game_update", {}, (err, data) => {
       
-    })
+    // })
   }))
 }
 canvasFunctions.drawInventory = () => {

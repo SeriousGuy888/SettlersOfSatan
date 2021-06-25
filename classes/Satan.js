@@ -37,6 +37,7 @@ class Satan {
 
     const tickData = {
       board: this.board,
+      settlementGrid: this.settlementGrid,
       players: this.players,
     }
     if(JSON.stringify(tickData) !== this.prevTickData) {
