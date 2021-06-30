@@ -157,7 +157,6 @@ canvasFunctions.drawHex = (x, y, resource, number, vertexes) => {
   if(vertexes) {
     ctx.fillStyle = "#f00"
     for(let vertPos in vertexes) {
-      console.log("skjfdg")
       ctx.beginPath()
       ctx.arc(x, y + (vertPos === "north" ? -hexRadius : hexRadius), hexRadius / 5, 0, 2 * Math.PI)
       ctx.fill()
