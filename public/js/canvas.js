@@ -82,7 +82,7 @@ canvasFunctions.draw = () => {
       for(let hex of row) {
         if(hex) {
           const xOffset = i % 2 !== 0 ? hexApothem : 0
-          canvasFunctions.drawHex(x + xOffset, y, hex.resource, hex.number)
+          canvasFunctions.drawHex(x + xOffset, y, hex.resource, hex.number, hex.vertexes)
           hex.x = x
           hex.y = y
         }
@@ -112,7 +112,7 @@ canvasFunctions.background = (colour) => {
   ctx.fill()
 }
 
-canvasFunctions.drawHex = (x, y, resource, number) => {
+canvasFunctions.drawHex = (x, y, resource, number, vertexes) => {
   const angle = 2 * Math.PI / 6
 
   ctx.beginPath()
@@ -137,7 +137,7 @@ canvasFunctions.drawHex = (x, y, resource, number) => {
   ctx.stroke()
   ctx.closePath()
 
-  if (number != "robber"){
+  if (number !== "robber") {
     ctx.fillStyle = "#fff"
     ctx.beginPath()
     ctx.arc(x, y, hexRadius / 3, 0, 2 * Math.PI)
@@ -152,6 +152,16 @@ canvasFunctions.drawHex = (x, y, resource, number) => {
     ctx.textAlign = "center"
     ctx.textBaseline = "middle"
     ctx.fillText(number.toString(), x, y)
+  }
+
+  if(vertexes) {
+    ctx.fillStyle = "#f00"
+    for(let vertPos in vertexes) {
+      console.log("skjfdg")
+      ctx.beginPath()
+      ctx.arc(x, y + (vertPos === "north" ? -hexRadius : hexRadius), hexRadius / 5, 0, 2 * Math.PI)
+      ctx.fill()
+    }
   }
 }
 

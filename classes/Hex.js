@@ -3,8 +3,8 @@ class Hex {
     this.number = null
     this.resource = null
     this.vertexes = {
-      north: null,
-      south: null
+      north: true,
+      south: true
     }
   }
 }
