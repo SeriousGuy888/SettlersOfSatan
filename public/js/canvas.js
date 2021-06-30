@@ -67,7 +67,6 @@ canvasFunctions.draw = () => {
   canvasFunctions.background()
 
   let board = currentGameData?.board
-  let settlementGrid = currentGameData?.settlementGrid
 
   const startY = hexRadius
   const yOffsetPerRow = hexRadius * 2 - hexRadius / 2
@@ -86,29 +85,6 @@ canvasFunctions.draw = () => {
           canvasFunctions.drawHex(x + xOffset, y, hex.resource, hex.number)
           hex.x = x
           hex.y = y
-        }
-        x += hexApothem * 2
-      }
-      y += yOffsetPerRow
-    }
-  }
-  if(settlementGrid) {
-    let y = startY + hexRadius
-    for(let i in settlementGrid) {
-      const row = settlementGrid[i]
-
-      const rowWidth = (row.length - 1) * hexApothem
-      const xCenter = canvasWidth / 2 - rowWidth
-      let x = xCenter
-
-      for(let settlement of row) {
-        if(settlement) {
-          const xOffset = i % 2 !== 0 ? 0 : hexApothem
-
-          ctx.fillStyle = "#de1616"
-          ctx.beginPath()
-          ctx.arc(x + xOffset, y, hexRadius / 5, 0, 2 * Math.PI)
-          ctx.fill()
         }
         x += hexApothem * 2
       }

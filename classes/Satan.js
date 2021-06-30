@@ -14,20 +14,6 @@ class Satan {
   constructor(lobbyId) {
     this.lobbyId = lobbyId
     this.board = []
-
-    this.settlementGrid = [
-      [null, true, true, true, null, null],
-      [null, true, true, true, true, null],
-      [null, true, true, true, true, null],
-      [true, true, true, true, true, null],
-      [true, true, true, true, true, null],
-      [true, true, true, true, true, true],
-      [true, true, true, true, true, null],
-      [true, true, true, true, true, null],
-      [null, true, true, true, true, null],
-      [null, true, true, true, true, null],
-      [null, true, true, true, null, null]
-    ]
     
     this.players = {}
   }
@@ -37,7 +23,6 @@ class Satan {
 
     const tickData = {
       board: this.board,
-      settlementGrid: this.settlementGrid,
       players: this.players,
     }
     if(JSON.stringify(tickData) !== this.prevTickData) {
