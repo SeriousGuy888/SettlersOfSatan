@@ -87,28 +87,18 @@ canvasFunctions.refreshBoard = () => {
       const xCenter = canvasWidth / 2 - rowWidth
       let x = xCenter
   
-      for(let j in row) {
-        const hex = row[j]
+      for(const hex of row) {
         if(hex) {
           const xOffset = i % 2 !== 0 ? hexApothem : 0
 
-          // j is the x coord and i is the y coord lol
-          boardHexes.push(
-            new canvasClasses.Hex(
-              x + xOffset, y,
-              [parseInt(j), parseInt(i)],
-              hex.resource,
-              hex.number
-            )
-          )
-
+          boardHexes.push(new canvasClasses.Hex(x + xOffset, y, hex.coords, hex.resource, hex.number))
           
           if(hex.vertexes) {
             for(let vertPos in hex.vertexes) {
               boardVertexes.push(
                 new canvasClasses.Vertex(
                   x + xOffset, y + (vertPos === "north" ? -hexRadius : hexRadius),
-                  [parseInt(j), parseInt(i), vertPos]
+                  [...hex.coords, vertPos]
                 )
               )
             }

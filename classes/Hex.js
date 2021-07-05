@@ -1,7 +1,10 @@
 class Hex {
-  constructor() {
+  constructor(coords) {
+    this.coords = coords
+
     this.number = null
     this.resource = null
+
     this.vertexes = {
       north: true,
       south: true
