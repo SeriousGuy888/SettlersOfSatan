@@ -8,8 +8,14 @@ class Hex {
     this.resource = null
 
     this.vertexes = {
-      north: new Vertex([...coords, "north"]),
-      south: new Vertex([...coords, "south"])
+      north: new Vertex({
+        ...coords,
+        v: "north",
+      }),
+      south: new Vertex({
+        ...coords,
+        v: "south",
+      })
     }
   }
 }

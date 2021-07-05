@@ -136,7 +136,7 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
       ctx.textAlign = "center"
       ctx.textBaseline = "middle"
       // ctx.fillText(number.toString(), xPos, yPos)
-      ctx.fillText(this.coords, xPos, yPos)
+      ctx.fillText(JSON.stringify(this.coords), xPos, yPos)
     }
   }
 }
@@ -168,7 +168,7 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
 
   onClick() {
     if(!this.isHovered(true)) return
-    
-    notifyUser(`clicked on vertex at ${this.coords}`)
+
+    notifyUser(`clicked on vertex at ${JSON.stringify(this.coords)}`)
   }
 }

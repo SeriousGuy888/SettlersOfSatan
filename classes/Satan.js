@@ -85,7 +85,10 @@ class Satan {
         const space = row[x]
 
         if(space) {
-          let hex = new Hex([parseInt(x), parseInt(y)])
+          let hex = new Hex({
+            x: parseInt(x),
+            y: parseInt(y)
+          })
 
           hex.resource = Object.keys(resourceCounts)[Math.floor(Math.random() * Object.keys(resourceCounts).length)]
           resourceCounts[hex.resource] -= 1

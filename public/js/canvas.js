@@ -94,11 +94,12 @@ canvasFunctions.refreshBoard = () => {
           boardHexes.push(new canvasClasses.Hex(x + xOffset, y, hex.coords, hex.resource, hex.number))
           
           if(hex.vertexes) {
-            for(let vertPos in hex.vertexes) {
+            for(let v in hex.vertexes) {
               boardVertexes.push(
                 new canvasClasses.Vertex(
-                  x + xOffset, y + (vertPos === "north" ? -hexRadius : hexRadius),
-                  [...hex.coords, vertPos]
+                  x + xOffset,
+                  y + (v === "north" ? -hexRadius : hexRadius),
+                  hex.vertexes[v].coords
                 )
               )
             }
