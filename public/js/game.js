@@ -30,4 +30,5 @@ socket.on("game_started_update", data => {
 let currentGameData
 socket.on("game_update", data => {
   currentGameData = data
+  canvasFunctions.refreshBoard()
 })

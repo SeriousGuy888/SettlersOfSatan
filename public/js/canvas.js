@@ -47,10 +47,11 @@ let drawLoop = false
 let placeMode = false
 
 setInterval(() => {
-  if(drawLoop) {
-    canvasFunctions.draw()
-  }
-}, 1000 / 60)
+  if(!drawLoop) return
+
+
+  canvasFunctions.draw()
+}, 1000 / 24)
 
 const canvasFunctions = {}
 
@@ -59,9 +60,22 @@ canvasFunctions.setup = () => {
   gameCanvas.height = canvasHeight
 
   canvasFunctions.setupInventory()
-  
+  canvasFunctions.refreshBoard()
+
+  drawLoop = true
+}
+canvasFunctions.stop = () => {
+  canvasElems.splice(0, canvasElems.length)
+  drawLoop = false
+}
+
+
+canvasFunctions.refreshBoard = () => {
   let board = currentGameData.board
   
+  boardHexes.splice(0, boardHexes.length)
+  boardVertexes.splice(0, boardVertexes.length)
+
   const startY = hexRadius
   const yOffsetPerRow = hexRadius * 2 - hexRadius / 2
   if(board) {
@@ -93,7 +107,8 @@ canvasFunctions.setup = () => {
             for(let vertPos in hex.vertexes) {
               boardVertexes.push(
                 new canvasClasses.Vertex(
-                  x + xOffset, y + (vertPos === "north" ? -hexRadius : hexRadius)
+                  x + xOffset, y + (vertPos === "north" ? -hexRadius : hexRadius),
+                  [parseInt(j), parseInt(i), vertPos]
                 )
               )
             }
@@ -105,13 +120,9 @@ canvasFunctions.setup = () => {
       y += yOffsetPerRow
     }
   }
+}
 
-  drawLoop = true
-}
-canvasFunctions.stop = () => {
-  canvasElems.splice(0, canvasElems.length)
-  drawLoop = false
-}
+
 
 canvasFunctions.draw = () => {
   canvasFunctions.background()
@@ -156,7 +167,7 @@ canvasFunctions.setupInventory = () => {
   }))
 }
 canvasFunctions.drawInventory = () => {
-  const inventory = currentGameData.players[playerId].inventory
+  const inventory = currentGameData?.players[playerId]?.inventory
   if(!inventory) return
 
   const x = 50
@@ -194,9 +205,15 @@ canvasFunctions.drawInventory = () => {
 
 gameCanvas.addEventListener("click", e => {
   for(const elem of canvasElems) {
-    if(elem.onClick) {
-      elem.onClick()
-    }
+    if(elem.onClick) elem.onClick()
+  }
+
+  for(const elem of boardHexes) {
+    if(elem.onClick) elem.onClick()
+  }
+
+  for(const elem of boardVertexes) {
+    if(elem.onClick) elem.onClick()
   }
 })
 gameCanvas.addEventListener("mousemove", e => mousePos = canvasFunctions.getMousePos(e))

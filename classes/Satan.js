@@ -49,6 +49,7 @@ class Satan {
   }
 
   setUpBoard(players){
+    this.board = []
     let resourceCounts = {
       mud: 3,
       forest: 4,
