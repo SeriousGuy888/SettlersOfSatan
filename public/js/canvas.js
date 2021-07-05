@@ -167,7 +167,7 @@ canvasFunctions.setupInventory = () => {
   }))
 }
 canvasFunctions.drawInventory = () => {
-  const inventory = currentGameData.players[playerId].inventory
+  const inventory = currentGameData?.players[playerId]?.inventory
   if(!inventory) return
 
   const x = 50
