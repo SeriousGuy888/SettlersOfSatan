@@ -7,6 +7,8 @@ const canvasWidth = 1920
 const canvasHeight = 1080
 const canvasElems = []
 
+const boardHexes = []
+
 let mousePos = { x: 0, y: 0 }
 
 const canvasFullscreenButton = document.querySelector("#canvas-fullscreen")
@@ -55,19 +57,9 @@ canvasFunctions.setup = () => {
   gameCanvas.height = canvasHeight
 
   canvasFunctions.setupInventory()
-
-  drawLoop = true
-}
-canvasFunctions.stop = () => {
-  canvasElems.splice(0, canvasElems.length)
-  drawLoop = false
-}
-
-canvasFunctions.draw = () => {
-  canvasFunctions.background()
-
-  let board = currentGameData?.board
-
+  
+  let board = currentGameData.board
+  
   const startY = hexRadius
   const yOffsetPerRow = hexRadius * 2 - hexRadius / 2
   if(board) {
@@ -82,7 +74,7 @@ canvasFunctions.draw = () => {
       for(let hex of row) {
         if(hex) {
           const xOffset = i % 2 !== 0 ? hexApothem : 0
-          canvasFunctions.drawHex(x + xOffset, y, hex.resource, hex.number, hex.vertexes)
+          boardHexes.push(new canvasClasses.Hex(x + xOffset, y, hex.resource, hex.number, hex.vertexes))
           hex.x = x
           hex.y = y
         }
@@ -91,6 +83,18 @@ canvasFunctions.draw = () => {
       y += yOffsetPerRow
     }
   }
+
+  drawLoop = true
+}
+canvasFunctions.stop = () => {
+  canvasElems.splice(0, canvasElems.length)
+  drawLoop = false
+}
+
+canvasFunctions.draw = () => {
+  canvasFunctions.background()
+
+
 
   canvasFunctions.drawInventory()
 
@@ -102,6 +106,10 @@ canvasFunctions.draw = () => {
       canvasElems.splice(canvasElems.indexOf(elem), 1)
     }
   }
+
+  for(const elem of boardHexes) {
+    elem.render()
+  }
 }
 
 canvasFunctions.background = (colour) => {
@@ -112,56 +120,7 @@ canvasFunctions.background = (colour) => {
   ctx.fill()
 }
 
-canvasFunctions.drawHex = (x, y, resource, number, vertexes) => {
-  const angle = 2 * Math.PI / 6
-
-  ctx.beginPath()
-  for (var i = 0; i < 6; i++) { // thieved from https://eperezcosano.github.io/hex-grid/
-    ctx.lineTo(
-      x + hexRadius * Math.cos(angle * i - angle / 2),
-      y + hexRadius * Math.sin(angle * i - angle / 2)
-    )
-  }
-
-  const resourceColours = {
-    "mud": "#753d00",
-    "forest": "#0e5700",
-    "mountain": "#333333",
-    "farm": "#fef177",
-    "pasture": "#94ff8f",
-    "desert": "#a39d5d"
-  }
-
-  ctx.fillStyle = resourceColours[resource]
-  ctx.fill()
-  ctx.stroke()
-  ctx.closePath()
-
-  if (number !== "robber") {
-    ctx.fillStyle = "#fff"
-    ctx.beginPath()
-    ctx.arc(x, y, hexRadius / 3, 0, 2 * Math.PI)
-    ctx.fill()
-    ctx.stroke()
-    ctx.closePath()
-  }
-
-  if(number) {
-    ctx.fillStyle = "#000"
-    ctx.font = `bold ${hexRadius / 4}px sans-serif`
-    ctx.textAlign = "center"
-    ctx.textBaseline = "middle"
-    ctx.fillText(number.toString(), x, y)
-  }
-
-  if(vertexes) {
-    ctx.fillStyle = "#f00"
-    for(let vertPos in vertexes) {
-      ctx.beginPath()
-      ctx.arc(x, y + (vertPos === "north" ? -hexRadius : hexRadius), hexRadius / 5, 0, 2 * Math.PI)
-      ctx.fill()
-    }
-  }
+canvasFunctions.drawHex = (x, y, resource, number) => {
 }
 
 canvasFunctions.setupInventory = () => {
@@ -176,7 +135,7 @@ canvasFunctions.setupInventory = () => {
   }))
 }
 canvasFunctions.drawInventory = () => {
-  const inventory = currentGameData?.players[playerId].inventory
+  const inventory = currentGameData.players[playerId].inventory
   if(!inventory) return
 
   const x = 50
