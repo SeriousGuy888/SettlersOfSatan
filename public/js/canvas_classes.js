@@ -165,4 +165,10 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
       height: hexRadius / 5 * 2,
     }
   }
+
+  onClick() {
+    if(!this.isHovered(true)) return
+    
+    notifyUser(`clicked on vertex at ${this.coords}`)
+  }
 }
