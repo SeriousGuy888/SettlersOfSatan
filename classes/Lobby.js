@@ -180,7 +180,9 @@ class Lobby {
         this.game.setPlayer(user.playerId, new Player(user.colour))
       }
     }
-    this.broadcast("game_started_update", { started: inGame })
+
+    this.game.tick() // make sure that clients receive the game data before instructing them to load the game
+    this.broadcast("game_started_update", { started: inGame }) // broadcast to all clients to load the game
   }
 
   setUserColour(userId, colour) {
