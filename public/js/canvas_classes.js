@@ -1,5 +1,19 @@
 const canvasClasses = {}
 
+canvasClasses.Hoverable = class {
+  isHovered() {
+    const { x, y } = this
+    const { width, height } = this.getDimensions()
+
+    return (
+      mousePos.x >= x &&
+      mousePos.y >= y &&
+      mousePos.x <= x + width &&
+      mousePos.y <= y + height
+    )
+  }
+}
+
 canvasClasses.Text = class {
   constructor(text, x, y, font, colour, alignment, baseline) {
     this.text = text
@@ -19,8 +33,10 @@ canvasClasses.Text = class {
     ctx.fillText(this.text, this.x, this.y)
   }
 }
-canvasClasses.Button = class {
+canvasClasses.Button = class extends canvasClasses.Hoverable {
   constructor(label, x, y, func) {
+    super()
+
     this.label = label
     this.x = x
     this.y = y
@@ -39,18 +55,6 @@ canvasClasses.Button = class {
       width: width + padding,
       height: height + padding
     }
-  }
-
-  isHovered() {
-    const { x, y } = this
-    const { width, height } = this.getDimensions()
-
-    return (
-      mousePos.x >= x &&
-      mousePos.y >= y &&
-      mousePos.x <= x + width &&
-      mousePos.y <= y + height
-    )
   }
 
   render() {
@@ -75,8 +79,10 @@ canvasClasses.Button = class {
     }
   }
 }
-canvasClasses.Hex = class {
+canvasClasses.Hex = class extends canvasClasses.Hoverable {
   constructor(xPos, yPos, coords, resource, number) {
+    super()
+
     this.xPos = xPos
     this.yPos = yPos
     this.coords = coords
@@ -129,8 +135,10 @@ canvasClasses.Hex = class {
     }
   }
 }
-canvasClasses.Vertex = class {
+canvasClasses.Vertex = class extends canvasClasses.Hoverable {
   constructor(xPos, yPos, coords) {
+    super()
+    
     this.xPos = xPos
     this.yPos = yPos
     this.coords = coords
@@ -139,7 +147,6 @@ canvasClasses.Vertex = class {
   render() {
     const { xPos, yPos } = this
 
-    
     ctx.fillStyle = "#f00"
     ctx.beginPath()
     ctx.arc(xPos, yPos, hexRadius / 5, 0, 2 * Math.PI)
