@@ -147,7 +147,7 @@ canvasFunctions.drawHex = (x, y, resource, number) => {
 canvasFunctions.setupInventory = () => {
   // i hate web programming so much
   // i guess we are having one place button for everything
-  canvasElems.push(new canvasClasses.Button("Place Item", 50, 180, () => {
+  canvasElems.push(new canvasClasses.Button("Place Item", 50, 220, () => {
     placeMode = true
     // alert(JSON.stringify(currentGameData.settlementGrid))
     // socket.emit("send_game_update", {}, (err, data) => {
@@ -175,9 +175,21 @@ canvasFunctions.drawInventory = () => {
   ctx.textAlign = "left"
   ctx.textBaseline = "top"
 
-  ctx.fillText(`Settlements: ${inventory.settlements}`, x, y)
-  ctx.fillText(`Cities: ${inventory.cities}`, x, y + 40)
-  ctx.fillText(`Roads: ${inventory.roads}`, x, y + 80)
+  ctx.fillText(`Settlements: `, x, y);
+  ctx.fillStyle = '#f00';
+  ctx.beginPath();
+  let top = y + 40
+  ctx.moveTo(x + 16, top);
+  ctx.lineTo(x, top + 16);
+  ctx.lineTo(x + 32, top + 16);
+  ctx.lineTo(x + 32, top + 32);
+  ctx.lineTo(x, top + 32);
+  ctx.lineTo(x, top + 16);
+  ctx.closePath();
+  ctx.fill();
+  
+  ctx.fillText(`Cities: ${inventory.cities}`, x, y + 80)
+  ctx.fillText(`Roads: ${inventory.roads}`, x, y + 120)
 }
 
 gameCanvas.addEventListener("click", e => {
