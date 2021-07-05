@@ -47,10 +47,11 @@ let drawLoop = false
 let placeMode = false
 
 setInterval(() => {
-  if(drawLoop) {
-    canvasFunctions.draw()
-  }
-}, 1000 / 60)
+  if(!drawLoop) return
+
+
+  canvasFunctions.draw()
+}, 1000 / 24)
 
 const canvasFunctions = {}
 
@@ -59,9 +60,22 @@ canvasFunctions.setup = () => {
   gameCanvas.height = canvasHeight
 
   canvasFunctions.setupInventory()
-  
+  canvasFunctions.refreshBoard()
+
+  drawLoop = true
+}
+canvasFunctions.stop = () => {
+  canvasElems.splice(0, canvasElems.length)
+  drawLoop = false
+}
+
+
+canvasFunctions.refreshBoard = () => {
   let board = currentGameData.board
   
+  boardHexes.splice(0, boardHexes.length)
+  boardVertexes.splice(0, boardVertexes.length)
+
   const startY = hexRadius
   const yOffsetPerRow = hexRadius * 2 - hexRadius / 2
   if(board) {
@@ -106,13 +120,9 @@ canvasFunctions.setup = () => {
       y += yOffsetPerRow
     }
   }
+}
 
-  drawLoop = true
-}
-canvasFunctions.stop = () => {
-  canvasElems.splice(0, canvasElems.length)
-  drawLoop = false
-}
+
 
 canvasFunctions.draw = () => {
   canvasFunctions.background()
