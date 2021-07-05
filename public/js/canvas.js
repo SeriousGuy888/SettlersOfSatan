@@ -183,9 +183,15 @@ canvasFunctions.drawInventory = () => {
 
 gameCanvas.addEventListener("click", e => {
   for(const elem of canvasElems) {
-    if(elem.onClick) {
-      elem.onClick()
-    }
+    if(elem.onClick) elem.onClick()
+  }
+
+  for(const elem of boardHexes) {
+    if(elem.onClick) elem.onClick()
+  }
+
+  for(const elem of boardVertexes) {
+    if(elem.onClick) elem.onClick()
   }
 })
 gameCanvas.addEventListener("mousemove", e => mousePos = canvasFunctions.getMousePos(e))

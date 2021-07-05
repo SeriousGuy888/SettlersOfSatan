@@ -1,15 +1,20 @@
 const canvasClasses = {}
 
 canvasClasses.Hoverable = class {
-  isHovered() {
-    const { x, y } = this
+  isHovered(centeredPos) {
+    let { xPos, yPos } = this
     const { width, height } = this.getDimensions()
 
+    if(centeredPos) {
+      xPos -= width / 2
+      yPos -= height / 2
+    }
+
     return (
-      mousePos.x >= x &&
-      mousePos.y >= y &&
-      mousePos.x <= x + width &&
-      mousePos.y <= y + height
+      mousePos.x >= xPos &&
+      mousePos.y >= yPos &&
+      mousePos.x <= xPos + width &&
+      mousePos.y <= yPos + height
     )
   }
 }
@@ -34,12 +39,12 @@ canvasClasses.Text = class {
   }
 }
 canvasClasses.Button = class extends canvasClasses.Hoverable {
-  constructor(label, x, y, func) {
+  constructor(label, xPos, yPos, func) {
     super()
 
     this.label = label
-    this.x = x
-    this.y = y
+    this.xPos = xPos
+    this.yPos = yPos
     this.func = func
   }
 
@@ -61,16 +66,16 @@ canvasClasses.Button = class extends canvasClasses.Hoverable {
     const fontSize = this.getFontSize()
     ctx.font = `${fontSize}px sans-serif`
 
-    const { label, x, y } = this
+    const { label, xPos, yPos } = this
     const { width, height } = this.getDimensions()
 
     const buttonPadding = this.getPadding()
 
     ctx.fillStyle = this.isHovered() ? "#94a9ff" : "#617fff"
-    ctx.fillRect(x, y, width, height)
+    ctx.fillRect(xPos, yPos, width, height)
 
     ctx.fillStyle = "#000"
-    ctx.fillText(label, x + buttonPadding / 2, y + buttonPadding / 2)
+    ctx.fillText(label, xPos + buttonPadding / 2, yPos + buttonPadding / 2)
   }
 
   onClick() {
@@ -147,9 +152,17 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
   render() {
     const { xPos, yPos } = this
 
-    ctx.fillStyle = "#f00"
+    ctx.fillStyle = this.isHovered(true) ? "#0f0" : "#f00"
+
     ctx.beginPath()
-    ctx.arc(xPos, yPos, hexRadius / 5, 0, 2 * Math.PI)
+    ctx.arc(xPos, yPos, this.getDimensions().width / 2, 0, 2 * Math.PI)
     ctx.fill()
+  }
+  
+  getDimensions() {
+    return {
+      width: hexRadius / 5 * 2,
+      height: hexRadius / 5 * 2,
+    }
   }
 }
