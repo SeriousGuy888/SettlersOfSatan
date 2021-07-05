@@ -77,11 +77,15 @@ class Satan {
       }
     }
 
-    for (let row of boardLayout) {
+    for (let y in boardLayout) {
+      const row = boardLayout[y]
+
       this.board.push([])
-      for(let space of row){
-        if (space) {
-          let hex = new Hex()
+      for(let x in row) {
+        const space = row[x]
+
+        if(space) {
+          let hex = new Hex([parseInt(x), parseInt(y)])
 
           hex.resource = Object.keys(resourceCounts)[Math.floor(Math.random() * Object.keys(resourceCounts).length)]
           resourceCounts[hex.resource] -= 1
