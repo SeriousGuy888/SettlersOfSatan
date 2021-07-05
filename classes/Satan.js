@@ -113,6 +113,9 @@ class Satan {
     // console.log(this.board)
   }
 
+  processAction(playerId, actionData) {
+    this.setUpBoard(5)
+  }
 }
 
 module.exports = Satan
