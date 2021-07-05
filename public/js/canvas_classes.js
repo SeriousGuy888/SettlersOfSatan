@@ -76,17 +76,16 @@ canvasClasses.Button = class {
   }
 }
 canvasClasses.Hex = class {
-  constructor(x, y, resource, number, vertexes) {
+  constructor(x, y, resource, number) {
     this.x = x
     this.y = y
     this.resource = resource
     this.number = number
-    this.vertexes = vertexes
   }
 
   render() {
     const angle = 2 * Math.PI / 6
-    const { x, y, resource, number, vertexes } = this
+    const { x, y, resource, number } = this
 
     ctx.beginPath()
     for(let i = 0; i < 6; i++) { // thieved from https://eperezcosano.github.io/hex-grid/
@@ -126,15 +125,21 @@ canvasClasses.Hex = class {
       ctx.textBaseline = "middle"
       ctx.fillText(number.toString(), x, y)
     }
+  }
+}
+canvasClasses.Vertex = class {
+  constructor(x, y) {
+    this.x = x
+    this.y = y
+  }
+
+  render() {
+    const { x, y } = this
 
     
-    if(vertexes) {
-      ctx.fillStyle = "#f00"
-      for(let vertPos in vertexes) {
-        ctx.beginPath()
-        ctx.arc(x, y + (vertPos === "north" ? -hexRadius : hexRadius), hexRadius / 5, 0, 2 * Math.PI)
-        ctx.fill()
-      }
-    }
+    ctx.fillStyle = "#f00"
+    ctx.beginPath()
+    ctx.arc(x, y, hexRadius / 5, 0, 2 * Math.PI)
+    ctx.fill()
   }
 }

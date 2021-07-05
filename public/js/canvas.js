@@ -8,6 +8,7 @@ const canvasHeight = 1080
 const canvasElems = []
 
 const boardHexes = []
+const boardVertexes = []
 
 let mousePos = { x: 0, y: 0 }
 
@@ -52,6 +53,7 @@ setInterval(() => {
 }, 1000 / 60)
 
 const canvasFunctions = {}
+
 canvasFunctions.setup = () => {
   gameCanvas.width = canvasWidth
   gameCanvas.height = canvasHeight
@@ -74,10 +76,18 @@ canvasFunctions.setup = () => {
       for(let hex of row) {
         if(hex) {
           const xOffset = i % 2 !== 0 ? hexApothem : 0
-          boardHexes.push(new canvasClasses.Hex(x + xOffset, y, hex.resource, hex.number, hex.vertexes))
+          boardHexes.push(new canvasClasses.Hex(x + xOffset, y, hex.resource, hex.number))
           hex.x = x
           hex.y = y
+
+          
+          if(hex.vertexes) {
+            for(let vertPos in hex.vertexes) {
+              boardVertexes.push(new canvasClasses.Vertex(x + xOffset, y + (vertPos === "north" ? -hexRadius : hexRadius)))
+            }
+          }
         }
+
         x += hexApothem * 2
       }
       y += yOffsetPerRow
@@ -107,9 +117,8 @@ canvasFunctions.draw = () => {
     }
   }
 
-  for(const elem of boardHexes) {
-    elem.render()
-  }
+  for(const e of boardHexes) e.render()
+  for(const e of boardVertexes) e.render()
 }
 
 canvasFunctions.background = (colour) => {
