@@ -73,17 +73,29 @@ canvasFunctions.setup = () => {
       const xCenter = canvasWidth / 2 - rowWidth
       let x = xCenter
   
-      for(let hex of row) {
+      for(let j in row) {
+        const hex = row[j]
         if(hex) {
           const xOffset = i % 2 !== 0 ? hexApothem : 0
-          boardHexes.push(new canvasClasses.Hex(x + xOffset, y, hex.resource, hex.number))
-          hex.x = x
-          hex.y = y
+
+          // j is the x coord and i is the y coord lol
+          boardHexes.push(
+            new canvasClasses.Hex(
+              x + xOffset, y,
+              [parseInt(j), parseInt(i)],
+              hex.resource,
+              hex.number
+            )
+          )
 
           
           if(hex.vertexes) {
             for(let vertPos in hex.vertexes) {
-              boardVertexes.push(new canvasClasses.Vertex(x + xOffset, y + (vertPos === "north" ? -hexRadius : hexRadius)))
+              boardVertexes.push(
+                new canvasClasses.Vertex(
+                  x + xOffset, y + (vertPos === "north" ? -hexRadius : hexRadius)
+                )
+              )
             }
           }
         }

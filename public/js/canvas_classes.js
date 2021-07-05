@@ -76,22 +76,23 @@ canvasClasses.Button = class {
   }
 }
 canvasClasses.Hex = class {
-  constructor(x, y, resource, number) {
-    this.x = x
-    this.y = y
+  constructor(xPos, yPos, coords, resource, number) {
+    this.xPos = xPos
+    this.yPos = yPos
+    this.coords = coords
     this.resource = resource
     this.number = number
   }
 
   render() {
     const angle = 2 * Math.PI / 6
-    const { x, y, resource, number } = this
+    const { xPos, yPos, resource, number } = this
 
     ctx.beginPath()
     for(let i = 0; i < 6; i++) { // thieved from https://eperezcosano.github.io/hex-grid/
       ctx.lineTo(
-        x + hexRadius * Math.cos(angle * i - angle / 2),
-        y + hexRadius * Math.sin(angle * i - angle / 2)
+        xPos + hexRadius * Math.cos(angle * i - angle / 2),
+        yPos + hexRadius * Math.sin(angle * i - angle / 2)
       )
     }
   
@@ -112,7 +113,7 @@ canvasClasses.Hex = class {
     if(number !== "robber") {
       ctx.fillStyle = "#fff"
       ctx.beginPath()
-      ctx.arc(x, y, hexRadius / 3, 0, 2 * Math.PI)
+      ctx.arc(xPos, yPos, hexRadius / 3, 0, 2 * Math.PI)
       ctx.fill()
       ctx.stroke()
       ctx.closePath()
@@ -123,7 +124,8 @@ canvasClasses.Hex = class {
       ctx.font = `bold ${hexRadius / 4}px sans-serif`
       ctx.textAlign = "center"
       ctx.textBaseline = "middle"
-      ctx.fillText(number.toString(), x, y)
+      // ctx.fillText(number.toString(), xPos, yPos)
+      ctx.fillText(this.coords, xPos, yPos)
     }
   }
 }
