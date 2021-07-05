@@ -96,7 +96,7 @@ canvasFunctions.refreshBoard = () => {
           boardHexes.push(
             new canvasClasses.Hex(
               x + xOffset, y,
-              [parseInt(j), parseInt(i)],
+              hex.coords,
               hex.resource,
               hex.number
             )
@@ -108,7 +108,7 @@ canvasFunctions.refreshBoard = () => {
               boardVertexes.push(
                 new canvasClasses.Vertex(
                   x + xOffset, y + (vertPos === "north" ? -hexRadius : hexRadius),
-                  [parseInt(j), parseInt(i), vertPos]
+                  [...hex.coords, vertPos]
                 )
               )
             }
