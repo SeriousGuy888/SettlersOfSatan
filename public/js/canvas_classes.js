@@ -75,3 +75,66 @@ canvasClasses.Button = class {
     }
   }
 }
+canvasClasses.Hex = class {
+  constructor(x, y, resource, number, vertexes) {
+    this.x = x
+    this.y = y
+    this.resource = resource
+    this.number = number
+    this.vertexes = vertexes
+  }
+
+  render() {
+    const angle = 2 * Math.PI / 6
+    const { x, y, resource, number, vertexes } = this
+
+    ctx.beginPath()
+    for(let i = 0; i < 6; i++) { // thieved from https://eperezcosano.github.io/hex-grid/
+      ctx.lineTo(
+        x + hexRadius * Math.cos(angle * i - angle / 2),
+        y + hexRadius * Math.sin(angle * i - angle / 2)
+      )
+    }
+  
+    const resourceColours = {
+      "mud": "#753d00",
+      "forest": "#0e5700",
+      "mountain": "#333333",
+      "farm": "#fef177",
+      "pasture": "#94ff8f",
+      "desert": "#a39d5d"
+    }
+  
+    ctx.fillStyle = resourceColours[resource]
+    ctx.fill()
+    ctx.stroke()
+    ctx.closePath()
+  
+    if(number !== "robber") {
+      ctx.fillStyle = "#fff"
+      ctx.beginPath()
+      ctx.arc(x, y, hexRadius / 3, 0, 2 * Math.PI)
+      ctx.fill()
+      ctx.stroke()
+      ctx.closePath()
+    }
+  
+    if(number) {
+      ctx.fillStyle = "#000"
+      ctx.font = `bold ${hexRadius / 4}px sans-serif`
+      ctx.textAlign = "center"
+      ctx.textBaseline = "middle"
+      ctx.fillText(number.toString(), x, y)
+    }
+
+    
+    if(vertexes) {
+      ctx.fillStyle = "#f00"
+      for(let vertPos in vertexes) {
+        ctx.beginPath()
+        ctx.arc(x, y + (vertPos === "north" ? -hexRadius : hexRadius), hexRadius / 5, 0, 2 * Math.PI)
+        ctx.fill()
+      }
+    }
+  }
+}
