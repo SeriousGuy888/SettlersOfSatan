@@ -130,18 +130,19 @@ canvasClasses.Hex = class {
   }
 }
 canvasClasses.Vertex = class {
-  constructor(x, y) {
-    this.x = x
-    this.y = y
+  constructor(xPos, yPos, coords) {
+    this.xPos = xPos
+    this.yPos = yPos
+    this.coords = coords
   }
 
   render() {
-    const { x, y } = this
+    const { xPos, yPos } = this
 
     
     ctx.fillStyle = "#f00"
     ctx.beginPath()
-    ctx.arc(x, y, hexRadius / 5, 0, 2 * Math.PI)
+    ctx.arc(xPos, yPos, hexRadius / 5, 0, 2 * Math.PI)
     ctx.fill()
   }
 }

@@ -93,7 +93,8 @@ canvasFunctions.setup = () => {
             for(let vertPos in hex.vertexes) {
               boardVertexes.push(
                 new canvasClasses.Vertex(
-                  x + xOffset, y + (vertPos === "north" ? -hexRadius : hexRadius)
+                  x + xOffset, y + (vertPos === "north" ? -hexRadius : hexRadius),
+                  [parseInt(j), parseInt(i), vertPos]
                 )
               )
             }
