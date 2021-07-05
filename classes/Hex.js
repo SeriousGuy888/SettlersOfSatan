@@ -1,3 +1,5 @@
+const Vertex = require("./Vertex.js")
+
 class Hex {
   constructor(coords) {
     this.coords = coords
@@ -6,8 +8,8 @@ class Hex {
     this.resource = null
 
     this.vertexes = {
-      north: true,
-      south: true
+      north: new Vertex([...coords, "north"]),
+      south: new Vertex([...coords, "south"])
     }
   }
 }
