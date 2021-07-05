@@ -177,20 +177,26 @@ canvasFunctions.drawInventory = () => {
   ctx.textBaseline = "top"
 
   ctx.fillText(`Settlements: `, x, y);
-  ctx.fillStyle = '#f00';
+  canvasFunctions.unplacedSettlement(x, y)
+  ctx.fillText(`Cities: ${inventory.cities}`, x, y + 80)
+  ctx.fillText(`Roads: ${inventory.roads}`, x, y + 120)
+}
+
+canvasFunctions.unplacedSettlement = (x, y, colour) => {
   ctx.beginPath();
   let top = y + 40
   ctx.moveTo(x + 16, top);
   ctx.lineTo(x, top + 16);
   ctx.lineTo(x + 32, top + 16);
+  ctx.closePath();
+  ctx.fill()
+  ctx.beginPath();
+  ctx.moveTo(x + 16, top);
   ctx.lineTo(x + 32, top + 32);
   ctx.lineTo(x, top + 32);
   ctx.lineTo(x, top + 16);
   ctx.closePath();
   ctx.fill();
-  
-  ctx.fillText(`Cities: ${inventory.cities}`, x, y + 80)
-  ctx.fillText(`Roads: ${inventory.roads}`, x, y + 120)
 }
 
 gameCanvas.addEventListener("click", e => {
