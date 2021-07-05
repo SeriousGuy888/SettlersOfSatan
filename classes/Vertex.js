@@ -2,6 +2,7 @@ class Vertex {
   constructor(coords) {
     this.coords = coords
     this.intersectingHexes = this.getIntersectingHexes()
+    this.building = null
   }
 
   getIntersectingHexes() {
@@ -19,6 +20,10 @@ class Vertex {
     }
 
     return intersectingHexes
+  }
+
+  setBuilding(building) {
+    this.building = building
   }
 }
 
