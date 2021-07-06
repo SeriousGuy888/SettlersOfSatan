@@ -1,13 +1,20 @@
 const Hex = require("./Hex.js")
 const lobbies = require("../server/lobbies.js")
 
-
+/*
+  0 = no hex
+  1 = regular hex
+  2 = fake hex with only south vertex
+  3 = fake hex with only north vertex
+*/
 const boardLayout = [
-  [null, true, true, true, null],
-  [true, true, true, true, null],
-  [true, true, true, true, true],
-  [true, true, true, true, null],
-  [null, true, true, true, null],
+  [0,0,2,2,2,2,0],
+  [0,2,1,1,1,2,0],
+  [0,2,1,1,1,1,2],
+  [0,1,1,1,1,1,0],
+  [0,3,1,1,1,1,3],
+  [0,3,1,1,1,3,0],
+  [0,0,3,3,3,3,0],
 ]
 
 class Satan {
@@ -84,30 +91,50 @@ class Satan {
       for(let x in row) {
         const space = row[x]
 
-        if(space) {
-          let hex = new Hex({
-            x: parseInt(x),
-            y: parseInt(y)
-          })
+        // at this point the variable space should be a number where...
+        // 0 = no hex here
+        // 1 = regular hex with both vertexes
+        // 2 = invisible hex with only a south vertex
+        // 3 = invisible hex with only a north vertex
 
-          hex.resource = Object.keys(resourceCounts)[Math.floor(Math.random() * Object.keys(resourceCounts).length)]
-          resourceCounts[hex.resource] -= 1
-          if (!resourceCounts[hex.resource]) delete resourceCounts[hex.resource]
-
-          // console.log(hex.resource)
-          if (hex.resource != "desert"){
-            hex.number = Object.keys(numberCounts)[Math.floor(Math.random() * Object.keys(numberCounts).length)]
-            numberCounts[hex.number] -= 1
-            if (!numberCounts[hex.number]) delete numberCounts[hex.number]
-          }
-          else {
-            hex.number = "robber"
-          }
-
-          this.board[this.board.length - 1].push(hex)
+        if(space === 0)  {
+          this.board[this.board.length - 1].push(null)
+          continue
         }
-        else this.board[this.board.length - 1].push(null)
-        // console.log(this.board[this.board.length - 1])
+
+
+        let hex = new Hex({
+          x: parseInt(x),
+          y: parseInt(y)
+        })
+        switch(space) {
+          case 1:
+            hex.resource = Object.keys(resourceCounts)[Math.floor(Math.random() * Object.keys(resourceCounts).length)]
+            resourceCounts[hex.resource]--
+
+            if(!resourceCounts[hex.resource]) delete resourceCounts[hex.resource]
+  
+            if(hex.resource === "desert") hex.number = "robber"
+            else {
+              hex.number = Object.keys(numberCounts)[Math.floor(Math.random() * Object.keys(numberCounts).length)]
+              numberCounts[hex.number]--
+              if(!numberCounts[hex.number]) delete numberCounts[hex.number]
+            }
+
+            hex.createVertex("north")
+            hex.createVertex("south")
+            break
+          case 2:
+            hex.setInvisible(true)
+            hex.createVertex("south")
+            break
+          case 3:
+            hex.setInvisible(true)
+            hex.createVertex("north")
+            break
+        }
+
+        this.board[this.board.length - 1].push(hex)
       }
     }
     // console.log(this.board)
