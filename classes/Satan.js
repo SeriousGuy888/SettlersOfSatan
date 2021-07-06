@@ -145,17 +145,20 @@ class Satan {
     if(!action) return
 
     const coords = actionData.coords
+    const x = coords?.x
+    const y = coords?.y
+    const v = coords?.v
 
     switch(action) {
       case "place_settlement":
-        if(!coords) break
+        if(!x || !y || !v) break
 
-        const hex = this.board[coords.y][coords.x]
+        const hex = this.board[y][x]
         if(!hex) break
-        const vertex = hex.vertexes[coords.v]
+        const vertex = hex.vertexes[v]
         if(!vertex) break
 
-        hex.vertexes[coords.v].setBuilding("settlement", playerId)
+        hex.vertexes[v].setBuilding("settlement", playerId)
         
         break
       default:
