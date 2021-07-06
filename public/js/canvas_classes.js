@@ -1,6 +1,17 @@
 const canvasClasses = {}
 
-var holding = ""
+var holding = null
+
+const lighterShades = {
+  "violet": "#ff93ff",
+  "indigo": "#5c1193",
+  "red": "#ff2222",
+  "orange": "#ffb611",
+  "green": "#008000",
+  "blue": "#0000ff",
+  "brown": "#a52a2a",
+  "darkcyan": "#008b8b"
+}
 
 canvasClasses.Hoverable = class {
   isHovered(centeredPos) {
@@ -170,31 +181,36 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
   }
 
   onClick() {
+    console.log(holding)
     if(!this.isHovered(true)) return
+    if(!holding) return
 
     socket.emit("perform_game_action", {
-      action: "place_settlement",
+      action: "place_" + holding,
       coords: this.data.coords,
     }, (err, data) => {
       if(err) notifyUser(err)
     })
+
+    holding = null
+    
   }
 }
 
-canvasClasses.unplacedPiece = class extends canvasClasses.Hoverable {
-  constructor (piece, player, x, y) {
+canvasClasses.UnplacedPiece = class extends canvasClasses.Hoverable {
+  constructor (piece, colour, x, y) {
 
     super()
 
     this.piece = piece
-    this.player = player
+    this.colour = colour
     this.x = x
     this.y = y
   }
 
   render() {
     if (this.piece == "settlement") {
-      ctx.fillStyle = this.player.colour
+      ctx.fillStyle = this.colour
       ctx.beginPath();
       ctx.moveTo(this.x + 16, this.y);
       ctx.lineTo(this.x, this.y + 16);
@@ -221,7 +237,18 @@ canvasClasses.unplacedPiece = class extends canvasClasses.Hoverable {
       ctx.fill();
     }
   }
+
+  getDimensions() {
+    return {
+      width: 32,
+      height: 32
+    }
+  }
+
   onClick() {
+    if(!this.isHovered(true)) return
     holding = this.piece
+    this.colour = lighterShades[this.colour]
+    console.log("yoooooooooooooo")
   }
 }

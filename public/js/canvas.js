@@ -138,7 +138,6 @@ canvasFunctions.draw = () => {
 
   for(const e of boardHexes) e.render()
   for(const e of boardVertexes) e.render()
-  console.log(unplacedPieces)
   for(const e of unplacedPieces) e.render()
 }
 
@@ -154,6 +153,7 @@ canvasFunctions.drawHex = (x, y, resource, number) => {
 }
 
 canvasFunctions.setupInventory = () => {
+  const inventory = currentGameData?.players[playerId]?.inventory
   // i hate web programming so much
   // i guess we are having one place button for everything
   canvasElems.push(new canvasClasses.Button("Place Item", 50, 220, () => {
@@ -163,6 +163,15 @@ canvasFunctions.setupInventory = () => {
       
     // })
   }))
+  
+  y = 90
+  xPos = 50
+  
+  for(let i = 0; i < inventory.settlements; i++){
+    unplacedPieces.push(new canvasClasses.UnplacedPiece("settlement", currentGameData?.players[playerId], xPos, y))
+    xPos += 40
+  }
+  
 }
 canvasFunctions.drawInventory = () => {
   const inventory = currentGameData?.players[playerId]?.inventory
@@ -184,14 +193,7 @@ canvasFunctions.drawInventory = () => {
   ctx.textAlign = "left"
   ctx.textBaseline = "top"
 
-  ctx.fillText(`Settlements: `, x, y);
-  xPos = x
-  console.log(inventory.settlements)
-  for(let i = 0; i < inventory.settlements; i++){
-    console.log("hi")
-    unplacedPieces.push(new canvasClasses.unplacedPiece("settlement", currentGameData?.players[playerId], xPos, y + 40))
-    xPos += 40
-  } 
+  ctx.fillText(`Settlements: `, x, y); 
 
   ctx.fillStyle = "#000"
   ctx.fillText(`Cities: ${inventory.cities}`, x, y + 80)
@@ -226,6 +228,10 @@ gameCanvas.addEventListener("click", e => {
   }
 
   for(const elem of boardVertexes) {
+    if(elem.onClick) elem.onClick()
+  }
+
+  for(const elem of unplacedPieces){
     if(elem.onClick) elem.onClick()
   }
 })
