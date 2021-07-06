@@ -60,7 +60,6 @@ canvasFunctions.setup = () => {
   gameCanvas.width = canvasWidth
   gameCanvas.height = canvasHeight
 
-  canvasFunctions.setupInventory()
   canvasFunctions.refreshBoard()
 
   drawLoop = true
@@ -149,21 +148,6 @@ canvasFunctions.background = (colour) => {
   ctx.fill()
 }
 
-canvasFunctions.setupInventory = () => {
-  const inventory = currentGameData?.players[playerId]?.inventory
-  // i hate web programming so much
-  // i guess we are having one place button for everything
-  canvasElems.push(new canvasClasses.Button("Place Item", 50, 220, () => {
-    placeMode = true
-    // alert(JSON.stringify(currentGameData.settlementGrid))
-    // socket.emit("send_game_update", {}, (err, data) => {
-      
-    // })
-  }))
-  
-  
-  
-}
 canvasFunctions.drawInventory = () => {
   const inventory = currentGameData?.players[playerId]?.inventory
   if(!inventory) return
