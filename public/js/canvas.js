@@ -164,8 +164,8 @@ canvasFunctions.setupInventory = () => {
     // })
   }))
   
-  y = 90
-  xPos = 50
+  let y = 90
+  let xPos = 50
   
   for(let i = 0; i < inventory.settlements; i++){
     unplacedPieces.push(new canvasClasses.UnplacedPiece("settlement", currentGameData?.players[playerId].colour, xPos, y))
@@ -179,8 +179,6 @@ canvasFunctions.drawInventory = () => {
 
   const x = 50
   const y = 50
-  const w = 300
-  const h = 500
 
   // ctx.fillStyle = "#efef90"
 
