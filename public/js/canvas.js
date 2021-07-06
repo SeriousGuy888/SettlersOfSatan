@@ -168,7 +168,7 @@ canvasFunctions.setupInventory = () => {
   xPos = 50
   
   for(let i = 0; i < inventory.settlements; i++){
-    unplacedPieces.push(new canvasClasses.UnplacedPiece("settlement", currentGameData?.players[playerId], xPos, y))
+    unplacedPieces.push(new canvasClasses.UnplacedPiece("settlement", currentGameData?.players[playerId].colour, xPos, y))
     xPos += 40
   }
   

@@ -181,10 +181,9 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
   }
 
   onClick() {
-    console.log(holding)
     if(!this.isHovered(true)) return
     if(!holding) return
-
+    console.log(holding)
     socket.emit("perform_game_action", {
       action: "place_" + holding,
       coords: this.data.coords,
@@ -204,24 +203,24 @@ canvasClasses.UnplacedPiece = class extends canvasClasses.Hoverable {
 
     this.piece = piece
     this.colour = colour
-    this.x = x
-    this.y = y
+    this.xPos = x
+    this.yPos = y
   }
 
   render() {
     if (this.piece == "settlement") {
       ctx.fillStyle = this.colour
       ctx.beginPath();
-      ctx.moveTo(this.x + 16, this.y);
-      ctx.lineTo(this.x, this.y + 16);
-      ctx.lineTo(this.x + 32, this.y + 16);
+      ctx.moveTo(this.xPos + 16, this.yPos);
+      ctx.lineTo(this.xPos, this.yPos + 16);
+      ctx.lineTo(this.xPos + 32, this.yPos + 16);
       ctx.closePath();
       ctx.fill()
       ctx.beginPath();
-      ctx.moveTo(this.x + 32, this.y + 16);
-      ctx.lineTo(this.x + 32, this.y + 32);
-      ctx.lineTo(this.x, this.y + 32);
-      ctx.lineTo(this.x, this.y + 16);
+      ctx.moveTo(this.xPos + 32, this.yPos + 16);
+      ctx.lineTo(this.xPos + 32, this.yPos + 32);
+      ctx.lineTo(this.xPos, this.yPos + 32);
+      ctx.lineTo(this.xPos, this.yPos + 16);
       ctx.closePath();
       ctx.fill();
     }
@@ -233,7 +232,7 @@ canvasClasses.UnplacedPiece = class extends canvasClasses.Hoverable {
     else if(this.piece == "road"){
       ctx.fillStyle = this.player.colour
       ctx.beginPath();
-      ctx.fillRect(this.x, this.y, 32, 32/3)
+      ctx.fillRect(this.xPos, this.yPos, 32, 32/3)
       ctx.fill();
     }
   }
