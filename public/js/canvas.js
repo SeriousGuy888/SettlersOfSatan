@@ -161,13 +161,7 @@ canvasFunctions.setupInventory = () => {
     // })
   }))
   
-  let y = 90
-  let xPos = 50
   
-  for(let i = 0; i < inventory.settlements; i++){
-    unplacedPieces.push(new canvasClasses.UnplacedPiece("settlement", currentGameData?.players[playerId].colour, xPos, y))
-    xPos += 40
-  }
   
 }
 canvasFunctions.drawInventory = () => {
@@ -188,7 +182,15 @@ canvasFunctions.drawInventory = () => {
   ctx.textAlign = "left"
   ctx.textBaseline = "top"
 
-  ctx.fillText(`Settlements: `, x, y); 
+  ctx.fillText(`Settlements: `, x, y)
+  unplacedPieces.splice(0, unplacedPieces.length)
+  let settlementsY = 90
+  let settlementsX = 50
+  for(let i = 0; i < inventory.settlements; i++) {
+    const colour = currentGameData?.players[playerId].colour
+    unplacedPieces.push(new canvasClasses.UnplacedPiece("settlement", colour, settlementsX, settlementsY))
+    settlementsX += 40
+  }
 
   ctx.fillStyle = "#000"
   ctx.fillText(`Cities: ${inventory.cities}`, x, y + 80)
