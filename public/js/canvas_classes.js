@@ -141,18 +141,19 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
   }
 }
 canvasClasses.Vertex = class extends canvasClasses.Hoverable {
-  constructor(xPos, yPos, coords) {
+  constructor(xPos, yPos, data) {
     super()
     
     this.xPos = xPos
     this.yPos = yPos
-    this.coords = coords
+    this.data = data
   }
 
   render() {
     const { xPos, yPos } = this
 
-    ctx.fillStyle = this.isHovered(true) ? "#0f0" : "#f00"
+    ctx.fillStyle = "#08f"
+    if(this.data.building) ctx.fillStyle = "#f0f"
 
     ctx.beginPath()
     ctx.arc(xPos, yPos, this.getDimensions().width / 2, 0, 2 * Math.PI)
@@ -171,7 +172,9 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
 
     socket.emit("perform_game_action", {
       action: "place_settlement",
-      coords: this.coords,
-    }, () => {})
+      coords: this.data.coords,
+    }, (err, data) => {
+      if(err) notifyUser(err)
+    })
   }
 }

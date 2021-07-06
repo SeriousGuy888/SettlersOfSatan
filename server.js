@@ -24,7 +24,7 @@ const Satan = require("./classes/Satan.js")
 const lobbies = require("./server/lobbies.js")
 const users = require("./server/users.js")
 
-setInterval(lobbies.tickAllLobbies, 1000)
+setInterval(lobbies.tickAllLobbies, 500)
 
 io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-not-the-chat-3l21
   console.log("A user has connected to via a socket.")
@@ -278,6 +278,7 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
 
     if(!lobby.getInGame()) return callback("not_playing")
 
+    if(typeof data !== "object") return callback("invalid_action_data")
     lobby.game.processAction(user.playerId, data)
   })
 })

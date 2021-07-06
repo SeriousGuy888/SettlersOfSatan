@@ -1,4 +1,5 @@
 const Hex = require("./Hex.js")
+const Building = require("./Building.js")
 const lobbies = require("../server/lobbies.js")
 
 
@@ -121,12 +122,14 @@ class Satan {
 
     switch(action) {
       case "place_settlement":
+        if(!coords) break
+
         const hex = this.board[coords.y][coords.x]
         if(!hex) break
-        // const vertex = hex.vertexes[coords.v]
-        // if(!vertex) break
+        const vertex = hex.vertexes[coords.v]
+        if(!vertex) break
 
-        hex.vertexes[coords.v] = null
+        hex.vertexes[coords.v].setBuilding("settlement", playerId)
         
         break
       default:

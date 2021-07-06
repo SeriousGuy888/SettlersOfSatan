@@ -101,7 +101,7 @@ canvasFunctions.refreshBoard = () => {
                 new canvasClasses.Vertex(
                   x + xOffset,
                   y + (v === "north" ? -hexRadius : hexRadius),
-                  hex.vertexes[v].coords
+                  hex.vertexes[v]
                 )
               )
             }

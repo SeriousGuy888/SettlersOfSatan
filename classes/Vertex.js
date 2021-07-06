@@ -22,8 +22,16 @@ class Vertex {
     return intersectingHexes
   }
 
-  setBuilding(building) {
-    this.building = building
+  setBuilding(type, playerId) {
+    if(!this.building) this.building = {}
+    
+    if(type) { // if type is not null
+      this.building.type = type // set building
+      if(playerId) this.building.playerId = playerId // only change owner player if arg is defined
+    }
+    else {
+      this.building = null
+    }
   }
 }
 
