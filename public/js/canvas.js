@@ -91,7 +91,9 @@ canvasFunctions.refreshBoard = () => {
         if(hex) {
           const xOffset = i % 2 !== 0 ? hexApothem : 0
 
-          boardHexes.push(new canvasClasses.Hex(x + xOffset, y, hex.coords, hex.resource, hex.number))
+          if(!hex.invisible) {
+            boardHexes.push(new canvasClasses.Hex(x + xOffset, y, hex.coords, hex.resource, hex.number))
+          }
           
           if(hex.vertexes) {
             for(let v in hex.vertexes) {

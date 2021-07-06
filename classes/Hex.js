@@ -3,20 +3,21 @@ const Vertex = require("./Vertex.js")
 class Hex {
   constructor(coords) {
     this.coords = coords
-
     this.number = null
     this.resource = null
+    this.vertexes = {}
+    this.invisible = false
+  }
 
-    this.vertexes = {
-      north: new Vertex({
-        ...coords,
-        v: "north",
-      }),
-      south: new Vertex({
-        ...coords,
-        v: "south",
-      })
-    }
+  setInvisible(invisible) {
+    this.invisible = invisible
+  }
+  
+  createVertex(vert) {
+    this.vertexes[vert] = new Vertex({
+      ...this.coords,
+      v: vert,
+    })
   }
 }
 
