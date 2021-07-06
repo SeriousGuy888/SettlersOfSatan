@@ -169,7 +169,9 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
   onClick() {
     if(!this.isHovered(true)) return
 
-    notifyUser(`clicked on vertex at ${JSON.stringify(this.coords)}`)
-    socket.emit("perform_game_action", { test: true }, () => {})
+    socket.emit("perform_game_action", {
+      action: "place_settlement",
+      coords: this.coords,
+    }, () => {})
   }
 }

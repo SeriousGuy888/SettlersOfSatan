@@ -95,6 +95,8 @@ canvasFunctions.refreshBoard = () => {
           
           if(hex.vertexes) {
             for(let v in hex.vertexes) {
+              if(!hex.vertexes[v]) continue
+
               boardVertexes.push(
                 new canvasClasses.Vertex(
                   x + xOffset,

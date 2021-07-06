@@ -114,7 +114,24 @@ class Satan {
   }
 
   processAction(playerId, actionData) {
-    this.setUpBoard(5)
+    const action = actionData.action
+    if(!action) return
+
+    const coords = actionData.coords
+
+    switch(action) {
+      case "place_settlement":
+        const hex = this.board[coords.y][coords.x]
+        if(!hex) break
+        // const vertex = hex.vertexes[coords.v]
+        // if(!vertex) break
+
+        hex.vertexes[coords.v] = null
+        
+        break
+      default:
+        return
+    }
   }
 }
 
