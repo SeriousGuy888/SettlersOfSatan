@@ -9,7 +9,7 @@ const canvasElems = []
 
 const boardHexes = []
 const boardVertexes = []
-var unplacedPieces = []
+const unplacedPieces = []
 
 let mousePos = { x: 0, y: 0 }
 
