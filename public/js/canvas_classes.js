@@ -1,5 +1,7 @@
 const canvasClasses = {}
 
+var holding = ""
+
 canvasClasses.Hoverable = class {
   isHovered(centeredPos) {
     let { xPos, yPos } = this
@@ -176,5 +178,50 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
     }, (err, data) => {
       if(err) notifyUser(err)
     })
+  }
+}
+
+canvasClasses.unplacedPiece = class extends canvasClasses.Hoverable {
+  constructor (piece, player, x, y) {
+
+    super()
+
+    this.piece = piece
+    this.player = player
+    this.x = x
+    this.y = y
+  }
+
+  render() {
+    if (this.piece == "settlement") {
+      ctx.fillStyle = this.player.colour
+      ctx.beginPath();
+      ctx.moveTo(this.x + 16, this.y);
+      ctx.lineTo(this.x, this.y + 16);
+      ctx.lineTo(this.x + 32, this.y + 16);
+      ctx.closePath();
+      ctx.fill()
+      ctx.beginPath();
+      ctx.moveTo(this.x + 32, this.y + 16);
+      ctx.lineTo(this.x + 32, this.y + 32);
+      ctx.lineTo(this.x, this.y + 32);
+      ctx.lineTo(this.x, this.y + 16);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    else if (this.piece == "city") {
+
+    }
+
+    else if(this.piece == "road"){
+      ctx.fillStyle = this.player.colour
+      ctx.beginPath();
+      ctx.fillRect(this.x, this.y, 32, 32/3)
+      ctx.fill();
+    }
+  }
+  onClick() {
+    holding = this.piece
   }
 }

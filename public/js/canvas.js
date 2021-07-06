@@ -9,6 +9,7 @@ const canvasElems = []
 
 const boardHexes = []
 const boardVertexes = []
+var unplacedPieces = []
 
 let mousePos = { x: 0, y: 0 }
 
@@ -137,6 +138,8 @@ canvasFunctions.draw = () => {
 
   for(const e of boardHexes) e.render()
   for(const e of boardVertexes) e.render()
+  console.log(unplacedPieces)
+  for(const e of unplacedPieces) e.render()
 }
 
 canvasFunctions.background = (colour) => {
@@ -182,24 +185,33 @@ canvasFunctions.drawInventory = () => {
   ctx.textBaseline = "top"
 
   ctx.fillText(`Settlements: `, x, y);
-  canvasFunctions.unplacedSettlement(x, y)
+  xPos = x
+  console.log(inventory.settlements)
+  for(let i = 0; i < inventory.settlements; i++){
+    console.log("hi")
+    unplacedPieces.push(new canvasClasses.unplacedPiece("settlement", currentGameData?.players[playerId], xPos, y + 40))
+    xPos += 40
+  } 
+
+  ctx.fillStyle = "#000"
   ctx.fillText(`Cities: ${inventory.cities}`, x, y + 80)
+  ctx.fillStyle = "#000"
   ctx.fillText(`Roads: ${inventory.roads}`, x, y + 120)
 }
 
 canvasFunctions.unplacedSettlement = (x, y, colour) => {
+  ctx.fillStyle = colour
   ctx.beginPath();
-  let top = y + 40
-  ctx.moveTo(x + 16, top);
-  ctx.lineTo(x, top + 16);
-  ctx.lineTo(x + 32, top + 16);
+  ctx.moveTo(x + 16, y);
+  ctx.lineTo(x, y + 16);
+  ctx.lineTo(x + 32, y + 16);
   ctx.closePath();
   ctx.fill()
   ctx.beginPath();
-  ctx.moveTo(x + 16, top);
-  ctx.lineTo(x + 32, top + 32);
-  ctx.lineTo(x, top + 32);
-  ctx.lineTo(x, top + 16);
+  ctx.moveTo(x + 32, y + 16);
+  ctx.lineTo(x + 32, y + 32);
+  ctx.lineTo(x, y + 32);
+  ctx.lineTo(x, y + 16);
   ctx.closePath();
   ctx.fill();
 }
