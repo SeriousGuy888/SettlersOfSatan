@@ -15,15 +15,18 @@
       <hr>
       <div id="memory-usage-container">
         <h4>Server Memory Usage</h4>
-        <a href="https://nodejs.org/api/process.html#process_process_memoryusage" target="_blank">
-          hwat ce dukk does any of cis mean?
-        </a>
+        <a href="https://nodejs.org/api/process.html#process_process_memoryusage" target="_blank">docs</a>
         <pre id="memory-usage">Refresh?</pre>
+      </div>
+      <div id="uptime-container">
+        <h4>Server Uptime</h4>
+        <pre id="uptime">Refresh?</pre>
       </div>
     </main>
     <script>
       const refreshButton = document.querySelector("#refresh-stats")
-      const memoryUsageDiv = document.querySelector("#memory-usage")
+      const memoryUsageBlock = document.querySelector("#memory-usage")
+      const uptimeBlock = document.querySelector("#uptime")
 
       refreshButton.addEventListener("click", async () => {
         const response = await fetch("/stats/get")
@@ -32,7 +35,7 @@
         const serverData = await response.json()
         console.log(serverData)
 
-        const { memoryUsage } = serverData
+        const { memoryUsage, uptime } = serverData
 
         const formatMemoryUsage = (bytes) => `${Math.round(bytes / 1024 / 1024 * 100) / 100} MB`
         const formattedMemoryUsageData = {
@@ -42,7 +45,30 @@
           external: formatMemoryUsage(memoryUsage.external),
         }
 
-        memoryUsageDiv.textContent = JSON.stringify(formattedMemoryUsageData, null, 4)
+        
+        const formatTime = seconds => {
+          const unitRatios = {
+            d: 60 * 60 * 24,
+            h: 60 * 60,
+            m: 60
+          }
+
+          let s = seconds
+          let d, h, m = 0
+
+          d = Math.floor(s / unitRatios.d)
+          s -= d * unitRatios.d
+          h = Math.floor(s / unitRatios.h)
+          s -= h * unitRatios.h
+          m = Math.floor(s / unitRatios.m)
+          s -= m * unitRatios.m
+          
+          return `${d}d${h}h${m}m${s}s`
+        }
+
+
+        memoryUsageBlock.textContent = JSON.stringify(formattedMemoryUsageData, null, 4)
+        uptimeBlock.textContent = formatTime(uptime)
       })
     </script>
   </body>
