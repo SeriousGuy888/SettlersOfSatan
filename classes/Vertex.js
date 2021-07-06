@@ -22,6 +22,10 @@ class Vertex {
     return intersectingHexes
   }
 
+  getBuilding() {
+    return this.building || null
+  }
+
   setBuilding(type, playerId) {
     if(!this.building) this.building = {}
     

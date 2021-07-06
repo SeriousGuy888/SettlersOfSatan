@@ -121,6 +121,10 @@ class Lobby {
     this.broadcast("receive_chat", { lines })
   }
 
+  getUser(id) {
+    return this.users[id] || null
+  }
+
   getUsers() {
     return this.users
   }

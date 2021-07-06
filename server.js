@@ -278,7 +278,9 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
 
     if(!lobby.getInGame()) return callback("not_playing")
 
+    const playerId = lobby.getUser(user.id).playerId
+
     if(typeof data !== "object") return callback("invalid_action_data")
-    lobby.game.processAction(user.playerId, data)
+    lobby.game.processAction(playerId, data)
   })
 })

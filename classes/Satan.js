@@ -158,8 +158,14 @@ class Satan {
         const vertex = hex.vertexes[v]
         if(!vertex) break
 
-        hex.vertexes[v].setBuilding("settlement", playerId)
-        
+        const player = this.getPlayer(playerId)
+
+        if(player.inventory.getSettlements() > 0) {
+          if(hex.vertexes[v].getBuilding() !== "settlement") {
+            hex.vertexes[v].setBuilding("settlement", playerId)
+            player.inventory.addSettlement(-1)
+          }
+        }
         break
       default:
         return
