@@ -149,9 +149,6 @@ canvasFunctions.background = (colour) => {
   ctx.fill()
 }
 
-canvasFunctions.drawHex = (x, y, resource, number) => {
-}
-
 canvasFunctions.setupInventory = () => {
   const inventory = currentGameData?.players[playerId]?.inventory
   // i hate web programming so much
