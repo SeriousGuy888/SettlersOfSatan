@@ -182,23 +182,6 @@ canvasFunctions.drawInventory = () => {
   ctx.fillText(`Roads: ${inventory.roads}`, x, y + 120)
 }
 
-canvasFunctions.unplacedSettlement = (x, y, colour) => {
-  ctx.fillStyle = colour
-  ctx.beginPath();
-  ctx.moveTo(x + 16, y);
-  ctx.lineTo(x, y + 16);
-  ctx.lineTo(x + 32, y + 16);
-  ctx.closePath();
-  ctx.fill()
-  ctx.beginPath();
-  ctx.moveTo(x + 32, y + 16);
-  ctx.lineTo(x + 32, y + 32);
-  ctx.lineTo(x, y + 32);
-  ctx.lineTo(x, y + 16);
-  ctx.closePath();
-  ctx.fill();
-}
-
 gameCanvas.addEventListener("click", e => {
   for(const elem of canvasElems) {
     if(elem.onClick) elem.onClick()
