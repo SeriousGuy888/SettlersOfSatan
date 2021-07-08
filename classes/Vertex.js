@@ -1,25 +1,25 @@
 class Vertex {
   constructor(coords) {
     this.coords = coords
-    this.intersectingHexes = this.getIntersectingHexes()
+    this.adjacentHexes = this.getAdjacentHexes()
     this.building = null
   }
 
-  getIntersectingHexes() {
+  getAdjacentHexes() {
     const { coords } = this
     const managerHex = { x: coords.x, y: coords.y } // the coords of the hex that manages this vertex
     
-    let intersectingHexes = [managerHex]
+    let adjacentHexes = [managerHex]
     if(coords.v === "north") {
-      intersectingHexes.push({ x: coords.x,       y: coords.y - 1 })
-      intersectingHexes.push({ x: coords.x + 1,   y: coords.y - 1 })
+      adjacentHexes.push({ x: coords.x,       y: coords.y - 1 })
+      adjacentHexes.push({ x: coords.x + 1,   y: coords.y - 1 })
     }
     else {
-      intersectingHexes.push({ x: coords.x - 1,   y: coords.y + 1 })
-      intersectingHexes.push({ x: coords.x,       y: coords.y + 1 })
+      adjacentHexes.push({ x: coords.x - 1,   y: coords.y + 1 })
+      adjacentHexes.push({ x: coords.x,       y: coords.y + 1 })
     }
 
-    return intersectingHexes
+    return adjacentHexes
   }
 
   getBuilding() {
