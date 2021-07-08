@@ -249,7 +249,10 @@ canvasClasses.UnplacedPiece = class extends canvasClasses.Hoverable {
 
   onClick() {
     if(!this.isHovered()) return
-    holding = this.piece
+
+    if(holding === this.piece) holding = null
+    else holding = this.piece
+    
     this.colour = lighterShades[this.colour]
     console.log("yoooooooooooooo")
   }
