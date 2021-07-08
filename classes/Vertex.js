@@ -2,6 +2,7 @@ class Vertex {
   constructor(coords) {
     this.coords = coords
     this.adjacentHexes = this.getAdjacentHexes()
+    this.adjacentVertexes = this.getAdjacentVertexes()
     this.building = null
   }
 
@@ -11,15 +12,41 @@ class Vertex {
     
     let adjacentHexes = [managerHex]
     if(coords.v === "north") {
-      adjacentHexes.push({ x: coords.x,       y: coords.y - 1 })
-      adjacentHexes.push({ x: coords.x + 1,   y: coords.y - 1 })
+      adjacentHexes.push(
+        { x: coords.x,      y: coords.y - 1 },
+        { x: coords.x + 1,  y: coords.y - 1 },
+      )
     }
     else {
-      adjacentHexes.push({ x: coords.x - 1,   y: coords.y + 1 })
-      adjacentHexes.push({ x: coords.x,       y: coords.y + 1 })
+      adjacentHexes.push(
+        { x: coords.x - 1,  y: coords.y + 1 },
+        { x: coords.x,      y: coords.y + 1 },
+      )
     }
 
     return adjacentHexes
+  }
+
+  getAdjacentVertexes() {
+    const { coords } = this
+
+    let adjacentVertexes = []
+    if(coords.v === "north") {
+      adjacentVertexes.push(
+        { x: coords.x,      y: coords.y - 2, v: "south" },
+        { x: coords.x,      y: coords.y - 1, v: "south" },
+        { x: coords.x + 1,  y: coords.y - 1, v: "south" },
+      )
+    }
+    else {
+      adjacentVertexes.push(
+        { x: coords.x,      y: coords.y + 2, v: "north" },
+        { x: coords.x,      y: coords.y + 1, v: "north" },
+        { x: coords.x + 1,  y: coords.y + 1, v: "north" },
+      )
+    }
+
+    return adjacentVertexes
   }
 
   getBuilding() {
