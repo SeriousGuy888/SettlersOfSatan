@@ -166,6 +166,9 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
     const { xPos, yPos } = this
 
     ctx.fillStyle = "#08f"
+    if(!holding && !this.data.building) {
+      return
+    }
     if(this.data.building) ctx.fillStyle = "#f0f"
 
     ctx.beginPath()
@@ -245,7 +248,7 @@ canvasClasses.UnplacedPiece = class extends canvasClasses.Hoverable {
   }
 
   onClick() {
-    if(!this.isHovered(true)) return
+    if(!this.isHovered()) return
     holding = this.piece
     this.colour = lighterShades[this.colour]
     console.log("yoooooooooooooo")
