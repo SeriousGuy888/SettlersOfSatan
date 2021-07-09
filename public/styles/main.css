@@ -160,6 +160,10 @@ html {
     display: flex;
     flex-direction: row;
 }
+.list-entry:hover .list-entry-options > * {
+    flex-basis: 0;
+    flex-grow: 1;
+}
 
 .hexagon {
     position: relative;

@@ -38,12 +38,11 @@ socket.on("lobby_update", data => {
     user.host && listEntryTitleDiv.appendChild(hostBadge)
 
     const listEntryOptionsDiv = document.createElement("div")
-    if(isHost && user.playerId !== playerId) {
-      listEntryOptionsDiv.className = "list-entry-options"
+    listEntryOptionsDiv.className = "list-entry-options"
   
-      const kickPlayerButton = document.createElement("a")
+    if(isHost && user.playerId !== playerId) {
+      const kickPlayerButton = document.createElement("button")
       kickPlayerButton.textContent = "Kick"
-      kickPlayerButton.href = "#"
       kickPlayerButton.onclick = () => {
         if(window.confirm(`Are you sure you want to kick ${user.name}?`)) {
           socket.emit("kick_player", {
@@ -56,9 +55,19 @@ socket.on("lobby_update", data => {
 
       listEntryOptionsDiv.appendChild(kickPlayerButton)
     }
+    const copyPlayerIdButton = document.createElement("button")
+    const copyPlayerIdButtonText = "Copy Player ID"
+    copyPlayerIdButton.textContent = copyPlayerIdButtonText
+    copyPlayerIdButton.onclick = () => {
+      navigator.clipboard.writeText(user.playerId).then(() => {
+        copyPlayerIdButton.textContent = "Copied!"
+        setTimeout(() => copyPlayerIdButton.textContent = copyPlayerIdButtonText, 1000)
+      })
+    }
+    listEntryOptionsDiv.appendChild(copyPlayerIdButton)
 
     listEntryDiv.appendChild(listEntryTitleDiv)
-    isHost && listEntryDiv.appendChild(listEntryOptionsDiv)
+    listEntryDiv.appendChild(listEntryOptionsDiv)
 
     listEntryDiv.classList.add(["list-entry"])
     listEntryDiv.style.border = "5px solid " + user.colour
