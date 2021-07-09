@@ -209,6 +209,7 @@ canvasFunctions.drawPiece = (piece, colour, x, y, w, h) => {
     ctx.beginPath()
     ctx.fillRect(x, y, 32, 32/3)
     ctx.fill()
+    ctx.stroke()
   }
 }
 

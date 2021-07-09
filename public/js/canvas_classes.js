@@ -165,18 +165,19 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
   render() {
     const { xPos, yPos } = this
 
-    ctx.fillStyle = "#08f"
-    if(!holding && !this.data.building) {
-      return
-    }
     if(this.data.building) {
-      const { colour } = canvasFunctions.getPlayer(this.data.building.playerId)
-      ctx.fillStyle = colour
+      const { playerId, type } = this.data.building
+      const { colour } = canvasFunctions.getPlayer(playerId)
+      const { width: w, height: h } = this.getDimensions()
+      canvasFunctions.drawPiece(type, colour, this.xPos - w / 2, this.yPos - h / 2, w, h)
     }
+    else if(holding) {
+      ctx.fillStyle = "#08f"
 
-    ctx.beginPath()
-    ctx.arc(xPos, yPos, this.getDimensions().width / 2, 0, 2 * Math.PI)
-    ctx.fill()
+      ctx.beginPath()
+      ctx.arc(xPos, yPos, this.getDimensions().width / 2, 0, 2 * Math.PI)
+      ctx.fill()
+    }
   }
   
   getDimensions() {
