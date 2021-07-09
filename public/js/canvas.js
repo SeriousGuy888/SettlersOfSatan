@@ -212,6 +212,10 @@ canvasFunctions.drawPiece = (piece, colour, x, y, w, h) => {
   }
 }
 
+canvasFunctions.getPlayer = (playerId) => {
+  return currentGameData.players[playerId] || null
+}
+
 
 
 gameCanvas.addEventListener("click", e => {

@@ -169,7 +169,10 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
     if(!holding && !this.data.building) {
       return
     }
-    if(this.data.building) ctx.fillStyle = "#f0f"
+    if(this.data.building) {
+      const { colour } = canvasFunctions.getPlayer(this.data.building.playerId)
+      ctx.fillStyle = colour
+    }
 
     ctx.beginPath()
     ctx.arc(xPos, yPos, this.getDimensions().width / 2, 0, 2 * Math.PI)
