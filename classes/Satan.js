@@ -1,4 +1,6 @@
 const Hex = require("./Hex.js")
+const Vertex = require("./Vertex.js")
+const Graph = require("./Graph.js")
 const lobbies = require("../server/lobbies.js")
 
 /*
@@ -20,7 +22,10 @@ const boardLayout = [
 class Satan {
   constructor(lobbyId) {
     this.lobbyId = lobbyId
+    
     this.board = []
+    this.vertexes = []
+    this.graph = new Graph()
     
     this.players = {}
   }
@@ -107,6 +112,23 @@ class Satan {
           x: parseInt(x),
           y: parseInt(y)
         })
+
+        const addVertex = (v) => {
+          const vertex = new Vertex({
+            ...hex.coords,
+            v,
+          })
+          
+          const vertCoords = JSON.stringify(vertex.coords)
+          
+          this.vertexes.push(vertex)
+          this.graph.addVertex(vertCoords)
+
+          const adjacentVertexes = vertex.getAdjacentVertexes()
+          for(let adjCoordsObj of adjacentVertexes) {
+            this.graph.addEdge(vertCoords, JSON.stringify(adjCoordsObj))
+          }
+        }
         switch(space) {
           case 1:
             hex.resource = Object.keys(resourceCounts)[Math.floor(Math.random() * Object.keys(resourceCounts).length)]
@@ -121,23 +143,23 @@ class Satan {
               if(!numberCounts[hex.number]) delete numberCounts[hex.number]
             }
 
-            hex.createVertex("north")
-            hex.createVertex("south")
+            addVertex("north")
+            addVertex("south")
             break
           case 2:
             hex.setInvisible(true)
-            hex.createVertex("south")
+            addVertex("south")
             break
           case 3:
             hex.setInvisible(true)
-            hex.createVertex("north")
+            addVertex("north")
             break
         }
 
         this.board[this.board.length - 1].push(hex)
       }
     }
-    // console.log(this.board)
+    // this.graph.printGraph()
   }
 
   processAction(playerId, actionData) {
