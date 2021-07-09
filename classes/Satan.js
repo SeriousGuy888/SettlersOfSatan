@@ -151,7 +151,7 @@ class Satan {
 
     switch(action) {
       case "place_settlement":
-        if(!x || !y || !v) break
+        if(x == undefined || y == undefined || v == undefined) break
 
         const hex = this.board[y][x]
         if(!hex) break

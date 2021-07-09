@@ -190,8 +190,10 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
 
   onClick() {
     if(!this.isHovered(true)) return
+
+    console.log(`Clicked on vertex ${JSON.stringify(this.data.coords)} while holding ${holding}`)
     if(!holding) return
-    console.log(holding)
+
     socket.emit("perform_game_action", {
       action: "place_" + holding,
       coords: this.data.coords,
