@@ -161,7 +161,7 @@ class Satan {
         const player = this.getPlayer(playerId)
 
         if(player.inventory.getSettlements() > 0) {
-          if(hex.vertexes[v].getBuilding() !== "settlement") {
+          if(hex.vertexes[v].getBuilding()?.type !== "settlement") {
             hex.vertexes[v].setBuilding("settlement", playerId)
             player.inventory.addSettlement(-1)
           }
