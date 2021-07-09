@@ -35,6 +35,8 @@ class Satan {
 
     const tickData = {
       board: this.board,
+      vertexes: this.vertexes,
+      graph: this.graph,
       players: this.players,
     }
     if(JSON.stringify(tickData) !== this.prevTickData) {
