@@ -2,7 +2,6 @@ class Vertex {
   constructor(coords) {
     this.coords = coords
     this.adjacentHexes = this.getAdjacentHexes()
-    this.adjacentVertexes = this.getAdjacentVertexes()
     this.building = null
   }
 

@@ -72,6 +72,7 @@ canvasFunctions.stop = () => {
 
 canvasFunctions.refreshBoard = () => {
   let board = currentGameData.board
+  let vertexes = currentGameData.vertexes
   
   boardHexes.splice(0, boardHexes.length)
   boardVertexes.splice(0, boardVertexes.length)
@@ -95,15 +96,17 @@ canvasFunctions.refreshBoard = () => {
             boardHexes.push(new canvasClasses.Hex(x + xOffset, y, hex.coords, hex.resource, hex.number))
           }
           
-          if(hex.vertexes) {
-            for(let v in hex.vertexes) {
-              if(!hex.vertexes[v]) continue
+          const hexVertexes = vertexes.filter(e => e.coords.x === hex.coords.x && e.coords.y === hex.coords.y)
+
+          if(hexVertexes) {
+            for(let vertex of hexVertexes) {
+              if(!vertex) continue
 
               boardVertexes.push(
                 new canvasClasses.Vertex(
                   x + xOffset,
-                  y + (v === "north" ? -hexRadius : hexRadius),
-                  hex.vertexes[v]
+                  y + (vertex.coords.v === "north" ? -hexRadius : hexRadius),
+                  vertex
                 )
               )
             }
