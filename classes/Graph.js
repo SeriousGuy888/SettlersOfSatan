@@ -1,21 +1,25 @@
-// stolen from https://www.geeksforgeeks.org/implementation-graph-javascript/
+// stolen from https://reginafurness.medium.com/representing-a-weighted-graph-with-an-adjacency-matrix-in-javascript-8a803bfbc36f
 
 class Graph {
   constructor() {
-    this.vertexes = new Map()
+    this.matrix = {}
   }
 
-  addVertex(vertexId) {
-    if(this.vertexes.has(vertexId)) return
-    this.vertexes.set(vertexId, [])
+  addVertex(key) {
+    this.matrix[key] = {}
+
+    for(let i in this.matrix) {
+      this.matrix[i][key] = false
+      this.matrix[key][i] = false
+    }
   }
 
   addEdge(vertexA, vertexB) {
-    if(!this.vertexes.has(vertexA)) this.addVertex(vertexA)
-    if(!this.vertexes.has(vertexB)) this.addVertex(vertexB)
+    if(!this.matrix.vertexA) this.addVertex(vertexA)
+    if(!this.matrix.vertexB) this.addVertex(vertexB)
 
-    this.vertexes.get(vertexA).push(vertexB)
-    this.vertexes.get(vertexB).push(vertexA)
+    this.matrix[vertexA][vertexB] = true
+    this.matrix[vertexB][vertexA] = true
   }
 
   printGraph() {
