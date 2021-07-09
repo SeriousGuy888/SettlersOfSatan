@@ -211,33 +211,8 @@ canvasClasses.UnplacedPiece = class extends canvasClasses.Hoverable {
   }
 
   render() {
-    if (this.piece == "settlement") {
-      ctx.fillStyle = this.colour
-      ctx.beginPath();
-      ctx.moveTo(this.xPos + 16, this.yPos);
-      ctx.lineTo(this.xPos, this.yPos + 16);
-      ctx.lineTo(this.xPos + 32, this.yPos + 16);
-      ctx.closePath();
-      ctx.fill()
-      ctx.beginPath();
-      ctx.moveTo(this.xPos + 32, this.yPos + 16);
-      ctx.lineTo(this.xPos + 32, this.yPos + 32);
-      ctx.lineTo(this.xPos, this.yPos + 32);
-      ctx.lineTo(this.xPos, this.yPos + 16);
-      ctx.closePath();
-      ctx.fill();
-    }
-
-    else if (this.piece == "city") {
-
-    }
-
-    else if(this.piece == "road"){
-      ctx.fillStyle = this.player.colour
-      ctx.beginPath();
-      ctx.fillRect(this.xPos, this.yPos, 32, 32/3)
-      ctx.fill();
-    }
+    const { width: w, height: h } = this.getDimensions()
+    canvasFunctions.drawPiece(this.piece, this.colour, this.xPos, this.yPos, w, h)
   }
 
   getDimensions() {

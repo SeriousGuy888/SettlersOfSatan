@@ -182,6 +182,38 @@ canvasFunctions.drawInventory = () => {
   ctx.fillText(`Roads: ${inventory.roads}`, x, y + 120)
 }
 
+canvasFunctions.drawPiece = (piece, colour, x, y, w, h) => {
+  if(piece == "settlement") {
+    ctx.fillStyle = colour
+    ctx.beginPath()
+    ctx.moveTo(x + w / 2, y)
+    ctx.lineTo(x, y + h / 2)
+    ctx.lineTo(x + w, y + h / 2)
+    ctx.closePath()
+    ctx.fill()
+    ctx.beginPath()
+    ctx.moveTo(x + w, y + h / 2)
+    ctx.lineTo(x + w, y + h)
+    ctx.lineTo(x, y + h)
+    ctx.lineTo(x, y + h / 2)
+    ctx.closePath()
+    ctx.fill()
+  }
+
+  else if(piece == "city") {
+
+  }
+
+  else if(piece == "road"){
+    ctx.fillStyle = colour
+    ctx.beginPath()
+    ctx.fillRect(x, y, 32, 32/3)
+    ctx.fill()
+  }
+}
+
+
+
 gameCanvas.addEventListener("click", e => {
   for(const elem of canvasElems) {
     if(elem.onClick) elem.onClick()
