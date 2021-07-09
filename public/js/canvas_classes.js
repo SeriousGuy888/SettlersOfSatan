@@ -130,17 +130,18 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
     }
   
     ctx.fillStyle = resourceColours[resource]
-    ctx.fill()
-    ctx.stroke()
     ctx.closePath()
+    ctx.stroke()
+    ctx.fill()
   
     if(number !== "robber") {
       ctx.fillStyle = "#fff"
+
       ctx.beginPath()
       ctx.arc(xPos, yPos, hexRadius / 3, 0, 2 * Math.PI)
+      ctx.closePath()
       ctx.fill()
       ctx.stroke()
-      ctx.closePath()
     }
   
     if(number) {
