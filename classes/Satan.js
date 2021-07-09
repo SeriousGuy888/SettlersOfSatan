@@ -25,6 +25,7 @@ class Satan {
     
     this.board = []
     this.vertexes = []
+    this.roads = []
     this.graph = new Graph()
     
     this.players = {}
@@ -36,7 +37,7 @@ class Satan {
     const tickData = {
       board: this.board,
       vertexes: this.vertexes,
-      graph: this.graph,
+      roads: this.roads,
       players: this.players,
     }
     if(JSON.stringify(tickData) !== this.prevTickData) {
@@ -161,7 +162,16 @@ class Satan {
         this.board[this.board.length - 1].push(hex)
       }
     }
-    // this.graph.printGraph()
+    // this.graph.printMatrix() // prints quite a bit of false in the console
+
+    const { matrix } = this.graph
+    for(let i in matrix) {
+      for(let j in matrix[i]) {
+        if(matrix[i][j]) { // if a connection exists between the nodes i and j,
+          this.roads.push([i, j])
+        }
+      }
+    }
   }
 
   processAction(playerId, actionData) {

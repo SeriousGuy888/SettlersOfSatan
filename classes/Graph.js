@@ -15,23 +15,20 @@ class Graph {
   }
 
   addEdge(vertexA, vertexB) {
-    if(!this.matrix.vertexA) this.addVertex(vertexA)
-    if(!this.matrix.vertexB) this.addVertex(vertexB)
+    if(this.matrix[vertexA] == undefined) this.addVertex(vertexA)
+    if(this.matrix[vertexB] == undefined) this.addVertex(vertexB)
 
     this.matrix[vertexA][vertexB] = true
     this.matrix[vertexB][vertexA] = true
   }
 
-  printGraph() {
-    let getKeys = this.vertexes.keys()
-  
-    for(let i of getKeys) {
-      let getValues = this.vertexes.get(i)
-      let conc = ""
-
-      for(let j of getValues) conc += j + " "
-
-      console.log(i + " -> " + conc)
+  printMatrix() {
+    for(let i in this.matrix) {
+      let row = "";
+      for(let j in this.matrix[i]) {
+        row += ` ${this.matrix[i][j]}`
+      }
+      console.log(row)
     }
   }
 }
