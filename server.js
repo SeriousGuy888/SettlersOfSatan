@@ -238,20 +238,8 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
 
     let content = helpers.goodifyUserInput(data.content, true, 250)
     if(!content) return callback("chat_message_empty")
-
-    const player = lobby.getUsers()[user.id]
-    const playerColour = player.colour || "black"
     
-    lobby.printToChat([
-      {
-        text: user.getName(),
-        style: {
-          bold: true,
-          colour: playerColour,
-        }
-      },
-      { text: content }
-    ])
+    lobby.handleChatMessage(user, content)
   })
 
   socket.on("select_colour", (data, callback) => {

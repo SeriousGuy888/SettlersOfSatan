@@ -110,15 +110,64 @@ class Lobby {
     lobbies.setLobby(this.code, null)
   }
 
+  handleChatMessage(user, content) {
+    const player = this.getUser(user.id)
+
+    if(content.startsWith("/")) {
+      content = content.substring(1)
+      const args = content.split(" ")
+      const cmd = args.splice(0, 1)[0]
+      
+      const errChatStyle = { colour: "red", italic: true }
+
+      if(this.getHost() !== user.id) {
+        this.printToUserChat(user.id, [{
+          text: "You are not allowed to use commands!",
+          style: errChatStyle
+        }])
+        return
+      }
+
+      if(cmd === "kick") {
+        const playerId = args[0]
+        this.printToChat([`testing command lol also ${playerId}`])
+      }
+      else {
+        this.printToUserChat(user.id, [{
+          text: "Invalid command!",
+          style: errChatStyle
+        }])
+      }
+    }
+    else {
+      const playerColour = player.colour || "black"
+      this.printToChat([
+        {
+          text: user.getName(),
+          style: {
+            bold: true,
+            colour: playerColour,
+          }
+        },
+        { text: content }
+      ])
+    }
+  }
+
+  printToUserChat(userId, lines) {
+    const socket = users.getUser(userId).socket
+    socket.emit("receive_chat", { lines })
+  }
+
+  printToChat(lines) {
+    this.broadcast("receive_chat", { lines })
+  }
+
   broadcast(msg, data) {
     for(let userId in this.users) {
       const user = users.getUser(userId)
       user.socket.emit(msg, data)
     }
-  }
-
-  printToChat(lines) {
-    this.broadcast("receive_chat", { lines })
   }
 
   getUser(id) {
