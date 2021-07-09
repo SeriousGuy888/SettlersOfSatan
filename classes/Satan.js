@@ -175,18 +175,14 @@ class Satan {
 
     switch(action) {
       case "place_settlement":
-        if(x == undefined || y == undefined || v == undefined) break
-
-        const hex = this.board[y][x]
-        if(!hex) break
-        const vertex = hex.vertexes[v]
+        const vertex = this.vertexes.filter(e => e.coords.x === x && e.coords.y === y && e.coords.v === v)[0]
         if(!vertex) break
 
         const player = this.getPlayer(playerId)
 
         if(player.inventory.getSettlements() > 0) {
-          if(hex.vertexes[v].getBuilding()?.type !== "settlement") {
-            hex.vertexes[v].setBuilding("settlement", playerId)
+          if(vertex.getBuilding()?.type !== "settlement") {
+            vertex.setBuilding("settlement", playerId)
             player.inventory.addSettlement(-1)
           }
         }
