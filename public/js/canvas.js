@@ -3,8 +3,8 @@ const gameCanvas = document.querySelector("#game-canvas")
  * @type {RenderingContext} ctx
  */
 const ctx = gameCanvas.getContext("2d")
-const canvasWidth = 1920
-const canvasHeight = 1080
+const canvasWidth = 1000
+const canvasHeight = 1000
 const canvasElems = []
 
 const boardHexes = []
@@ -13,12 +13,12 @@ const unplacedPieces = []
 
 let mousePos = { x: 0, y: 0 }
 
-const canvasFullscreenButton = document.querySelector("#canvas-fullscreen")
-canvasFullscreenButton.addEventListener("click", () => {
-  if(gameCanvas.requestFullscreen) gameCanvas.requestFullscreen()
-  else if(gameCanvas.webkitRequestFullScreen) gameCanvas.webkitRequestFullScreen()
-  else if(gameCanvas.mozRequestFullScreen) gameCanvas.mozRequestFullScreen()
-})
+// const canvasFullscreenButton = document.querySelector("#canvas-fullscreen")
+// canvasFullscreenButton.addEventListener("click", () => {
+//   if(gameCanvas.requestFullscreen) gameCanvas.requestFullscreen()
+//   else if(gameCanvas.webkitRequestFullScreen) gameCanvas.webkitRequestFullScreen()
+//   else if(gameCanvas.mozRequestFullScreen) gameCanvas.mozRequestFullScreen()
+// })
 
 /*
   billzo's hexagon notes
@@ -93,7 +93,7 @@ canvasFunctions.refreshBoard = () => {
           const xOffset = i % 2 !== 0 ? hexApothem : 0
 
           if(!hex.invisible) {
-            boardHexes.push(new canvasClasses.Hex(x + xOffset, y, hex.coords, hex.resource, hex.number, hex.robber))
+            boardHexes.push(new canvasClasses.Hex(Math.round(x + xOffset), Math.round(y), hex.coords, hex.resource, hex.number, hex.robber))
           }
           
           const hexVertexes = vertexes.filter(e => e.coords.x === hex.coords.x && e.coords.y === hex.coords.y)
