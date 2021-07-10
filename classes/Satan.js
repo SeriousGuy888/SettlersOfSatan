@@ -34,12 +34,18 @@ class Satan {
   tick() {
     const lobby = lobbies.getLobby(this.lobbyId)
 
+    let playersPublicData = {}
+    for(let i in this.players) {
+      playersPublicData[i] = this.players[i].getPublicData()
+    }
+
     const tickData = {
       board: this.board,
       vertexes: this.vertexes,
       edges: this.edges,
-      players: this.players,
+      players: playersPublicData,
     }
+
     if(JSON.stringify(tickData) !== this.prevTickData) {
       lobby.broadcast("game_update", tickData)
       this.prevTickData = JSON.stringify(tickData)

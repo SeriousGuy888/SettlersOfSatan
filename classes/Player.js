@@ -8,6 +8,11 @@ class Player {
     this.cards = []
   }
 
+  getPublicData() {
+    const { id, colour, inventory } = this
+    return { id, colour, inventory }
+  }
+
   getColour() {
     return this.colour
   }

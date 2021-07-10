@@ -28,7 +28,14 @@ socket.on("game_started_update", data => {
 
 
 let currentGameData
-socket.on("game_update", data => {
-  currentGameData = data
-  canvasFunctions.refreshBoard()
+socket.on("game_update", gData => {
+  currentGameData = gData
+
+  socket.emit("request_player_data_update", {}, (err, pData) => {
+    if(err) notifyUser(err)
+    else {
+      currentGameData.me = pData
+      canvasFunctions.refreshBoard()
+    }
+  })
 })
