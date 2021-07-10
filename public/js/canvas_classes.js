@@ -98,7 +98,7 @@ canvasClasses.Button = class extends canvasClasses.Hoverable {
   }
 }
 canvasClasses.Hex = class extends canvasClasses.Hoverable {
-  constructor(xPos, yPos, coords, resource, number) {
+  constructor(xPos, yPos, coords, resource, number, robber) {
     super()
 
     this.xPos = xPos
@@ -106,6 +106,7 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
     this.coords = coords
     this.resource = resource
     this.number = number
+    this.robber = robber
   }
 
   render() {
@@ -134,7 +135,9 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
     ctx.stroke()
     ctx.fill()
   
-    if(number !== "robber") {
+    if(this.robber) {
+    }
+    else if(number) { // do not display the hex's number if the hex has the robber
       ctx.fillStyle = "#fff"
 
       ctx.beginPath()
@@ -142,9 +145,7 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
       ctx.closePath()
       ctx.fill()
       ctx.stroke()
-    }
-  
-    if(number) {
+      
       ctx.fillStyle = "#000"
       ctx.font = `bold ${hexRadius / 4}px sans-serif`
       ctx.textAlign = "center"

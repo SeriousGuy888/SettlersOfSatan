@@ -139,7 +139,9 @@ class Satan {
 
             if(!resourceCounts[hex.resource]) delete resourceCounts[hex.resource]
   
-            if(hex.resource === "desert") hex.number = "robber"
+            if(hex.resource === "desert") {
+              hex.robber = true
+            }
             else {
               hex.number = Object.keys(numberCounts)[Math.floor(Math.random() * Object.keys(numberCounts).length)]
               numberCounts[hex.number]--

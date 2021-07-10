@@ -1,9 +1,8 @@
-const Vertex = require("./Vertex.js")
-
 class Hex {
   constructor(coords) {
     this.coords = coords
     this.number = null
+    this.robber = false
     this.resource = null
     this.invisible = false
   }
