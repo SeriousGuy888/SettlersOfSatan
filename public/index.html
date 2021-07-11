@@ -110,8 +110,13 @@
                     <h2 id="lobby-name"></h2>
                     <button id="leave-lobby"><img alt="←" src="https://static.thenounproject.com/png/565717-200.png"> Leave Lobby</button>
                 </div>
-                <div id="game-area-container" class="flex-layout-grid-grow-2">
-                    <div id="lobby-waiting">
+                <div class="flex-layout-grid">
+                    <div id="lobby-player-list-container">
+                        <h3>Players <span id="lobby-player-count">0</span>/<span id="lobby-max-player-count">0</span></h3>
+                        <div id="lobby-player-list"></div>
+                    </div>
+
+                    <div id="lobby-waiting" class="flex-layout-grid-grow-2">
                         <p>
                             Lobby Code:
                             <code>
@@ -136,13 +141,6 @@
                             <div id="colour-buttons-container" class="button-group"></div>
                         </div>
                     </div>
-                </div>
-                <div class="flex-layout-grid">
-                    <div id="lobby-player-list-container">
-                        <h3>Players <span id="lobby-player-count">0</span>/<span id="lobby-max-player-count">0</span></h3>
-                        <div id="lobby-player-list"></div>
-                    </div>
-
                     <div id="lobby-playing" class="flex-layout-grid-grow-2" style="display: none;">
                         <!-- <button id="canvas-fullscreen">Fullscreen Game</button> -->
                         <canvas id="game-canvas">Oeuf</canvas>
