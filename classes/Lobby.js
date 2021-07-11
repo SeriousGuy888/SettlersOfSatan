@@ -154,10 +154,7 @@ class Lobby {
         return
       }
 
-      if(cmd === "kick") {
-        const playerId = args[0]
-        this.printToChat([`testing command lol also ${playerId}`])
-      }
+      if(cmd === "kick") this.kick(args[0])
       else {
         this.printToUserChat(user.id, [{
           text: "Invalid command!",
