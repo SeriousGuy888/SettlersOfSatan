@@ -23,9 +23,9 @@
   padding: 0;
 }
 
-#lobby-chat-messages > div:nth-last-of-type(odd) {
-  background-color: #efefef;
-}
-#lobby-chat-messages > div:nth-last-of-type(even) {
+#lobby-chat-messages > div:nth-of-type(odd) {
   background-color: #dfdfdf;
+}
+#lobby-chat-messages > div:nth-of-type(even) {
+  background-color: #efefef;
 }
