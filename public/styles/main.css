@@ -196,6 +196,18 @@ html {
     height: 1em;
 }
 
+
+#game-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1em;
+}
+
+.game-control-button {
+    border: none;
+}
+
 #game-canvas {
     width: 100%;
 }
