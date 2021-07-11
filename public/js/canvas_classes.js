@@ -207,6 +207,58 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
   }
 }
 
+canvasClasses.Edge = class extends canvasClasses.Hoverable {
+  constructor(vertexCoordsA, vertexCoordsB, data) {
+    super()
+    
+    this.vertexCoordsA = vertexCoordsA
+    this.vertexCoordsB = vertexCoordsB
+    this.data = data
+  }
+
+  render() {
+    // const { xPos, yPos } = this
+
+    // if(this.data.building) {
+    //   const { playerId, type } = this.data.building
+    //   const { colour } = canvasFunctions.getPlayer(playerId)
+    //   const { width: w, height: h } = this.getDimensions()
+    //   canvasFunctions.drawPiece(type, colour, this.xPos - w / 2, this.yPos - h / 2, w, h)
+    // }
+    // else if(holding) {
+    //   ctx.fillStyle = "#08f"
+
+    //   ctx.beginPath()
+    //   ctx.arc(xPos, yPos, this.getDimensions().width / 2, 0, 2 * Math.PI)
+    //   ctx.fill()
+    // }
+  }
+  
+  // getDimensions() {
+  //   return {
+  //     width: hexRadius / 5 * 2,
+  //     height: hexRadius / 5 * 2,
+  //   }
+  // }
+
+  // onClick() {
+  //   if(!this.isHovered(true)) return
+
+  //   console.log(`Clicked on vertex ${JSON.stringify(this.data.coords)} while holding ${holding}`)
+  //   if(!holding) return
+
+  //   socket.emit("perform_game_action", {
+  //     action: "place_" + holding,
+  //     coords: this.data.coords,
+  //   }, (err, data) => {
+  //     if(err) notifyUser(err)
+  //   })
+
+  //   holding = null
+    
+  // }
+}
+
 canvasClasses.UnplacedPiece = class extends canvasClasses.Hoverable {
   constructor (piece, colour, x, y) {
 

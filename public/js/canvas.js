@@ -9,6 +9,7 @@ const canvasElems = []
 
 const boardHexes = []
 const boardVertexes = []
+const boardEdges = []
 const unplacedPieces = []
 
 let mousePos = { x: 0, y: 0 }
@@ -73,9 +74,11 @@ canvasFunctions.stop = () => {
 canvasFunctions.refreshBoard = () => {
   let board = currentGameData.board
   let vertexes = currentGameData.vertexes
+  let edges = currentGameData.edges
   
   boardHexes.splice(0, boardHexes.length)
   boardVertexes.splice(0, boardVertexes.length)
+  boardEdges.splice(0, boardEdges.length)
 
   const startY = hexRadius
   const yOffsetPerRow = hexRadius * 2 - hexRadius / 2
@@ -118,6 +121,13 @@ canvasFunctions.refreshBoard = () => {
       y += yOffsetPerRow
     }
   }
+  if(edges) {
+    for(let edge of edges) {
+      const vertA = JSON.parse(edge[0])
+      const vertB = JSON.parse(edge[1])
+      boardEdges.push(new canvasClasses.Edge(vertA, vertB, edge))
+    }
+  }
 }
 
 
@@ -140,6 +150,7 @@ canvasFunctions.draw = () => {
 
   for(const e of boardHexes) e.render()
   for(const e of boardVertexes) e.render()
+  for(const e of boardEdges) e.render()
   for(const e of unplacedPieces) e.render()
 }
 
@@ -226,15 +237,15 @@ gameCanvas.addEventListener("click", e => {
   for(const elem of canvasElems) {
     if(elem.onClick) elem.onClick()
   }
-
   for(const elem of boardHexes) {
     if(elem.onClick) elem.onClick()
   }
-
   for(const elem of boardVertexes) {
     if(elem.onClick) elem.onClick()
   }
-
+  for(const elem of boardEdges) {
+    if(elem.onClick) elem.onClick()
+  }
   for(const elem of unplacedPieces){
     if(elem.onClick) elem.onClick()
   }
