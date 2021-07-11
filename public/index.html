@@ -27,6 +27,7 @@
         <script defer src="js/notification.js"></script>
         <script defer src="js/colours.js"></script>
         <script defer src="js/chat.js"></script>
+        <script defer src="js/game_controls.js"></script>
         <script defer src="js/game.js"></script>
         <script defer src="js/canvas.js"></script>
         <script defer src="js/canvas_classes.js"></script>
@@ -144,11 +145,11 @@
                     <div id="lobby-playing" class="flex-layout-grid-grow-2" style="display: none;">
                         <!-- <button id="canvas-fullscreen">Fullscreen Game</button> -->
                         <div id="game-controls">
-                            <button class="game-control-button">🏠</button>
-                            <button class="game-control-button">🌆</button>
-                            <button class="game-control-button">🚗</button>
-                            <button class="game-control-button">📈</button>
-                            <button class="game-control-button">🔃</button>
+                            <button class="game-control-button" id="settlement-button"      >🏠</button>
+                            <button class="game-control-button" id="city-button"            >🌆</button>
+                            <button class="game-control-button" id="road-button"            >🚗</button>
+                            <button class="game-control-button" id="development-card-button">📈</button>
+                            <button class="game-control-button" id="trade-button"           >🔃</button>
                         </div>
                         <p>I shall manufi aktaul ikons at some point</p>
                         <canvas id="game-canvas">Oeuf</canvas>

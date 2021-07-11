@@ -1,6 +1,6 @@
 const canvasClasses = {}
 
-var holding = null
+holding = holding // NOSONAR
 
 const lighterShades = {
   "violet": "#ff93ff",
