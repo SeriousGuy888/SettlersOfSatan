@@ -200,30 +200,8 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     if(!requestValidation) return
     const { lobby } = requestValidation
 
-
     if(!lobby.hasUser(data.playerId, true)) return callback("Player not found.")
-
-    let userId
-    const lobbyUsers = lobby.getUsers()
-    for(let lobbyUserId in lobbyUsers) {
-      if(lobbyUsers[lobbyUserId].playerId === data.playerId) {
-        userId = lobbyUserId
-        break
-      }
-    }
-
-    if(!userId) return callback("user_not_found")
-    lobby.leave(userId)
-    const kickedUser = users.getUser(userId)
-    kickedUser.setLobby(null)
-    kickedUser.updateLobbyState("You were kicked from the lobby by the host.")
-    
-    lobby.printToChat([
-      {
-        text: `${kickedUser.name} was kicked by the host`,
-        style: { colour: "red" }
-      }
-    ])
+    lobby.kick(data.playerId)
   })
 
   socket.on("send_chat", (data, callback) => {

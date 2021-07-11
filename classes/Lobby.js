@@ -110,6 +110,31 @@ class Lobby {
     lobbies.setLobby(this.code, null)
   }
 
+  kick(playerId) {
+    let userId
+    const lobbyUsers = this.getUsers()
+    for(let lobbyUserId in lobbyUsers) {
+      if(lobbyUsers[lobbyUserId].playerId === playerId) {
+        userId = lobbyUserId
+        break
+      }
+    }
+
+    if(!userId) return
+    
+    this.leave(userId)
+    const kickedUser = users.getUser(userId)
+    kickedUser.setLobby(null)
+    kickedUser.updateLobbyState("You were kicked from the lobby by the host.")
+    
+    this.printToChat([
+      {
+        text: `${kickedUser.name} was kicked by the host`,
+        style: { colour: "red" }
+      }
+    ])
+  }  
+
   handleChatMessage(user, content) {
     const player = this.getUser(user.id)
 
@@ -120,7 +145,8 @@ class Lobby {
       
       const errChatStyle = { colour: "red", italic: true }
 
-      if(this.getHost() !== user.id) {
+      const hostId = this.getHost()
+      if(hostId !== user.id) {
         this.printToUserChat(user.id, [{
           text: "You are not allowed to use commands!",
           style: errChatStyle
