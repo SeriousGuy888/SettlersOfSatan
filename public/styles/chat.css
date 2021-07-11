@@ -1,6 +1,7 @@
-#lobby-chat {
-  border: 2px solid #000;
+#lobby-chat-container {
   padding: 0.5em;
+  display: flex;
+  flex-direction: column;
 }
 
 #lobby-chat > * {
@@ -8,9 +9,8 @@
 }
 
 #lobby-chat-messages {
-  height: 20vh;
+  flex: 1 0 20vh;
   overflow-y: scroll;
-  margin-top: 1em;
   word-wrap: anywhere;
 }
 
