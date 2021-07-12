@@ -254,8 +254,8 @@ canvasClasses.Edge = class extends canvasClasses.Hoverable {
     const vertB = getVertex(coordsArr[1])
     if(!vertA || !vertB) return
 
-    const centerX = (vertA.xPos + vertB.xPos) / 2
-    const centerY = (vertA.yPos + vertB.yPos) / 2
+    this.xPos = (vertA.xPos + vertB.xPos) / 2
+    this.yPos = (vertA.yPos + vertB.yPos) / 2
 
     if(this.data.road) {
       const road = this.data.road
@@ -274,7 +274,7 @@ canvasClasses.Edge = class extends canvasClasses.Hoverable {
       ctx.fillStyle = "#08f"
 
       ctx.beginPath()
-      ctx.arc(centerX, centerY, this.getDimensions().width / 2, 0, 2 * Math.PI)
+      ctx.arc(this.xPos, this.yPos, this.getDimensions().width / 2, 0, 2 * Math.PI)
       ctx.fill()
     }
   }
@@ -283,22 +283,19 @@ canvasClasses.Edge = class extends canvasClasses.Hoverable {
     return selectionTargetDims
   }
 
-  // onClick() {
-  //   if(!this.isHovered(true)) return
+  onClick() {
+    if(!this.isHovered(true)) return
+    if(holding !== "road") return
 
-  //   console.log(`Clicked on vertex ${JSON.stringify(this.data.coords)} while holding ${holding}`)
-  //   if(!holding) return
+    socket.emit("perform_game_action", {
+      action: "place_road",
+      coordsArr: this.data.coordsArr,
+    }, (err, data) => {
+      if(err) notifyUser(err)
+    })
 
-  //   socket.emit("perform_game_action", {
-  //     action: "place_" + holding,
-  //     coords: this.data.coords,
-  //   }, (err, data) => {
-  //     if(err) notifyUser(err)
-  //   })
-
-  //   holding = null
-    
-  // }
+    holding = null
+  }
 }
 
 canvasClasses.UnplacedPiece = class extends canvasClasses.Hoverable {
