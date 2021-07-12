@@ -123,6 +123,8 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
 
     ctx.beginPath()
     ctx.lineWidth = 1
+    ctx.strokeStyle = "#000"
+    
     for(let i = 0; i < 6; i++) { // thieved from https://eperezcosano.github.io/hex-grid/
       ctx.lineTo(
         xPos + hexRadius * Math.cos(angle * i - angle / 2),
@@ -161,7 +163,6 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
     }
     else if(number) { // do not display the hex's number if the hex has the robber
       ctx.fillStyle = "#fff"
-      ctx.strokeStyle = "#000"
 
       ctx.beginPath()
       ctx.arc(xPos, yPos, hexRadius / 3, 0, 2 * Math.PI)
