@@ -190,7 +190,10 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
       const { width: w, height: h } = this.getDimensions()
       canvasFunctions.drawPiece(type, colour, this.xPos - w / 2, this.yPos - h / 2, w, h)
     }
-    else if(holding && !this.data.noPlace) {
+    else if(holding) {
+      if(this.data.noPlace) return
+      if(!["settlement", "city"].includes(holding)) return
+
       ctx.fillStyle = "#08f"
 
       ctx.beginPath()
@@ -208,10 +211,12 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
 
   onClick() {
     if(!this.isHovered(true)) return
-    if(this.data.noPlace) return
-
+    
     console.log(`Clicked on vertex ${JSON.stringify(this.data.coords)} while holding ${holding}`)
-    if(!holding) return
+
+    if(this.data.noPlace) return
+    if(!["settlement", "city"].includes(holding)) return
+
 
     socket.emit("perform_game_action", {
       action: "place_" + holding,
