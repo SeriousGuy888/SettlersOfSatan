@@ -41,7 +41,7 @@ class Vertex {
       adjacentVertexes.push(
         { x: coords.x,      y: coords.y + 2, v: "north" },
         { x: coords.x,      y: coords.y + 1, v: "north" },
-        { x: coords.x + 1,  y: coords.y + 1, v: "north" },
+        { x: coords.x - 1,  y: coords.y + 1, v: "north" },
       )
     }
 
