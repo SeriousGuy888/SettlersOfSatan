@@ -1,0 +1,69 @@
+#left-column,#right-column {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 0;
+}
+
+#resource-cards {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1em;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+.resource-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  text-align: center;
+
+  border: 3px solid #bb9662;
+  background-color: #e4c18e;
+
+  width: 100%;
+  padding: 0.2em;
+  margin: 0.1em;
+  border-radius: 5px;
+}
+
+.resource-card > h3 {
+  text-align: right;
+}
+.resource-card > img {
+  width: 3em;
+  height: 3em;
+}
+
+#lobby-chat-container {
+  padding: 0.5em;
+  display: flex;
+  flex-direction: column;
+}
+
+#lobby-chat > * {
+  margin: 0;
+}
+
+#lobby-chat-messages {
+  flex: 1 0 20vh;
+  overflow-y: scroll;
+  word-wrap: anywhere;
+}
+
+#lobby-chat-messages div {
+  margin: 0;
+  padding: 1% 2.5%;
+}
+#lobby-chat-messages div p {
+  margin: 0;
+  padding: 0;
+}
+
+#lobby-chat-messages > div:nth-of-type(odd) {
+  background-color: #dfdfdf;
+}
+#lobby-chat-messages > div:nth-of-type(even) {
+  background-color: #efefef;
+}
