@@ -1,5 +1,8 @@
 const canvasClasses = {}
 
+let devSettings = {
+  displayAxis: null
+}
 holding = holding // NOSONAR
 
 const lighterShades = {
@@ -130,7 +133,20 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
       "desert": "#a39d5d"
     }
   
-    ctx.fillStyle = resourceColours[resource]
+
+    const axisCols = ["#239123", "#23c123"]
+    switch(devSettings.displayAxis) {
+      case "x":
+        ctx.fillStyle = this.coords.x % 2 === 0 ? axisCols[0] : axisCols[1]
+        break
+      case "y":
+        ctx.fillStyle = this.coords.y % 2 === 0 ? axisCols[0] : axisCols[1]
+        break
+      default:
+        ctx.fillStyle = resourceColours[resource]
+        break
+    }
+
     ctx.closePath()
     ctx.stroke()
     ctx.fill()
@@ -191,6 +207,7 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
 
   onClick() {
     if(!this.isHovered(true)) return
+    if(this.data.noPlace) return
 
     console.log(`Clicked on vertex ${JSON.stringify(this.data.coords)} while holding ${holding}`)
     if(!holding) return
