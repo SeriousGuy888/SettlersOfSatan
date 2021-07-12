@@ -29,20 +29,21 @@ class Vertex {
 
   getAdjacentVertexes() {
     const { coords } = this
+    const { x, y } = coords
 
     let adjacentVertexes = []
     if(coords.v === "north") {
       adjacentVertexes.push(
-        { x: coords.x,      y: coords.y - 2, v: "south" },
-        { x: coords.x,      y: coords.y - 1, v: "south" },
-        { x: coords.x + 1,  y: coords.y - 1, v: "south" },
+        { x,                              y: y - 2, v: "south" },
+        { x,                              y: y - 1, v: "south" },
+        { x: x + (y % 2 === 0 ? -1 : 1),  y: y - 1, v: "south" },
       )
     }
     else {
       adjacentVertexes.push(
-        { x: coords.x,      y: coords.y + 2, v: "north" },
-        { x: coords.x,      y: coords.y + 1, v: "north" },
-        { x: coords.x - 1,  y: coords.y + 1, v: "north" },
+        { x: x,                           y: y + 2, v: "north" },
+        { x: x,                           y: y + 1, v: "north" },
+        { x: x + (y % 2 === 0 ? -1 : 1),  y: y + 1, v: "north" },
       )
     }
 
