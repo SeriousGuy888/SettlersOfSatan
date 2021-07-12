@@ -133,8 +133,6 @@ canvasFunctions.refreshBoard = () => {
 canvasFunctions.draw = () => {
   canvasFunctions.background()
 
-
-
   canvasFunctions.drawInventory()
 
   for(const elem of canvasElems) {
@@ -146,10 +144,10 @@ canvasFunctions.draw = () => {
     }
   }
 
-  for(const e of boardHexes) e.render()
-  for(const e of boardVertexes) e.render()
-  for(const e of boardEdges) e.render()
-  for(const e of unplacedPieces) e.render()
+  for(const e of boardHexes)      e.render()
+  for(const e of boardEdges)      e.render()
+  for(const e of boardVertexes)   e.render()
+  for(const e of unplacedPieces)  e.render()
 }
 
 canvasFunctions.background = (colour) => {
@@ -238,21 +236,11 @@ canvasFunctions.getPlayer = (playerId) => {
 
 
 gameCanvas.addEventListener("click", e => {
-  for(const elem of canvasElems) {
-    if(elem.onClick) elem.onClick()
-  }
-  for(const elem of boardHexes) {
-    if(elem.onClick) elem.onClick()
-  }
-  for(const elem of boardVertexes) {
-    if(elem.onClick) elem.onClick()
-  }
-  for(const elem of boardEdges) {
-    if(elem.onClick) elem.onClick()
-  }
-  for(const elem of unplacedPieces){
-    if(elem.onClick) elem.onClick()
-  }
+  for(const elem of canvasElems)    if(elem.onClick) elem.onClick()
+  for(const elem of boardHexes)     if(elem.onClick) elem.onClick()
+  for(const elem of boardEdges)     if(elem.onClick) elem.onClick()
+  for(const elem of boardVertexes)  if(elem.onClick) elem.onClick()
+  for(const elem of unplacedPieces) if(elem.onClick) elem.onClick()
 })
 gameCanvas.addEventListener("mousemove", e => mousePos = canvasFunctions.getMousePos(e))
 canvasFunctions.getMousePos = (e) => {
