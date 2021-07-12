@@ -70,6 +70,15 @@ class Satan {
     return this.vertexes.filter(e => e.coords.x === coords.x && e.coords.y === coords.y && e.coords.v === coords.v)[0]
   }
 
+  getEdge(coordsArr) {
+    return this.edges.filter(e => {
+      return ( // im not fixing this dumb code -billzo
+        e.coordsArr[0].x === coordsArr[0].x && e.coordsArr[0].y === coordsArr[0].y && e.coordsArr[0].v === coordsArr[0].v &&
+        e.coordsArr[1].x === coordsArr[1].x && e.coordsArr[1].y === coordsArr[1].y && e.coordsArr[1].v === coordsArr[1].v
+      )
+    })[0]
+  }
+
   getBoard() {
     return this.board
   }
@@ -192,33 +201,42 @@ class Satan {
     if(!action) return
 
     const coords = actionData.coords
+    const coordsArr = actionData.coordsArr
+
+    const player = this.getPlayer(playerId)
 
     switch(action) {
       case "place_settlement":
         const vertex = this.getVertex(coords)
         if(!vertex) break
 
-        const player = this.getPlayer(playerId)
+        if(player.inventory.getSettlements() <= 0) break
+        if(vertex.getBuilding()?.type !== "settlement") {
+          let adjVerts = []
 
-        if(player.inventory.getSettlements() > 0) {
-          if(vertex.getBuilding()?.type !== "settlement") {
-            let adjVerts = []
+          for(let adjVertCoords of vertex.getAdjacentVertexes()) {
+            const adjVert = this.getVertex(adjVertCoords)
+            if(!adjVert) continue
 
-            for(let adjVertCoords of vertex.getAdjacentVertexes()) {
-              const adjVert = this.getVertex(adjVertCoords)
-              if(!adjVert) continue
+            // Distance Rule: a settlement may only be placed where all adjacent intersections are vacant
+            if(adjVert.getBuilding()) break
 
-              if(adjVert.getBuilding()) {
-                return // Distance Rule: a settlement may only be placed where all adjacent intersections are vacant
-              }
-
-              adjVerts.push(adjVert)
-            }
-
-            vertex.setBuilding("settlement", playerId)
-            player.inventory.addSettlement(-1)
-            adjVerts.forEach(vert => vert.noPlace = true)
+            adjVerts.push(adjVert)
           }
+
+          vertex.setBuilding("settlement", playerId)
+          player.inventory.addSettlement(-1)
+          adjVerts.forEach(vert => vert.noPlace = true)
+        }
+        break
+      case "place_road":
+        const edge = this.getEdge(coordsArr)
+        if(!edge) break
+        
+        if(player.inventory.getRoads() <= 0) break
+        if(!edge.getRoad()) {
+          edge.setRoad(playerId)
+          player.inventory.addRoad(-1)
         }
         break
       default:
