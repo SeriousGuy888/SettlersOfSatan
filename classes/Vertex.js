@@ -3,6 +3,7 @@ class Vertex {
     this.coords = coords
     this.adjacentHexes = this.getAdjacentHexes()
     this.building = null
+    this.noPlace = false
   }
 
   getAdjacentHexes() {

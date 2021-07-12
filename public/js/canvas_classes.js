@@ -173,7 +173,7 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
       const { width: w, height: h } = this.getDimensions()
       canvasFunctions.drawPiece(type, colour, this.xPos - w / 2, this.yPos - h / 2, w, h)
     }
-    else if(holding) {
+    else if(holding && !this.data.noPlace) {
       ctx.fillStyle = "#08f"
 
       ctx.beginPath()

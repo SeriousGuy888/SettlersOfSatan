@@ -65,6 +65,10 @@ class Satan {
     else this.players[playerId] = data
   }
 
+  getVertex(coords) {
+    return this.vertexes.filter(e => e.coords.x === coords.x && e.coords.y === coords.y && e.coords.v === coords.v)[0]
+  }
+
   getBoard() {
     return this.board
   }
@@ -187,21 +191,30 @@ class Satan {
     if(!action) return
 
     const coords = actionData.coords
-    const x = coords?.x
-    const y = coords?.y
-    const v = coords?.v
 
     switch(action) {
       case "place_settlement":
-        const vertex = this.vertexes.filter(e => e.coords.x === x && e.coords.y === y && e.coords.v === v)[0]
+        const vertex = this.getVertex(coords)
         if(!vertex) break
 
         const player = this.getPlayer(playerId)
 
         if(player.inventory.getSettlements() > 0) {
           if(vertex.getBuilding()?.type !== "settlement") {
+            let adjVerts = []
+
+            for(let adjVertCoords of vertex.getAdjacentVertexes()) {
+              const adjVert = this.getVertex(adjVertCoords)
+              if(adjVert.getBuilding()) {
+                return // Distance Rule: a settlement may only be placed where all adjacent intersections are vacant
+              }
+
+              adjVerts.push(adjVert)
+            }
+
             vertex.setBuilding("settlement", playerId)
             player.inventory.addSettlement(-1)
+            adjVerts.forEach(vert => vert.noPlace = true)
           }
         }
         break
