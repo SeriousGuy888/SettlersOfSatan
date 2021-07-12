@@ -241,7 +241,7 @@ canvasClasses.Edge = class extends canvasClasses.Hoverable {
   }
 
   render() {
-    const { coordsArr, data } = this
+    const { coordsArr } = this
 
     const getVertex = coords => {
       return boardVertexes.filter(vert => {
@@ -270,12 +270,15 @@ canvasClasses.Edge = class extends canvasClasses.Hoverable {
       ctx.stroke()
       ctx.closePath()
     }
-    else if(holding === "road") {
-      ctx.fillStyle = "#08f"
 
+    if(holding === "road") {
+      if(this.data.road) return
+
+      ctx.fillStyle = "#08f"
       ctx.beginPath()
       ctx.arc(this.xPos, this.yPos, this.getDimensions().width / 2, 0, 2 * Math.PI)
       ctx.fill()
+
     }
   }
   
@@ -285,7 +288,10 @@ canvasClasses.Edge = class extends canvasClasses.Hoverable {
 
   onClick() {
     if(!this.isHovered(true)) return
+    if(this.data.road) return
     if(holding !== "road") return
+
+    console.log(`Clicked on edge ${JSON.stringify(this.coordsArr)}`)
 
     socket.emit("perform_game_action", {
       action: "place_road",
