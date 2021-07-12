@@ -7,6 +7,7 @@
         <link rel="stylesheet" defer href="/styles/main.css">
         <link rel="stylesheet" defer href="/styles/layouts.css">
         <link rel="stylesheet" defer href="/styles/chat.css">
+        <link rel="stylesheet" defer href="/styles/left_column.css">
         <meta charset="UTF-8">
 
         <meta name="title" content="Settlers of Satan">
@@ -112,9 +113,33 @@
                     <button id="leave-lobby"><img alt="←" src="https://static.thenounproject.com/png/565717-200.png"> Leave Lobby</button>
                 </div>
                 <div class="flex-layout-grid">
-                    <div id="lobby-player-list-container">
-                        <h3>Players <span id="lobby-player-count">0</span>/<span id="lobby-max-player-count">0</span></h3>
-                        <div id="lobby-player-list"></div>
+                    <div id="left-column">
+                        <div id="lobby-player-list-container">
+                            <h3>Players <span id="lobby-player-count">0</span>/<span id="lobby-max-player-count">0</span></h3>
+                            <div id="lobby-player-list"></div>
+                        </div>
+                        <div id="resource-cards" style="display: none;">
+                            <div class="resource-card">
+                                <img src="/images/resource_cards/bricks.png" alt="bricks">
+                                <h3>Bricks</h3>
+                            </div>
+                            <div class="resource-card">
+                                <img src="/images/resource_cards/lumber.png" alt="lumber">
+                                <h3>Lumber</h3>
+                            </div>
+                            <div class="resource-card">
+                                <img src="/images/resource_cards/wool.png" alt="wool">
+                                <h3>Wool</h3>
+                            </div>
+                            <div class="resource-card">
+                                <img src="/images/resource_cards/wheat.png" alt="wheat">
+                                <h3>Wheat</h3>
+                            </div>
+                            <div class="resource-card">
+                                <img src="/images/resource_cards/ore.png" alt="ore">
+                                <h3>Ore</h3>
+                            </div>
+                        </div>
                     </div>
 
                     <div id="lobby-waiting" class="flex-layout-grid-grow-2">
