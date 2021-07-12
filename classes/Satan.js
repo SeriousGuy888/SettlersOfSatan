@@ -205,6 +205,8 @@ class Satan {
 
             for(let adjVertCoords of vertex.getAdjacentVertexes()) {
               const adjVert = this.getVertex(adjVertCoords)
+              if(!adjVert) continue
+
               if(adjVert.getBuilding()) {
                 return // Distance Rule: a settlement may only be placed where all adjacent intersections are vacant
               }
