@@ -16,6 +16,11 @@ const lighterShades = {
   "darkcyan": "#008b8b"
 }
 
+const selectionTargetDims = {
+  width: hexRadius / 6 * 2,
+  height: hexRadius / 6 * 2,
+}
+
 canvasClasses.Hoverable = class {
   isHovered(centeredPos) {
     let { xPos, yPos } = this
@@ -203,10 +208,7 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
   }
   
   getDimensions() {
-    return {
-      width: hexRadius / 5 * 2,
-      height: hexRadius / 5 * 2,
-    }
+    return selectionTargetDims
   }
 
   onClick() {
@@ -250,38 +252,36 @@ canvasClasses.Edge = class extends canvasClasses.Hoverable {
 
     const vertA = getVertex(coordsArr[0])
     const vertB = getVertex(coordsArr[1])
-
     if(!vertA || !vertB) return
 
-    ctx.beginPath()
-    ctx.moveTo(vertA.xPos, vertA.yPos)
-    ctx.lineTo(vertB.xPos, vertB.yPos)
-    ctx.lineWidth = 10
-    // ctx.strokeStyle = "blue"
-    ctx.stroke()
-    ctx.closePath()
+    const centerX = (vertA.xPos + vertB.xPos) / 2
+    const centerY = (vertA.yPos + vertB.yPos) / 2
 
-    // if(this.data.building) {
-    //   const { playerId, type } = this.data.building
-    //   const { colour } = canvasFunctions.getPlayer(playerId)
-    //   const { width: w, height: h } = this.getDimensions()
-    //   canvasFunctions.drawPiece(type, colour, this.xPos - w / 2, this.yPos - h / 2, w, h)
-    // }
-    // else if(holding) {
-    //   ctx.fillStyle = "#08f"
+    if(this.data.road) {
+      const road = this.data.road
+      const colour = canvasFunctions.getPlayer(road).colour
 
-    //   ctx.beginPath()
-    //   ctx.arc(xPos, yPos, this.getDimensions().width / 2, 0, 2 * Math.PI)
-    //   ctx.fill()
-    // }
+      ctx.beginPath()
+      ctx.moveTo(vertA.xPos, vertA.yPos)
+      ctx.lineTo(vertB.xPos, vertB.yPos)
+
+      ctx.lineWidth = 10
+      ctx.strokeStyle = colour
+      ctx.stroke()
+      ctx.closePath()
+    }
+    else if(holding === "road") {
+      ctx.fillStyle = "#08f"
+
+      ctx.beginPath()
+      ctx.arc(centerX, centerY, this.getDimensions().width / 2, 0, 2 * Math.PI)
+      ctx.fill()
+    }
   }
   
-  // getDimensions() {
-  //   return {
-  //     width: hexRadius / 5 * 2,
-  //     height: hexRadius / 5 * 2,
-  //   }
-  // }
+  getDimensions() {
+    return selectionTargetDims
+  }
 
   // onClick() {
   //   if(!this.isHovered(true)) return
