@@ -197,18 +197,24 @@ canvasFunctions.drawInventory = () => {
 canvasFunctions.drawPiece = (piece, colour, x, y, w, h) => {
   if(piece == "settlement") {
     ctx.fillStyle = colour
+    ctx.lineWidth = 3
+    ctx.strokeStyle = "#fff"
+
     ctx.beginPath()
     ctx.moveTo(x + w / 2, y)
     ctx.lineTo(x, y + h / 2)
     ctx.lineTo(x + w, y + h / 2)
     ctx.closePath()
+    ctx.stroke()
     ctx.fill()
+
     ctx.beginPath()
     ctx.moveTo(x + w, y + h / 2)
     ctx.lineTo(x + w, y + h)
     ctx.lineTo(x, y + h)
     ctx.lineTo(x, y + h / 2)
     ctx.closePath()
+    ctx.stroke()
     ctx.fill()
   }
 
