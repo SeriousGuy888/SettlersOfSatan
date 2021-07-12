@@ -211,7 +211,7 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
 
   onClick() {
     if(!this.isHovered(true)) return
-    
+
     console.log(`Clicked on vertex ${JSON.stringify(this.data.coords)} while holding ${holding}`)
 
     if(this.data.noPlace) return
@@ -231,16 +231,15 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
 }
 
 canvasClasses.Edge = class extends canvasClasses.Hoverable {
-  constructor(vertexCoordsA, vertexCoordsB, data) {
+  constructor(coordsArr, data) {
     super()
     
-    this.vertexCoordsA = vertexCoordsA
-    this.vertexCoordsB = vertexCoordsB
+    this.coordsArr = coordsArr
     this.data = data
   }
 
   render() {
-    const { vertexCoordsA, vertexCoordsB, data } = this
+    const { coordsArr, data } = this
 
     const getVertex = coords => {
       return boardVertexes.filter(vert => {
@@ -249,8 +248,8 @@ canvasClasses.Edge = class extends canvasClasses.Hoverable {
       })[0]
     }
 
-    const vertA = getVertex(vertexCoordsA)
-    const vertB = getVertex(vertexCoordsB)
+    const vertA = getVertex(coordsArr[0])
+    const vertB = getVertex(coordsArr[1])
 
     if(!vertA || !vertB) return
 

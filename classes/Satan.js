@@ -1,5 +1,6 @@
 const Hex = require("./Hex.js")
 const Vertex = require("./Vertex.js")
+const Edge = require("./Edge.js")
 const Graph = require("./Graph.js")
 const lobbies = require("../server/lobbies.js")
 
@@ -180,7 +181,7 @@ class Satan {
     for(let i in matrix) {
       for(let j in matrix[i]) {
         if(matrix[i][j]) { // if a connection exists between the nodes i and j,
-          this.edges.push([i, j])
+          this.edges.push(new Edge([i, j].map(e => JSON.parse(e))))
         }
       }
     }

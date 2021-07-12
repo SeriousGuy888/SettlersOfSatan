@@ -123,9 +123,7 @@ canvasFunctions.refreshBoard = () => {
   }
   if(edges) {
     for(let edge of edges) {
-      const vertA = JSON.parse(edge[0])
-      const vertB = JSON.parse(edge[1])
-      boardEdges.push(new canvasClasses.Edge(vertA, vertB, edge))
+      boardEdges.push(new canvasClasses.Edge(edge.coordsArr, edge))
     }
   }
 }
