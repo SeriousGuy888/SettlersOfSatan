@@ -190,6 +190,7 @@ class Satan {
     for(let i in matrix) {
       for(let j in matrix[i]) {
         if(matrix[i][j]) { // if a connection exists between the nodes i and j,
+          matrix[j][i] = false // my dumb way of nuking duplicates
           this.edges.push(new Edge([i, j].map(e => JSON.parse(e))))
         }
       }
