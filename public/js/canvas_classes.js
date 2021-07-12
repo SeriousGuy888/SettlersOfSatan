@@ -117,6 +117,7 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
     const { xPos, yPos, resource, number } = this
 
     ctx.beginPath()
+    ctx.lineWidth = 1
     for(let i = 0; i < 6; i++) { // thieved from https://eperezcosano.github.io/hex-grid/
       ctx.lineTo(
         xPos + hexRadius * Math.cos(angle * i - angle / 2),
@@ -234,7 +235,27 @@ canvasClasses.Edge = class extends canvasClasses.Hoverable {
   }
 
   render() {
-    // const { xPos, yPos } = this
+    const { vertexCoordsA, vertexCoordsB, data } = this
+
+    const getVertex = coords => {
+      return boardVertexes.filter(vert => {
+        const vCoords = vert.data.coords
+        return vCoords.x === coords.x && vCoords.y === coords.y && vCoords.v === coords.v
+      })[0]
+    }
+
+    const vertA = getVertex(vertexCoordsA)
+    const vertB = getVertex(vertexCoordsB)
+
+    if(!vertA || !vertB) return
+
+    ctx.beginPath()
+    ctx.moveTo(vertA.xPos, vertA.yPos)
+    ctx.lineTo(vertB.xPos, vertB.yPos)
+    ctx.lineWidth = 10
+    // ctx.strokeStyle = "blue"
+    ctx.stroke()
+    ctx.closePath()
 
     // if(this.data.building) {
     //   const { playerId, type } = this.data.building
