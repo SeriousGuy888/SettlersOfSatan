@@ -161,6 +161,7 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
     }
     else if(number) { // do not display the hex's number if the hex has the robber
       ctx.fillStyle = "#fff"
+      ctx.strokeStyle = "#000"
 
       ctx.beginPath()
       ctx.arc(xPos, yPos, hexRadius / 3, 0, 2 * Math.PI)
