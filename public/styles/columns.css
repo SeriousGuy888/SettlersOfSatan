@@ -1,6 +1,5 @@
 #left-column,#right-column {
-  display: flex;
-  flex-direction: column;
+  max-height: 100%;
 }
 
 #resource-cards {
@@ -47,18 +46,16 @@
 }
 
 #lobby-chat-container {
+  padding: 0.5em;
   display: flex;
   flex-direction: column;
-  padding: 0.5em;
   margin: 0;
-
-  max-height: 50vh;
 }
 
 #lobby-chat-messages {
+  flex: 1 0 20vh;
   overflow-y: scroll;
   word-wrap: anywhere;
-  height: 100%;
 }
 
 #lobby-chat-messages div {
