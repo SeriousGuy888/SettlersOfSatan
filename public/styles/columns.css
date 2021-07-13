@@ -12,6 +12,8 @@
 }
 
 .resource-card {
+  flex: 1 0 auto;
+
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -21,7 +23,6 @@
   border: 3px solid #bb9662;
   background-color: #e4c18e;
 
-  width: 42%;
   padding: 0.2em;
   margin: 0.1em;
   border-radius: 5px;
