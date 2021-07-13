@@ -170,7 +170,7 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
       ctx.fill()
       ctx.stroke()
       
-      ctx.fillStyle = "#000"
+      ctx.fillStyle = number == 8 || number == 6 ? "#f00" : "#000" 
       ctx.font = `bold ${hexRadius / 4}px sans-serif`
       ctx.textAlign = "center"
       ctx.textBaseline = "middle"
@@ -228,6 +228,8 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
     }, (err, data) => {
       if(err) notifyUser(err)
     })
+    
+    
 
     holding = null
     

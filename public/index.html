@@ -8,6 +8,7 @@
         <link rel="stylesheet" defer href="/styles/layouts.css">
         <link rel="stylesheet" defer href="/styles/columns.css">
         <link rel="stylesheet" defer href="/styles/modal.css">
+        <link rel="stylesheet" defer href="styles/card.css">
         <meta charset="UTF-8">
 
         <meta name="title" content="Settlers of Satan">
@@ -137,6 +138,15 @@
                                 <h3 class="resource"></h3>
                             </div>
                         </div>
+
+                        <div id="development-card-list">
+                            <article class="card">
+                                <header class="card-header">
+                                    <p>Development Card</p>
+                                </header>
+                            </article>
+                        </div>
+
                         <div id="lobby-player-list-container">
                             <h3>Players <span id="lobby-player-count">0</span>/<span id="lobby-max-player-count">0</span></h3>
                             <div id="lobby-player-list"></div>
@@ -185,7 +195,7 @@
                             <button class="game-control-button" id="development-card-button">📈</button>
                             <button class="game-control-button" id="trade-button"           >🔃</button>
                         </div>
-                        <p>I shall manufi aktaul ikons at some point</p>
+                        <p id="inv-list">Settlements: 2, Roads: 2, Cities: 0</p>
                         <canvas id="game-canvas">Oeuf</canvas>
                     </div>
                     <div id="lobby-chat-container">

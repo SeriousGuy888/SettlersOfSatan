@@ -149,6 +149,10 @@ html {
     height: 1em;
 }
 
+#inv-list {
+    font-size: 18px;
+    text-align: center;
+}
 
 #game-controls {
     display: flex;
@@ -163,4 +167,5 @@ html {
 
 #game-canvas {
     width: 100%;
+    background-color: grey;
 }

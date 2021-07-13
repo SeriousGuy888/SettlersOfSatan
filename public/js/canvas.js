@@ -170,26 +170,7 @@ canvasFunctions.drawInventory = () => {
   // ctx.beginPath()
   // ctx.rect(x, y, w, h)
   // ctx.fill()
-
-  ctx.fillStyle = "#000"
-  ctx.font = `32px sans-serif`
-  ctx.textAlign = "left"
-  ctx.textBaseline = "top"
-
-  ctx.fillText(`Settlements: `, x, y)
-  unplacedPieces.splice(0, unplacedPieces.length)
-  let settlementsY = 90
-  let settlementsX = 50
-  for(let i = 0; i < inventory.settlements; i++) {
-    const colour = currentGameData?.players[playerId].colour
-    unplacedPieces.push(new canvasClasses.UnplacedPiece("settlement", colour, settlementsX, settlementsY))
-    settlementsX += 40
-  }
-
-  ctx.fillStyle = "#000"
-  ctx.fillText(`Cities: ${inventory.cities}`, x, y + 80)
-  ctx.fillStyle = "#000"
-  ctx.fillText(`Roads: ${inventory.roads}`, x, y + 120)
+  
 }
 
 canvasFunctions.drawPiece = (piece, colour, x, y, w, h) => {
