@@ -54,6 +54,7 @@ socket.on("lobby_update", data => {
       modal.style.display = "block"
 
       modalTitle.textContent = user.name
+      user.host && modalTitle.appendChild(hostBadge)
       
       modalButtons.innerHTML = ""
       if(isHost && user.playerId !== playerId) {
