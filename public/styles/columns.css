@@ -28,9 +28,13 @@
   border-radius: 5px;
 }
 
-.resource-card > h3 {
+.resource-card > .resource {
   text-align: right;
 }
+.resource-card > .resource > .count {
+  font-weight: lighter;
+}
+
 .resource-card > img {
   width: 3em;
   height: 3em;

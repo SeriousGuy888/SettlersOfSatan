@@ -5,7 +5,13 @@ class Player {
     this.id = id
     this.colour = colour
     this.inventory = new Inventory(2, 0, 2)
-    this.cards = []
+    this.resources = {
+      bricks: 0,
+      lumber: 0,
+      wool: 0,
+      wheat: 0,
+      ore: 0,
+    }
   }
 
   getPublicData() {

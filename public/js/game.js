@@ -39,6 +39,7 @@ socket.on("game_update", gData => {
     else {
       currentGameData.me = pData
       canvasFunctions.refreshBoard()
+      refreshResourceCards()
     }
   })
 })
