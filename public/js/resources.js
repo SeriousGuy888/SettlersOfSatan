@@ -8,7 +8,7 @@ const resourceDivs = {
 
 const refreshResourceCards = () => {
   for(let divKey in resourceDivs) {
-    const para = resourceDivs[divKey].querySelector(".resource > .count")
-    para.textContent = currentGameData.me.resources[divKey]
+    const amtDisplay = resourceDivs[divKey].querySelector(".resource")
+    amtDisplay.textContent = currentGameData.me.resources[divKey]
   }
 }
