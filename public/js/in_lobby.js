@@ -67,6 +67,7 @@ socket.on("lobby_update", data => {
               if(err) notifyUser(err)
             })
           }
+          modal.style.display = "none"
         }
         modalButtons.appendChild(kickPlayerButton)
       }
