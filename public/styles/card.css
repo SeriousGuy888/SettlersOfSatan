@@ -28,6 +28,8 @@
     padding: 1.5rem;
     border-radius: 16px;
     background: #faeb96;
+    border: 3px solid #c4b878;
+
     /* box-shadow: -1rem 0 3rem #000; */
     display: flex;
     flex-direction: column;
