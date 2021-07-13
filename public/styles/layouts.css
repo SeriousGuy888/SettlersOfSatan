@@ -15,6 +15,7 @@
   flex-wrap: wrap;
   justify-content: flex-start;
   margin-left: -1%;
+  align-items: stretch;
 }
 .flex-layout-grid > * {
   flex-grow: 1;

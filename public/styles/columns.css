@@ -1,7 +1,6 @@
 #left-column,#right-column {
   display: flex;
   flex-direction: column;
-  flex: 1 0 0;
 }
 
 #resource-cards {
@@ -40,20 +39,25 @@
   height: 3em;
 }
 
-#lobby-chat-container {
-  padding: 0.5em;
+
+#lobby-player-list {
   display: flex;
   flex-direction: column;
 }
 
-#lobby-chat > * {
+#lobby-chat-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5em;
   margin: 0;
+
+  max-height: 50vh;
 }
 
 #lobby-chat-messages {
-  flex: 1 0 20vh;
   overflow-y: scroll;
   word-wrap: anywhere;
+  height: 100%;
 }
 
 #lobby-chat-messages div {

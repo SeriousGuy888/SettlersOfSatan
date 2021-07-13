@@ -125,11 +125,6 @@ html {
     border: none;
 }
 
-#lobby-player-list {
-    display: flex;
-    flex-direction: column;
-}
-
 .list-entry {
     display: flex;
     flex-direction: column;
