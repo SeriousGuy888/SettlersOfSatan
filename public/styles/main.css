@@ -114,17 +114,6 @@ html {
     vertical-align: middle;
 }
 
-#chat-button {
-    float: right;
-    /* padding: 0px; */
-    background-image: url("/images/chat.png");
-    display: flex;
-    height: 72px;
-    width: 72px;
-    cursor: pointer;
-    border: none;
-}
-
 .list-entry {
     display: flex;
     flex-direction: column;
@@ -155,33 +144,7 @@ html {
     display: block;
 }
 
-.hexagon {
-    position: relative;
-    width: 120px;
-    height: 100px;
-    background: #d8d8d8;
-}
-  
-.hexagon:after,
-.hexagon:before {
-    position: absolute;
-    content: "";
-    z-index: 1;
-    top: 0;  
-    width: 0px;
-    background: #fff;
-    border-top: 50px transparent solid; 
-    border-bottom: 50px transparent solid;
-}
 
-.hexagon:before {
-    left: 0;
-    border-right: 30px #d8d8d8 solid; 
-}
-.hexagon:after {
-    right: 0;
-    border-left: 30px #d8d8d8 solid; 
-}
 .icon-1em {
     height: 1em;
 }
