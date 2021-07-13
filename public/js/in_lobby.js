@@ -2,8 +2,18 @@ const lobbyPlayerList = document.querySelector("#lobby-player-list")
 const lobbyPlayerCountSpan = document.querySelector("#lobby-player-count")
 const lobbyMaxPlayerCountSpan = document.querySelector("#lobby-max-player-count")
 
-let currentLobbyData
+const modal = document.querySelector("#player-list-modal")
+const modalClose = modal.querySelector(".modal-content > .modal-close")
+const modalTitle = modal.querySelector(".modal-content > .modal-title")
+const modalButtons = modal.querySelector(".modal-content > .modal-buttons")
 
+modalClose.addEventListener("click", () => modal.style.display = "none")
+document.addEventListener("click", e => {
+  if(e.target === modal) modal.style.display = "none"
+})
+
+
+let currentLobbyData
 socket.on("lobby_update", data => {
   currentLobbyData = data
 
@@ -37,37 +47,44 @@ socket.on("lobby_update", data => {
     listEntryTitleDiv.appendChild(playerNameH)
     user.host && listEntryTitleDiv.appendChild(hostBadge)
 
-    const listEntryOptionsDiv = document.createElement("div")
-    listEntryOptionsDiv.className = "list-entry-options"
-  
-    if(isHost && user.playerId !== playerId) {
-      const kickPlayerButton = document.createElement("button")
-      kickPlayerButton.textContent = "Kick"
-      kickPlayerButton.onclick = () => {
-        if(window.confirm(`Are you sure you want to kick ${user.name}?`)) {
-          socket.emit("kick_player", {
-            playerId: user.playerId
-          }, (err, dat) => {
-            if(err) notifyUser(err)
-          })
+    const playerMenuButton = document.createElement("span")
+    playerMenuButton.textContent = "⋮"
+    playerMenuButton.className = "player-list-modal-button"
+    playerMenuButton.onclick = () => {
+      modal.style.display = "block"
+
+      modalTitle.textContent = user.name
+      
+      modalButtons.innerHTML = ""
+      if(isHost && user.playerId !== playerId) {
+        const kickPlayerButton = document.createElement("button")
+        kickPlayerButton.textContent = "Kick"
+        kickPlayerButton.onclick = () => {
+          if(window.confirm(`Are you sure you want to kick ${user.name}?`)) {
+            socket.emit("kick_player", {
+              playerId: user.playerId
+            }, (err, dat) => {
+              if(err) notifyUser(err)
+            })
+          }
         }
+        modalButtons.appendChild(kickPlayerButton)
       }
 
-      listEntryOptionsDiv.appendChild(kickPlayerButton)
+      const copyPlayerIdButton = document.createElement("button")
+      const copyPlayerIdButtonText = "Copy Player ID"
+      copyPlayerIdButton.textContent = copyPlayerIdButtonText
+      copyPlayerIdButton.onclick = () => {
+        navigator.clipboard.writeText(user.playerId).then(() => {
+          copyPlayerIdButton.textContent = "Copied!"
+          setTimeout(() => copyPlayerIdButton.textContent = copyPlayerIdButtonText, 1000)
+        })
+      }
+      modalButtons.appendChild(copyPlayerIdButton)
     }
-    const copyPlayerIdButton = document.createElement("button")
-    const copyPlayerIdButtonText = "Copy Player ID"
-    copyPlayerIdButton.textContent = copyPlayerIdButtonText
-    copyPlayerIdButton.onclick = () => {
-      navigator.clipboard.writeText(user.playerId).then(() => {
-        copyPlayerIdButton.textContent = "Copied!"
-        setTimeout(() => copyPlayerIdButton.textContent = copyPlayerIdButtonText, 1000)
-      })
-    }
-    listEntryOptionsDiv.appendChild(copyPlayerIdButton)
 
+    listEntryTitleDiv.appendChild(playerMenuButton)
     listEntryDiv.appendChild(listEntryTitleDiv)
-    listEntryDiv.appendChild(listEntryOptionsDiv)
 
     listEntryDiv.classList.add(["list-entry"])
     listEntryDiv.style.border = "5px solid " + user.colour

@@ -148,16 +148,11 @@ html {
   padding: 0.1em 0.6em;
 }
 
-.list-entry-options {
+.list-entry .player-list-modal-button {
     display: none;
 }
-.list-entry:hover .list-entry-options {
-    display: flex;
-    flex-direction: row;
-}
-.list-entry:hover .list-entry-options > * {
-    flex-basis: 0;
-    flex-grow: 1;
+.list-entry:hover .player-list-modal-button {
+    display: block;
 }
 
 .hexagon {
