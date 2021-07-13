@@ -10,11 +10,11 @@
     width: 10px;
     height: 10px;
 }
-.card-list::-webkit-scrollbar-thumb {
+/* .card-list::-webkit-scrollbar-thumb {
     background: #201c29;
     border-radius: 10px;
     box-shadow: inset 2px 2px 2px rgba(255, 255, 255, 0.25), inset -2px -2px 2px rgba(255, 255, 255, 0.25);
-}
+} */
 
 .card-list::-webkit-scrollbar-track {
     background: linear-gradient(90deg,#fff,#fff 1px,#fff 0,#fff);
@@ -28,7 +28,7 @@
     padding: 1.5rem;
     border-radius: 16px;
     background: #faeb96;
-    box-shadow: -1rem 0 3rem #000;
+    /* box-shadow: -1rem 0 3rem #000; */
     display: flex;
     flex-direction: column;
     transition: .2s;
