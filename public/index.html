@@ -155,19 +155,6 @@
                                 </header>
                             </article>
                         </div>
-
-                        <div id="lobby-player-list-container">
-                            <h3>Players <span id="lobby-player-count">0</span>/<span id="lobby-max-player-count">0</span></h3>
-                            <div id="lobby-player-list"></div>
-
-                            <div class="modal" id="player-list-modal">
-                                <div class="modal-content">
-                                    <span class="modal-close">&times;</span>
-                                    <h3 class="modal-title">PLAYERNAME</h3>
-                                    <div class="modal-buttons"></div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     <div id="lobby-waiting" class="flex-layout-grid-grow-2">
@@ -207,14 +194,28 @@
                         <p id="inv-list">Settlements: 2, Roads: 2, Cities: 0</p>
                         <canvas id="game-canvas">Oeuf</canvas>
                     </div>
-                    <div id="lobby-chat-container">
-                        <h3>Chat</h3>
-                        <div id="lobby-chat-messages"></div>
-                        <div class="single-line-input">
-                            <input id="lobby-chat-input" placeholder="Send a message">
-                            <button id="lobby-chat-send-button">
-                                <img src="/images/icons/check.svg" alt="Send" class="icon-1em">
-                            </button>
+                    <div id="right-column">
+                        <div id="lobby-chat-container">
+                            <h3>Chat</h3>
+                            <div id="lobby-chat-messages"></div>
+                            <div class="single-line-input">
+                                <input id="lobby-chat-input" placeholder="Send a message">
+                                <button id="lobby-chat-send-button">
+                                    <img src="/images/icons/check.svg" alt="Send" class="icon-1em">
+                                </button>
+                            </div>
+                        </div>
+                        <div id="lobby-player-list-container">
+                            <h3>Players <span id="lobby-player-count">0</span>/<span id="lobby-max-player-count">0</span></h3>
+                            <div id="lobby-player-list"></div>
+    
+                            <div class="modal" id="player-list-modal">
+                                <div class="modal-content">
+                                    <span class="modal-close">&times;</span>
+                                    <h3 class="modal-title">PLAYERNAME</h3>
+                                    <div class="modal-buttons"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

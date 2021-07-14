@@ -64,7 +64,7 @@
 }
 
 #lobby-chat-messages {
-  flex: 1 0 20vh;
+  flex: 1 0 32vh;
   overflow-y: scroll;
   word-wrap: anywhere;
 }
