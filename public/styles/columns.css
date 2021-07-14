@@ -40,9 +40,13 @@
   height: 3em;
 }
 
-.resource-card-blue {
+#development-card-toggle {
   border: 3px solid #4f65c5;
   background-color: #94a4eb;
+}
+#development-card-toggle:hover {
+  cursor: pointer;
+  user-select: none;
 }
 
 
