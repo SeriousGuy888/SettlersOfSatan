@@ -30,21 +30,25 @@ class Satan {
     this.graph = new Graph()
     
     this.players = {}
+    this.turn = null
   }
 
   tick() {
     const lobby = lobbies.getLobby(this.lobbyId)
+    
+    this.nextTurn()
 
     let playersPublicData = {}
     for(let i in this.players) {
       playersPublicData[i] = this.players[i].getPublicData()
     }
-
+    
     const tickData = {
       board: this.board,
       vertexes: this.vertexes,
       edges: this.edges,
       players: playersPublicData,
+      turn: this.turn
     }
 
     if(JSON.stringify(tickData) !== this.prevTickData) {
@@ -242,6 +246,20 @@ class Satan {
         break
       default:
         return
+    }
+  }
+
+  nextTurn() {
+    const playerIds = Object.keys(this.players)
+    const sortedPlayerIds = playerIds.sort((a, b) => this.players[a].joinTimestamp - this.players[b].joinTimestamp)
+    const firstJoiner = sortedPlayerIds[0]
+
+    const currentIndex = sortedPlayerIds.indexOf(this.turn)
+    if(currentIndex === -1 || !playerIds[currentIndex + 1]) { // there is no turn right now or the current turn is the last player
+      this.turn = firstJoiner
+    }
+    else {
+      this.turn = playerIds[currentIndex + 1]
     }
   }
 }
