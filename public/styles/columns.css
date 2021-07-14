@@ -40,6 +40,12 @@
   height: 3em;
 }
 
+.resource-card-blue {
+  border: 3px solid #4f65c5;
+  background-color: #94a4eb;
+}
+
+
 
 #lobby-player-list {
   display: flex;
