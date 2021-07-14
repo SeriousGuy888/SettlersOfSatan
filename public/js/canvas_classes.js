@@ -106,8 +106,10 @@ canvasClasses.Button = class extends canvasClasses.Hoverable {
   }
 }
 canvasClasses.Hex = class extends canvasClasses.Hoverable {
-  constructor(xPos, yPos, coords, resource, number, robber) {
+  constructor(xPos, yPos, data) {
     super()
+
+    const { coords, resource, number, robber, invisible, harbour } = data
 
     this.xPos = xPos
     this.yPos = yPos
@@ -115,16 +117,29 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
     this.resource = resource
     this.number = number
     this.robber = robber
+    this.invisible = invisible
+    this.harbour = harbour
   }
 
   render() {
-    const angle = 2 * Math.PI / 6
     const { xPos, yPos, resource, number } = this
 
-    ctx.beginPath()
     ctx.lineWidth = 1
     ctx.strokeStyle = "#000"
-    
+
+    if(this.harbour) {
+      ctx.fillStyle = "#666"
+
+      ctx.beginPath()
+      ctx.arc(xPos, yPos, hexRadius / 4, 0, 2 * Math.PI)
+      ctx.closePath()
+      ctx.fill()
+    }
+
+    if(this.invisible) return
+
+    const angle = 2 * Math.PI / 6
+    ctx.beginPath()
     for(let i = 0; i < 6; i++) { // thieved from https://eperezcosano.github.io/hex-grid/
       ctx.lineTo(
         xPos + hexRadius * Math.cos(angle * i - angle / 2),
@@ -170,7 +185,7 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
       ctx.fill()
       ctx.stroke()
       
-      ctx.fillStyle = number == 8 || number == 6 ? "#f00" : "#000" 
+      ctx.fillStyle = number === 8 || number === 6 ? "#f00" : "#000" 
       ctx.font = `bold ${hexRadius / 4}px sans-serif`
       ctx.textAlign = "center"
       ctx.textBaseline = "middle"

@@ -177,10 +177,12 @@ class Satan {
             break
           case 2:
             hex.setInvisible(true)
+            hex.setHarbour(true)
             addVertex("south")
             break
           case 3:
             hex.setInvisible(true)
+            hex.setHarbour(true)
             addVertex("north")
             break
         }

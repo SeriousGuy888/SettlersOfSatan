@@ -95,9 +95,7 @@ canvasFunctions.refreshBoard = () => {
         if(hex) {
           const xOffset = i % 2 !== 0 ? hexApothem : 0
 
-          if(!hex.invisible) {
-            boardHexes.push(new canvasClasses.Hex(Math.round(x + xOffset), Math.round(y), hex.coords, hex.resource, hex.number, hex.robber))
-          }
+          boardHexes.push(new canvasClasses.Hex(Math.round(x + xOffset), Math.round(y), hex))
           
           const hexVertexes = vertexes.filter(e => e.coords.x === hex.coords.x && e.coords.y === hex.coords.y)
 
