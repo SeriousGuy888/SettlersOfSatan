@@ -1,5 +1,6 @@
 .card-list {
     display: flex;
+    flex-direction: column;
     padding: 3rem;
     overflow-x: scroll;
 }
@@ -20,9 +21,7 @@
 
 
 .card {
-    height: 128px;
-    width: 128px;
-    min-width: 250px;
+    height: 5em;
     padding: 1.5rem;
     border-radius: 16px;
     background: #faeb96;
@@ -39,15 +38,15 @@
 }
 
 .card:focus-within~.card, .card:hover~.card {
-    transform: translateX(130px);
+    transform: translateY(0.2em);
 }
 
 .card:hover {
-    transform: translateY(-1rem);
+    transform: translateY(-1.2em);
 }
 
 .card:not(:first-child) {
-    margin-left: -130px;
+    margin-top: -2em;
 }
 
 
