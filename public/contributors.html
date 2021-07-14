@@ -35,7 +35,7 @@
         (async () => {
           const creditsContainer = document.querySelector("#credits-container")
 
-          const response = await fetch("/resources/credits.txt")
+          const response = await fetch("/resources/contributors.txt")
           const text = await response.text()
           const sections = text.split(/\n\s*\n/)
 
