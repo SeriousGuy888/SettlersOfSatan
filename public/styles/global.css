@@ -2,7 +2,7 @@ body {
   background-image: url("/images/background-min.png");
   background-attachment: fixed;
   background-position: center;
-  font-family: Trebuchet MS;
+  font-family: 'Trebuchet MS', 'Lucida Grande', 'Roboto', 'Arial', sans-serif;
   word-wrap: anywhere;
 }
 
