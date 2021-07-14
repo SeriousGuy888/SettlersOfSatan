@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     padding: 3rem;
-    overflow-x: scroll;
+    overflow-y: scroll;
 }
 
 .card-list::-webkit-scrollbar {
@@ -21,13 +21,12 @@
 
 
 .card {
-    height: 5em;
-    padding: 1.5rem;
+    height: max(10em, max-content);
+    padding: 0.25em 1.5em;
     border-radius: 16px;
     background: #faeb96;
     border: 3px solid #c4b878;
 
-    /* box-shadow: -1rem 0 3rem #000; */
     display: flex;
     flex-direction: column;
     transition: .2s;
@@ -35,30 +34,40 @@
     scroll-snap-align: start;
     clear: both;
     position: relative;
+
+    z-index: 1;
 }
 
-.card:focus-within~.card, .card:hover~.card {
+.card:hover ~.card {
     transform: translateY(0.2em);
 }
 
 .card:hover {
-    transform: translateY(-1.2em);
+    transform: translateY(-0.4em);
+    z-index: 2;
 }
 
 .card:not(:first-child) {
-    margin-top: -2em;
+    margin-top: -3em;
 }
 
 
-.card-header {
-    margin-bottom: auto;
+.card .card-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 0.2em;
+}
+.card .card-header .card-icon {
+    width: 4em;
+    height: 4em;
+}
+.card p {
+    font-size: 0.8em;
 }
 
-.card-header p {
-    font-size: 14px;
-    margin: 0 0 1rem;
-    color: #7a7a8c;
-}
 
 .card-header h2 {
     font-size: 20px;
