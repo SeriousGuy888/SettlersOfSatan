@@ -27,6 +27,7 @@ const notifyUser = (message) => {
   notificationDiv.appendChild(notificationDismissButton)
 
   notificationContainer.appendChild(notificationDiv)
+  setTimeout(notificationDismissButton.onclick, 15000)
 
   notificationDismissAllButton.style.display = null
 }
