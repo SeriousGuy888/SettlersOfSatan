@@ -142,6 +142,7 @@ html {
 }
 .list-entry:hover .player-list-modal-button {
     display: block;
+    height: 1.2em;
 }
 
 
