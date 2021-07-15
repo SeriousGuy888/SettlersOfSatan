@@ -285,8 +285,6 @@ class Satan {
         const building = vertex.getBuilding()
         if(!building) continue
 
-        console.log(vertex.coords)
-
         const adjacentHexes = vertex.getAdjacentHexes()
         const player = this.getPlayer(building.playerId)
         for(const hexCoords of adjacentHexes) {
