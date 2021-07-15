@@ -267,6 +267,10 @@ class Satan {
     else {
       this.turn = playerIds[currentIndex + 1]
     }
+
+    if(this.players[this.turn].disconnected) {
+      this.nextTurn()
+    }
   }
 }
 

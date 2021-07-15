@@ -81,6 +81,12 @@ class Lobby {
         style: { colour: "red" }
       }])
 
+      if(this.game) {
+        this.game
+          .getPlayer(this.users[userId].playerId)
+          .setDisconnected(true)
+      }
+
       delete this.users[userId]
       lobbyHelpers.emitLobbyUpdate(this)
 

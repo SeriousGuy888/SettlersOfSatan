@@ -5,6 +5,7 @@ class Player {
     this.id = id
     this.colour = colour
     this.joinTimestamp = joinTimestamp
+    this.disconnected = false
     this.inventory = new Inventory(2, 0, 2)
     this.resources = {
       bricks: 0,
@@ -26,6 +27,10 @@ class Player {
 
   getInventory() {
     return this.inventory
+  }
+
+  setDisconnected(disconnected) {
+    this.disconnected = disconnected
   }
 }
 
