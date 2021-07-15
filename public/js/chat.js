@@ -21,6 +21,10 @@ const parseChatLine = (line) => {
 const printToChat = (lines) => {
   const chatMessageDiv = document.createElement("div")
 
+  if(lobbyChatMessagesDiv.childElementCount >= 250) {
+    lobbyChatMessagesDiv.removeChild(lobbyChatMessagesDiv.children[0])
+  }
+
   for(let line of lines) {
     const chatMessageContentLine = parseChatLine(line)
     chatMessageContentLine && chatMessageDiv.appendChild(chatMessageContentLine)
