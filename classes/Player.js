@@ -18,8 +18,8 @@ class Player {
   }
 
   getPublicData() {
-    const { id, name, colour, inventory } = this
-    return { id, name, colour, inventory }
+    const { id, name, colour, inventory, resources } = this
+    return { id, name, colour, inventory, resources }
   }
 
   getColour() {

@@ -20,6 +20,14 @@ const boardLayout = [
   [0,3,1,1,1,3,0,0],
   [0,0,3,3,3,3,0,0],
 ]
+const hexTypesResources = {
+  mud: "bricks",
+  forest: "lumber",
+  mountain: "ore",
+  farm: "wheat",
+  pasture: "wool",
+  desert: null
+}
 
 class Satan {
   constructor(lobbyId) {
@@ -90,7 +98,7 @@ class Satan {
 
   setUpBoard(players){
     this.board = []
-    let resourceCounts = {
+    let hexTypeCounts = {
       mud: 3,
       forest: 4,
       mountain: 3,
@@ -111,9 +119,9 @@ class Satan {
     // console.log(numberCounts)
 
     if ([5,6].includes(players)) {
-      for (let key in resourceCounts) { 
-        resourceCounts[key] += 2
-        if (key == "desert") resourceCounts[key] -= 2
+      for (let key in hexTypeCounts) { 
+        hexTypeCounts[key] += 2
+        if (key == "desert") hexTypeCounts[key] -= 2
       }
     }
 
@@ -159,10 +167,10 @@ class Satan {
         }
         switch(space) {
           case 1:
-            hex.resource = Object.keys(resourceCounts)[Math.floor(Math.random() * Object.keys(resourceCounts).length)]
-            resourceCounts[hex.resource]--
+            hex.resource = Object.keys(hexTypeCounts)[Math.floor(Math.random() * Object.keys(hexTypeCounts).length)]
+            hexTypeCounts[hex.resource]--
 
-            if(!resourceCounts[hex.resource]) delete resourceCounts[hex.resource]
+            if(!hexTypeCounts[hex.resource]) delete hexTypeCounts[hex.resource]
   
             if(hex.resource === "desert") {
               hex.robber = true
@@ -273,6 +281,22 @@ class Satan {
       this.nextTurn()
     }
     else {
+      for(const vertex of this.vertexes) {
+        const building = vertex.getBuilding()
+        if(!building) continue
+
+        console.log(vertex.coords)
+
+        const adjacentHexes = vertex.getAdjacentHexes()
+        const player = this.getPlayer(building.playerId)
+        for(const hexCoords of adjacentHexes) {
+          const hex = this.board[hexCoords.y][hexCoords.x]
+          const resource = hexTypesResources[hex.resource]
+
+          if(resource) player.resources[resource]++
+        }
+      }
+
       lobbies.getLobby(this.lobbyId).printToChat([{
         text: `It is now ${this.players[this.turn].name}'s turn.`,
         style: {
