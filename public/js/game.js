@@ -2,6 +2,8 @@ const lobbyWaitingDiv = document.querySelector("#lobby-waiting")
 const lobbyPlayingDiv = document.querySelector("#lobby-playing")
 const leftColumnDiv = document.querySelector("#left-column")
 
+const gameStatusMessage = document.querySelector("#game-status-message")
+
 const toggleInGameGui = (render) => {
   if(render) {
     lobbyWaitingDiv.style.display = "none"
@@ -30,6 +32,11 @@ socket.on("game_started_update", data => {
 })
 
 
+const setStatusMessage = (msg) => {
+  gameStatusMessage.textContent = msg
+}
+
+
 let currentGameData
 socket.on("game_update", gData => {
   currentGameData = gData
@@ -41,7 +48,14 @@ socket.on("game_update", gData => {
       canvasFunctions.refreshBoard()
       refreshResourceCards()
       document.getElementById("inv-list").innerHTML = `Settlements: ${currentGameData.me.inventory.settlements}, Roads: ${currentGameData.me.inventory.roads}, Cities: ${currentGameData.me.inventory.cities}`
+
+      
+      if(currentGameData.turn === currentGameData.me.id) {
+        setStatusMessage("It is your turn!")
+      }
+      else {
+        setStatusMessage("Please wait for your turn...")
+      }
     }
   })
-
 })

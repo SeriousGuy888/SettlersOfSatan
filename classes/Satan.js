@@ -36,7 +36,7 @@ class Satan {
   tick() {
     const lobby = lobbies.getLobby(this.lobbyId)
     
-    this.nextTurn()
+    if(!this.turn) this.nextTurn()
 
     let playersPublicData = {}
     for(let i in this.players) {
@@ -213,6 +213,10 @@ class Satan {
     const player = this.getPlayer(playerId)
 
     switch(action) {
+      case "end_turn":
+        if(player.id !== this.turn) return
+        this.nextTurn()
+        break
       case "place_settlement":
         const vertex = this.getVertex(coords)
         if(!vertex) break
