@@ -117,6 +117,17 @@
                 </div>
                 <div class="flex-layout-grid">
                     <div id="left-column">
+                        <div id="game-controls">
+                            <button class="game-control-button" id="settlement-button"      >🏠</button>
+                            <button class="game-control-button" id="city-button"            >🌆</button>
+                            <button class="game-control-button" id="road-button"            >🚗</button>
+                            <button class="game-control-button" id="development-card-button">📈</button>
+                            <button class="game-control-button" id="trade-button"           >🔃</button>
+                        </div>
+                        <p id="inv-list">Settlements: 2, Roads: 2, Cities: 0</p>
+
+                        <hr>
+
                         <div id="resource-cards">
                             <div class="resource-card" id="resource-bricks">
                                 <img src="/images/resource_cards/bricks.png" alt="bricks">
@@ -188,14 +199,6 @@
                     </div>
                     <div id="lobby-playing" class="flex-layout-grid-grow-2" style="display: none;">
                         <!-- <button id="canvas-fullscreen">Fullscreen Game</button> -->
-                        <div id="game-controls">
-                            <button class="game-control-button" id="settlement-button"      >🏠</button>
-                            <button class="game-control-button" id="city-button"            >🌆</button>
-                            <button class="game-control-button" id="road-button"            >🚗</button>
-                            <button class="game-control-button" id="development-card-button">📈</button>
-                            <button class="game-control-button" id="trade-button"           >🔃</button>
-                        </div>
-                        <p id="inv-list">Settlements: 2, Roads: 2, Cities: 0</p>
                         <canvas id="game-canvas">Oeuf</canvas>
                     </div>
                     <div id="right-column">
