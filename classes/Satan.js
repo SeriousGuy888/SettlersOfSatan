@@ -3,6 +3,7 @@ const Vertex = require("./Vertex.js")
 const Edge = require("./Edge.js")
 const Graph = require("./Graph.js")
 const lobbies = require("../server/lobbies.js")
+const users = require("../server/users.js")
 
 /*
   0 = no hex
@@ -270,6 +271,14 @@ class Satan {
 
     if(this.players[this.turn].disconnected) {
       this.nextTurn()
+    }
+    else {
+      lobbies.getLobby(this.lobbyId).printToChat([{
+        text: `It is now ${this.players[this.turn].name}'s turn.`,
+        style: {
+          colour: "green",
+        },
+      }])
     }
   }
 }

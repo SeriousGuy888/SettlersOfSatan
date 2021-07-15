@@ -1,8 +1,9 @@
 const Inventory = require("./Inventory.js")
 
 class Player {
-  constructor(id, colour, joinTimestamp) {
+  constructor(id, name, colour, joinTimestamp) {
     this.id = id
+    this.name = name
     this.colour = colour
     this.joinTimestamp = joinTimestamp
     this.disconnected = false
@@ -17,8 +18,8 @@ class Player {
   }
 
   getPublicData() {
-    const { id, colour, inventory } = this
-    return { id, colour, inventory }
+    const { id, name, colour, inventory } = this
+    return { id, name, colour, inventory }
   }
 
   getColour() {
