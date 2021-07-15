@@ -1,7 +1,8 @@
 const canvasClasses = {}
 
 let devSettings = {
-  displayAxis: null
+  displayAxis: null,
+  hexCoords: false,
 }
 holding = holding // NOSONAR
 
@@ -189,8 +190,9 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
       ctx.font = `bold ${hexRadius / 4}px sans-serif`
       ctx.textAlign = "center"
       ctx.textBaseline = "middle"
-      ctx.fillText(number.toString(), xPos, yPos)
-      // ctx.fillText(JSON.stringify(this.coords), xPos, yPos)
+
+      if(devSettings.hexCoords) ctx.fillText(`${this.coords.x},${this.coords.y}`, xPos, yPos)
+      else ctx.fillText(number.toString(), xPos, yPos)
     }
   }
 }
