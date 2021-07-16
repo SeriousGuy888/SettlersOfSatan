@@ -130,8 +130,6 @@ canvasFunctions.refreshBoard = () => {
 canvasFunctions.draw = () => {
   canvasFunctions.background()
 
-  canvasFunctions.drawInventory()
-
   for(const elem of canvasElems) {
     if(elem.render) {
       elem.render()
@@ -152,21 +150,6 @@ canvasFunctions.background = (colour) => {
   ctx.rect(0, 0, canvasWidth, canvasHeight)
   ctx.fillStyle = colour || "#0000"
   ctx.fill()
-}
-
-canvasFunctions.drawInventory = () => {
-  const inventory = currentGameData?.players[playerId]?.inventory
-  if(!inventory) return
-
-  const x = 50
-  const y = 50
-
-  // ctx.fillStyle = "#efef90"
-
-  // ctx.beginPath()
-  // ctx.rect(x, y, w, h)
-  // ctx.fill()
-  
 }
 
 canvasFunctions.drawPiece = (piece, colour, x, y, w, h) => {
