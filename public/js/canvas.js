@@ -10,7 +10,6 @@ const canvasElems = []
 const boardHexes = []
 const boardVertexes = []
 const boardEdges = []
-const unplacedPieces = []
 
 let mousePos = { x: 0, y: 0 }
 
@@ -145,7 +144,6 @@ canvasFunctions.draw = () => {
   for(const e of boardHexes)      e.render()
   for(const e of boardEdges)      e.render()
   for(const e of boardVertexes)   e.render()
-  for(const e of unplacedPieces)  e.render()
 }
 
 canvasFunctions.background = (colour) => {
@@ -219,7 +217,6 @@ gameCanvas.addEventListener("click", e => {
   for(const elem of boardHexes)     if(elem.onClick) elem.onClick()
   for(const elem of boardEdges)     if(elem.onClick) elem.onClick()
   for(const elem of boardVertexes)  if(elem.onClick) elem.onClick()
-  for(const elem of unplacedPieces) if(elem.onClick) elem.onClick()
 })
 gameCanvas.addEventListener("mousemove", e => mousePos = canvasFunctions.getMousePos(e))
 canvasFunctions.getMousePos = (e) => {
