@@ -331,22 +331,16 @@ class Satan {
   }
 
   rollDice() {
-    const playerIds = Object.keys(this.players)
-
     let dice1 = Math.floor(Math.random() * 6) + 1
     let dice2 = Math.floor(Math.random() * 6) + 1
     let number = dice1 + dice2
 
     lobbies.getLobby(this.lobbyId).printToChat([{
-      text: `${this.players[this.turn].name} rolled a ${number}`,
+      text: `${this.players[this.turn].name} rolled ${dice1}+${dice2} = ${number}`,
       style: {
         colour: "purple",
       },
     }])
-
-    // for(let playerId of playerIds) {
-    //   this.getPlayer(playerId)
-    // }
 
     for(const vertex of this.vertexes) {
       const building = vertex.getBuilding()
