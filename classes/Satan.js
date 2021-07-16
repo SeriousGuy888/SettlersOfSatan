@@ -225,6 +225,7 @@ class Satan {
 
     switch(action) {
       case "roll_dice":
+        this.rollDice()
         this.turnStage++
         break
       case "end_turn":
