@@ -224,6 +224,9 @@ class Satan {
     const player = this.getPlayer(playerId)
 
     switch(action) {
+      case "roll_dice":
+        this.turnStage++
+        break
       case "end_turn":
         if(player.id !== this.turn) return
         this.nextTurn()
@@ -284,6 +287,8 @@ class Satan {
       this.nextTurn()
     }
     else {
+      this.turnStage = 0
+
       for(const vertex of this.vertexes) {
         const building = vertex.getBuilding()
         if(!building) continue
