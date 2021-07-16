@@ -227,6 +227,7 @@ class Satan {
       case "end_turn":
         if(player.id !== this.turn) return
         this.nextTurn()
+        this.rollDice()
         break
       case "place_settlement":
         const vertex = this.getVertex(coords)
@@ -305,6 +306,19 @@ class Satan {
       }])
     }
   }
+
+  rollDice() {
+    const playerIds = Object.keys(this.players)
+
+    let dice1 = Math.floor(Math.random() * 6) + 1
+    let dice2 = Math.floor(Math.random() * 6) + 1
+    let number = dice1 + dice2
+
+    for(player of playerIds) {
+      
+    }
+  }
+
 }
 
 module.exports = Satan
