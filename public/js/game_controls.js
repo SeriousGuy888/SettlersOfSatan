@@ -25,6 +25,8 @@ const turnButton = document.querySelector("#end-turn-dice-button")
 
 const refreshTurnControls = () => {
   if(currentGameData.turn !== currentGameData.me.id) {
+    for(let i in gameControls) gameControls[i].disabled = true
+
     turnButton.disabled = true
     turnButton.textContent = "It is not your turn..."
   }
@@ -33,9 +35,11 @@ const refreshTurnControls = () => {
 
     if(currentGameData.turnStage === 0) {
       turnButton.textContent = "Roll Dice"
+      for(let i in gameControls) gameControls[i].disabled = true
     }
     else {
       turnButton.textContent = "End Turn"
+      for(let i in gameControls) gameControls[i].disabled = false
     }
   }
 }
