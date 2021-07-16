@@ -225,11 +225,12 @@ class Satan {
 
     switch(action) {
       case "roll_dice":
+        if(this.turnStage !== 0) break
         this.rollDice()
         this.turnStage++
         break
       case "end_turn":
-        if(player.id !== this.turn) return
+        if(player.id !== this.turn) break
         this.nextTurn()
         break
       case "place_settlement":
