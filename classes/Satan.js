@@ -231,7 +231,6 @@ class Satan {
       case "end_turn":
         if(player.id !== this.turn) return
         this.nextTurn()
-        this.rollDice()
         break
       case "place_settlement":
         const vertex = this.getVertex(coords)
