@@ -224,6 +224,9 @@ class Satan {
     const player = this.getPlayer(playerId)
 
     switch(action) {
+      case "roll_dice":
+        this.turnStage++
+        break
       case "end_turn":
         if(player.id !== this.turn) return
         this.nextTurn()
