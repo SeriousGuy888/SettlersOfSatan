@@ -80,7 +80,7 @@ canvasFunctions.refreshBoard = () => {
   boardVertexes.splice(0, boardVertexes.length)
   boardEdges.splice(0, boardEdges.length)
 
-  const startY = hexRadius
+  const startY = hexRadius / 2
   const yOffsetPerRow = hexRadius * 2 - hexRadius / 2
   if(board) {
     let y = startY
