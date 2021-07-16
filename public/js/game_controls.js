@@ -41,7 +41,7 @@ const refreshTurnControls = () => {
 }
 
 turnButton.addEventListener("click", () => {
-  const action = turnStage === 0 ? "roll_dice" : "end_turn"
+  const action = currentGameData.turnStage === 0 ? "roll_dice" : "end_turn"
 
   socket.emit("perform_game_action", { action },
   (err, data) => {
