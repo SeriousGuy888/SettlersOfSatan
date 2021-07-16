@@ -203,6 +203,31 @@ class Satan {
     }
     // this.graph.printMatrix() // prints quite a bit of false in the console
 
+    for(let hex of this.board){
+      if(hex.number == "8" || hex.number == "6"){
+
+        let needToMoveHex = false
+
+        for(let adjacentHex of hex.getAdjacentHexes()){
+          if(adjacentHex.number == "8" || adjacentHex.number == "6"){
+            needToMoveHex = true
+          }
+        }
+
+        while(needToMoveHex){
+          let randomHex = this.board[Math.floor(Math.random() * this.board.length)]
+
+          if(randomHex.number){
+            if(!randomHex.getAdjacentHexes().includes("8") && !randomHex.getAdjacentHexes().includes("6")){
+              let randomHexNumber = randomHex.number
+              randomHex.number = hex.number
+              hex.number = randomHexNumber
+            }
+          }
+        }
+      }
+    }
+
     const { matrix } = this.graph
     for(let i in matrix) {
       for(let j in matrix[i]) {
@@ -212,6 +237,8 @@ class Satan {
         }
       }
     }
+
+    console.log(this.board)
   }
 
   processAction(playerId, actionData) {
@@ -313,7 +340,7 @@ class Satan {
     lobbies.getLobby(this.lobbyId).printToChat([{
       text: `${this.players[this.turn].name} rolled a ${number}`,
       style: {
-        colour: "blue",
+        colour: "purple",
       },
     }])
 
