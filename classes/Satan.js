@@ -215,8 +215,10 @@ class Satan {
           let needToMoveHex = false
 
           for(let adjacentHex of hex.getAdjacentHexes()) {
-            if(adjacentHex.number == 8 || adjacentHex.number == 6) {
+            console.log(adjacentHex)
+            if(this.board[adjacentHex.y][adjacentHex.x] && [8, 6].includes(this.board[adjacentHex.y][adjacentHex.x].number)) {
                 needToMoveHex = true
+                break
             }
           }
           
@@ -226,10 +228,8 @@ class Satan {
 
             if(randomHex.number){
               for(let adjacentHex of randomHex.getAdjacentHexes()) {
-                if(!adjacentHex.number == 8 && !adjacentHex.number == 6) {
-                  let randomHexNumber = randomHex.number
-                  randomHex.number = hex.number
-                  hex.number = randomHexNumber
+                if(this.board[adjacentHex.y][adjacentHex.x] && [8, 6].includes(this.board[adjacentHex.y][adjacentHex.x].number)) {
+                  moveHex = this.board.indexOf(randomHex)
                 }
               }
             }
@@ -247,6 +247,10 @@ class Satan {
         }
       }
     }
+  }
+
+  moveNumbers(){
+
   }
 
   processAction(playerId, actionData) {
