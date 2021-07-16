@@ -9,6 +9,27 @@ class Hex {
     this.harbour = false
   }
 
+  getAdjacentHexes() {
+    const { coords } = this
+    const { x, y } = coords
+    
+    const adjacentHexes = []
+    adjacentHexes.push(
+      { x: x - 1, y: y },
+      { x: x + 1, y: y },
+      { x: x, y: y + 1 },
+      { x: x, y: y - 1 },
+    )
+
+    const xOffset = y % 2 === 0 ? -1 : 1
+    adjacentHexes.push(
+      {x: x + xOffset, y + 1},
+      {x: x + xOffset, y - 1}
+    )
+
+    return adjacentHexes
+  }
+
   setInvisible(invisible) {
     this.invisible = invisible
   }
