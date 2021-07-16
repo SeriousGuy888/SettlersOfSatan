@@ -286,6 +286,8 @@ class Satan {
       this.nextTurn()
     }
     else {
+      this.turnStage = 0
+
       for(const vertex of this.vertexes) {
         const building = vertex.getBuilding()
         if(!building) continue
