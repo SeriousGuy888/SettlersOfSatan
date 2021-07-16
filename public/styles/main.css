@@ -7,24 +7,21 @@ html {
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
-}
-.button-group button {
-    margin: 0.2em;
+    gap: 0.3em;
 }
 .colour-button {
-    position: static;
     border: 2px solid rgb(0, 0, 0);
-    width: 72px;
-    height: 64px;
-    margin-right: 10px;
-    cursor: pointer;
-    border-radius: 10%;
-
-    color: white; /* White text */
+    width: 4rem;
+    height: 4rem;
+    color: white;
     text-align: center;
 }
 .colour-button:disabled {
-    background-color: grey !important;
+    font-size: 0;
+}
+.colour-button:disabled::after {
+    content: "✖";
+    font-size: 1.5rem;
 }
 
 #home-title-container {
