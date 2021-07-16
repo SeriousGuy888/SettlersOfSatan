@@ -289,20 +289,6 @@ class Satan {
     else {
       this.turnStage = 0
 
-      for(const vertex of this.vertexes) {
-        const building = vertex.getBuilding()
-        if(!building) continue
-
-        const adjacentHexes = vertex.getAdjacentHexes()
-        const player = this.getPlayer(building.playerId)
-        for(const hexCoords of adjacentHexes) {
-          const hex = this.board[hexCoords.y][hexCoords.x]
-          const resource = hexTypesResources[hex.resource]
-
-          if(resource) player.resources[resource]++
-        }
-      }
-
       lobbies.getLobby(this.lobbyId).printToChat([{
         text: `It is now ${this.players[this.turn].name}'s turn.`,
         style: {
@@ -319,9 +305,31 @@ class Satan {
     let dice2 = Math.floor(Math.random() * 6) + 1
     let number = dice1 + dice2
 
-    for(player of playerIds) {
-      
+    lobbies.getLobby(this.lobbyId).printToChat([{
+      text: `${this.players[this.turn].name} rolled a ${number}`,
+      style: {
+        colour: "blue",
+      },
+    }])
+
+    // for(let playerId of playerIds) {
+    //   this.getPlayer(playerId)
+    // }
+
+    for(const vertex of this.vertexes) {
+      const building = vertex.getBuilding()
+      if(!building) continue
+
+      const adjacentHexes = vertex.getAdjacentHexes()
+      const player = this.getPlayer(building.playerId)
+      for(const hexCoords of adjacentHexes) {
+        const hex = this.board[hexCoords.y][hexCoords.x]
+        const resource = hexTypesResources[hex.resource]
+
+        if(resource && hex.number == number) player.resources[resource]++
+      }
     }
+
   }
 
 }
