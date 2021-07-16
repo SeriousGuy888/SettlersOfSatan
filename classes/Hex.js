@@ -23,8 +23,8 @@ class Hex {
 
     const xOffset = y % 2 === 0 ? -1 : 1
     adjacentHexes.push(
-      {x: x + xOffset, y + 1},
-      {x: x + xOffset, y - 1}
+      {x: x + xOffset, y: y + 1},
+      {x: x + xOffset, y: y - 1}
     )
 
     return adjacentHexes
