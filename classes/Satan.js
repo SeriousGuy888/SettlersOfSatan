@@ -176,7 +176,7 @@ class Satan {
               hex.robber = true
             }
             else {
-              hex.number = Object.keys(numberCounts)[Math.floor(Math.random() * Object.keys(numberCounts).length)]
+              hex.number = parseInt(Object.keys(numberCounts)[Math.floor(Math.random() * Object.keys(numberCounts).length)])
               numberCounts[hex.number]--
               if(!numberCounts[hex.number]) delete numberCounts[hex.number]
             }
