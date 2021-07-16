@@ -40,6 +40,7 @@ class Satan {
     
     this.players = {}
     this.turn = null
+    this.turnStage = 0 // turn stage manages whether the dice have been rolled
   }
 
   tick() {
@@ -57,7 +58,8 @@ class Satan {
       vertexes: this.vertexes,
       edges: this.edges,
       players: playersPublicData,
-      turn: this.turn
+      turn: this.turn,
+      turnStage: this.turnStage,
     }
 
     if(JSON.stringify(tickData) !== this.prevTickData) {

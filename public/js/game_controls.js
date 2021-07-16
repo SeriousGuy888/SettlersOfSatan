@@ -30,7 +30,13 @@ const refreshTurnControls = () => {
   }
   else {
     turnButton.disabled = false
-    turnButton.textContent = "End Turn"
+
+    if(currentGameData.turnStage === 0) {
+      turnButton.textContent = "Roll Dice"
+    }
+    else {
+      turnButton.textContent = "End Turn"
+    }
   }
 }
 
