@@ -234,6 +234,8 @@ class Satan {
         this.nextTurn()
         break
       case "place_settlement":
+        if(this.turnStage === 0) break
+
         const vertex = this.getVertex(coords)
         if(!vertex) break
 
@@ -257,6 +259,8 @@ class Satan {
         }
         break
       case "place_road":
+        if(this.turnStage === 0) break
+        
         const edge = this.getEdge(coordsArr)
         if(!edge) break
         
