@@ -2,6 +2,21 @@
   max-height: 100%;
 }
 
+
+#game-controls {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1em;
+}
+
+#inv-list {
+  font-size: 18px;
+  text-align: center;
+}
+
+
 #resource-cards {
   display: flex;
   flex-direction: row;
