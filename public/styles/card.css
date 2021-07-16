@@ -5,10 +5,10 @@
     overflow-y: scroll;
 }
 
-.card-list::-webkit-scrollbar {
+/* .card-list::-webkit-scrollbar {
     width: 10px;
     height: 10px;
-}
+} */
 /* .card-list::-webkit-scrollbar-thumb {
     background: #201c29;
     border-radius: 10px;
@@ -21,7 +21,7 @@
 
 
 .card {
-    height: max(10em, max-content);
+    height: max-content;
     padding: 0.25em 1.5em;
     border-radius: 16px;
     background: #faeb96;
@@ -31,8 +31,6 @@
     flex-direction: column;
     transition: .2s;
     margin: 0;
-    scroll-snap-align: start;
-    clear: both;
     position: relative;
 
     z-index: 1;
@@ -77,14 +75,6 @@
     border: 0;
     display: inline-block;
     cursor: pointer;
-}
-
-.card-header h2:hover {
-    background: linear-gradient(90deg,#ff8a00,#e52e71);
-    text-shadow: none;
-    -webkit-text-fill-color: transparent;
-    -webkit-background-clip: text;
-    background-clip: text;
 }
 
 .card-author {
