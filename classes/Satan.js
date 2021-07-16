@@ -204,7 +204,11 @@ class Satan {
     // this.graph.printMatrix() // prints quite a bit of false in the console
 
     for(let hex of this.board){
+      console.log("i bea a hex")
+
       if(hex.number == "8" || hex.number == "6"){
+
+        console.log("i bea a red hex")
 
         let needToMoveHex = false
 
@@ -237,8 +241,6 @@ class Satan {
         }
       }
     }
-
-    console.log(this.board)
   }
 
   processAction(playerId, actionData) {
