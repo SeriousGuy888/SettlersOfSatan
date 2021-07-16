@@ -222,18 +222,18 @@ class Satan {
             }
           }
           
-          while(needToMoveHex){
-            console.log("moving hex...")
-            let randomHex = this.board[Math.floor(Math.random() * this.board.length)]
+          // while(needToMoveHex){
+          //   console.log("moving hex...")
+          //   let randomHex = this.board[Math.floor(Math.random() * this.board.length)]
 
-            if(randomHex.number){
-              for(let adjacentHex of randomHex.getAdjacentHexes()) {
-                if(this.board[adjacentHex.y][adjacentHex.x] && [8, 6].includes(this.board[adjacentHex.y][adjacentHex.x].number)) {
-                  moveHex = this.board.indexOf(randomHex)
-                }
-              }
-            }
-          }
+          //   if(randomHex.number){
+          //     for(let adjacentHex of randomHex.getAdjacentHexes()) {
+          //       if(this.board[adjacentHex.y][adjacentHex.x] && [8, 6].includes(this.board[adjacentHex.y][adjacentHex.x].number)) {
+          //         moveHex = this.board.indexOf(randomHex)
+          //       }
+          //     }
+          //   }
+          // }
         }
       }
     }
