@@ -203,29 +203,35 @@ class Satan {
     }
     // this.graph.printMatrix() // prints quite a bit of false in the console
 
-    for(let hex of this.board){
-      console.log("i bea a hex")
+    // console.log(this.board)
 
-      if(hex.number == "8" || hex.number == "6"){
+    for(let row of this.board){
+      // console.log(row)
+      for(let hex of row){
+        if(hex && (hex.number == 8 || hex.number == 6)){
 
-        console.log("i bea a red hex")
+          console.log("i bea a red hex")
 
-        let needToMoveHex = false
+          let needToMoveHex = false
 
-        for(let adjacentHex of hex.getAdjacentHexes()){
-          if(adjacentHex.number == "8" || adjacentHex.number == "6"){
-            needToMoveHex = true
+          for(let adjacentHex of hex.getAdjacentHexes()) {
+            if(adjacentHex.number == 8 || adjacentHex.number == 6) {
+                needToMoveHex = true
+            }
           }
-        }
+          
+          while(needToMoveHex){
+            console.log("moving hex...")
+            let randomHex = this.board[Math.floor(Math.random() * this.board.length)]
 
-        while(needToMoveHex){
-          let randomHex = this.board[Math.floor(Math.random() * this.board.length)]
-
-          if(randomHex.number){
-            if(!randomHex.getAdjacentHexes().includes("8") && !randomHex.getAdjacentHexes().includes("6")){
-              let randomHexNumber = randomHex.number
-              randomHex.number = hex.number
-              hex.number = randomHexNumber
+            if(randomHex.number){
+              for(let adjacentHex of randomHex.getAdjacentHexes()) {
+                if(!adjacentHex.number == 8 && !adjacentHex.number == 6) {
+                  let randomHexNumber = randomHex.number
+                  randomHex.number = hex.number
+                  hex.number = randomHexNumber
+                }
+              }
             }
           }
         }
