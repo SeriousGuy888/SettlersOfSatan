@@ -276,6 +276,18 @@ class Satan {
     const coordsArr = actionData.coordsArr
     const vertex = this.getVertex(coords)
     const player = this.getPlayer(playerId)
+    const user = users.getUser(player.userId)
+    const lobby = lobbies.getLobby(user.lobbyId)
+
+    const printChatErr = (msg) => {
+      lobby.printToUserChat(user.id, [{
+        text: msg,
+        style: {
+          colour: "red",
+          italic: true,
+        }
+      }])
+    }
 
     const buildingCosts = {
       road: {
@@ -308,6 +320,13 @@ class Satan {
       Object.keys(cost).forEach(resource => playerResources[resource] -= cost[resource])
     }
 
+    if(action.startsWith("place_")) {
+      if(this.turnStage === 0) {
+        printChatErr("You need to roll the dice before doing this.")
+        return
+      }
+    }
+
     switch(action) {
       case "roll_dice":
         if(this.turnStage !== 0) break
@@ -319,15 +338,20 @@ class Satan {
         this.nextTurn()
         break
       case "place_settlement":
-        if(this.turnStage === 0) break
         if(!vertex) break
         if(player.inventory.getSettlements() <= 0) break
 
         if(this.inSetupTurnCycle()) {
-          if(this.setupTurnPlaced.settlement >= 1) break
+          if(this.setupTurnPlaced.settlement >= 1) {
+            printChatErr("You have already placed a settlement this turn.")
+            break
+          }
         }
         else {
-          if(!canAfford(player, "settlement")) break
+          if(!canAfford(player, "settlement")) {
+            printChatErr("You cannot afford this.")
+            break
+          }
         }
 
         if(vertex.getBuilding()?.type !== "settlement") {
@@ -353,10 +377,12 @@ class Satan {
         }
         break
       case "place_city":
-        if(this.turnStage === 0) break
         if(!vertex) break
         if(player.inventory.getCities() <= 0) break
-        if(!canAfford(player, "city")) break
+        if(!canAfford(player, "city")) {
+          printChatErr("You cannot afford this.")
+          break
+        }
         
         const existingBuilding = vertex.getBuilding()
         if(!existingBuilding) break
@@ -369,15 +395,20 @@ class Satan {
         }
         break
       case "place_road":
-        if(this.turnStage === 0) break
         const edge = this.getEdge(coordsArr)
         if(!edge) break
 
         if(this.inSetupTurnCycle()) {
-          if(this.setupTurnPlaced.road >= 1) break
+          if(this.setupTurnPlaced.road >= 1) {
+            printChatErr("You have already placed a road this turn.")
+            break
+          }
         }
         else {
-          if(!canAfford(player, "road")) break
+          if(!canAfford(player, "road")) {
+            printChatErr("You cannot afford this.")
+            break
+          }
         }
         
         if(player.inventory.getRoads() <= 0) break
