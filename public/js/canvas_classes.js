@@ -313,6 +313,9 @@ canvasClasses.Edge = class extends canvasClasses.Hoverable {
       ctx.moveTo(vertA.xPos, vertA.yPos)
       ctx.lineTo(vertB.xPos, vertB.yPos)
 
+      ctx.lineWidth = 14
+      ctx.strokeStyle = "#fff"
+      ctx.stroke()
       ctx.lineWidth = 10
       ctx.strokeStyle = colour
       ctx.stroke()
