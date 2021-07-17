@@ -226,18 +226,30 @@ class Satan {
             }
           }
           
-          // while(needToMoveHex){
-          //   console.log("moving hex...")
-          //   let randomHex = this.board[Math.floor(Math.random() * this.board.length)]
+          while(needToMoveHex){
+            console.log("moving hex...")
+            let randomRowIndex = Math.floor(Math.random() * this.board.length)
+            let randomHexIndex = Math.floor(Math.random() * this.board[randomRowIndex].length)
+            let randomHex = this.board[randomRowIndex][randomHexIndex]
 
-          //   if(randomHex.number){
-          //     for(let adjacentHex of randomHex.getAdjacentHexes()) {
-          //       if(this.board[adjacentHex.y][adjacentHex.x] && [8, 6].includes(this.board[adjacentHex.y][adjacentHex.x].number)) {
-          //         moveHex = this.board.indexOf(randomHex)
-          //       }
-          //     }
-          //   }
-          // }
+            let moveHex = true
+
+            if(randomHex && randomHex.number){
+              for(let adjacentHex of randomHex.getAdjacentHexes()) {
+                if(this.board[adjacentHex.y][adjacentHex.x] && [8, 6].includes(this.board[adjacentHex.y][adjacentHex.x].number)) {
+                  moveHex = null
+                  console.log("moveHex beas null")
+                }
+              }
+              if(moveHex){
+                let randomHexNumber = this.board[randomRowIndex][randomHexIndex].number
+
+                this.board[randomRowIndex][randomHexIndex].number = hex.number
+                hex.number = randomHexNumber
+                needToMoveHex = false
+              }
+            }
+          }
         }
       }
     }
