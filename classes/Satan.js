@@ -39,7 +39,9 @@ class Satan {
     this.graph = new Graph()
     
     this.players = {}
-    this.turn = null
+
+    this.turn = null // stores the player id of the currently playing playeur
+    this.turnCycle = 0 // how many times every player has been given a turn
     this.turnStage = 0 // turn stage manages whether the dice have been rolled
   }
 
@@ -59,6 +61,7 @@ class Satan {
       edges: this.edges,
       players: playersPublicData,
       turn: this.turn,
+      turnCycle: this.turnCycle,
       turnStage: this.turnStage,
     }
 
@@ -334,6 +337,7 @@ class Satan {
     const currentIndex = sortedPlayerIds.indexOf(this.turn)
     if(currentIndex === -1 || !playerIds[currentIndex + 1]) { // there is no turn right now or the current turn is the last player
       this.turn = firstJoiner
+      this.turnCycle++
     }
     else {
       this.turn = playerIds[currentIndex + 1]

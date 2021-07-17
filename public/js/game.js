@@ -54,12 +54,7 @@ socket.on("game_update", gData => {
       document.getElementById("inv-list").innerHTML = `Settlements: ${currentGameData.me.inventory.settlements}, Roads: ${currentGameData.me.inventory.roads}, Cities: ${currentGameData.me.inventory.cities}`
 
       
-      if(currentGameData.turn === currentGameData.me.id) {
-        setStatusMessage("It is your turn!")
-      }
-      else {
-        setStatusMessage("Please wait for your turn...")
-      }
+      setStatusMessage(`turn: ${currentGameData.turn}, turn cycle: ${currentGameData.turnCycle}, turn stage ${currentGameData.turnStage}`)
     }
   })
 })
