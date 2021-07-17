@@ -34,10 +34,12 @@ html {
     margin: 1rem;
 }
 .title-satan:hover span {
-    display: none;
+    /* display: none; */
+    font-size: 0;
 }
 .title-satan:hover::after {
     content: "/səˈtæn/";
+    font-size: 2.8vw;
 }
 #home-title-links {
     display: flex;
