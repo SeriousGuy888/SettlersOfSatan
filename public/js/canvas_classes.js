@@ -195,6 +195,18 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
       else ctx.fillText(number.toString(), xPos, yPos)
     }
   }
+
+  getDimensions() {
+    return {
+      width: hexApothem * 2,
+      height: hexApothem * 2,
+    }
+  }
+
+  onClick() {
+    if(!this.isHovered(true)) return
+    console.log(`Clicked on hex ${JSON.stringify(this.coords)}`)
+  }
 }
 canvasClasses.Vertex = class extends canvasClasses.Hoverable {
   constructor(xPos, yPos, data) {
