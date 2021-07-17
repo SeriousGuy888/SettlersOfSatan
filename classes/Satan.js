@@ -43,6 +43,10 @@ class Satan {
     this.turn = null // stores the player id of the currently playing playeur
     this.turnCycle = 0 // how many times every player has been given a turn
     this.turnStage = 0 // turn stage manages whether the dice have been rolled
+    this.setupTurnPlaced = {
+      settlement: 0,
+      road: 0,
+    }
   }
 
   tick() {
@@ -317,8 +321,15 @@ class Satan {
       case "place_settlement":
         if(this.turnStage === 0) break
         if(!vertex) break
-
         if(player.inventory.getSettlements() <= 0) break
+
+        if(this.inSetupTurnCycle()) {
+          if(this.setupTurnPlaced.settlement >= 1) break
+        }
+        else {
+          if(!canAfford(player, "settlement")) break
+        }
+
         if(vertex.getBuilding()?.type !== "settlement") {
           let adjVerts = []
 
@@ -333,6 +344,10 @@ class Satan {
           }
 
           vertex.setBuilding("settlement", playerId)
+
+          if(this.inSetupTurnCycle()) this.setupTurnPlaced.settlement++
+          else                        spendResourcesOn(player, "settlement")
+
           player.inventory.addSettlement(-1)
           adjVerts.forEach(vert => vert.noPlace = true)
         }
@@ -341,29 +356,35 @@ class Satan {
         if(this.turnStage === 0) break
         if(!vertex) break
         if(player.inventory.getCities() <= 0) break
-
         if(!canAfford(player, "city")) break
         
         const existingBuilding = vertex.getBuilding()
         if(!existingBuilding) break
         if(existingBuilding.type === "settlement" && existingBuilding.playerId === playerId) {
           vertex.setBuilding("city", playerId)
-
           spendResourcesOn(player, "city")
-          
+
           player.inventory.addCity(-1)
           player.inventory.addSettlement()
         }
         break
       case "place_road":
         if(this.turnStage === 0) break
-        
         const edge = this.getEdge(coordsArr)
         if(!edge) break
+
+        if(this.inSetupTurnCycle()) {
+          if(this.setupTurnPlaced.road >= 1) break
+        }
+        else {
+          if(!canAfford(player, "road")) break
+        }
         
         if(player.inventory.getRoads() <= 0) break
         if(!edge.getRoad()) {
           edge.setRoad(playerId)
+          if(this.inSetupTurnCycle()) this.setupTurnPlaced.road++
+          else                        spendResourcesOn(player, "road")
           player.inventory.addRoad(-1)
         }
         break
@@ -391,6 +412,11 @@ class Satan {
     }
     else {
       this.turnStage = 0
+      if(this.inSetupTurnCycle()) {
+        this.setupTurnPlaced.settlement = 0
+        this.setupTurnPlaced.road = 0
+        this.turnStage = 1
+      }
 
       lobbies.getLobby(this.lobbyId).printToChat([{
         text: `It is now ${this.players[this.turn].name}'s turn.`,
@@ -400,6 +426,10 @@ class Satan {
       }])
     }
   }
+  inSetupTurnCycle() {
+    return (this.turnCycle <= 2)
+  }
+
 
   rollDice() {
     let dice1 = Math.floor(Math.random() * 6) + 1
