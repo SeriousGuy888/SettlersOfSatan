@@ -153,11 +153,11 @@ canvasFunctions.background = (colour) => {
 }
 
 canvasFunctions.drawPiece = (piece, colour, x, y, w, h) => {
-  if(piece == "settlement") {
-    ctx.fillStyle = colour
-    ctx.lineWidth = 3
-    ctx.strokeStyle = "#fff"
+  ctx.fillStyle = colour
+  ctx.lineWidth = 3
+  ctx.strokeStyle = "#fff"
 
+  if(piece == "settlement") {
     ctx.beginPath()
     ctx.moveTo(x + w / 2, y)
     ctx.lineTo(x, y + h / 2)
@@ -177,11 +177,21 @@ canvasFunctions.drawPiece = (piece, colour, x, y, w, h) => {
   }
 
   else if(piece == "city") {
-
+    ctx.beginPath()
+    ctx.moveTo(x, y + h)
+    ctx.moveTo(x, y + h / 2)
+    ctx.lineTo(x + w / 2, y + h / 2)
+    ctx.lineTo(x + w / 2, y + h * 0.25)
+    ctx.lineTo(x + w * 0.75, y)
+    ctx.lineTo(x + w, y + h * 0.25)
+    ctx.lineTo(x + w, y + h)
+    ctx.lineTo(x, y + h)
+    ctx.closePath()
+    ctx.stroke()
+    ctx.fill()
   }
 
-  else if(piece == "road"){
-    ctx.fillStyle = colour
+  else if(piece == "road") {
     ctx.beginPath()
     ctx.fillRect(x, y, 32, 32/3)
     ctx.fill()
