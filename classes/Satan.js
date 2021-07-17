@@ -214,12 +214,9 @@ class Satan {
       for(let hex of row){
         if(hex && (hex.number == 8 || hex.number == 6)){
 
-          console.log("i bea a red hex")
-
           let needToMoveHex = false
 
           for(let adjacentHex of hex.getAdjacentHexes()) {
-            console.log(adjacentHex)
             if(this.board[adjacentHex.y][adjacentHex.x] && [8, 6].includes(this.board[adjacentHex.y][adjacentHex.x].number)) {
                 needToMoveHex = true
                 break
@@ -227,7 +224,6 @@ class Satan {
           }
           
           while(needToMoveHex){
-            console.log("moving hex...")
             let randomRowIndex = Math.floor(Math.random() * this.board.length)
             let randomHexIndex = Math.floor(Math.random() * this.board[randomRowIndex].length)
             let randomHex = this.board[randomRowIndex][randomHexIndex]
@@ -238,7 +234,6 @@ class Satan {
               for(let adjacentHex of randomHex.getAdjacentHexes()) {
                 if(this.board[adjacentHex.y][adjacentHex.x] && [8, 6].includes(this.board[adjacentHex.y][adjacentHex.x].number)) {
                   moveHex = null
-                  console.log("moveHex beas null")
                 }
               }
               if(moveHex){
@@ -395,7 +390,6 @@ class Satan {
         if(resource && hex.number == number) player.resources[resource]++
       }
     }
-
   }
 
 }
