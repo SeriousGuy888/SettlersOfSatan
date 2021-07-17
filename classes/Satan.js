@@ -387,7 +387,14 @@ class Satan {
         const hex = this.board[hexCoords.y][hexCoords.x]
         const resource = hexTypesResources[hex.resource]
 
-        if(resource && hex.number == number) player.resources[resource]++
+        if(resource && hex.number === number) {
+          if(building.type === "city") {
+            player.resources[resource] += 2
+          }
+          else {
+            player.resources[resource]++
+          }
+        }
       }
     }
   }
