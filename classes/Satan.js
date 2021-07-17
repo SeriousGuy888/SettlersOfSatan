@@ -341,11 +341,16 @@ class Satan {
         if(this.turnStage === 0) break
         if(!vertex) break
         if(player.inventory.getCities() <= 0) break
+
+        if(!canAfford(player, "city")) break
         
         const existingBuilding = vertex.getBuilding()
         if(!existingBuilding) break
         if(existingBuilding.type === "settlement" && existingBuilding.playerId === playerId) {
           vertex.setBuilding("city", playerId)
+
+          spendResourcesOn(player, "city")
+          
           player.inventory.addCity(-1)
         }
         break
