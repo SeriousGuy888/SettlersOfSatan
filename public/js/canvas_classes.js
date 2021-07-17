@@ -176,8 +176,8 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
     ctx.fill()
   
     if(this.robber) {
-      let robberWidth = hexRadius / 4
-      let robberHeight = hexRadius / 2
+      let robberWidth = hexRadius / 3
+      let robberHeight = hexRadius / 1.5
       canvasFunctions.drawRobber(xPos - robberWidth / 2, yPos - robberHeight / 2, robberWidth, robberHeight)
     }
     else if(number) { // do not display the hex's number if the hex has the robber
