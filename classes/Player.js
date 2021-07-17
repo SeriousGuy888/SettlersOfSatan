@@ -7,7 +7,7 @@ class Player {
     this.colour = colour
     this.joinTimestamp = joinTimestamp
     this.disconnected = false
-    this.inventory = new Inventory(2, 0, 2)
+    this.inventory = new Inventory(5, 4, 15)
     this.resources = {
       bricks: 0,
       lumber: 0,
