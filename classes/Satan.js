@@ -270,9 +270,39 @@ class Satan {
 
     const coords = actionData.coords
     const coordsArr = actionData.coordsArr
-
     const vertex = this.getVertex(coords)
     const player = this.getPlayer(playerId)
+
+    const buildingCosts = {
+      road: {
+        bricks: 1,
+        lumber: 1,
+      },
+      settlement: {
+        bricks: 1,
+        lumber: 1,
+        wheat: 1,
+        wool: 1,
+      },
+      city: {
+        wheat: 2,
+        ore: 3,
+      },
+    }
+    const canAfford = (p, item) => {
+      const playerResources = p.resources
+      const cost = buildingCosts[item]
+      if(!playerResources || !cost) return false
+
+      return Object.keys(cost).every(resource => playerResources[resource] >= cost[resource])
+    }
+    const spendResourcesOn = (p, item) => {
+      const playerResources = p.resources
+      const cost = buildingCosts[item]
+      if(!playerResources || !cost) return false
+
+      Object.keys(cost).forEach(resource => playerResources[resource] -= cost[resource])
+    }
 
     switch(action) {
       case "roll_dice":
@@ -311,12 +341,18 @@ class Satan {
         if(this.turnStage === 0) break
         if(!vertex) break
         if(player.inventory.getCities() <= 0) break
+
+        if(!canAfford(player, "city")) break
         
         const existingBuilding = vertex.getBuilding()
         if(!existingBuilding) break
         if(existingBuilding.type === "settlement" && existingBuilding.playerId === playerId) {
           vertex.setBuilding("city", playerId)
+
+          spendResourcesOn(player, "city")
+          
           player.inventory.addCity(-1)
+          player.inventory.addSettlement()
         }
         break
       case "place_road":
