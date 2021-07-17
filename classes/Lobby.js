@@ -53,14 +53,16 @@ class Lobby {
   join(userId) {
     if(this.hasUser(userId)) return
 
+    const user = users.getUser(userId)
     this.users[userId] = {
-      name: users.getUser(userId).name,
+      name: user.name,
       joinTimestamp: Date.now(),
       playerId: `${Date.now()}${Math.round(Math.random() * 1000).toString().padStart(3, "0")}`,
+      userId: user.id,
     }
 
     this.printToChat([{
-      text: `${users.getUser(userId).getName()} joined the lobby`,
+      text: `${user.getName()} joined the lobby`,
       style: { colour: "blue" }
     }])
 
@@ -259,7 +261,7 @@ class Lobby {
       this.game = game
       for(const i in this.users) {
         const user = this.users[i]
-        this.game.setPlayer(user.playerId, new Player(user.playerId, user.name, user.colour, user.joinTimestamp))
+        this.game.setPlayer(user.playerId, new Player(user.playerId, user))
       }
     }
 
