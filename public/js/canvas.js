@@ -199,6 +199,12 @@ canvasFunctions.drawPiece = (piece, colour, x, y, w, h) => {
   }
 }
 
+canvasFunctions.drawRobber = (x, y, w, h) => {
+  let robberImg = new Image()
+  robberImg.src = "/images/robber.png"
+  ctx.drawImage(robberImg, x, y, w, h);
+}
+
 canvasFunctions.getPlayer = (playerId) => {
   return currentGameData.players[playerId] || null
 }
