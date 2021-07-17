@@ -82,6 +82,7 @@ class Satan {
   }
 
   getVertex(coords) {
+    if(coords == undefined || coords.x == undefined || coords.y == undefined || coords.v == undefined) return null
     return this.vertexes.filter(e => e.coords.x === coords.x && e.coords.y === coords.y && e.coords.v === coords.v)[0]
   }
 
@@ -260,6 +261,7 @@ class Satan {
     const coords = actionData.coords
     const coordsArr = actionData.coordsArr
 
+    const vertex = this.getVertex(coords)
     const player = this.getPlayer(playerId)
 
     switch(action) {
@@ -274,8 +276,6 @@ class Satan {
         break
       case "place_settlement":
         if(this.turnStage === 0) break
-
-        const vertex = this.getVertex(coords)
         if(!vertex) break
 
         if(player.inventory.getSettlements() <= 0) break
@@ -295,6 +295,18 @@ class Satan {
           vertex.setBuilding("settlement", playerId)
           player.inventory.addSettlement(-1)
           adjVerts.forEach(vert => vert.noPlace = true)
+        }
+        break
+      case "place_city":
+        if(this.turnStage === 0) break
+        if(!vertex) break
+        if(player.inventory.getCities() <= 0) break
+        
+        const existingBuilding = vertex.getBuilding()
+        if(!existingBuilding) break
+        if(existingBuilding.type === "settlement" && existingBuilding.playerId === playerId) {
+          vertex.setBuilding("city", playerId)
+          player.inventory.addCity(-1)
         }
         break
       case "place_road":
