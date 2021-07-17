@@ -91,13 +91,23 @@
   word-wrap: anywhere;
 }
 
-#lobby-chat-messages div {
+#lobby-chat-messages > div {
   margin: 0;
   padding: 1% 2.5%;
 }
-#lobby-chat-messages div p {
+#lobby-chat-messages > div > .chat-message-content > p {
   margin: 0;
   padding: 0;
+}
+#lobby-chat-messages > div > .chat-message-content > .chat-message-dice {
+  display: flex;
+  flex-direction: row;
+  gap: 0.25em;
+  margin-top: 0.25em;
+}
+#lobby-chat-messages > div > .chat-message-content > .chat-message-dice > img {
+  width: 2.5em;
+  height: 2.5em;
 }
 
 #lobby-chat-messages > div:nth-of-type(odd) {

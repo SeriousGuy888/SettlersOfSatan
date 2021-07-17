@@ -437,7 +437,8 @@ class Satan {
     let number = dice1 + dice2
 
     lobbies.getLobby(this.lobbyId).printToChat([{
-      text: `${this.players[this.turn].name} rolled ${dice1}+${dice2} = ${number}`,
+      text: `${this.players[this.turn].name} rolled ${number}`,
+      dice: [dice1, dice2],
       style: {
         colour: "purple",
       },

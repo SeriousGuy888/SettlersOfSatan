@@ -5,18 +5,40 @@ const lobbyChatSendButton = document.querySelector("#lobby-chat-send-button")
 
 const scrollChatToBottom = () => lobbyChatMessagesDiv.scrollTop = lobbyChatMessagesDiv.scrollHeight
 const parseChatLine = (line) => {
-  const chatMessageContentLine = document.createElement("p")
+  const content = document.createElement("div")
+  content.className = "chat-message-content"
+
   if(typeof line === "object") {
-    if(!line.text) return
-    chatMessageContentLine.textContent = line.text
-    if(line.style) {
-      chatMessageContentLine.style["font-weight"] = line.style?.bold ? "bold" : "normal"
-      chatMessageContentLine.style["font-style"] = line.style?.italic ? "italic" : "normal"
-      chatMessageContentLine.style.color = line.style?.colour
+    const contentP = document.createElement("p")
+    if(line.text) {
+      contentP.textContent = line.text
+      if(line.style) {
+        contentP.style["font-weight"] = line.style?.bold ? "bold" : "normal"
+        contentP.style["font-style"] = line.style?.italic ? "italic" : "normal"
+        contentP.style.color = line.style?.colour
+      }
+      content.appendChild(contentP)
+    }
+    if(line.dice) {
+      const contentDice = document.createElement("div")
+      contentDice.classList = "chat-message-dice"
+      
+      for(const num of line.dice) {
+        const imgElem = document.createElement("img")
+        imgElem.src = `/images/dice/${num}.svg`
+
+        contentDice.appendChild(imgElem)
+      }
+      content.appendChild(contentDice)
     }
   }
-  else chatMessageContentLine.textContent = line
-  return chatMessageContentLine
+  else {
+    const contentP = document.createElement("p")
+    contentP.textContent = line
+    content.appendChild(contentP)
+  }
+
+  return content
 }
 const printToChat = (lines) => {
   const chatMessageDiv = document.createElement("div")
