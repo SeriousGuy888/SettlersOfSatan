@@ -201,7 +201,7 @@ canvasFunctions.drawPiece = (piece, colour, x, y, w, h) => {
 
 canvasFunctions.drawRobber = (x, y, w, h) => {
   let robberImg = new Image()
-  robberImg.src = "/images/robber.png"
+  robberImg.src = "/images/glowing_robber.png"
   ctx.drawImage(robberImg, x, y, w, h);
 }
 
