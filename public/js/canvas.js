@@ -199,10 +199,21 @@ canvasFunctions.drawPiece = (piece, colour, x, y, w, h) => {
   }
 }
 
+var robberImgSrc = "/images/robber.png"
+
 canvasFunctions.drawRobber = (x, y, w, h) => {
   let robberImg = new Image()
-  robberImg.src = "/images/glowing_robber.png"
+  robberImg.src = robberImgSrc
   ctx.drawImage(robberImg, x, y, w, h);
+}
+
+canvasFunctions.changeRobberAppearance = (robbing) => {
+  if(robbing && currentGameData.turn === currentGameData.me.id) {
+    robberImgSrc = "/images/glowing_robber.png"
+  }
+  else {
+    robberImgSrc = "/images/robber.png"
+  }
 }
 
 canvasFunctions.getPlayer = (playerId) => {

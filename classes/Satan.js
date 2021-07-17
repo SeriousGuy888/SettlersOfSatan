@@ -413,26 +413,36 @@ class Satan {
       },
     }])
 
-    for(const vertex of this.vertexes) {
-      const building = vertex.getBuilding()
-      if(!building) continue
+    if (number == 7) {
+      moveRobber()
+    }
 
-      const adjacentHexes = vertex.getAdjacentHexes()
-      const player = this.getPlayer(building.playerId)
-      for(const hexCoords of adjacentHexes) {
-        const hex = this.board[hexCoords.y][hexCoords.x]
-        const resource = hexTypesResources[hex.resource]
+    else {
+      for(const vertex of this.vertexes) {
+        const building = vertex.getBuilding()
+        if(!building) continue
 
-        if(resource && hex.number === number) {
-          if(building.type === "city") {
-            player.resources[resource] += 2
-          }
-          else {
-            player.resources[resource]++
+        const adjacentHexes = vertex.getAdjacentHexes()
+        const player = this.getPlayer(building.playerId)
+        for(const hexCoords of adjacentHexes) {
+          const hex = this.board[hexCoords.y][hexCoords.x]
+          const resource = hexTypesResources[hex.resource]
+
+          if(resource && hex.number === number) {
+            if(building.type === "city") {
+              player.resources[resource] += 2
+            }
+            else {
+              player.resources[resource]++
+            }
           }
         }
       }
     }
+  }
+
+  moveRobber() {
+    
   }
 
 }
