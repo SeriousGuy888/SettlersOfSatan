@@ -352,6 +352,7 @@ class Satan {
           spendResourcesOn(player, "city")
           
           player.inventory.addCity(-1)
+          player.inventory.addSettlement()
         }
         break
       case "place_road":
