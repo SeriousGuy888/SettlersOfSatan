@@ -444,7 +444,7 @@ class Satan {
     }])
 
     if (number == 7) {
-      moveRobber()
+      this.moveRobber()
     }
 
     else {
@@ -472,7 +472,7 @@ class Satan {
   }
 
   moveRobber() {
-    
+    // canvasFunctions.changeRobberAppearance(true)
   }
 
 }
