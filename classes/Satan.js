@@ -344,11 +344,11 @@ class Satan {
         if(player.id !== this.turn) break
         if(this.inSetupTurnCycle()) {
           if(!this.setupTurnPlaced.settlement) {
-            printChatErr("You must place a settlement before ending your turn.")
+            printChatErr("This is a setup turn. You must place a settlement before ending your turn.")
             break
           }
           if(!this.setupTurnPlaced.road) {
-            printChatErr("You must place a road before ending your turn.")
+            printChatErr("This is a setup turn. You must place a road before ending your turn.")
             break
           }
         }
@@ -361,7 +361,7 @@ class Satan {
 
         if(this.inSetupTurnCycle()) {
           if(this.setupTurnPlaced.settlement) {
-            printChatErr("You have already placed a settlement this turn.")
+            printChatErr("This is a setup turn. You have already placed a settlement this turn.")
             break
           }
         }
