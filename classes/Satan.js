@@ -424,6 +424,26 @@ class Satan {
             break
           }
         }
+
+        const vertexesConnectedToEdge = coordsArr.map(e => this.getVertex(e))
+        const connectedToOwnedVertex = vertexesConnectedToEdge.some(vert => vert.building && vert.building.playerId === playerId)
+        let connectedToOwnedEdge = false
+
+        for(const vert of vertexesConnectedToEdge) {
+          const adjacentVertexes = vert.getAdjacentVertexes().map(v => this.getVertex(v))
+          const adjacentEdges = adjacentVertexes.map(vert2 => {
+            if(!vert || !vert2) return
+            return this.getEdge([vert.coords, vert2.coords])
+          })
+          connectedToOwnedEdge = adjacentEdges.some(loopEdge => loopEdge.road === playerId)
+          if(connectedToOwnedEdge) break
+        }
+
+        // if the road is neither connected to an owned settlement nor connected to an owned edge
+        if(!(connectedToOwnedVertex || connectedToOwnedEdge)) {
+          printChatErr("You can only place a road where it is connected to a settlement, city, or road that you own.")
+          break
+        }
         
         if(player.inventory.getRoads() <= 0) break
         if(!edge.getRoad()) {
