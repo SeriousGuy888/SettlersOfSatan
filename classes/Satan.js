@@ -335,6 +335,17 @@ class Satan {
         break
       case "end_turn":
         if(player.id !== this.turn) break
+        if(this.inSetupTurnCycle()) {
+          if(this.setupTurnPlaced.settlement < 1) {
+            printChatErr("You must place a settlement before ending your turn.")
+            break
+          }
+          if(this.setupTurnPlaced.road < 1) {
+            printChatErr("You must place a road before ending your turn.")
+            break
+          }
+        }
+
         this.nextTurn()
         break
       case "place_settlement":
