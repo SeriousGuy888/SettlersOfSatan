@@ -80,7 +80,9 @@ joinLobbyButton.addEventListener("click", () => {
 })
 
 leaveLobbyButton.addEventListener("click", () => {
-  socket.emit("leave_lobby", {}, socketCallback)
+  if(confirm("Are you sure you want to leave the lobby?")) {
+    socket.emit("leave_lobby", {}, socketCallback)
+  }
 })
 
 openLobbiesRefreshButton.addEventListener("click", () => {
