@@ -28,7 +28,7 @@ html {
     display: grid;
     text-align: center;
 
-    --title-height: 3vw;
+    --title-height: max(3vw, 1.3em);
 }
 #home-title-top {
   display: flex;
@@ -46,12 +46,11 @@ html {
     margin: 1rem;
 }
 .title-satan:hover {
-    /* display: none; */
     font-size: 0;
 }
 .title-satan:hover::after {
     content: "/səˈtæn/";
-    font-size: calc(var(--title-height) - 0.2vw);
+    font-size: calc(var(--title-height) * 0.9);
 }
 #home-title-links {
     display: flex;
