@@ -149,9 +149,9 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
     }
   
     const resourceColours = {
-      "mud": "#753d00",
-      "forest": "#0e5700",
-      "mountain": "#333333",
+      "mud": "#8D662B",
+      "forest": "#00630d",
+      "mountain": "#4d4b51",
       "farm": "#fef177",
       "pasture": "#94ff8f",
       "desert": "#a39d5d"
