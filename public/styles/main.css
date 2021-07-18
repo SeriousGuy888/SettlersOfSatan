@@ -27,19 +27,31 @@ html {
 #home-title-container {
     display: grid;
     text-align: center;
+
+    --title-height: 3vw;
+}
+#home-title-top {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+}
+#home-title-logo {
+    height: calc(var(--title-height) * 1.2);
 }
 #home-title {
     font-weight: 900;
-    font-size: 3vw;
+    font-size: var(--title-height);
     margin: 1rem;
 }
-.title-satan:hover span {
+.title-satan:hover {
     /* display: none; */
     font-size: 0;
 }
 .title-satan:hover::after {
     content: "/səˈtæn/";
-    font-size: 2.8vw;
+    font-size: calc(var(--title-height) - 0.2vw);
 }
 #home-title-links {
     display: flex;
