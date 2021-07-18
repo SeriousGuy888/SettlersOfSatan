@@ -107,6 +107,10 @@ class Satan {
 
   setUpBoard(players){
     this.board = []
+    this.vertexes = []
+    this.edges = []
+    this.graph = new Graph()
+    
     let hexTypeCounts = {
       mud: 3,
       forest: 4,
