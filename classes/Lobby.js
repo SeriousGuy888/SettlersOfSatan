@@ -149,25 +149,41 @@ class Lobby {
     if(content.startsWith("/")) {
       content = content.substring(1)
       const args = content.split(" ")
-      const cmd = args.splice(0, 1)[0]
+      const cmd = args.splice(0, 1)[0].toLowerCase()
       
       const errChatStyle = { colour: "red", italic: true }
+      const printChatErr = (msg) => this.printToUserChat(user.id, [{
+        text: msg,
+        style: errChatStyle
+      }])
 
       const hostId = this.getHost()
       if(hostId !== user.id) {
-        this.printToUserChat(user.id, [{
-          text: "You are not allowed to use commands!",
-          style: errChatStyle
-        }])
+        printChatErr("Only the host is allowed to use commands!")
         return
       }
 
-      if(cmd === "kick") this.kick(args[0])
-      else {
-        this.printToUserChat(user.id, [{
-          text: "Invalid command!",
-          style: errChatStyle
-        }])
+      switch(cmd) {
+        case "kick":
+          this.kick(args[0])
+          break
+        case "reshuffle":
+          if(!this.game) {
+            printChatErr("Use this command on the first turn when the game has started to reshuffle the board. Note that this command cannot be used after the first turn has ended.")
+            break
+          }
+          if(this.game.turnCycle !== 1) printChatErr("This command can only be used on the first turn.")
+          else {
+            this.game.setUpBoard(Object.keys(this.game.players).length)
+            this.printToChat([{
+              text: `The host, ${user.name}, has reshuffled the board.`,
+              style: { colour: "green" }
+            }])
+          }
+          break
+        default:
+          printChatErr("Invalid command.")
+          break
       }
     }
     else {
