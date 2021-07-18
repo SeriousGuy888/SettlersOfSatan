@@ -93,12 +93,11 @@ class Satan {
     return this.vertexes.filter(e => e.coords.x === coords.x && e.coords.y === coords.y && e.coords.v === coords.v)[0]
   }
 
-  getEdge(coordsArr) {
+  getEdge(coordsArr) { // i dont know how efficient this is but it does work without requiring the coords to be in a specific order
     return this.edges.filter(e => {
-      return ( // im not fixing this dumb code -billzo
-        e.coordsArr[0].x === coordsArr[0].x && e.coordsArr[0].y === coordsArr[0].y && e.coordsArr[0].v === coordsArr[0].v &&
-        e.coordsArr[1].x === coordsArr[1].x && e.coordsArr[1].y === coordsArr[1].y && e.coordsArr[1].v === coordsArr[1].v
-      )
+      const coordsArrStringified = coordsArr.map(f => JSON.stringify(f))
+      const elemCoordsArrStringified = e.coordsArr.map(f => JSON.stringify(f))
+      return elemCoordsArrStringified.every(f => coordsArrStringified.includes(f))
     })[0]
   }
 
