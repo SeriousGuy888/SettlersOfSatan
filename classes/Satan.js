@@ -321,6 +321,10 @@ class Satan {
     }
 
     if(action.startsWith("place_")) {
+      if(player.id !== this.turn) {
+        printChatErr("It is not your turn.")
+        return
+      }
       if(this.turnStage === 0) {
         printChatErr("You need to roll the dice before doing this.")
         return
