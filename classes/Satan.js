@@ -440,7 +440,7 @@ class Satan {
             if(!vert || !vert2) return
             return this.getEdge([vert.coords, vert2.coords])
           })
-          connectedToOwnedEdge = adjacentEdges.some(loopEdge => loopEdge.road === playerId)
+          connectedToOwnedEdge = adjacentEdges.some(loopEdge => loopEdge?.road === playerId)
           if(connectedToOwnedEdge) break
         }
 
