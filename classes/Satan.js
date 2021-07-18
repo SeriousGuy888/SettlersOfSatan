@@ -527,8 +527,10 @@ class Satan {
         const player = this.getPlayer(building.playerId)
         for(const hexCoords of adjacentHexes) {
           const hex = this.board[hexCoords.y][hexCoords.x]
-          const resource = hexTypesResources[hex.resource]
 
+          if(hex.robber) continue
+
+          const resource = hexTypesResources[hex.resource]
           if(resource && hex.number === number) {
             if(building.type === "city") {
               player.resources[resource] += 2
