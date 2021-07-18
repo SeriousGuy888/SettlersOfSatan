@@ -369,20 +369,25 @@ class Satan {
         }
 
         if(vertex.getBuilding()?.type !== "settlement") {
-          let adjVerts = []
+          const adjVerts = []
+          const adjEdges = []
 
           for(let adjVertCoords of vertex.getAdjacentVertexes()) {
             const adjVert = this.getVertex(adjVertCoords)
             if(!adjVert) continue
 
-            // Distance Rule: a settlement may only be placed where all adjacent intersections are vacant
-            if(adjVert.getBuilding()) break
+            if(adjVert.getBuilding()) break // distance rule
 
             adjVerts.push(adjVert)
+            adjEdges.push(this.getEdge([vertex.coords, adjVertCoords]))
+          }
+
+          if(!this.inSetupTurnCycle() && adjEdges.every(loopEdge => loopEdge.road !== playerId)) {
+            printChatErr("Settlements must be placed connected to a road that you own.")
+            break
           }
 
           vertex.setBuilding("settlement", playerId)
-
           if(this.inSetupTurnCycle()) this.setupTurnPlaced.settlement++
           else                        spendResourcesOn(player, "settlement")
 
