@@ -44,8 +44,8 @@ class Satan {
     this.turnCycle = 0 // how many times every player has been given a turn
     this.turnStage = 0 // turn stage manages whether the dice have been rolled
     this.setupTurnPlaced = {
-      settlement: 0,
-      road: 0,
+      settlement: null,
+      road: null,
     }
   }
 
@@ -110,7 +110,7 @@ class Satan {
     this.vertexes = []
     this.edges = []
     this.graph = new Graph()
-    
+
     let hexTypeCounts = {
       mud: 3,
       forest: 4,
@@ -343,11 +343,11 @@ class Satan {
       case "end_turn":
         if(player.id !== this.turn) break
         if(this.inSetupTurnCycle()) {
-          if(this.setupTurnPlaced.settlement < 1) {
+          if(!this.setupTurnPlaced.settlement) {
             printChatErr("You must place a settlement before ending your turn.")
             break
           }
-          if(this.setupTurnPlaced.road < 1) {
+          if(!this.setupTurnPlaced.road) {
             printChatErr("You must place a road before ending your turn.")
             break
           }
@@ -360,7 +360,7 @@ class Satan {
         if(player.inventory.getSettlements() <= 0) break
 
         if(this.inSetupTurnCycle()) {
-          if(this.setupTurnPlaced.settlement >= 1) {
+          if(this.setupTurnPlaced.settlement) {
             printChatErr("You have already placed a settlement this turn.")
             break
           }
@@ -392,7 +392,7 @@ class Satan {
           }
 
           vertex.setBuilding("settlement", playerId)
-          if(this.inSetupTurnCycle()) this.setupTurnPlaced.settlement++
+          if(this.inSetupTurnCycle()) this.setupTurnPlaced.settlement = vertex.coords
           else                        spendResourcesOn(player, "settlement")
 
           player.inventory.addSettlement(-1)
@@ -422,8 +422,16 @@ class Satan {
         if(!edge) break
 
         if(this.inSetupTurnCycle()) {
-          if(this.setupTurnPlaced.road >= 1) {
-            printChatErr("You have already placed a road this turn.")
+          if(this.setupTurnPlaced.road) {
+            printChatErr("This is a setup turn. You have already placed a road this turn.")
+            break
+          }
+          if(!this.setupTurnPlaced.settlement) {
+            printChatErr("This is a setup turn. You must place a settlement first.")
+            break
+          }
+          if(!coordsArr.map(e => JSON.stringify(e)).includes(JSON.stringify(this.setupTurnPlaced.settlement))) {
+            printChatErr("This is a setup turn. Your road must be connected to the settlement you placed this turn.")
             break
           }
         }
@@ -457,7 +465,7 @@ class Satan {
         if(player.inventory.getRoads() <= 0) break
         if(!edge.getRoad()) {
           edge.setRoad(playerId)
-          if(this.inSetupTurnCycle()) this.setupTurnPlaced.road++
+          if(this.inSetupTurnCycle()) this.setupTurnPlaced.road = edge.coordsArr
           else                        spendResourcesOn(player, "road")
           player.inventory.addRoad(-1)
         }
@@ -487,8 +495,8 @@ class Satan {
     else {
       this.turnStage = 0
       if(this.inSetupTurnCycle()) {
-        this.setupTurnPlaced.settlement = 0
-        this.setupTurnPlaced.road = 0
+        this.setupTurnPlaced.settlement = null
+        this.setupTurnPlaced.road = null
         this.turnStage = 1
       }
 
