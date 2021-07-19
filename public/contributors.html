@@ -88,7 +88,10 @@
               }
               else {
                 const lineP = document.createElement("p")
-                lineP.textContent = jsonData.lang[creditsLang]?.[text] || text
+
+                const contributionEmoji = jsonData.lang.emojis[text]
+                const langText = jsonData.lang[creditsLang]?.[text] || text
+                lineP.textContent = `${contributionEmoji ? contributionEmoji + " " : ""}${langText}`
                 creditSection.appendChild(lineP)
               }
             }

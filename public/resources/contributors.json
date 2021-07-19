@@ -29,6 +29,11 @@
     }
   ],
   "lang": {
+    "emojis": {
+      "front_end": "🌐",
+      "back_end": "💻",
+      "art": "🎨"
+    },
     "english": {
       "front_end": "Web Design",
       "back_end": "Server Backend",
