@@ -4,14 +4,16 @@
       "name": "Billzo",
       "contributions": [
         "front_end",
-        "back_end"
+        "back_end",
+        "art"
       ]
     },
     {
       "name": "Liam",
       "contributions": [
         "front_end",
-        "back_end"
+        "back_end",
+        "catan"
       ]
     },
     {
@@ -32,21 +34,24 @@
     "emojis": {
       "front_end": "🌐",
       "back_end": "💻",
-      "art": "🎨"
+      "art": "🎨",
+      "catan": "🧾"
     },
     "english": {
       "front_end": "Web Design",
       "back_end": "Server Backend",
       "art": "Art",
       "participation": "Emotional Support",
-      "distract_liam": "Distracting Liam"
+      "distract_liam": "Distracting Liam",
+      "catan": "Knowing the Rules of Catan"
     },
     "billzonian": {
       "front_end": "Web Design",
       "back_end": "Serveur Bakkend",
       "art": "Vandalism",
       "participation": "Emotional Assistion",
-      "distract_liam": "Distrakting Liam"
+      "distract_liam": "Distrakting Liam",
+      "catan": "Kogging Hautu Play Catan"
     }
   }
 }
