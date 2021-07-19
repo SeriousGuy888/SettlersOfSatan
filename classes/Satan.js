@@ -4,6 +4,7 @@ const Edge = require("./Edge.js")
 const Graph = require("./Graph.js")
 const lobbies = require("../server/lobbies.js")
 const users = require("../server/users.js")
+const { Socket } = require("socket.io")
 
 /*
   0 = no hex
@@ -472,7 +473,9 @@ class Satan {
   }
 
   moveRobber() {
-    // canvasFunctions.changeRobberAppearance(true)
+    // socket.emit("move_robber", {}, (err, data) => {
+    //   if(err) notifyUser(err)
+    // })
   }
 
 }

@@ -1,3 +1,5 @@
+// const { Socket } = require("socket.io")
+
 const gameCanvas = document.querySelector("#game-canvas")
 /**
  * @type {RenderingContext} ctx
@@ -200,6 +202,10 @@ canvasFunctions.drawPiece = (piece, colour, x, y, w, h) => {
 }
 
 var robberImgSrc = "/images/robber.png"
+
+// socket.on("move_robber", (data, callback) => {
+  // canvasFunctions.changeRobberAppearance(true)
+// })
 
 canvasFunctions.drawRobber = (x, y, w, h) => {
   let robberImg = new Image()
