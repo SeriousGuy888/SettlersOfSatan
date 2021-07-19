@@ -29,6 +29,7 @@ const refreshTurnControls = () => {
 
     turnButton.disabled = true
     turnButton.textContent = "It is not your turn..."
+    tradeButton.disabled = true
   }
   else {
     turnButton.disabled = false
@@ -40,7 +41,7 @@ const refreshTurnControls = () => {
     }
     else {
       for(let i in gameControls) gameControls[i].disabled = false
-      tradeButton.disabled = false
+      tradeButton.disabled = (currentGameData.turnCycle <= 2) // disable trade during setup turns
       turnButton.textContent = "End Turn"
     }
   }
