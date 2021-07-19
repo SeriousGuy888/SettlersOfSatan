@@ -16,7 +16,7 @@ module.exports = (app) => {
   app.use(express.static("public"))
   
   app.get("/credits", (req, res) => res.redirect("/contributors"))
-  app.get("/contributors", (req, res) => res.sendFile(path.join(publicDir, "/contributors.html")))
+  app.get("/:oeuf(contributors|kontributeurs)*", (req, res) => res.sendFile(path.join(publicDir, "/contributors.html")))
 
   app.use("/", serverStats)
 }

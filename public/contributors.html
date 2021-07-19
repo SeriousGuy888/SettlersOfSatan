@@ -13,11 +13,16 @@
         text-align: center;
       }
 
+      #contributors-page-title {
+        margin-bottom: 0;
+      }
+
       #credits-container {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         gap: 2em;
+        margin: 2em;
       }
 
       .credit-section {
@@ -30,39 +35,62 @@
       .credit-section > p {
         margin: 0.1em;
       }
-      .credit-section > p.credit-section-title {
-        font-size: 1.2em;
-        font-weight: bold;
+      .credit-section > h3 {
+        margin: 0.1em;
+        font-size: 1.4em;
       }
     </style>
   </head>
   <body>
     <main class="center">
-      <h1>Contributors</h1>
-      <div id="credits-container">
-        
-      </div>
+      <h1 id="contributors-page-title">Contributors</h1>
+      <a id="switch-lang-link" href="/kontributeurs">Switch to Billzonian</a>
+
+
+      <div id="credits-container"></div>
+      <script>
+        let creditsLang
+        if(window.location.pathname.endsWith("contributors")) creditsLang = "english"
+        if(window.location.pathname.endsWith("kontributeurs")) creditsLang = "billzonian"
+
+        if(creditsLang === "billzonian") {
+          document.querySelector("#contributors-page-title").textContent = "Kontributeurs"
+
+          const switchLangLink = document.querySelector("#switch-lang-link")
+          switchLangLink.href = "/contributors"
+          switchLangLink.textContent = "Switch to English"
+        }
+      </script>
       <script defer>
         (async () => {
           const creditsContainer = document.querySelector("#credits-container")
 
-          const response = await fetch("/resources/contributors.txt")
-          const text = await response.text()
-          const sections = text.split(/\n\s*\n/)
+          const response = await fetch("/resources/contributors.json")
+          const jsonData = await response.json()
+          const contributorsArray = jsonData.contributors
 
-          for(let i in sections) {
+          for(let contributor of contributorsArray) {
             const creditSection = document.createElement("div")
             creditSection.classList.add(["credit-section"])
             
-            const sectionLines = sections[i].split("\n")
-            for(let j in sectionLines) {
-              const line = sectionLines[j]
-              
-              const lineP = document.createElement("p")
-              if(j == 0) lineP.classList.add(["credit-section-title"])
+            const sectionLines = []
+            sectionLines.push(contributor.name)
+            contributor.contributions.forEach(e => sectionLines.push(e))
 
-              lineP.textContent = line
-              creditSection.appendChild(lineP)
+            for(let j in sectionLines) {
+              const text = sectionLines[j]
+              
+              if(j == 0) {
+                const lineH = document.createElement("h3")
+                lineH.classList.add(["credit-section-title"])
+                lineH.textContent = text
+                creditSection.appendChild(lineH)
+              }
+              else {
+                const lineP = document.createElement("p")
+                lineP.textContent = jsonData.lang[creditsLang]?.[text] || text
+                creditSection.appendChild(lineP)
+              }
             }
 
             creditsContainer.appendChild(creditSection)
