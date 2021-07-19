@@ -3,7 +3,6 @@ const gameControls = {
   city: document.querySelector("#city-button"),
   road: document.querySelector("#road-button"),
   developmentCard: document.querySelector("#development-card-button"),
-  trade: document.querySelector("#trade-button"),
 }
 
 let holding = null
@@ -22,6 +21,7 @@ gameControls.road.addEventListener("click", () => setHolding("road"))
 
 const turnControls = document.querySelector("#turn-controls")
 const turnButton = document.querySelector("#end-turn-dice-button")
+const tradeButton = document.querySelector("#trade-button")
 
 const refreshTurnControls = () => {
   if(currentGameData.turn !== currentGameData.me.id) {
@@ -34,12 +34,14 @@ const refreshTurnControls = () => {
     turnButton.disabled = false
 
     if(currentGameData.turnStage === 0) {
-      turnButton.textContent = "Roll Dice"
       for(let i in gameControls) gameControls[i].disabled = true
+      tradeButton.disabled = true
+      turnButton.textContent = "Roll Dice"
     }
     else {
-      turnButton.textContent = "End Turn"
       for(let i in gameControls) gameControls[i].disabled = false
+      tradeButton.disabled = false
+      turnButton.textContent = "End Turn"
     }
   }
 }
