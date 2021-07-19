@@ -360,8 +360,6 @@ class Satan {
         break
       case "place_settlement":
         if(!vertex) break
-        if(player.inventory.getSettlements() <= 0) break
-
         if(this.inSetupTurnCycle()) {
           if(this.setupTurnPlaced.settlement) {
             printChatErr("This is a setup turn. You have already placed a settlement this turn.")
@@ -373,6 +371,11 @@ class Satan {
             printChatErr("You cannot afford this.")
             break
           }
+        }
+
+        if(player.inventory.getSettlements() <= 0) {
+          printChatErr("You are out of settlements to place. You will need to upgrade some settlements to cities to get some settlements back.")
+          break
         }
 
         if(vertex.getBuilding()?.type !== "settlement") {
@@ -391,9 +394,12 @@ class Satan {
         break
       case "place_city":
         if(!vertex) break
-        if(player.inventory.getCities() <= 0) break
         if(!canAfford(player, "city")) {
           printChatErr("You cannot afford this.")
+          break
+        }
+        if(player.inventory.getCities() <= 0) {
+          printChatErr("You are out of cities to place.")
           break
         }
         
@@ -433,6 +439,11 @@ class Satan {
           }
         }
 
+        if(player.inventory.getRoads() <= 0) {
+          printChatErr("You are out of roads to place.")
+          break
+        }
+
         const vertexesConnectedToEdge = coordsArr.map(e => this.getVertex(e))
         const connectedToOwnedVertex = vertexesConnectedToEdge.some(vert => vert.building && vert.building.playerId === playerId)
         let connectedToOwnedEdge = false
@@ -453,7 +464,6 @@ class Satan {
           break
         }
         
-        if(player.inventory.getRoads() <= 0) break
         if(!edge.getRoad()) {
           edge.setRoad(playerId)
           if(this.inSetupTurnCycle()) this.setupTurnPlaced.road = edge.coordsArr
