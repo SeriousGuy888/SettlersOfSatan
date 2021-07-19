@@ -222,6 +222,7 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
 
   render() {
     const { xPos, yPos } = this
+    if(!this.data.allowPlacement) return
 
     if(this.data.building) {
       const { playerId, type } = this.data.building
@@ -239,7 +240,7 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
     }
 
     if(holding === "settlement") {
-      if(this.data.noPlace) return
+      if(!this.data.allowPlacement) return
       if(this.data.building) return
 
       drawCircle()
@@ -262,7 +263,7 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
 
     console.log(`Clicked on vertex ${JSON.stringify(this.data.coords)} while holding ${holding}`)
 
-    if(this.data.noPlace) return
+    if(!this.data.allowPlacement) return
     if(!["settlement", "city"].includes(holding)) return
 
 
@@ -324,6 +325,7 @@ canvasClasses.Edge = class extends canvasClasses.Hoverable {
 
     if(holding === "road") {
       if(this.data.road) return
+      if(!this.data.allowPlacement) return
 
       ctx.fillStyle = "#08f8"
       ctx.beginPath()
@@ -338,6 +340,7 @@ canvasClasses.Edge = class extends canvasClasses.Hoverable {
   }
 
   onClick() {
+    if(!this.data.allowPlacement) return
     if(!this.isHovered(true)) return
     if(this.data.road) return
     if(holding !== "road") return

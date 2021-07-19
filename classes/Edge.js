@@ -2,6 +2,7 @@ class Edge {
   constructor(coordsArr) {
     this.coordsArr = coordsArr
     this.road = null
+    this.allowPlacement = false // whether the player whose turn it is is allowed to place anything here
   }
 
   getRoad() {

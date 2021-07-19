@@ -33,18 +33,17 @@ const hexTypesResources = {
 class Satan {
   constructor(lobbyId) {
     this.lobbyId = lobbyId
+    this.players = {}
     
     this.board = []
     this.vertexes = []
     this.edges = []
     this.graph = new Graph()
-    
-    this.players = {}
 
     this.turn = null // stores the player id of the currently playing playeur
     this.turnCycle = 0 // how many times every player has been given a turn
     this.turnStage = 0 // turn stage manages whether the dice have been rolled
-    this.setupTurnPlaced = {
+    this.setupTurnPlaced = { // stores the coordinates of the pieces placed this setup turn
       settlement: null,
       road: null,
     }
@@ -377,21 +376,8 @@ class Satan {
         }
 
         if(vertex.getBuilding()?.type !== "settlement") {
-          const adjVerts = []
-          const adjEdges = []
-
-          for(let adjVertCoords of vertex.getAdjacentVertexes()) {
-            const adjVert = this.getVertex(adjVertCoords)
-            if(!adjVert) continue
-
-            if(adjVert.getBuilding()) break // distance rule
-
-            adjVerts.push(adjVert)
-            adjEdges.push(this.getEdge([vertex.coords, adjVertCoords]))
-          }
-
-          if(!this.inSetupTurnCycle() && adjEdges.every(loopEdge => loopEdge.road !== playerId)) {
-            printChatErr("Settlements must be placed connected to a road that you own.")
+          if(!vertex.allowPlacement) {
+            printChatErr("A settlement must be placed connected to one of your roads and at least two edges from any other settlement.")
             break
           }
 
@@ -400,7 +386,7 @@ class Satan {
           else                        spendResourcesOn(player, "settlement")
 
           player.inventory.addSettlement(-1)
-          adjVerts.forEach(vert => vert.noPlace = true)
+          this.refreshAllowedPlacements()
         }
         break
       case "place_city":
@@ -419,6 +405,7 @@ class Satan {
 
           player.inventory.addCity(-1)
           player.inventory.addSettlement()
+          this.refreshAllowedPlacements()
         }
         break
       case "place_road":
@@ -472,11 +459,33 @@ class Satan {
           if(this.inSetupTurnCycle()) this.setupTurnPlaced.road = edge.coordsArr
           else                        spendResourcesOn(player, "road")
           player.inventory.addRoad(-1)
+          this.refreshAllowedPlacements()
         }
         break
       default:
         return
     }
+  }
+
+  refreshAllowedPlacements() {
+    this.vertexes.forEach(vertex => {
+      vertex.allowPlacement = true
+
+      const adjEdges = []
+      for(let adjVertCoords of vertex.getAdjacentVertexes()) {
+        const adjVert = this.getVertex(adjVertCoords)
+        if(!adjVert) continue
+        if(adjVert.getBuilding()) vertex.allowPlacement = false // distance rule
+        adjEdges.push(this.getEdge([vertex.coords, adjVertCoords]))
+      }
+
+      if(!this.inSetupTurnCycle() && adjEdges.every(loopEdge => loopEdge.road !== this.turn)) {
+        vertex.allowPlacement = false
+      }
+    })
+    this.edges.forEach(edge => {
+      edge.allowPlacement = true // couldnt make it work so im just leaving this here -billzo
+    })
   }
 
   nextTurn() {
@@ -503,6 +512,8 @@ class Satan {
         this.setupTurnPlaced.road = null
         this.turnStage = 1
       }
+
+      this.refreshAllowedPlacements()
 
       lobbies.getLobby(this.lobbyId).printToChat([{
         text: `It is now ${this.players[this.turn].name}'s turn.`,
