@@ -52,7 +52,7 @@ class Satan {
   tick() {
     const lobby = lobbies.getLobby(this.lobbyId)
     
-    if(!this.turn) this.nextTurn()
+    if(!this.turn || this.getPlayer(this.turn).disconnected) this.nextTurn()
 
     let playersPublicData = {}
     for(let i in this.players) {
