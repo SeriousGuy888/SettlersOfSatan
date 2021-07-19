@@ -275,9 +275,8 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
     })
     
     
-
-    holding = null
-    
+    if(currentGameData.turnCycle <= 2) holding = "road"
+    else holding = null
   }
 }
 
