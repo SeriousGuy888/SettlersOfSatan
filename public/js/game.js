@@ -52,7 +52,6 @@ socket.on("game_update", gData => {
       refreshTurnControls()
       
       document.getElementById("inv-list").innerHTML = `Settlements: ${currentGameData.me.inventory.settlements}, Roads: ${currentGameData.me.inventory.roads}, Cities: ${currentGameData.me.inventory.cities}`
-
       
       setStatusMessage(`turn: ${currentGameData.turn}, turn cycle: ${currentGameData.turnCycle}, turn stage ${currentGameData.turnStage}`)
     }

@@ -48,6 +48,8 @@ class Satan {
       settlement: null,
       road: null,
     }
+
+    this.robbing = false
   }
 
   tick() {
@@ -68,6 +70,7 @@ class Satan {
       turn: this.turn,
       turnCycle: this.turnCycle,
       turnStage: this.turnStage,
+      robbing: this.robbing,
     }
 
     if(JSON.stringify(tickData) !== this.prevTickData) {
@@ -532,6 +535,7 @@ class Satan {
     }
 
     else {
+      this.robbing = false
       for(const vertex of this.vertexes) {
         const building = vertex.getBuilding()
         if(!building) continue
@@ -558,9 +562,7 @@ class Satan {
   }
 
   moveRobber() {
-    // socket.emit("move_robber", {}, (err, data) => {
-    //   if(err) notifyUser(err)
-    // })
+    this.robbing = true
   }
 
 }

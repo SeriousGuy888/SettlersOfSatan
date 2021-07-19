@@ -13,6 +13,8 @@ const boardHexes = []
 const boardVertexes = []
 const boardEdges = []
 
+var robberImgSrc = "/images/robber.png"
+
 let mousePos = { x: 0, y: 0 }
 
 // const canvasFullscreenButton = document.querySelector("#canvas-fullscreen")
@@ -125,6 +127,13 @@ canvasFunctions.refreshBoard = () => {
       boardEdges.push(new canvasClasses.Edge(edge.coordsArr, edge))
     }
   }
+
+  if(currentGameData.robbing && currentGameData.turn === currentGameData.me.id) {
+    robberImgSrc = "/images/glowing_robber.png"
+  }
+  else {
+    robberImgSrc = "/images/robber.png"
+  }
 }
 
 
@@ -200,8 +209,6 @@ canvasFunctions.drawPiece = (piece, colour, x, y, w, h) => {
     ctx.stroke()
   }
 }
-
-var robberImgSrc = "/images/robber.png"
 
 // socket.on("move_robber", (data, callback) => {
   // canvasFunctions.changeRobberAppearance(true)
