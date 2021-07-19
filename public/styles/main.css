@@ -160,6 +160,12 @@ html {
     height: 1em;
 }
 
+#lobby-playing {
+    display: flex;
+    flex-direction: column;
+}
 #game-canvas {
     width: 100%;
+    min-width: 350px;
+    justify-self: center;
 }
