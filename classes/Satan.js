@@ -4,6 +4,7 @@ const Edge = require("./Edge.js")
 const Graph = require("./Graph.js")
 const lobbies = require("../server/lobbies.js")
 const users = require("../server/users.js")
+const { Socket } = require("socket.io")
 
 /*
   0 = no hex
@@ -47,6 +48,8 @@ class Satan {
       settlement: null,
       road: null,
     }
+
+    this.robbing = false
   }
 
   tick() {
@@ -67,6 +70,7 @@ class Satan {
       turn: this.turn,
       turnCycle: this.turnCycle,
       turnStage: this.turnStage,
+      robbing: this.robbing,
     }
 
     if(JSON.stringify(tickData) !== this.prevTickData) {
@@ -531,6 +535,7 @@ class Satan {
     }
 
     else {
+      this.robbing = false
       for(const vertex of this.vertexes) {
         const building = vertex.getBuilding()
         if(!building) continue
@@ -557,7 +562,7 @@ class Satan {
   }
 
   moveRobber() {
-    // canvasFunctions.changeRobberAppearance(true)
+    this.robbing = true
   }
 
 }
