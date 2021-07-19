@@ -4,11 +4,12 @@
 
 
 #game-controls {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
   justify-content: center;
-  gap: 1em;
+  gap: 3px;
+}
+.game-control-button {
+  width: 5em;
+  height: 5em;
 }
 
 #inv-list {
