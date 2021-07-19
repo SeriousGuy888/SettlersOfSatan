@@ -1,11 +1,15 @@
 const Inventory = require("./Inventory.js")
 
 class Player {
-  constructor(id, name, colour, joinTimestamp) {
+  constructor(id, data) {
     this.id = id
+
+    const { name, colour, joinTimestamp, userId } = data
     this.name = name
     this.colour = colour
     this.joinTimestamp = joinTimestamp
+    this.userId = userId
+
     this.disconnected = false
     this.inventory = new Inventory(5, 4, 15)
     this.resources = {

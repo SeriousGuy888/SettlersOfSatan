@@ -45,8 +45,8 @@ class Satan {
     this.turnCycle = 0 // how many times every player has been given a turn
     this.turnStage = 0 // turn stage manages whether the dice have been rolled
     this.setupTurnPlaced = {
-      settlement: 0,
-      road: 0,
+      settlement: null,
+      road: null,
     }
   }
 
@@ -94,12 +94,11 @@ class Satan {
     return this.vertexes.filter(e => e.coords.x === coords.x && e.coords.y === coords.y && e.coords.v === coords.v)[0]
   }
 
-  getEdge(coordsArr) {
+  getEdge(coordsArr) { // i dont know how efficient this is but it does work without requiring the coords to be in a specific order
     return this.edges.filter(e => {
-      return ( // im not fixing this dumb code -billzo
-        e.coordsArr[0].x === coordsArr[0].x && e.coordsArr[0].y === coordsArr[0].y && e.coordsArr[0].v === coordsArr[0].v &&
-        e.coordsArr[1].x === coordsArr[1].x && e.coordsArr[1].y === coordsArr[1].y && e.coordsArr[1].v === coordsArr[1].v
-      )
+      const coordsArrStringified = coordsArr.map(f => JSON.stringify(f))
+      const elemCoordsArrStringified = e.coordsArr.map(f => JSON.stringify(f))
+      return elemCoordsArrStringified.every(f => coordsArrStringified.includes(f))
     })[0]
   }
 
@@ -109,6 +108,10 @@ class Satan {
 
   setUpBoard(players){
     this.board = []
+    this.vertexes = []
+    this.edges = []
+    this.graph = new Graph()
+
     let hexTypeCounts = {
       mud: 3,
       forest: 4,
@@ -277,6 +280,18 @@ class Satan {
     const coordsArr = actionData.coordsArr
     const vertex = this.getVertex(coords)
     const player = this.getPlayer(playerId)
+    const user = users.getUser(player.userId)
+    const lobby = lobbies.getLobby(user.lobbyId)
+
+    const printChatErr = (msg) => {
+      lobby.printToUserChat(user.id, [{
+        text: msg,
+        style: {
+          colour: "red",
+          italic: true,
+        }
+      }])
+    }
 
     const buildingCosts = {
       road: {
@@ -309,6 +324,17 @@ class Satan {
       Object.keys(cost).forEach(resource => playerResources[resource] -= cost[resource])
     }
 
+    if(action.startsWith("place_")) {
+      if(player.id !== this.turn) {
+        printChatErr("It is not your turn.")
+        return
+      }
+      if(this.turnStage === 0) {
+        printChatErr("You need to roll the dice before doing this.")
+        return
+      }
+    }
+
     switch(action) {
       case "roll_dice":
         if(this.turnStage !== 0) break
@@ -317,36 +343,57 @@ class Satan {
         break
       case "end_turn":
         if(player.id !== this.turn) break
+        if(this.inSetupTurnCycle()) {
+          if(!this.setupTurnPlaced.settlement) {
+            printChatErr("This is a setup turn. You must place a settlement before ending your turn.")
+            break
+          }
+          if(!this.setupTurnPlaced.road) {
+            printChatErr("This is a setup turn. You must place a road before ending your turn.")
+            break
+          }
+        }
+
         this.nextTurn()
         break
       case "place_settlement":
-        if(this.turnStage === 0) break
         if(!vertex) break
         if(player.inventory.getSettlements() <= 0) break
 
         if(this.inSetupTurnCycle()) {
-          if(this.setupTurnPlaced.settlement >= 1) break
+          if(this.setupTurnPlaced.settlement) {
+            printChatErr("This is a setup turn. You have already placed a settlement this turn.")
+            break
+          }
         }
         else {
-          if(!canAfford(player, "settlement")) break
+          if(!canAfford(player, "settlement")) {
+            printChatErr("You cannot afford this.")
+            break
+          }
         }
 
         if(vertex.getBuilding()?.type !== "settlement") {
-          let adjVerts = []
+          const adjVerts = []
+          const adjEdges = []
 
           for(let adjVertCoords of vertex.getAdjacentVertexes()) {
             const adjVert = this.getVertex(adjVertCoords)
             if(!adjVert) continue
 
-            // Distance Rule: a settlement may only be placed where all adjacent intersections are vacant
-            if(adjVert.getBuilding()) break
+            if(adjVert.getBuilding()) break // distance rule
 
             adjVerts.push(adjVert)
+            adjEdges.push(this.getEdge([vertex.coords, adjVertCoords]))
+          }
+
+          if(!this.inSetupTurnCycle() && adjEdges.every(loopEdge => loopEdge.road !== playerId)) {
+            printChatErr("Settlements must be placed connected to a road that you own.")
+            break
           }
 
           vertex.setBuilding("settlement", playerId)
-
-          if(this.inSetupTurnCycle()) this.setupTurnPlaced.settlement++
+          if(this.inSetupTurnCycle()) this.setupTurnPlaced.settlement = vertex.coords
           else                        spendResourcesOn(player, "settlement")
 
           player.inventory.addSettlement(-1)
@@ -354,10 +401,12 @@ class Satan {
         }
         break
       case "place_city":
-        if(this.turnStage === 0) break
         if(!vertex) break
         if(player.inventory.getCities() <= 0) break
-        if(!canAfford(player, "city")) break
+        if(!canAfford(player, "city")) {
+          printChatErr("You cannot afford this.")
+          break
+        }
         
         const existingBuilding = vertex.getBuilding()
         if(!existingBuilding) break
@@ -370,21 +419,54 @@ class Satan {
         }
         break
       case "place_road":
-        if(this.turnStage === 0) break
         const edge = this.getEdge(coordsArr)
         if(!edge) break
 
         if(this.inSetupTurnCycle()) {
-          if(this.setupTurnPlaced.road >= 1) break
+          if(this.setupTurnPlaced.road) {
+            printChatErr("This is a setup turn. You have already placed a road this turn.")
+            break
+          }
+          if(!this.setupTurnPlaced.settlement) {
+            printChatErr("This is a setup turn. You must place a settlement first.")
+            break
+          }
+          if(!coordsArr.map(e => JSON.stringify(e)).includes(JSON.stringify(this.setupTurnPlaced.settlement))) {
+            printChatErr("This is a setup turn. Your road must be connected to the settlement you placed this turn.")
+            break
+          }
         }
         else {
-          if(!canAfford(player, "road")) break
+          if(!canAfford(player, "road")) {
+            printChatErr("You cannot afford this.")
+            break
+          }
+        }
+
+        const vertexesConnectedToEdge = coordsArr.map(e => this.getVertex(e))
+        const connectedToOwnedVertex = vertexesConnectedToEdge.some(vert => vert.building && vert.building.playerId === playerId)
+        let connectedToOwnedEdge = false
+
+        for(const vert of vertexesConnectedToEdge) {
+          const adjacentVertexes = vert.getAdjacentVertexes().map(v => this.getVertex(v))
+          const adjacentEdges = adjacentVertexes.map(vert2 => {
+            if(!vert || !vert2) return
+            return this.getEdge([vert.coords, vert2.coords])
+          })
+          connectedToOwnedEdge = adjacentEdges.some(loopEdge => loopEdge?.road === playerId)
+          if(connectedToOwnedEdge) break
+        }
+
+        // if the road is neither connected to an owned settlement nor connected to an owned edge
+        if(!(connectedToOwnedVertex || connectedToOwnedEdge)) {
+          printChatErr("You can only place a road where it is connected to a settlement, city, or road that you own.")
+          break
         }
         
         if(player.inventory.getRoads() <= 0) break
         if(!edge.getRoad()) {
           edge.setRoad(playerId)
-          if(this.inSetupTurnCycle()) this.setupTurnPlaced.road++
+          if(this.inSetupTurnCycle()) this.setupTurnPlaced.road = edge.coordsArr
           else                        spendResourcesOn(player, "road")
           player.inventory.addRoad(-1)
         }
@@ -414,8 +496,8 @@ class Satan {
     else {
       this.turnStage = 0
       if(this.inSetupTurnCycle()) {
-        this.setupTurnPlaced.settlement = 0
-        this.setupTurnPlaced.road = 0
+        this.setupTurnPlaced.settlement = null
+        this.setupTurnPlaced.road = null
         this.turnStage = 1
       }
 
@@ -438,7 +520,8 @@ class Satan {
     let number = dice1 + dice2
 
     lobbies.getLobby(this.lobbyId).printToChat([{
-      text: `${this.players[this.turn].name} rolled ${dice1}+${dice2} = ${number}`,
+      text: `${this.players[this.turn].name} rolled ${number}`,
+      dice: [dice1, dice2],
       style: {
         colour: "purple",
       },
@@ -457,8 +540,10 @@ class Satan {
         const player = this.getPlayer(building.playerId)
         for(const hexCoords of adjacentHexes) {
           const hex = this.board[hexCoords.y][hexCoords.x]
-          const resource = hexTypesResources[hex.resource]
 
+          if(hex.robber) continue
+
+          const resource = hexTypesResources[hex.resource]
           if(resource && hex.number === number) {
             if(building.type === "city") {
               player.resources[resource] += 2

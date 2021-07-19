@@ -91,13 +91,30 @@
   word-wrap: anywhere;
 }
 
-#lobby-chat-messages div {
+#lobby-chat-messages > div {
   margin: 0;
   padding: 1% 2.5%;
 }
-#lobby-chat-messages div p {
+#lobby-chat-messages > div > .chat-message-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+#lobby-chat-messages > div > .chat-message-content > p {
   margin: 0;
   padding: 0;
+}
+#lobby-chat-messages > div > .chat-message-content > .chat-message-dice {
+  display: flex;
+  flex-direction: row;
+  gap: 0.25em;
+  justify-self: right;
+}
+#lobby-chat-messages > div > .chat-message-content > .chat-message-dice > img {
+  width: 1.9em;
+  height: 1.9em;
 }
 
 #lobby-chat-messages > div:nth-of-type(odd) {
