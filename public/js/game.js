@@ -20,7 +20,7 @@ const toggleInGameGui = (render) => {
     turnControls.style.display = "none"
 
     canvasFunctions.stop()
-    delete currentGameData
+    currentGameData = undefined
   }
 }
 
