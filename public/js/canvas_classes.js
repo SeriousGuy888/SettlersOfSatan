@@ -266,6 +266,7 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
     if(!this.data.allowPlacement) return
     if(!["settlement", "city"].includes(holding)) return
 
+    if(holding === "city" && this.data.building?.type !== "settlement") return
 
     socket.emit("perform_game_action", {
       action: "place_" + holding,
@@ -275,7 +276,7 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
     })
     
     
-    if(currentGameData.turnCycle <= 2) holding = "road"
+    if(holding === "settlement" && currentGameData.turnCycle <= 2) holding = "road"
     else holding = null
   }
 }
