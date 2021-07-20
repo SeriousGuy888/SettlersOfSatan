@@ -51,7 +51,8 @@ class Satan {
 
     this.trade = {
       offer: null,
-      takers: []
+      takers: [],
+      idempotency: Date.now()
     }
 
     this.robbing = false
@@ -82,6 +83,7 @@ class Satan {
       turnCycle: this.turnCycle,
       turnStage: this.turnStage,
       turnCountdownTo: this.turnCountdownTo,
+      trade: this.trade,
       robbing: this.robbing,
     }
 
@@ -502,9 +504,24 @@ class Satan {
         this.trade.takers = []
 
         lobby.printToChat([{
-          text: `${player.name} is offering ${JSON.stringify(this.trade.offer.offererGives)} for ${JSON.stringify(this.trade.offer.takerGives)}`,
+          trade: this.trade,
           style: { colour: "brown" }
         }])
+        break
+      case "accept_trade":
+        if(this.inSetupTurnCycle()) break
+        if(this.turnStage !== 1) break
+        if(actionData.idempotency !== this.trade.idempotency) {
+          printChatErr("This trade offer does not exist or has expired.")
+          break
+        }
+        if(this.trade.takers.includes(playerId)) {
+          printChatErr("You've already accepted this trade. Please wait for the offerer to decide.")
+          break
+        }
+
+        this.trade.takers.push(playerId)
+        lobby.printToUserChat(player.userId, [{text: ":D"}])
         break
       default:
         return
