@@ -1,0 +1,30 @@
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 0.3em;
+}
+.colour-button {
+  border: 2px solid rgb(0, 0, 0);
+  width: 4rem;
+  height: 4rem;
+  color: white;
+  text-align: center;
+}
+.colour-button:disabled {
+  font-size: 0;
+}
+.colour-button:disabled::after {
+  content: "✖";
+  font-size: 1.5rem;
+}
+
+#lobby-playing {
+  display: flex;
+  flex-direction: column;
+}
+#game-canvas {
+  width: 100%;
+  min-width: 350px;
+  justify-self: center;
+}
