@@ -38,6 +38,17 @@ const setStatusMessage = (msg) => {
   gameStatusMessage.textContent = msg
 }
 
+const refreshTurnDisplay = () => {
+  const turnPlayer = document.querySelector("#turn-player")
+  const turnCycleStage = document.querySelector("#turn-cycle-stage")
+  const turnTimer = document.querySelector("#turn-timer")
+
+  turnPlayer.textContent = currentGameData.players[currentGameData.turn].name
+  turnPlayer.style.color = currentGameData.players[currentGameData.turn].colour
+  turnCycleStage.textContent = `C${currentGameData.turnCycle} | S${currentGameData.turnStage}`
+  turnTimer.textContent = `oeuf`
+}
+
 
 let currentGameData
 socket.on("game_update", gData => {
@@ -50,10 +61,9 @@ socket.on("game_update", gData => {
       canvasFunctions.refreshBoard()
       refreshResourceCards()
       refreshTurnControls()
+      refreshTurnDisplay()
       
       document.getElementById("inv-list").innerHTML = `Settlements: ${currentGameData.me.inventory.settlements}, Roads: ${currentGameData.me.inventory.roads}, Cities: ${currentGameData.me.inventory.cities}`
-      
-      setStatusMessage(`turn: ${currentGameData.turn}, turn cycle: ${currentGameData.turnCycle}, turn stage ${currentGameData.turnStage}`)
     }
   })
 })
