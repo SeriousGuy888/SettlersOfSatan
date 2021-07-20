@@ -49,6 +49,11 @@ class Satan {
       road: null,
     }
 
+    this.trade = {
+      offer: null,
+      takers: []
+    }
+
     this.robbing = false
   }
 
@@ -353,6 +358,7 @@ class Satan {
         break
       case "end_turn":
         if(player.id !== this.turn) break
+        if(this.turnStage !== 1) break
         if(this.inSetupTurnCycle()) {
           if(!this.setupTurnPlaced.settlement) {
             printChatErr("This is a setup turn. You must place a settlement before ending your turn.")
@@ -480,6 +486,26 @@ class Satan {
           this.refreshAllowedPlacements()
         }
         break
+      case "offer_trade":
+        if(player.id !== this.turn) break
+        if(this.inSetupTurnCycle()) break
+        if(this.turnStage !== 1) break
+
+        this.trade.offer = {
+          offererGives: {
+            wool: 2
+          },
+          takerGives: {
+            lumber: 1
+          }
+        }
+        this.trade.takers = []
+
+        lobby.printToChat([{
+          text: `${player.name} is offering ${JSON.stringify(this.trade.offer.offererGives)} for ${JSON.stringify(this.trade.offer.takerGives)}`,
+          style: { colour: "brown" }
+        }])
+        break
       default:
         return
     }
@@ -526,6 +552,9 @@ class Satan {
     else {
       this.turnStage = 0
       this.turnCountdownTo = new Date().setTime(new Date().getTime() + 60 * 1000)
+
+      this.trade.offer = null
+      this.trade.takers = []
 
       if(this.inSetupTurnCycle()) {
         this.setupTurnPlaced.settlement = null
