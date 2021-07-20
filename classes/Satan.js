@@ -52,7 +52,7 @@ class Satan {
     this.trade = {
       offer: null,
       takers: [],
-      idempotency: Date.now()
+      idempotency: null
     }
 
     this.robbing = false
@@ -502,6 +502,7 @@ class Satan {
           }
         }
         this.trade.takers = []
+        this.trade.idempotency = Date.now()
 
         lobby.printToChat([{
           trade: this.trade,
@@ -572,6 +573,7 @@ class Satan {
 
       this.trade.offer = null
       this.trade.takers = []
+      this.trade.idempotency = null
 
       if(this.inSetupTurnCycle()) {
         this.setupTurnPlaced.settlement = null
