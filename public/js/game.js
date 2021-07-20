@@ -20,6 +20,7 @@ const toggleInGameGui = (render) => {
     turnControls.style.display = "none"
 
     canvasFunctions.stop()
+    delete currentGameData
   }
 }
 
@@ -41,13 +42,18 @@ const setStatusMessage = (msg) => {
 const refreshTurnDisplay = () => {
   const turnPlayer = document.querySelector("#turn-player")
   const turnCycleStage = document.querySelector("#turn-cycle-stage")
-  const turnTimer = document.querySelector("#turn-timer")
 
   turnPlayer.textContent = currentGameData.players[currentGameData.turn].name
   turnPlayer.style.color = currentGameData.players[currentGameData.turn].colour
   turnCycleStage.textContent = `C${currentGameData.turnCycle} | S${currentGameData.turnStage}`
-  turnTimer.textContent = `oeuf`
 }
+setInterval(() => {
+  if(!currentGameData?.turnCountdownTo) return
+  const turnTimer = document.querySelector("#turn-timer")
+
+  const msRemaining = currentGameData.turnCountdownTo - Date.now()
+  turnTimer.textContent = Math.floor(msRemaining / 1000)
+}, 1000)
 
 
 let currentGameData

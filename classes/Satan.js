@@ -43,6 +43,7 @@ class Satan {
     this.turn = null // stores the player id of the currently playing playeur
     this.turnCycle = 0 // how many times every player has been given a turn
     this.turnStage = 0 // turn stage manages whether the dice have been rolled
+    this.turnCountdownTo = null // a timestamp that when passed, the present turn will be forcefully passed
     this.setupTurnPlaced = { // stores the coordinates of the pieces placed this setup turn
       settlement: null,
       road: null,
@@ -54,7 +55,13 @@ class Satan {
   tick() {
     const lobby = lobbies.getLobby(this.lobbyId)
     
-    if(!this.turn || this.getPlayer(this.turn).disconnected) this.nextTurn()
+    if(
+      !this.turn || // no turn is set
+      this.getPlayer(this.turn).disconnected || // player whose turn it is has disconnected
+      this.turnCountdownTo - Date.now() < 0 // time limit for the turn has passed
+    ) {
+      this.nextTurn()
+    }
 
     let playersPublicData = {}
     for(let i in this.players) {
@@ -69,6 +76,7 @@ class Satan {
       turn: this.turn,
       turnCycle: this.turnCycle,
       turnStage: this.turnStage,
+      turnCountdownTo: this.turnCountdownTo,
       robbing: this.robbing,
     }
 
@@ -517,6 +525,8 @@ class Satan {
     }
     else {
       this.turnStage = 0
+      this.turnCountdownTo = new Date().setTime(new Date().getTime() + 60 * 1000)
+
       if(this.inSetupTurnCycle()) {
         this.setupTurnPlaced.settlement = null
         this.setupTurnPlaced.road = null
