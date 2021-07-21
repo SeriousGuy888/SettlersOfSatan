@@ -66,7 +66,7 @@ socket.on("game_update", gData => {
       currentGameData.me = pData
       canvasFunctions.refreshBoard()
       refreshResourceCards()
-      refreshTurnControls()
+      refreshControls()
       refreshTurnDisplay()
       
       document.getElementById("inv-list").innerHTML = `Settlements: ${currentGameData.me.inventory.settlements}, Roads: ${currentGameData.me.inventory.roads}, Cities: ${currentGameData.me.inventory.cities}`

@@ -26,7 +26,7 @@ const makeTradeButton = document.querySelector("#make-trade-button")
 const takeTradeDiv = document.querySelector("#trade-interface-take")
 const takeTradeButton = document.querySelector("#take-trade-button")
 
-const refreshTurnControls = () => {
+const refreshControls = () => {
   if(currentGameData.turn !== currentGameData.me.id) {
     for(let i in gameControls) gameControls[i].disabled = true
 
