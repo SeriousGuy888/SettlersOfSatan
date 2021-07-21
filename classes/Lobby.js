@@ -167,6 +167,19 @@ class Lobby {
         case "kick":
           this.kick(args[0])
           break
+        case "skip_setup": // todo: remove this after development is done
+          if(!this.game) {
+            printChatErr("Not in game!")
+            break
+          }
+          if(this.game.turnCycle <= 2) {
+            this.game.turnCycle = 3
+            this.printToChat([{
+              text: "skipped setup turns or something",
+              style: { colour: "green" }
+            }])
+          }
+          break
         case "reshuffle":
           if(!this.game) {
             printChatErr("Use this command on the first turn when the game has started to reshuffle the board. Note that this command cannot be used after the first turn has ended.")
