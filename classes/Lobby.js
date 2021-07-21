@@ -180,6 +180,26 @@ class Lobby {
             }])
           }
           break
+        case "give_res": // todo: remove this after development is done
+          if(!this.game) {
+            printChatErr("Not in game!")
+            break
+          }
+          const targetPlayer = this.game.getPlayer(args[0])
+          if(!targetPlayer) {
+            printChatErr("Invalid player!")
+            break
+          }
+          const allowedResources = ["bricks", "lumber", "wool", "wheat", "ore"]
+          const resource = args[1]?.toLowerCase()
+          if(!allowedResources.includes(resource)) {
+            printChatErr(`Allowed resources: ${JSON.stringify(allowedResources)}`)
+            break
+          }
+          const amount = parseInt(args[2]) || 1
+          targetPlayer.resources[resource] += amount
+          this.printToUserChat(user.id, [{text: `gave ${amount} of ${resource} to ${targetPlayer.name} (${targetPlayer.id})`}])
+          break
         case "reshuffle":
           if(!this.game) {
             printChatErr("Use this command on the first turn when the game has started to reshuffle the board. Note that this command cannot be used after the first turn has ended.")
