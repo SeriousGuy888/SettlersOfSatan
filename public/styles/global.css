@@ -29,6 +29,16 @@ input:focus {
   border-bottom: 2px solid #6ba4ff;
 }
 
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 code, pre {
   background-color: #ddd;
   border-radius: 3px;

@@ -47,15 +47,31 @@ const refreshControls = () => {
     }
   }
 
-  tradeInterface.style.display = currentGameData.turnCycle > 2 ? null : "none"
+
+  const tradeAmountDivs = document.querySelectorAll(".trade-amount-selection-div")
+
   if(currentGameData.turnStage === 0) {
     makeTradeDiv.style.display = "none"
     takeTradeDiv.style.display = "none"
+    tradeAmountDivs.forEach(e => e.style.display = "none")
   }
   else {
-    makeTradeDiv.style.display = currentGameData.turn === currentGameData.me.id ? null : "none"
-    takeTradeDiv.style.display = currentGameData.turn === currentGameData.me.id ? "none" : null
+    if(currentGameData.turn === currentGameData.me.id) {
+      makeTradeDiv.style.display = null
+      tradeAmountDivs.forEach(e => e.style.display = null)
+      takeTradeDiv.style.display = "none"
+    }
+    else {
+      makeTradeDiv.style.display = "none"
+      tradeAmountDivs.forEach(e => e.style.display = "none")
+      takeTradeDiv.style.display = null
+    }
   }
+
+  tradeInterface.style.display = currentGameData.turnCycle > 2 ? null : "none"
+  tradeAmountDivs.forEach(e => {
+    if(currentGameData.turnCycle <= 2) e.style.display = "none"
+  })
 }
 
 makeTradeButton.addEventListener("click", () => {
