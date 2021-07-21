@@ -130,6 +130,17 @@ canvasFunctions.refreshBoard = () => {
 
   if(currentGameData.robbing && currentGameData.turn === currentGameData.me.id) {
     robberImgSrc = "/images/glowing_robber.png"
+    let buildings = []
+
+    let hexesAdjacentToBuildings = []
+    console.log(vertexes)
+    for(vertex of currentGameData.vertexes) {
+      if(vertex.building){
+        for(adjacentHex of vertex.adjacentHexes){
+          
+        }
+      }
+    }
   }
   else {
     robberImgSrc = "/images/robber.png"

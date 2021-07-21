@@ -110,7 +110,7 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
   constructor(xPos, yPos, data) {
     super()
 
-    const { coords, resource, number, robber, invisible, harbour } = data
+    const { coords, resource, number, robber, invisible, harbour, glowing } = data
 
     this.xPos = xPos
     this.yPos = yPos
@@ -123,7 +123,7 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
   }
 
   render() {
-    const { xPos, yPos, resource, number } = this
+    const { xPos, yPos, resource, number, glowing} = this
 
     ctx.lineWidth = 1
     ctx.strokeStyle = "#000"
@@ -138,6 +138,9 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
     }
 
     if(this.invisible) return
+
+    // if (currentGameData.robbing) {
+    // }
 
     const angle = 2 * Math.PI / 6
     ctx.beginPath()
@@ -167,7 +170,18 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
         ctx.fillStyle = this.coords.y % 2 === 0 ? axisCols[0] : axisCols[1]
         break
       default:
-        ctx.fillStyle = resourceColours[resource]
+        let fillStyle = resourceColours[resource]
+        // console.log(glowing)
+        // if(glowing){
+        //   for(numberIndex in fillStyle){
+        //     console.log(fillStyle[numberIndex])
+        //     newNumber = parseInt("0x" + fillStyle[numberIndex]) + 4
+        //     if (newNumber >= 16) newNumber = 15
+        //     fillStyle[numberIndex] = newNumber.toString(16)
+        //   }
+        // }
+
+        ctx.fillStyle = fillStyle
         break
     }
 
