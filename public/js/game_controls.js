@@ -21,6 +21,7 @@ gameControls.road.addEventListener("click", () => setHolding("road"))
 
 const turnControls = document.querySelector("#turn-controls")
 const turnButton = document.querySelector("#end-turn-dice-button")
+const tradeInterface = document.querySelector("#trade-interface")
 const makeTradeDiv = document.querySelector("#trade-interface-make")
 const makeTradeButton = document.querySelector("#make-trade-button")
 const takeTradeDiv = document.querySelector("#trade-interface-take")
@@ -30,18 +31,8 @@ const refreshControls = () => {
   if(currentGameData.turn !== currentGameData.me.id) {
     for(let i in gameControls) gameControls[i].disabled = true
 
-    if(currentGameData.turnStage === 1) {
-      makeTradeDiv.style.display = "none"
-      takeTradeDiv.style.display = currentGameData.turnCycle > 2 ? null : "none"
-    }
-    else {
-      makeTradeDiv.style.display = "none"
-      takeTradeDiv.style.display = "none"
-    }
-
     turnButton.disabled = true
     turnButton.textContent = "It is not your turn..."
-
   }
   else {
     turnButton.disabled = false
@@ -49,17 +40,21 @@ const refreshControls = () => {
     if(currentGameData.turnStage === 0) {
       for(let i in gameControls) gameControls[i].disabled = true
       turnButton.textContent = "Roll Dice"
-      
-      makeTradeDiv.style.display = "none"
-      takeTradeDiv.style.display = "none"
     }
     else {
       for(let i in gameControls) gameControls[i].disabled = false
       turnButton.textContent = "End Turn"
-
-      makeTradeDiv.style.display = currentGameData.turnCycle > 2 ? null : "none"
-      takeTradeDiv.style.display = "none"
     }
+  }
+
+  tradeInterface.style.display = currentGameData.turnCycle > 2 ? null : "none"
+  if(currentGameData.turnStage === 0) {
+    makeTradeDiv.style.display = "none"
+    takeTradeDiv.style.display = "none"
+  }
+  else {
+    makeTradeDiv.style.display = currentGameData.turn === currentGameData.me.id ? null : "none"
+    takeTradeDiv.style.display = currentGameData.turn === currentGameData.me.id ? "none" : null
   }
 }
 
