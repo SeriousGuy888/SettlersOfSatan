@@ -86,6 +86,7 @@
 #trade-interface {
   padding: 1em;
   text-align: center;
+  height: 10em;
 }
 #trade-interface > div {
   display: flex;
