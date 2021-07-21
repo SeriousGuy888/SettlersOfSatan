@@ -511,7 +511,7 @@ class Satan {
         break
       case "accept_trade":
         if(this.inSetupTurnCycle()) break
-        if(this.turnStage !== 1) break
+
         if(actionData.idempotency !== this.trade.idempotency) {
           printChatErr("This trade offer does not exist or has expired.")
           break
@@ -520,6 +520,8 @@ class Satan {
           printChatErr("You've already accepted this trade. Please wait for the offerer to decide.")
           break
         }
+        
+        if(this.turnStage !== 1) break
 
         this.trade.takers.push(playerId)
         lobby.printToUserChat(player.userId, [{text: ":D"}])
