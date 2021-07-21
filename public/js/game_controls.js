@@ -34,6 +34,10 @@ const refreshControls = () => {
       makeTradeDiv.style.display = "none"
       takeTradeDiv.style.display = currentGameData.turnCycle > 2 ? null : "none"
     }
+    else {
+      makeTradeDiv.style.display = "none"
+      takeTradeDiv.style.display = "none"
+    }
 
     turnButton.disabled = true
     turnButton.textContent = "It is not your turn..."
@@ -45,6 +49,9 @@ const refreshControls = () => {
     if(currentGameData.turnStage === 0) {
       for(let i in gameControls) gameControls[i].disabled = true
       turnButton.textContent = "Roll Dice"
+      
+      makeTradeDiv.style.display = "none"
+      takeTradeDiv.style.display = "none"
     }
     else {
       for(let i in gameControls) gameControls[i].disabled = false
