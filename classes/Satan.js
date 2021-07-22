@@ -600,7 +600,7 @@ class Satan {
     else {
       this.turnStage = 0
       this.turnTick = true
-      this.turnCountdownTo = new Date().setTime(new Date().getTime() + 60 * 1000)
+      this.turnCountdownTo = new Date().setTime(new Date().getTime() + 120 * 1000)
 
       this.trade.offer = null
       this.trade.takers = []
