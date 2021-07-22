@@ -101,6 +101,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+  gap: 0.25em;
 
   min-height: 12em;
   height: max-content;
