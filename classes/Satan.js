@@ -532,7 +532,7 @@ class Satan {
       case "accept_trade":
         if(this.inSetupTurnCycle()) break
 
-        if(actionData.idempotency !== this.trade.idempotency) {
+        if(!this.trade.offer || actionData.idempotency !== this.trade.idempotency) {
           printChatErr("This trade offer does not exist or has expired.")
           break
         }
