@@ -94,6 +94,11 @@ const refreshControls = () => {
     const offererResourceInput = tradeOffererInputs.querySelector(`#trade-amount-input-${resourceName}`)
     const takerResourceInput = tradeTakerInputs.querySelector(`#trade-amount-input-${resourceName}`)
 
+    if(currentGameData.turnTick) {
+      offererResourceInput.value = 0
+      takerResourceInput.value = 0
+    }
+
     if(currentGameData.turn === currentGameData.me.id) {
       offererResourceInput.disabled = false
       takerResourceInput.disabled = false
