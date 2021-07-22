@@ -1,5 +1,5 @@
 const resourceCardsDiv = document.querySelector("#resource-cards")
-const resourceDivs = {
+const resourceDivNames = {
   bricks: "resource-bricks",
   lumber: "resource-lumber",
   wool: "resource-wool",
@@ -7,18 +7,24 @@ const resourceDivs = {
   ore: "resource-ore",
 }
 
+const createResourceImg = (resourceName) => {
+  const img = document.createElement("img")
+  img.src = `/images/resource_cards/${resourceName}.png`
+  img.alt = resourceName
+
+  return img
+}
+
 const refreshResourceCards = () => {
   if(!resourceCardsDiv.childElementCount) {
     const frag = document.createDocumentFragment()
 
-    for(let resourceName in resourceDivs) {
+    for(let resourceName in resourceDivNames) {
       const resourceCard = document.createElement("div")
       resourceCard.className = "resource-card"
-      resourceCard.id = resourceDivs[resourceName]
+      resourceCard.id = resourceDivNames[resourceName]
 
-      const img = document.createElement("img")
-      img.src = `/images/resource_cards/${resourceName}.png`
-      img.alt = resourceName
+      const img = createResourceImg(resourceName)
 
       const h3 = document.createElement("h3")
       h3.className = "resource"
@@ -42,8 +48,8 @@ const refreshResourceCards = () => {
     resourceCardsDiv.appendChild(frag)
   }
 
-  for(let divKey in resourceDivs) {
-    const amtDisplay = document.getElementById(resourceDivs[divKey]).querySelector(".resource")
+  for(let divKey in resourceDivNames) {
+    const amtDisplay = document.getElementById(resourceDivNames[divKey]).querySelector(".resource")
     amtDisplay.textContent = currentGameData.me.resources[divKey]
   }
 }

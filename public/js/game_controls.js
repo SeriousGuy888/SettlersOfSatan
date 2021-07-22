@@ -44,10 +44,39 @@ const refreshControls = () => {
   }
 
   tradePanel.style.display = currentGameData.turnCycle > 2 ? null : "none"
+
+  const createTradeInputs = (container, rightColumn) => {
+    if(!container.childElementCount) {
+      const frag = document.createDocumentFragment()
+  
+      for(let resourceName in resourceDivNames) {
+        const currentResourceDiv = document.createElement("div")
+        currentResourceDiv.className = "trade-amount-div"
+        rightColumn && currentResourceDiv.classList.add(["trade-amount-div-right"])
+  
+        const img = createResourceImg(resourceName)
+        const inputElem = document.createElement("input")
+        inputElem.type = "number"
+        inputElem.min = 0
+        inputElem.value = 0
+        inputElem.id = `trade-amount-input-${resourceName}`
+        
+        currentResourceDiv.appendChild(img)
+        currentResourceDiv.appendChild(inputElem)
+        frag.appendChild(currentResourceDiv)
+      }
+  
+      container.appendChild(frag)
+    }
+  }
+  createTradeInputs(tradeOffererInputs, false)
+  createTradeInputs(tradeTakerInputs, true)
 }
 
 const makeTradeButton = document.querySelector("#make-trade-button")
 const takeTradeButton = document.querySelector("#take-trade-button")
+const tradeOffererInputs = document.querySelector("#trade-offerer-inputs")
+const tradeTakerInputs = document.querySelector("#trade-taker-inputs")
 
 makeTradeButton.addEventListener("click", () => {
   socket.emit("perform_game_action", {
