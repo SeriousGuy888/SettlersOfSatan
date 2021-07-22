@@ -46,21 +46,24 @@ const refreshControls = () => {
   tradePanel.style.display = currentGameData.turnCycle > 2 ? null : "none"
 }
 
-// makeTradeButton.addEventListener("click", () => {
-//   socket.emit("perform_game_action", {
-//     action: "offer_trade"
-//   }, (err, data) => {
-//     if(err) notifyUser(err)
-//   })
-// })
-// takeTradeButton.addEventListener("click", () => {
-//   socket.emit("perform_game_action", {
-//     action: "accept_trade",
-//     idempotency: currentGameData.trade.idempotency
-//   }, (err, data) => {
-//     if(err) notifyUser(err)
-//   })
-// })
+const makeTradeButton = document.querySelector("#make-trade-button")
+const takeTradeButton = document.querySelector("#take-trade-button")
+
+makeTradeButton.addEventListener("click", () => {
+  socket.emit("perform_game_action", {
+    action: "offer_trade"
+  }, (err, data) => {
+    if(err) notifyUser(err)
+  })
+})
+takeTradeButton.addEventListener("click", () => {
+  socket.emit("perform_game_action", {
+    action: "accept_trade",
+    idempotency: currentGameData.trade.idempotency
+  }, (err, data) => {
+    if(err) notifyUser(err)
+  })
+})
 
 turnButton.addEventListener("click", () => {
   holding = null
