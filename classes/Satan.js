@@ -493,19 +493,12 @@ class Satan {
         if(this.inSetupTurnCycle()) break
         if(this.turnStage !== 1) break
 
-        this.trade.offer = {
-          offererGives: {
-            wool: 2
-          },
-          takerGives: {
-            lumber: 1
-          }
-        }
+        this.trade.offer = actionData.offer
         this.trade.takers = []
         this.trade.idempotency = Date.now()
 
         lobby.printToChat([{
-          trade: this.trade,
+          text: JSON.stringify(this.trade),
           style: { colour: "brown" }
         }])
         break

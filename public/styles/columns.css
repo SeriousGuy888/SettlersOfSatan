@@ -144,6 +144,12 @@
 
   border: 2px solid #47f;
   border-radius: 3px;
+  
+  font-size: 1.2em;
+}
+.trade-amount-div > input:disabled {
+  border: 2px solid transparent;
+  color: black;
 }
 .trade-amount-div-right > img { order: 2; }
 

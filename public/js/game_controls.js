@@ -43,8 +43,6 @@ const refreshControls = () => {
     }
   }
 
-  tradePanel.style.display = currentGameData.turnCycle > 2 ? null : "none"
-
   const createTradeInputs = (container, rightColumn) => {
     if(!container.childElementCount) {
       const frag = document.createDocumentFragment()
@@ -71,16 +69,67 @@ const refreshControls = () => {
   }
   createTradeInputs(tradeOffererInputs, false)
   createTradeInputs(tradeTakerInputs, true)
+
+
+
+
+  tradePanel.style.display = currentGameData.turnCycle > 2 ? null : "none"
+
+  offererNameP.textContent = currentGameData.players[currentGameData.turn].name
+  offererNameP.style.color = currentGameData.players[currentGameData.turn].colour
+  takerNameP.textContent = "Everyone"
+
+  if(currentGameData.turn === currentGameData.me.id) {
+    makeTradeButton.style.display = null
+    takeTradeButton.style.display = "none"
+  }
+  else {
+    makeTradeButton.style.display = "none"
+    takeTradeButton.style.display = null
+  }
+
+  for(let resourceName in resourceDivNames) {
+    const offererResourceInput = tradeOffererInputs.querySelector(`#trade-amount-input-${resourceName}`)
+    const takerResourceInput = tradeTakerInputs.querySelector(`#trade-amount-input-${resourceName}`)
+
+    if(currentGameData.turn === currentGameData.me.id) {
+      offererResourceInput.disabled = false
+      takerResourceInput.disabled = false
+    }
+    else {
+      offererResourceInput.disabled = true
+      takerResourceInput.disabled = true
+      offererResourceInput.value = currentGameData.trade.offer?.offerer[resourceName] ?? 0
+      takerResourceInput.value = currentGameData.trade.offer?.taker[resourceName] ?? 0
+    }
+  }
 }
 
 const makeTradeButton = document.querySelector("#make-trade-button")
 const takeTradeButton = document.querySelector("#take-trade-button")
 const tradeOffererInputs = document.querySelector("#trade-offerer-inputs")
 const tradeTakerInputs = document.querySelector("#trade-taker-inputs")
+const offererNameP = document.querySelector("#trade-offerer-name")
+const takerNameP = document.querySelector("#trade-taker-name")
 
 makeTradeButton.addEventListener("click", () => {
+  const offererAmounts = {}
+  const takerAmounts = {}
+  for(let resourceName in resourceDivNames) {
+    const offererResourceInput = tradeOffererInputs.querySelector(`#trade-amount-input-${resourceName}`)
+    const takerResourceInput = tradeTakerInputs.querySelector(`#trade-amount-input-${resourceName}`)
+    offererAmounts[resourceName] = parseInt(offererResourceInput?.value) || 0
+    takerAmounts[resourceName] = parseInt(takerResourceInput?.value) || 0
+  }
+
+  const offer = {
+    offerer: offererAmounts,
+    taker: takerAmounts
+  }
+
   socket.emit("perform_game_action", {
-    action: "offer_trade"
+    action: "offer_trade",
+    offer,
   }, (err, data) => {
     if(err) notifyUser(err)
   })

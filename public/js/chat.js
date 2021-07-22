@@ -31,31 +31,6 @@ const parseChatLine = (line) => {
       }
       content.appendChild(contentDice)
     }
-    if(line.trade) {
-      const contentTrade = document.createElement("div")
-      
-      const trade = line.trade
-      const idempotency = trade.idempotency
-      const { offererGives, takerGives } = trade.offer
-
-      const p = document.createElement("p")
-      p.textContent = `${currentGameData.players[currentGameData.turn].name} offers to trade their ${JSON.stringify(offererGives)} for ${JSON.stringify(takerGives)}.`
-      const button = document.createElement("button")
-      button.textContent = "Accept Trade"
-      button.onclick = () => {
-        socket.emit("perform_game_action", {
-          action: "accept_trade",
-          idempotency
-        }, (err, data) => {
-          if(err) notifyUser(err)
-        })
-      }
-
-      contentTrade.appendChild(p)
-      contentTrade.appendChild(button)
-
-      content.appendChild(contentTrade)
-    }
   }
   else {
     const contentP = document.createElement("p")
