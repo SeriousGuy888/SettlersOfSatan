@@ -52,7 +52,12 @@ setInterval(() => {
   const turnTimer = document.querySelector("#turn-timer")
 
   const msRemaining = currentGameData.turnCountdownTo - Date.now()
-  turnTimer.textContent = Math.floor(msRemaining / 1000)
+  const secondsRemaining = Math.floor(msRemaining / 1000)
+
+  if(secondsRemaining <= 15) turnTimer.parentElement.classList.add(["attention-pls"])
+  else turnTimer.parentElement.classList.remove(["attention-pls"])
+
+  turnTimer.textContent = secondsRemaining
 }, 1000)
 
 
