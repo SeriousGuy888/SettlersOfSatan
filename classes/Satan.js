@@ -489,9 +489,18 @@ class Satan {
         }
         break
       case "offer_trade":
-        if(player.id !== this.turn) break
-        if(this.inSetupTurnCycle()) break
-        if(this.turnStage !== 1) break
+        if(player.id !== this.turn) {
+          printChatErr("It is not your turn.")
+          break
+        }
+        if(this.inSetupTurnCycle()) {
+          printChatErr("Trading is not allowed during setup turns.")
+          break
+        }
+        if(this.turnStage !== 1) {
+          printChatErr("The dice have not been rolled this turn.")
+          break
+        }
 
 
 
