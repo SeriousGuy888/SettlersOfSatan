@@ -493,7 +493,25 @@ class Satan {
         if(this.inSetupTurnCycle()) break
         if(this.turnStage !== 1) break
 
-        this.trade.offer = actionData.offer
+
+
+        // sanitise the incoming offer data to make sure everything is a number
+        const resourceNames = ["bricks", "lumber", "wool", "wheat", "ore"]
+        const unsanitisedOffer = actionData.offer
+        const { offerer, taker } = unsanitisedOffer
+
+        this.trade.offer = {
+          offerer: {},
+          taker: {}
+        }
+
+        for(let resource of resourceNames) {
+          this.trade.offer.offerer[resource] = parseInt(offerer[resource]) || 0
+          this.trade.offer.taker[resource] = parseInt(taker[resource]) || 0
+        }
+
+
+        
         this.trade.takers = []
         this.trade.idempotency = Date.now()
 
