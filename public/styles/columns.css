@@ -100,13 +100,22 @@
   gap: 3px;
 }
 #trade-panel {
-  height: 10em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 10em;
+  height: max-content;
   padding: 0.25em;
-  text-align: center;
+}
+#trade-panel > * {
+  margin: 0;
 }
 #trade-interface {
   display: grid;
   grid: 1fr / 3fr 1fr 3fr;
+  text-align: center;
 }
 #trade-interface > div.trade-icon {
   max-width: 100%;
