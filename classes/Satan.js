@@ -509,6 +509,10 @@ class Satan {
           printChatErr("This trade offer does not exist or has expired.")
           break
         }
+        if(playerId === this.turn) {
+          printChatErr("You cannot accept your own trade.")
+          break
+        }
         if(this.trade.takers.includes(playerId)) {
           printChatErr("You've already accepted this trade. Please wait for the offerer to decide.")
           break
