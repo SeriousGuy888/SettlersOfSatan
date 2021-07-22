@@ -85,7 +85,7 @@
 
 
 
-.resource-card,#trade-interface {
+.resource-card,#trade-panel {
   border: 3px solid #bb9662;
   background-color: #e4c18e;
   padding: 0.2em;
@@ -99,18 +99,23 @@
   flex-direction: column;
   gap: 3px;
 }
-#trade-interface {
-  padding: 1em;
-  text-align: center;
+#trade-panel {
   height: 10em;
+  padding: 0.25em;
+  text-align: center;
 }
-#trade-interface > div {
+#trade-interface {
+  display: grid;
+  grid: 1fr / 3fr 1fr 3fr;
+}
+#trade-interface > div.trade-icon {
+  max-width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
 }
-#trade-interface > * {
-  margin: 0;
+#trade-interface > div.trade-icon > img {
+  width: 100%;
 }
 
 

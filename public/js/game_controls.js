@@ -21,11 +21,7 @@ gameControls.road.addEventListener("click", () => setHolding("road"))
 
 const turnControls = document.querySelector("#turn-controls")
 const turnButton = document.querySelector("#end-turn-dice-button")
-const tradeInterface = document.querySelector("#trade-interface")
-const makeTradeDiv = document.querySelector("#trade-interface-make")
-const makeTradeButton = document.querySelector("#make-trade-button")
-const takeTradeDiv = document.querySelector("#trade-interface-take")
-const takeTradeButton = document.querySelector("#take-trade-button")
+const tradePanel = document.querySelector("#trade-panel")
 
 const refreshControls = () => {
   if(currentGameData.turn !== currentGameData.me.id) {
@@ -47,31 +43,7 @@ const refreshControls = () => {
     }
   }
 
-
-  const tradeAmountDivs = document.querySelectorAll(".trade-amount-selection-div")
-
-  if(currentGameData.turnStage === 0) {
-    makeTradeDiv.style.display = "none"
-    takeTradeDiv.style.display = "none"
-    tradeAmountDivs.forEach(e => e.style.display = "none")
-  }
-  else {
-    if(currentGameData.turn === currentGameData.me.id) {
-      makeTradeDiv.style.display = null
-      tradeAmountDivs.forEach(e => e.style.display = null)
-      takeTradeDiv.style.display = "none"
-    }
-    else {
-      makeTradeDiv.style.display = "none"
-      tradeAmountDivs.forEach(e => e.style.display = "none")
-      takeTradeDiv.style.display = null
-    }
-  }
-
-  tradeInterface.style.display = currentGameData.turnCycle > 2 ? null : "none"
-  tradeAmountDivs.forEach(e => {
-    if(currentGameData.turnCycle <= 2) e.style.display = "none"
-  })
+  tradePanel.style.display = currentGameData.turnCycle > 2 ? null : "none"
 }
 
 makeTradeButton.addEventListener("click", () => {
