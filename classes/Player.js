@@ -20,6 +20,17 @@ class Player {
       ore: 0,
     }
   }
+  
+  canAfford(cost) {
+    const { resources } = this
+    if(!cost) return false
+
+    return Object
+      .keys(cost) // get the names of all the resources in the cost
+      .every(resource => { // test that every resource...
+        return resources[resource] >= cost[resource] // this player has at least the amount of that resource
+      })
+  }
 
   getPublicData() {
     const { id, name, colour, inventory, resources } = this

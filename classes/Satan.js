@@ -342,13 +342,7 @@ class Satan {
         ore: 3,
       },
     }
-    const canAfford = (p, item) => {
-      const playerResources = p.resources
-      const cost = buildingCosts[item]
-      if(!playerResources || !cost) return false
-
-      return Object.keys(cost).every(resource => playerResources[resource] >= cost[resource])
-    }
+    
     const spendResourcesOn = (p, item) => {
       const playerResources = p.resources
       const cost = buildingCosts[item]
@@ -399,7 +393,7 @@ class Satan {
           }
         }
         else {
-          if(!canAfford(player, "settlement")) {
+          if(!player.canAfford(buildingCosts.settlement)) {
             printChatErr("You cannot afford this.")
             break
           }
@@ -426,7 +420,7 @@ class Satan {
         break
       case "place_city":
         if(!vertex) break
-        if(!canAfford(player, "city")) {
+        if(!player.canAfford(buildingCosts.city)) {
           printChatErr("You cannot afford this.")
           break
         }
@@ -466,6 +460,7 @@ class Satan {
         }
         else {
           if(!canAfford(player, "road")) {
+          if(!player.canAfford(buildingCosts.road)) {
             printChatErr("You cannot afford this.")
             break
           }
@@ -533,10 +528,21 @@ class Satan {
         for(let resource of resourceNames) {
           this.trade.offer.offerer[resource] = parseInt(offerer[resource]) || 0
           this.trade.offer.taker[resource] = parseInt(taker[resource]) || 0
+          const maxAmt = 7
+
+          if(sanitisedOffer.offerer[resource] > player.resources[resource]) {
+            cannotAffordTrade = true
+            break
+          }
+        }
+
+        if(cannotAffordTrade) {
+          printChatErr("You do not have the resources necessary for this trade.")
+          break
         }
 
 
-        
+        this.trade.offer = sanitisedOffer
         this.trade.takers = []
         this.trade.idempotency = Date.now()
 
