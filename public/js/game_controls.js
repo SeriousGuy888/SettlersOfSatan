@@ -21,7 +21,6 @@ gameControls.road.addEventListener("click", () => setHolding("road"))
 
 const turnControls = document.querySelector("#turn-controls")
 const turnButton = document.querySelector("#end-turn-dice-button")
-const tradePanel = document.querySelector("#trade-panel")
 
 const refreshControls = () => {
   if(currentGameData.turn !== currentGameData.me.id) {
@@ -73,7 +72,6 @@ const refreshControls = () => {
 
 
 
-  tradePanel.style.display = currentGameData.turnCycle > 2 ? null : "none"
 
   offererNameP.textContent = currentGameData.players[currentGameData.turn].name
   offererNameP.style.color = currentGameData.players[currentGameData.turn].colour

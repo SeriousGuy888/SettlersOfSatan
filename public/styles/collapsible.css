@@ -1,0 +1,26 @@
+/* stolen from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_collapsible_symbol lol */
+
+.collapsible {
+  border: 3px solid #bb9662;
+  border-radius: 5px;
+  background-color: #e4c18e;
+  cursor: pointer;
+  padding: 0.2em 1em;
+  width: 100%;
+  outline: none;
+  font-size: 1.1em;
+  text-align: left;
+}
+.collapsible::after {
+  content: "\25BC";
+  float: right;
+  margin-left: 5px;
+}
+.collapsible-active::after { content: "\25B2"; }
+
+.collapsible-active, .collapsible:hover { background-color: #bb9662; }
+.collapsible-active { border-radius: 5px 5px 0 0; }
+
+.collapsible-content {
+  display: none;
+}

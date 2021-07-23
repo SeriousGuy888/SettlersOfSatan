@@ -10,6 +10,7 @@
         <link rel="stylesheet" defer href="/styles/center_column.css">
         <link rel="stylesheet" defer href="/styles/modal.css">
         <link rel="stylesheet" defer href="styles/card.css">
+        <link rel="stylesheet" defer href="styles/collapsible.css">
         <meta charset="UTF-8">
 
         <meta name="title" content="Settlers of Satan">
@@ -35,6 +36,7 @@
         <script defer src="js/canvas.js"></script>
         <script defer src="js/canvas_classes.js"></script>
         <script defer src="js/resources.js"></script>
+        <script defer src="js/collapsible.js"></script>
     </head>
     <body>
         <div id="notification-center">
@@ -134,8 +136,8 @@
 
                         <hr>
 
-                        <div id="trade-panel">
-                            <h3>Trade and Commerce</h3>
+                        <button class="collapsible">Trade Menu</button>
+                        <div id="trade-panel" class="collapsible-content" style="display: none;">
                             <div id="trade-interface">
                                 <p id="trade-offerer-name">offerer name</p>
                                 <br>
