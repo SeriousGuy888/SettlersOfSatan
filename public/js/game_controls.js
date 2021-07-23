@@ -42,20 +42,20 @@ const refreshControls = () => {
     }
   }
 
-  const createTradeInputs = (container, rightColumn) => {
+  const createTradeInputs = (container, takerSide) => {
     if(!container.childElementCount) {
       const frag = document.createDocumentFragment()
   
       for(let resourceName in resourceDivNames) {
         const currentResourceDiv = document.createElement("div")
         currentResourceDiv.className = "trade-amount-div"
-        rightColumn && currentResourceDiv.classList.add(["trade-amount-div-right"])
+        takerSide && currentResourceDiv.classList.add(["trade-amount-div-right"])
   
         const img = createResourceImg(resourceName)
         const inputElem = document.createElement("input")
         inputElem.type = "number"
         inputElem.min = 0
-        inputElem.max = 7
+        inputElem.max = takerSide ? 7 : currentGameData.me.resources[resourceName]
         inputElem.value = 0
         inputElem.id = `trade-amount-input-${resourceName}`
         
