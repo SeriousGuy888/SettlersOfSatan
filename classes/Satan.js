@@ -567,6 +567,22 @@ class Satan {
         this.trade.takers.push(playerId)
         lobby.printToUserChat(player.userId, [{text: ":D"}])
         break
+      case "cancel_trade":
+        if(player.id !== this.turn) {
+          printChatErr("It is not your turn.")
+          break
+        }
+        if(!this.trade.offer) {
+          printChatErr("There is no trade to cancel.")
+          break
+        }
+
+        this.clearTrade()
+        lobby.printToChat([{
+          text: `${player.name} has cancelled their trade offer.`,
+          style: { colour: "brown" }
+        }])
+        break
       default:
         return
     }
