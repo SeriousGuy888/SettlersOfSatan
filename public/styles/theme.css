@@ -87,6 +87,10 @@ body.dark-theme #turn-data-display > div {
 }
 
 
+body .credit-section            { background-color: var(--light-game-display-2); border: 3px solid var(--light-game-display-1); }
+body.dark-theme .credit-section { background-color: var(--dark-game-display-2); border: 3px solid var(--dark-game-display-1); }
+
+
 
 body .collapsible { border: 3px solid var(--light-game-display-1); background-color: var(--light-game-display-2); }
 body .collapsible-active, body .collapsible:hover { background-color: var(--light-game-display-1); }
