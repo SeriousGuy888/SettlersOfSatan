@@ -4,12 +4,11 @@ const setDarkTheme = (enabled) => {
   localStorage.setItem("darkTheme", enabled)
   document.body.classList.toggle("dark-theme", enabled)
   if(darkThemeToggle) {
-    if(creditsLang === "billzonian") {
-      darkThemeToggle.textContent = enabled ? "🌞 Luihtceme" : "🌛 Darkceme"
-    }
-    else {
-      darkThemeToggle.textContent = enabled ? "🌞 Light Theme" : "🌛 Dark Theme"
-    }
+    try {
+      let themeTexts = ["Light Theme", "Dark Theme"]
+      if(creditsLang === "billzonian") themeTexts = ["Bruiht Ceme", "Nuiht Ceme"]
+      darkThemeToggle.textContent = enabled ? "🌞 " + themeTexts[0] : "🌛 " + themeTexts[1]
+    } catch {} // swallow the error so it doesnt print in the browser console if this is not the credits page
   }
 }
 const getDarkTheme = () => localStorage.getItem("darkTheme") === "true" // localstorage only takes strings :(
