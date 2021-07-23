@@ -9,7 +9,7 @@ const logoutButton = document.querySelector("#logout-button")
 
 const playingAs = document.querySelector("#playing-as")
 
-
+let creditsLang
 let colourChoices
 
 const updateLoggedInState = (loggedIn, data) => {
