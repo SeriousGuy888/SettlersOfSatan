@@ -55,6 +55,7 @@ const refreshControls = () => {
         const inputElem = document.createElement("input")
         inputElem.type = "number"
         inputElem.min = 0
+        inputElem.max = 7
         inputElem.value = 0
         inputElem.id = `trade-amount-input-${resourceName}`
         
