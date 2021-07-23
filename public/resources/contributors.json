@@ -3,7 +3,8 @@
     {
       "name": "Billzo",
       "contributions": [
-        "front_end",
+        "web_design",
+        "dark_theme",
         "back_end",
         "art"
       ]
@@ -11,7 +12,7 @@
     {
       "name": "Liam",
       "contributions": [
-        "front_end",
+        "web_design",
         "back_end",
         "catan"
       ]
@@ -26,32 +27,38 @@
     {
       "name": "Jakob",
       "contributions": [
-        "distract_liam"
+        "distract_liam",
+        "jakob_criticism"
       ]
     }
   ],
   "lang": {
     "emojis": {
-      "front_end": "🌐",
+      "web_design": "😵",
+      "dark_theme": "🌛",
       "back_end": "💻",
       "art": "🎨",
       "catan": "🧾"
     },
     "english": {
-      "front_end": "Web Design",
+      "web_design": "Web Design",
+      "dark_theme": "Dark Theme CSS",
       "back_end": "Server Backend",
       "art": "Art",
       "participation": "Emotional Support",
+      "catan": "Knowing the Rules of Catan",
       "distract_liam": "Distracting Liam",
-      "catan": "Knowing the Rules of Catan"
+      "jakob_criticism": "Criticism of Billzo's Web Design"
     },
     "billzonian": {
-      "front_end": "Web Design",
+      "web_design": "Web Designment",
+      "dark_theme": "Nuiht Ceme CSS",
       "back_end": "Serveur Bakkend",
       "art": "Vandalism",
       "participation": "Emotional Assistion",
+      "catan": "Koqqing Hautu Catan·ise",
       "distract_liam": "Distrakting Liam",
-      "catan": "Kogqing Hautu Catan·ise"
+      "jakob_criticism": "Bullying Billzo Ceir Designment"
     }
   }
 }
