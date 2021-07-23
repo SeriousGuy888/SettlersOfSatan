@@ -34,16 +34,16 @@ const refreshResourceCards = () => {
       frag.appendChild(resourceCard)
     }
 
-    const developmentCardToggle = document.createElement("div")
-    developmentCardToggle.className = "resource-card"
-    developmentCardToggle.id = "development-card-toggle"
-    developmentCardToggle.textContent = "Toggle Development Cards"
-    developmentCardToggle.onclick = () => {
-      const developmentCardListDiv = document.querySelector("#development-card-list")
-      if(!developmentCardListDiv.style.display) developmentCardListDiv.style.display = "none"
-      else developmentCardListDiv.style.display = null
-    }
-    frag.appendChild(developmentCardToggle)
+    // const developmentCardToggle = document.createElement("div")
+    // developmentCardToggle.className = "resource-card"
+    // developmentCardToggle.id = "development-card-toggle"
+    // developmentCardToggle.textContent = "Toggle Development Cards"
+    // developmentCardToggle.onclick = () => {
+    //   const developmentCardListDiv = document.querySelector("#development-card-list")
+    //   if(!developmentCardListDiv.style.display) developmentCardListDiv.style.display = "none"
+    //   else developmentCardListDiv.style.display = null
+    // }
+    // frag.appendChild(developmentCardToggle)
 
     resourceCardsDiv.appendChild(frag)
   }

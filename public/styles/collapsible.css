@@ -10,6 +10,8 @@
   outline: none;
   font-size: 1.1em;
   text-align: left;
+
+  margin-top: 0.5em;
 }
 .collapsible::after {
   content: "\25BC";
@@ -20,7 +22,3 @@
 
 .collapsible-active, .collapsible:hover { background-color: #bb9662; }
 .collapsible-active { border-radius: 5px 5px 0 0; }
-
-.collapsible-content {
-  display: none;
-}
