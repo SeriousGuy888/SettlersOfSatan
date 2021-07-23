@@ -236,7 +236,6 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
 
   render() {
     const { xPos, yPos } = this
-    if(!this.data.allowPlacement) return
 
     if(this.data.building) {
       const { playerId, type } = this.data.building
@@ -244,6 +243,8 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
       const { width: w, height: h } = this.getDimensions()
       canvasFunctions.drawPiece(type, colour, this.xPos - w / 2, this.yPos - h / 2, w, h)
     }
+    
+    if(!this.data.allowPlacement) return
 
 
     const drawCircle = () => {
