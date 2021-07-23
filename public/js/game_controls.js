@@ -77,13 +77,13 @@ const refreshControls = () => {
   offererNameP.style.color = currentGameData.players[currentGameData.turn].colour
   takerNameP.textContent = "Everyone"
 
-  if(currentGameData.turnStage === 1) {
+  if(currentGameData.turnStage === 1 && currentGameData.turnCycle > 2) {
     tradeButton.textContent = currentGameData.turn === currentGameData.me.id ? "Propose Trade" : "Accept Trade"
     tradeButton.disabled = false
     tradeInterfaceDiv.style.display = null
   }
   else {
-    tradeButton.textContent = "Roll dice before trading..."
+    tradeButton.textContent = currentGameData.turnCycle > 2 ? "Roll dice before trading..." : "Trading is not allowed right now..."
     tradeButton.disabled = true
     tradeInterfaceDiv.style.display = "none"
   }
