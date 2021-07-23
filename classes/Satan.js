@@ -459,7 +459,6 @@ class Satan {
           }
         }
         else {
-          if(!canAfford(player, "road")) {
           if(!player.canAfford(buildingCosts.road)) {
             printChatErr("You cannot afford this.")
             break
@@ -520,23 +519,19 @@ class Satan {
         const unsanitisedOffer = actionData.offer
         const { offerer, taker } = unsanitisedOffer
 
-        this.trade.offer = {
+        const sanitisedOffer = {
           offerer: {},
           taker: {}
         }
 
         for(let resource of resourceNames) {
-          this.trade.offer.offerer[resource] = parseInt(offerer[resource]) || 0
-          this.trade.offer.taker[resource] = parseInt(taker[resource]) || 0
           const maxAmt = 7
-
-          if(sanitisedOffer.offerer[resource] > player.resources[resource]) {
-            cannotAffordTrade = true
-            break
-          }
+          const minAmt = 0
+          sanitisedOffer.offerer[resource] = Math.max(Math.min(parseInt(offerer[resource]) || 0, maxAmt), minAmt)
+          sanitisedOffer.taker[resource] = Math.max(Math.min(parseInt(taker[resource]) || 0, maxAmt), minAmt)
         }
 
-        if(cannotAffordTrade) {
+        if(!player.canAfford(sanitisedOffer.offerer)) {
           printChatErr("You do not have the resources necessary for this trade.")
           break
         }
@@ -579,6 +574,23 @@ class Satan {
 
   finishTrade(deal, party1, party2) {
     const { offerer, taker } = deal
+
+    const printNoRes = (human) => {
+      lobbies.getLobby(this.lobbyId).printToChat([{
+        text: `${human.name} did not have the resources needed for the trade.`,
+        style: { colour: "red", italic: true }
+      }])
+    }
+
+    if(!party1.canAfford(offerer)) {
+      printNoRes(party1)
+      return
+    }
+    if(!party2.canAfford(taker)) {
+      printNoRes(party2)
+      return
+    }
+    
     for(let i in offerer) {
       party1.resources[i] -= offerer[i]
       party1.resources[i] += taker[i]
