@@ -9,8 +9,6 @@ body {
 main {
   margin: 0 8%;
   padding: 2em 5vw 4em;
-
-  background-color: #fff;
   border-radius: 5px;
   overflow-x: hidden;
 }
@@ -22,6 +20,7 @@ main {
 input {
   border: none;
   border-bottom: 2px solid #1262e7;
+  background-color: transparent;
   transition: 500ms;
 }
 input:focus {
@@ -40,7 +39,6 @@ input[type=number] {
 }
 
 code, pre {
-  background-color: #ddd;
   border-radius: 3px;
   font-family: 'Courier New', 'Courier', 'Consolas', monospace
 }
@@ -48,34 +46,21 @@ code {
   padding: 0.25em;
 }
 pre {
-  border: 2px solid #aaa;
   padding: 1em;
 }
 
 
 button {
   padding: 0.4em;
-  background-color: #fff;
   cursor: pointer;
   color: #000;
-  border: 2px solid #7c7c7c;
   font-size: 16px;
 }
-button:hover {
-  background-color: #eee;
-}
 button:disabled {
-  background-color: #ddd;
   opacity: 0.75;
   cursor: not-allowed;
 }
 
-a {
-  color: #1262e7;
-}
-a:hover {
-  color: #6ba4ff;
-}
 a[target="_blank"]::after {
   display: inline-block;
   content: "";

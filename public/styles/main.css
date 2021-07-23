@@ -108,11 +108,9 @@ html {
     display: flex;
     flex-direction: column;
     text-align: left;
-    background-color: #dfdfdf;
     margin-top: 0.2em;
     padding: 0.6em 1.2em;
     border-radius: 5px;
-    border: 2px solid #232323;
 }
 .list-entry * {
   margin: 0.2em;
@@ -134,7 +132,6 @@ html {
     display: block;
     height: 1.2em;
 }
-
 
 .icon-1em {
     height: 1em;
