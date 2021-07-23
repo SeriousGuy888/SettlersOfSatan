@@ -70,6 +70,18 @@ class Satan {
       this.nextTurn()
     }
 
+
+    if(this.trade.takers.length) {
+      const takerId = this.trade.takers[0]
+      const taker = this.getPlayer(takerId)
+
+      if(!taker) return
+
+      this.finishTrade(this.trade.offer, this.getPlayer(this.turn), taker)
+      this.clearTrade()
+    }
+
+
     let playersPublicData = {}
     for(let i in this.players) {
       playersPublicData[i] = this.players[i].getPublicData()
@@ -559,6 +571,24 @@ class Satan {
     }
   }
 
+  finishTrade(deal, party1, party2) {
+    const { offerer, taker } = deal
+    for(let i in offerer) {
+      party1.resources[i] -= offerer[i]
+      party1.resources[i] += taker[i]
+    }
+    for(let i in taker) {
+      party2.resources[i] -= taker[i]
+      party2.resources[i] += offerer[i]
+    }
+  }
+
+  clearTrade() {
+    this.trade.offer = null
+    this.trade.takers = []
+    this.trade.idempotency = null
+  }
+
   refreshAllowedPlacements() {
     this.vertexes.forEach(vertex => {
       vertex.allowPlacement = true
@@ -602,9 +632,7 @@ class Satan {
       this.turnTick = true
       this.turnCountdownTo = new Date().setTime(new Date().getTime() + 120 * 1000)
 
-      this.trade.offer = null
-      this.trade.takers = []
-      this.trade.idempotency = null
+      this.clearTrade()
 
       if(this.inSetupTurnCycle()) {
         this.setupTurnPlaced.settlement = null
