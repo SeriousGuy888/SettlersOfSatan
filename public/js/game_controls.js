@@ -79,7 +79,14 @@ const refreshControls = () => {
   takerNameP.textContent = "Everyone"
 
   if(currentGameData.turnStage === 1 && currentGameData.turnCycle > 2) {
-    tradeButton.textContent = currentGameData.turn === currentGameData.me.id ? "Propose Trade" : "Accept Trade"
+    if(currentGameData.turn === currentGameData.me.id) {
+      tradeButton.textContent = currentGameData.trade.offer ? "Cancel Trade Offer" : "Propose Trade"
+    }
+    else {
+      tradeButton.textContent = "Accept Trade"
+    }
+
+
     tradeButton.disabled = false
     tradeInterfaceDiv.style.display = null
   }
@@ -98,23 +105,21 @@ const refreshControls = () => {
       takerResourceInput.value = 0
     }
 
-    if(currentGameData.turn === currentGameData.me.id) {
+    if(currentGameData.trade.offer) {
+      offererResourceInput.disabled = true
+      takerResourceInput.disabled = true
+      offererResourceInput.value = currentGameData.trade.offer.offerer[resourceName] ?? 0
+      takerResourceInput.value = currentGameData.trade.offer.taker[resourceName] ?? 0
+    }
+    else if(currentGameData.turn === currentGameData.me.id) {
       offererResourceInput.disabled = false
       takerResourceInput.disabled = false
     }
     else {
-      if(currentGameData.trade.offer) {
-        offererResourceInput.disabled = true
-        takerResourceInput.disabled = true
-        offererResourceInput.value = currentGameData.trade.offer.offerer[resourceName] ?? 0
-        takerResourceInput.value = currentGameData.trade.offer.taker[resourceName] ?? 0
-      }
-      else {
-        tradeButton.disabled = true
-        tradeButton.textContent = "No trade offer..."
+      tradeButton.disabled = true
+      tradeButton.textContent = "No trade offer..."
 
-        tradeInterfaceDiv.style.display = "none"
-      }
+      tradeInterfaceDiv.style.display = "none"
     }
   }
 }
@@ -129,26 +134,35 @@ const takerNameP = document.querySelector("#trade-taker-name")
 
 tradeButton.addEventListener("click", () => {
   if(currentGameData.turn === currentGameData.me.id) {
-    const offererAmounts = {}
-    const takerAmounts = {}
-    for(let resourceName in resourceDivNames) {
-      const offererResourceInput = tradeOffererInputs.querySelector(`#trade-amount-input-${resourceName}`)
-      const takerResourceInput = tradeTakerInputs.querySelector(`#trade-amount-input-${resourceName}`)
-      offererAmounts[resourceName] = parseInt(offererResourceInput?.value) || 0
-      takerAmounts[resourceName] = parseInt(takerResourceInput?.value) || 0
+    if(currentGameData.trade.offer) {
+      socket.emit("perform_game_action", {
+        action: "cancel_trade",
+      }, (err, data) => {
+        if(err) notifyUser(err)
+      })
     }
-  
-    const offer = {
-      offerer: offererAmounts,
-      taker: takerAmounts
+    else {
+      const offererAmounts = {}
+      const takerAmounts = {}
+      for(let resourceName in resourceDivNames) {
+        const offererResourceInput = tradeOffererInputs.querySelector(`#trade-amount-input-${resourceName}`)
+        const takerResourceInput = tradeTakerInputs.querySelector(`#trade-amount-input-${resourceName}`)
+        offererAmounts[resourceName] = parseInt(offererResourceInput?.value) || 0
+        takerAmounts[resourceName] = parseInt(takerResourceInput?.value) || 0
+      }
+    
+      const offer = {
+        offerer: offererAmounts,
+        taker: takerAmounts
+      }
+    
+      socket.emit("perform_game_action", {
+        action: "offer_trade",
+        offer,
+      }, (err, data) => {
+        if(err) notifyUser(err)
+      })
     }
-  
-    socket.emit("perform_game_action", {
-      action: "offer_trade",
-      offer,
-    }, (err, data) => {
-      if(err) notifyUser(err)
-    })
   }
   else {
     socket.emit("perform_game_action", {
