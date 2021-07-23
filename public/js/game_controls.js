@@ -114,8 +114,8 @@ const refreshControls = () => {
       const takerVal = currentGameData.trade.offer.taker[resourceName] ?? 0
       offererResourceInput.value = offererVal
       takerResourceInput.value = takerVal
-      if(offererVal === 0) offererResourceInput.style.color = "#666"
-      if(takerVal === 0) takerResourceInput.style.color = "#666"
+      if(offererVal === 0) offererResourceInput.style.color = "#555"
+      if(takerVal === 0) takerResourceInput.style.color = "#555"
     }
     else if(currentGameData.turn === currentGameData.me.id) {
       offererResourceInput.disabled = false
