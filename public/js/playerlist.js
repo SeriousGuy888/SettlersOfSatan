@@ -15,6 +15,7 @@ document.addEventListener("click", e => {
 const refreshPlayerList = () => {
   lobbyPlayerList.innerHTML = ""
   const { users, maxPlayerCount } = currentLobbyData
+  const players = currentGameData?.players
 
   redrawColourButtons(users)
 
@@ -33,7 +34,9 @@ const refreshPlayerList = () => {
     listEntryTitleDiv.classList.add(["list-entry-title"])
 
     const playerNameH = document.createElement("h4")
-    playerNameH.appendChild(document.createTextNode(user.name))
+    let playerNameContent = user.name
+    if(players) playerNameContent += ` (${players[user.playerId].points} VP)`
+    playerNameH.textContent = playerNameContent
 
     const hostBadge = document.createElement("img")
     hostBadge.src = "/images/icons/host.svg"
