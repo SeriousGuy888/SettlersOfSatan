@@ -65,11 +65,6 @@ body #turn-data-display > div {
   border: 3px solid var(--theme-game-display-1);
   background-color: var(--theme-game-display-2);
 }
-body .credit-section {
-  border: 3px solid var(--theme-game-display-1);
-  background-color: var(--theme-game-display-2);
-}
-
 
 
 body .collapsible {

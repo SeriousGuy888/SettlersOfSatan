@@ -5,10 +5,13 @@
   const jsonData = await response.json()
   const contributorsArray = jsonData.contributors
 
+  let totalWeight = 0
+  contributorsArray.forEach(con => { if(con.weight) totalWeight += con.weight })
+
   for(let contributor of contributorsArray) {
     const creditSection = document.createElement("div")
     creditSection.classList.add(["credit-section"])
-    
+
     const sectionLines = []
     sectionLines.push(contributor.name)
     contributor.contributions.forEach(e => sectionLines.push(e))
@@ -31,6 +34,14 @@
         creditSection.appendChild(lineP)
       }
     }
+
+    const contributionPercentage = Math.round(((contributor.weight ?? 0) / totalWeight) * 100)
+
+    const contributionPercentageDiv = document.createElement("div")
+    contributionPercentageDiv.title = "Contribution Percentage"
+    contributionPercentageDiv.className = "contribution-percentage"
+    contributionPercentageDiv.textContent = `${contributionPercentage}%`
+    creditSection.appendChild(contributionPercentageDiv)
 
     creditsContainer.appendChild(creditSection)
   }

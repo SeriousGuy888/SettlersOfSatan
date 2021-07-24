@@ -2,6 +2,7 @@
   "contributors": [
     {
       "name": "Billzo",
+      "weight": 80,
       "contributions": [
         "web_design",
         "dark_theme",
@@ -11,6 +12,7 @@
     },
     {
       "name": "Liam",
+      "weight": 30,
       "contributions": [
         "web_design",
         "back_end",
@@ -19,6 +21,7 @@
     },
     {
       "name": "Hoang",
+      "weight": 5,
       "contributions": [
         "art",
         "participation"
@@ -26,6 +29,7 @@
     },
     {
       "name": "Jakob",
+      "weight": -10,
       "contributions": [
         "distract_liam",
         "jakob_criticism"
