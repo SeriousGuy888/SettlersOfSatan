@@ -11,6 +11,7 @@ class Player {
     this.userId = userId
 
     this.disconnected = false
+    this.points = 0
     this.inventory = new Inventory(5, 4, 15)
     this.resources = {
       bricks: 0,
@@ -33,8 +34,8 @@ class Player {
   }
 
   getPublicData() {
-    const { id, name, colour, inventory, resources } = this
-    return { id, name, colour, inventory, resources }
+    const { id, name, colour, inventory, resources, points } = this
+    return { id, name, colour, inventory, resources, points }
   }
 
   getColour() {
