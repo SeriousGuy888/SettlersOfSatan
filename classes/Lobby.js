@@ -59,6 +59,7 @@ class Lobby {
       joinTimestamp: Date.now(),
       playerId: `${Date.now()}${Math.round(Math.random() * 1000).toString().padStart(3, "0")}`,
       userId: user.id,
+      votekicks: [], // array of the ids of users who have votekicked this user
     }
 
     this.printToChat([{
@@ -118,23 +119,48 @@ class Lobby {
     lobbies.setLobby(this.code, null)
   }
 
-  kick(playerId) {
+  kick(playerId, votekick) {
     const kickedUser = users.getUser(this.getUser(playerId, true).userId)
     if(!kickedUser) return
-
-    console.log(kickedUser)
     
     this.leave(kickedUser.id)
     kickedUser.setLobby(null)
-    kickedUser.updateLobbyState("You were kicked from the lobby by the host.")
+    kickedUser.updateLobbyState(votekick ? "You were votekicked from that lobby." : "You were kicked from the lobby by the host.")
     
-    this.printToChat([
-      {
-        text: `${kickedUser.name} was kicked by the host`,
-        style: { colour: "red" }
-      }
-    ])
-  }  
+    this.printToChat([{
+      text: votekick ? `${kickedUser.name} was votekicked` : `${kickedUser.name} was kicked by the host`,
+      style: { colour: "red" }
+    }])
+  }
+
+  votekick(playerId, voterPlayerId) {
+    if(playerId === voterPlayerId) {
+      return
+    }
+
+    const kickedUser = users.getUser(this.getUser(playerId, true).userId)
+    const votingUser = users.getUser(voterPlayerId)
+    if(!kickedUser || !votingUser) return
+
+    const votesNeeded = Object.keys(this.users).length - 1
+
+    let votekicks = this.users[kickedUser.id].votekicks
+    if(votekicks.includes(votingUser.id)) {
+      this.printToUserChat(votingUser.id, [{ text: "You've already voted to kick this user.", style: { colour: "red" } }])
+      return
+    }
+    votekicks.push(votingUser.id)
+    this.printToChat([{
+      text: `${votingUser.name} has voted to kick ${kickedUser.name}. (${votekicks.length}/${votesNeeded} votes)`,
+      style: { colour: "green" }
+    }])
+
+    if(votekicks.length >= votesNeeded) {
+      this.kick(playerId, true)
+    }
+  }
+
+
 
   handleChatMessage(user, content) {
     const player = this.getUser(user.id)

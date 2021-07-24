@@ -56,21 +56,35 @@ const refreshPlayerList = () => {
       user.host && modalTitle.appendChild(hostBadge.cloneNode())
       
       modalButtons.innerHTML = ""
-      if(isHost && user.playerId !== playerId) {
-        const kickPlayerButton = document.createElement("button")
-        kickPlayerButton.classList.add("red-button")
-        kickPlayerButton.textContent = "Kick"
-        kickPlayerButton.onclick = () => {
-          if(window.confirm(`Are you sure you want to kick ${user.name}?`)) {
-            socket.emit("kick_player", {
-              playerId: user.playerId
-            }, (err, dat) => {
-              if(err) notifyUser(err)
-            })
-          }
+
+      if(user.playerId !== playerId) {
+        const votekickButton = document.createElement("button")
+        votekickButton.textContent = "Votekick"
+        votekickButton.onclick = () => {
+          socket.emit("votekick_player", {
+            playerId: user.playerId
+          }, (err, dat) => { if(err) notifyUser(err) })
+          
           modal.style.display = "none"
         }
-        modalButtons.appendChild(kickPlayerButton)
+        modalButtons.appendChild(votekickButton)
+
+        if(isHost) {
+          const kickPlayerButton = document.createElement("button")
+          kickPlayerButton.classList.add("red-button")
+          kickPlayerButton.textContent = "Kick"
+          kickPlayerButton.onclick = () => {
+            if(window.confirm(`Are you sure you want to kick ${user.name}?`)) {
+              socket.emit("kick_player", {
+                playerId: user.playerId
+              }, (err, dat) => {
+                if(err) notifyUser(err)
+              })
+            }
+            modal.style.display = "none"
+          }
+          modalButtons.appendChild(kickPlayerButton)
+        }
       }
 
       const copyPlayerIdButton = document.createElement("button")

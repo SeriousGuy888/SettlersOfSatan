@@ -204,6 +204,19 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     lobby.kick(data.playerId)
   })
 
+  socket.on("votekick_player", (data, callback) => {
+    const requestValidation = helpers.validateRequest(callback, socket, {
+      requireCallback: true,
+      requireUser: true,
+      requireLobby: true,
+    })
+    if(!requestValidation) return
+    const { lobby, user } = requestValidation
+
+    if(!lobby.hasUser(data.playerId, true)) return callback("Player not found.")
+    lobby.votekick(data.playerId, user.id)
+  })
+
   socket.on("send_chat", (data, callback) => {
     const requestValidation = helpers.validateRequest(callback, socket, {
       requireCallback: true,
