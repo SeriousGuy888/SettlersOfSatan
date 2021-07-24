@@ -664,17 +664,28 @@ class Satan {
   }
 
   nextTurn() {
+    const reversedCycle = this.turnCycle === 2
+    const reversedCycleIsNext = this.turnCycle === 2 - 1
+    // the second setup round is played in reverse order
+
     const playerIds = Object.keys(this.players)
     const sortedPlayerIds = playerIds.sort((a, b) => this.players[a].joinTimestamp - this.players[b].joinTimestamp)
-    const firstJoiner = sortedPlayerIds[0]
+    const firstOfNextCycle = reversedCycleIsNext ? sortedPlayerIds[sortedPlayerIds.length - 1] : sortedPlayerIds[0]
+
+    const nextTurnAddend = reversedCycle ? -1 : 1 // go backwards if this is a reversed turn cycle
 
     const currentIndex = sortedPlayerIds.indexOf(this.turn)
-    if(currentIndex === -1 || !playerIds[currentIndex + 1]) { // there is no turn right now or the current turn is the last player
-      this.turn = firstJoiner
+    if(currentIndex === -1 || !playerIds[currentIndex + nextTurnAddend]) { // there is no turn right now or the current turn is the last player
+      this.turn = firstOfNextCycle
       this.turnCycle++
+
+      if(reversedCycleIsNext) lobbies.getLobby(this.lobbyId).printToChat([{
+        text: "This setup round is played in reverse. The last player gets to place another settlement and road.",
+        style: { colour: "green" },
+      }])
     }
     else {
-      this.turn = playerIds[currentIndex + 1]
+      this.turn = playerIds[currentIndex + nextTurnAddend]
     }
 
     if(this.players[this.turn].disconnected) {
@@ -697,9 +708,7 @@ class Satan {
 
       lobbies.getLobby(this.lobbyId).printToChat([{
         text: `It is now ${this.players[this.turn].name}'s turn.`,
-        style: {
-          colour: "green",
-        },
+        style: { colour: "green" },
       }])
     }
   }
