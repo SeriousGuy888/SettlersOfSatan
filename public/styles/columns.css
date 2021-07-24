@@ -142,7 +142,7 @@
 }
 .trade-amount-div > input:disabled {
   border: 2px solid transparent;
-  color: black;
+  color: var(--theme-text);
 }
 .trade-amount-div-right > img { order: 2; }
 
