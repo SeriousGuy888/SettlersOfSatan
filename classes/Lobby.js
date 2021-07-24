@@ -142,7 +142,7 @@ class Lobby {
     const votingUser = users.getUser(voterPlayerId)
     if(!kickedUser || !votingUser) return
 
-    const votesNeeded = Object.keys(this.users).length - 1
+    const votesNeeded = Math.max(Object.keys(this.users).length - 1, 2)
 
     let votekicks = this.users[kickedUser.id].votekicks
     if(votekicks.includes(votingUser.id)) {
