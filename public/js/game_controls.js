@@ -22,6 +22,16 @@ gameControls.road.addEventListener("click", () => setHolding("road"))
 const turnControls = document.querySelector("#turn-controls")
 const turnButton = document.querySelector("#end-turn-dice-button")
 
+
+const tradeInterfaceDiv = document.querySelector("#trade-interface")
+const tradeButton = document.querySelector("#trade-button")
+const tradeOffererInputs = document.querySelector("#trade-offerer-inputs")
+const tradeTakerInputs = document.querySelector("#trade-taker-inputs")
+const offererNameP = document.querySelector("#trade-offerer-name")
+const takerNameP = document.querySelector("#trade-taker-name")
+const tradeTakersList = document.querySelector("#trade-takers")
+
+
 const refreshControls = () => {
   if(currentGameData.turn !== currentGameData.me.id) {
     for(let i in gameControls) gameControls[i].disabled = true
@@ -74,13 +84,23 @@ const refreshControls = () => {
 
 
 
+
   offererNameP.textContent = currentGameData.players[currentGameData.turn].name
   offererNameP.style.color = currentGameData.players[currentGameData.turn].colour
-  takerNameP.textContent = "Everyone"
+  takerNameP.textContent = "Anyone"
+
+  tradeTakersList.style.display = "none"
 
   if(currentGameData.turnStage === 1 && currentGameData.turnCycle > 2) {
     if(currentGameData.turn === currentGameData.me.id) {
-      tradeButton.textContent = currentGameData.trade.offer ? "Cancel Trade Offer" : "Propose Trade"
+      if(currentGameData.trade.offer) {
+        tradeButton.textContent = "Cancel Trade Offer"
+        tradeTakersList.style.display = null
+        tradeTakersList.textContent = JSON.stringify(currentGameData.trade.takers)
+      }
+      else {
+        tradeButton.textContent = "Propose Trade"
+      }
     }
     else {
       tradeButton.textContent = "Accept Trade"
@@ -129,13 +149,6 @@ const refreshControls = () => {
     }
   }
 }
-
-const tradeInterfaceDiv = document.querySelector("#trade-interface")
-const tradeButton = document.querySelector("#trade-button")
-const tradeOffererInputs = document.querySelector("#trade-offerer-inputs")
-const tradeTakerInputs = document.querySelector("#trade-taker-inputs")
-const offererNameP = document.querySelector("#trade-offerer-name")
-const takerNameP = document.querySelector("#trade-taker-name")
 
 
 tradeButton.addEventListener("click", () => {

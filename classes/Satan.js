@@ -71,15 +71,15 @@ class Satan {
     }
 
 
-    if(this.trade.takers.length) {
-      const takerId = this.trade.takers[0]
-      const taker = this.getPlayer(takerId)
+    // if(this.trade.takers.length) {
+    //   const takerId = this.trade.takers[0]
+    //   const taker = this.getPlayer(takerId)
 
-      if(!taker) return
+    //   if(!taker) return
 
-      this.finishTrade(this.trade.offer, this.getPlayer(this.turn), taker)
-      this.clearTrade()
-    }
+    //   this.finishTrade(this.trade.offer, this.getPlayer(this.turn), taker)
+    //   this.clearTrade()
+    // }
 
 
     let playersPublicData = {}
@@ -566,6 +566,23 @@ class Satan {
 
         this.trade.takers.push(playerId)
         lobby.printToUserChat(player.userId, [{text: ":D"}])
+        break
+      case "confirm_trade":
+        if(player.id !== this.turn) {
+          printChatErr("It is not your turn.")
+          break
+        }
+        if(!this.trade.offer) {
+          printChatErr("There is no trade to confirm.")
+          break
+        }
+
+        const tradeTakerId = this.trade.takers[0]
+        const tradeTaker = this.getPlayer(tradeTakerId)
+        if(!tradeTaker) break
+
+        this.finishTrade(this.trade.offer, this.getPlayer(this.turn), tradeTaker)
+        this.clearTrade()
         break
       case "cancel_trade":
         if(player.id !== this.turn) {
