@@ -68,7 +68,7 @@
         (async () => {
           const creditsContainer = document.querySelector("#credits-container")
 
-          const response = await fetch("/resources/contributors.json")
+          const response = await fetch("/contributors/contributors.json")
           const jsonData = await response.json()
           const contributorsArray = jsonData.contributors
 
