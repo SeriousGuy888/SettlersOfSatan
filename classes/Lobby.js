@@ -64,7 +64,7 @@ class Lobby {
 
     this.printToChat([{
       text: `${user.getName()} joined the lobby`,
-      style: { colour: "blue" }
+      style: { colour: "orange" }
     }])
 
     this.setUserColour(userId)
@@ -81,7 +81,7 @@ class Lobby {
 
       this.printToChat([{
         text: `${users.getUser(userId).getName()} left the lobby`,
-        style: { colour: "red" }
+        style: { colour: "orange" }
       }])
 
       if(this.game) {
