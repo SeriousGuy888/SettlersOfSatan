@@ -119,19 +119,12 @@ class Lobby {
   }
 
   kick(playerId) {
-    let userId
-    const lobbyUsers = this.getUsers()
-    for(let lobbyUserId in lobbyUsers) {
-      if(lobbyUsers[lobbyUserId].playerId === playerId) {
-        userId = lobbyUserId
-        break
-      }
-    }
+    const kickedUser = users.getUser(this.getUser(playerId, true).userId)
+    if(!kickedUser) return
 
-    if(!userId) return
+    console.log(kickedUser)
     
-    this.leave(userId)
-    const kickedUser = users.getUser(userId)
+    this.leave(kickedUser.id)
     kickedUser.setLobby(null)
     kickedUser.updateLobbyState("You were kicked from the lobby by the host.")
     
@@ -250,8 +243,15 @@ class Lobby {
     }
   }
 
-  getUser(id) {
-    return this.users[id] || null
+  getUser(id, byPlayerId) {
+    if(!byPlayerId) {
+      return this.users[id] || null
+    }
+    else {
+      const foundUsers = Object.keys(this.users).filter(k => this.users[k].playerId === id)
+      if(foundUsers.length) return this.users[foundUsers[0]]
+      else return null
+    }
   }
 
   getUsers() {
