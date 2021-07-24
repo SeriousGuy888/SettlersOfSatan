@@ -34,8 +34,9 @@ class Player {
   }
 
   getPublicData() {
-    const { id, name, colour, inventory, resources, points } = this
-    return { id, name, colour, inventory, resources, points }
+    const { id, name, colour, inventory, points, resources } = this
+    const resourceCardCount = Object.values(resources).reduce((acc, cur) => acc += cur)
+    return { id, name, colour, inventory, points, resourceCardCount }
   }
 
   getColour() {
