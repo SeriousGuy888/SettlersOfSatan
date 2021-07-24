@@ -9,6 +9,9 @@ body {
   --theme-chat-2: #e2e2e2;
   --theme-game-display-1: #bb9662;
   --theme-game-display-2: #e4c18e;
+  --theme-red-button-border: #c90d00;
+  --theme-red-button-bg: #ff7167;
+  --theme-red-button-hover: #ff9e97;
 }
 body.dark-theme {
   --theme-text: #f8f8f8;
@@ -21,6 +24,9 @@ body.dark-theme {
   --theme-chat-2: #454545;
   --theme-game-display-1: #856b47;
   --theme-game-display-2: #a68759;
+  --theme-red-button-border: #92150d;
+  --theme-red-button-bg: #e4291c;
+  --theme-red-button-hover: #f04c40;
 }
 
 body * { transition: 250ms background-color; }
@@ -47,6 +53,8 @@ pre        { border: 2px solid var(--theme-bg-4); }
 button           { background-color: var(--theme-bg); border: 2px solid var(--theme-border); color: var(--theme-text); }
 button:hover     { background-color: var(--theme-bg-2); }
 button:disabled  { background-color: var(--theme-bg-3); }
+button.red-button           { background-color: var(--theme-red-button-bg); border: 2px solid var(--theme-red-button-border); color: var(--theme-text); }
+button.red-button:hover     { background-color: var(--theme-red-button-hover); }
 
 
 .list-entry { background-color: var(--theme-bg-2); border: 2px solid var(--theme-border); }

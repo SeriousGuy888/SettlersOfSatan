@@ -35,7 +35,7 @@ const refreshPlayerList = () => {
 
     const playerNameH = document.createElement("h4")
     let playerNameContent = user.name
-    if(players) playerNameContent += ` (${players[user.playerId].points} VP)`
+    if(players) playerNameContent += ` (${players[user.playerId]?.points} VP)`
     playerNameH.textContent = playerNameContent
 
     const hostBadge = document.createElement("img")
@@ -58,6 +58,7 @@ const refreshPlayerList = () => {
       modalButtons.innerHTML = ""
       if(isHost && user.playerId !== playerId) {
         const kickPlayerButton = document.createElement("button")
+        kickPlayerButton.classList.add("red-button")
         kickPlayerButton.textContent = "Kick"
         kickPlayerButton.onclick = () => {
           if(window.confirm(`Are you sure you want to kick ${user.name}?`)) {
