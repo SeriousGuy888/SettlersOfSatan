@@ -5,6 +5,8 @@
     <link rel="stylesheet" href="/styles/global.css">
     <link rel="stylesheet" href="/styles/theme.css">
     
+    <script defer src="/contributors/language.js"></script>
+    <script defer src="/contributors/load_credits.js"></script>
     <script defer src="js/theme.js"></script>
 
     <meta charset="UTF-8">
@@ -49,60 +51,7 @@
       <a id="switch-lang-link" href="/kontributeurs">Exit intu Billzonian</a>
       <a href="#" id="dark-theme-toggle"></a>
 
-
       <div id="credits-container"></div>
-      <script>
-        let creditsLang
-        if(window.location.pathname.endsWith("contributors")) creditsLang = "english"
-        if(window.location.pathname.endsWith("kontributeurs")) creditsLang = "billzonian"
-
-        if(creditsLang === "billzonian") {
-          document.querySelector("#contributors-page-title").textContent = "Kontributeurs"
-
-          const switchLangLink = document.querySelector("#switch-lang-link")
-          switchLangLink.href = "/contributors"
-          switchLangLink.textContent = "Switch to English"
-        }
-      </script>
-      <script defer>
-        (async () => {
-          const creditsContainer = document.querySelector("#credits-container")
-
-          const response = await fetch("/contributors/contributors.json")
-          const jsonData = await response.json()
-          const contributorsArray = jsonData.contributors
-
-          for(let contributor of contributorsArray) {
-            const creditSection = document.createElement("div")
-            creditSection.classList.add(["credit-section"])
-            
-            const sectionLines = []
-            sectionLines.push(contributor.name)
-            contributor.contributions.forEach(e => sectionLines.push(e))
-
-            for(let j in sectionLines) {
-              const text = sectionLines[j]
-              
-              if(j == 0) {
-                const lineH = document.createElement("h3")
-                lineH.className = "credit-section-title"
-                lineH.textContent = text
-                creditSection.appendChild(lineH)
-              }
-              else {
-                const lineP = document.createElement("p")
-
-                const contributionEmoji = jsonData.lang.emojis[text]
-                const langText = jsonData.lang[creditsLang]?.[text] || text
-                lineP.textContent = `${contributionEmoji ? contributionEmoji + " " : ""}${langText}`
-                creditSection.appendChild(lineP)
-              }
-            }
-
-            creditsContainer.appendChild(creditSection)
-          }
-        })()
-      </script>
     </main>
   </body>
 </html>
