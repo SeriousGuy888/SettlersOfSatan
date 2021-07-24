@@ -414,6 +414,7 @@ class Satan {
           if(this.inSetupTurnCycle()) this.setupTurnPlaced.settlement = vertex.coords
           else                        spendResourcesOn(player, "settlement")
 
+          player.points++
           player.inventory.addSettlement(-1)
           this.refreshAllowedPlacements()
         }
@@ -435,6 +436,7 @@ class Satan {
           vertex.setBuilding("city", playerId)
           spendResourcesOn(player, "city")
 
+          player.points++
           player.inventory.addCity(-1)
           player.inventory.addSettlement()
           this.refreshAllowedPlacements()
