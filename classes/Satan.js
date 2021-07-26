@@ -421,10 +421,25 @@ class Satan {
             break
           }
 
+          if(this.inSetupTurnCycle()) {
+            this.setupTurnPlaced.settlement = vertex.coords
+            
+            if(this.turnCycle === 2) {
+              const adjacentHexes = vertex.getAdjacentHexes()
+              for(const hexCoords of adjacentHexes) {
+                const hex = this.board[hexCoords.y][hexCoords.x]
+                const resource = hexTypesResources[hex.resource]
+                if(resource) {
+                  player.resources[resource]++
+                }
+              }
+            }
+          }
+          else {
+            spendResourcesOn(player, "settlement")
+          }
+          
           vertex.setBuilding("settlement", playerId)
-          if(this.inSetupTurnCycle()) this.setupTurnPlaced.settlement = vertex.coords
-          else                        spendResourcesOn(player, "settlement")
-
           player.points++
           player.inventory.addSettlement(-1)
           this.refreshAllowedPlacements()
@@ -798,7 +813,6 @@ class Satan {
   moveRobber() {
     this.robbing = true
   }
-
 }
 
 module.exports = Satan
