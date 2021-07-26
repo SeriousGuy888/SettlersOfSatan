@@ -670,7 +670,29 @@ class Satan {
       }
     })
     this.edges.forEach(edge => {
-      edge.allowPlacement = true // couldnt make it work so im just leaving this here -billzo
+      const connectedVertexes = edge.coordsArr.map(c => this.getVertex(c))
+      if(connectedVertexes.some(v => v === undefined)) return
+
+      edge.allowPlacement = false
+
+      if(this.inSetupTurnCycle()) {
+        if(connectedVertexes.some(v => v.coords === this.setupTurnPlaced.settlement)) {
+          edge.allowPlacement = true
+        }
+      }
+      else {
+        if(connectedVertexes.some(v => v.getBuilding()?.playerId === this.turn)) {
+          edge.allowPlacement = true
+        }
+
+        connectedVertexes.forEach(vertex => {
+          for(let adjVertCoords of vertex.getAdjacentVertexes()) {
+            const adjEdge = this.getEdge([vertex.coords, adjVertCoords])
+            if(!adjEdge) continue
+            if(adjEdge.getRoad() === this.turn) edge.allowPlacement = true
+          }
+        })
+      }
     })
   }
 
