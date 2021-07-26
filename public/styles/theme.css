@@ -9,6 +9,8 @@ body {
   --theme-chat-2: #e2e2e2;
   --theme-game-display-1: #bb9662;
   --theme-game-display-2: #e4c18e;
+  --theme-game-display-attention-1: #c4b878;
+  --theme-game-display-attention-2: #faeb96;
   --theme-red-button-border: #c90d00;
   --theme-red-button-bg: #ff7167;
   --theme-red-button-hover: #ff9e97;
@@ -24,6 +26,8 @@ body.dark-theme {
   --theme-chat-2: #454545;
   --theme-game-display-1: #856b47;
   --theme-game-display-2: #a68759;
+  --theme-game-display-attention-1: #867c42;
+  --theme-game-display-attention-2: #b6a858;
   --theme-red-button-border: #92150d;
   --theme-red-button-bg: #e4291c;
   --theme-red-button-hover: #f04c40;
@@ -72,6 +76,22 @@ body.dark-theme #lobby-chat-messages > div p  { filter: brightness(175%); }
 #turn-data-display > div {
   border: 3px solid var(--theme-game-display-1);
   background-color: var(--theme-game-display-2);
+}
+
+
+@keyframes give-me-attention {
+  0% {
+    border: 3px solid var(--theme-game-display-1);
+    background-color: var(--theme-game-display-2);
+  }
+  50% {
+    border: 3px solid var(--theme-game-display-attention-1);
+    background-color: var(--theme-game-display-attention-2);
+  }
+  100% {
+    border: 3px solid var(--theme-game-display-1);
+    background-color: var(--theme-game-display-2);
+  }
 }
 
 
