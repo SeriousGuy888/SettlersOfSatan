@@ -139,6 +139,17 @@ class Satan {
     return this.board
   }
 
+  handleWin() {
+    const lobby = lobbies.getLobby(this.lobbyId)
+    const currentPlayer = this.getPlayer(this.turn)
+    if(currentPlayer.points < 10) return
+
+    lobby.printToChat([{
+      text: `${currentPlayer.name} has reached ten victory points and won the game 🎉 but billzo has not coded the stuff for ending a game`,
+      style: { colour: "magenta", bold: true }
+    }])
+  }
+
   setUpBoard(players){
     this.board = []
     this.vertexes = []
@@ -705,6 +716,7 @@ class Satan {
       }
 
       this.refreshAllowedPlacements()
+      this.handleWin()
 
       lobbies.getLobby(this.lobbyId).printToChat([{
         text: `It is now ${this.players[this.turn].name}'s turn.`,
