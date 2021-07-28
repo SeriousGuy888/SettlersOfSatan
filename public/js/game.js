@@ -72,6 +72,7 @@ socket.on("game_update", gData => {
       canvasFunctions.refreshBoard()
       refreshResourceCards()
       refreshControls()
+      refreshTradeMenu()
       refreshTurnDisplay()
       refreshPlayerList()
 
