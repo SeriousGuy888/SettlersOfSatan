@@ -44,11 +44,17 @@ const refreshPlayerList = () => {
     const playerVpDisplay = document.createElement("p")
     if(players) playerVpDisplay.textContent = `${players[user.playerId]?.points}VP`
 
+    const confirmTradeButton = document.createElement("button")
+    confirmTradeButton.textContent = "Trade"
+
     if(user.host) listEntryTitleDiv.appendChild(hostBadge)
     listEntryTitleDiv.appendChild(playerNameH)
-    if(currentGameData) listEntryTitleDiv.appendChild(playerVpDisplay)
-
-
+    if(currentGameData) {
+      listEntryTitleDiv.appendChild(playerVpDisplay)
+      if(currentGameData.turn === currentGameData.me.id && currentGameData.trade.takers?.includes(user.playerId)) {
+        listEntryTitleDiv.appendChild(confirmTradeButton)
+      }
+    }
 
     
     const playerMenuButton = document.createElement("span")
