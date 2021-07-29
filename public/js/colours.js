@@ -16,8 +16,6 @@ const redrawColourButtons = (users) => {
     colourButton.id = `colour-button-${colour}`
     colourButton.style.backgroundColor = colour
     colourButton.textContent = colour
-    
-    if(colour === "lime" || colour === "pink") colourButton.style.color = "black"
   
     colourButton.onclick = () => {
       socket.emit("select_colour", { colour }, (err, data) => {
