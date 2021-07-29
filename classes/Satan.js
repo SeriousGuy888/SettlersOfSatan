@@ -604,6 +604,10 @@ class Satan {
           printChatErr("You've already accepted this trade. Please wait for the offerer to decide.")
           break
         }
+        if(!this.getPlayer(playerId).canAfford(this.trade.offer.taker)){
+          printChatErr("You cannot afford this trade.")
+          break
+        }
         
         if(this.turnStage !== 1) break
 
