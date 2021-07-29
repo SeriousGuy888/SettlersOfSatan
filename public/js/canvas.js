@@ -134,9 +134,9 @@ canvasFunctions.refreshBoard = () => {
 
     let hexesAdjacentToBuildings = []
     console.log(vertexes)
-    for(vertex of currentGameData.vertexes) {
+    for(let vertex of currentGameData.vertexes) {
       if(vertex.building){
-        for(adjacentHex of vertex.adjacentHexes){
+        for(let adjacentHex of vertex.adjacentHexes) {
           
         }
       }
