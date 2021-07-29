@@ -32,6 +32,7 @@ html {
 
 #notification-container {
     position: fixed;
+    z-index: 5;
 
     bottom: 1em;
     left: 10vw;
