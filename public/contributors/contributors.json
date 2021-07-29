@@ -16,7 +16,8 @@
       "contributions": [
         "web_design",
         "back_end",
-        "catan"
+        "catan",
+        "background"
       ]
     },
     {
@@ -51,6 +52,7 @@
       "art": "Art",
       "participation": "Emotional Support",
       "catan": "Knowing the Rules of Catan",
+      "background": "Stealing the Background Image",
       "distract_liam": "Distracting Liam",
       "jakob_criticism": "Criticism of Billzo's Web Design"
     },
@@ -61,6 +63,7 @@
       "art": "Vandalism",
       "participation": "Emotional Assistion",
       "catan": "Koqqing Hautu Catan·ise",
+      "background": "Cieving ce Bakkground Image",
       "distract_liam": "Distrakting Liam",
       "jakob_criticism": "Bullying Billzo Ceir Web Designment"
     }
