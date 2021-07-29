@@ -50,11 +50,6 @@ const refreshTradeMenu = () => {
       if(currentGameData.trade.offer) {
         tradeButton.textContent = "Cancel Trade Offer"
         tradeTakersList.style.display = null
-
-        for(const takerPlayerId of currentGameData.trade.takers) {
-          const takerPlayerName = currentGameData.players[takerPlayerId].name
-          tradeTakersList.textContent += takerPlayerName
-        }
       }
       else {
         tradeButton.textContent = "Propose Trade"
