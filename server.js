@@ -51,7 +51,7 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     const user = users.setUser(socket.id, new User(socket.id, nickname, socket))
 
     console.log(`${user.name} (${user.id}) has logged in.`)
-    callback(null, { name: nickname, colourChoices: lobbies.colourChoices })
+    callback(null, { name: nickname })
   })
 
   socket.on("logout", (data, callback) => {
@@ -68,6 +68,15 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
       users.setUser(user.id, null)
     }
     callback(null, data)
+  })
+
+  socket.on("get_colour_choices", (data, callback) => {
+    const requestValidation = helpers.validateRequest(callback, socket, {
+      requireCallback: true,
+    })
+    if(!requestValidation) return
+
+    callback(null, { colourChoices: lobbies.colourChoices })
   })
 
   socket.on("create_lobby", (data, callback) => {

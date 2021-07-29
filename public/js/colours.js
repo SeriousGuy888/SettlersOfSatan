@@ -1,5 +1,11 @@
 const colourButtonsContainer = document.querySelector("#colour-buttons-container")
 
+let colourChoices = []
+socket.emit("get_colour_choices", {}, (err, data) => {
+  if(err) notifyUser(err)
+  colourChoices = data.colourChoices
+})
+
 const redrawColourButtons = (users) => {
   colourButtonsContainer.innerHTML = ""
 
