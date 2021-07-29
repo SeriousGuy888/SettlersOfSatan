@@ -16,6 +16,32 @@ main {
   main { margin: 0; }
 }
 
+.title-container {
+  display: grid;
+  text-align: center;
+
+  --title-height: max(2.5vw, 1.8em);
+}
+.title-container-top {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+}
+.title-container-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5em;
+  flex-wrap: wrap;
+}
+.page-title {
+  font-weight: 900;
+  font-size: var(--title-height);
+  margin: 0.5rem;
+}
+
+
 
 input {
   border: none;
