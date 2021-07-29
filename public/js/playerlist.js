@@ -33,19 +33,24 @@ const refreshPlayerList = () => {
     const listEntryTitleDiv = document.createElement("div")
     listEntryTitleDiv.classList.add(["list-entry-title"])
 
-    const playerNameH = document.createElement("h4")
-    let playerNameContent = user.name
-    if(players) playerNameContent += ` (${players[user.playerId]?.points} VP)`
-    playerNameH.textContent = playerNameContent
-
     const hostBadge = document.createElement("img")
     hostBadge.src = "/images/icons/host.svg"
     hostBadge.title = "Lobby Host"
     hostBadge.classList.add(["icon-1em"])
 
-    listEntryTitleDiv.appendChild(playerNameH)
-    user.host && listEntryTitleDiv.appendChild(hostBadge)
+    const playerNameH = document.createElement("h4")
+    playerNameH.textContent = user.name
 
+    const playerVpDisplay = document.createElement("p")
+    if(players) playerVpDisplay.textContent = `${players[user.playerId]?.points}VP`
+
+    if(user.host) listEntryTitleDiv.appendChild(hostBadge)
+    listEntryTitleDiv.appendChild(playerNameH)
+    if(currentGameData) listEntryTitleDiv.appendChild(playerVpDisplay)
+
+
+
+    
     const playerMenuButton = document.createElement("span")
     playerMenuButton.textContent = "⋮"
     playerMenuButton.className = "player-list-modal-button"
