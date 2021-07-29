@@ -2,7 +2,7 @@ const notificationContainer = document.querySelector("#notification-container")
 const notificationDismissAllButton = document.querySelector("#notification-dismiss-all-button")
 
 
-const notifyUser = (message) => {
+const notifyUser = (message, timeout) => {
   const notificationId = `notification-${Date.now()}_${Math.round(Math.random() * 1000)}`
 
   const notificationDiv = document.createElement("div")
@@ -27,7 +27,9 @@ const notifyUser = (message) => {
   notificationDiv.appendChild(notificationDismissButton)
 
   notificationContainer.appendChild(notificationDiv)
-  setTimeout(notificationDismissButton.onclick, 15000)
+  if(timeout !== 0) {
+    setTimeout(notificationDismissButton.onclick, (timeout || 15) * 1000)
+  }
 
   notificationDismissAllButton.style.display = null
 }
