@@ -54,6 +54,5 @@ logoutButton.addEventListener("click", () => {
 })
 
 socket.on("disconnect", () => {
-  alert("You were disconnected from the game server! The server may be restarting.\n\nClick OK to reload.")
-  window.location.reload()
+  notifyUser("Disconnected from game server! Reload to reconnect.")
 })
