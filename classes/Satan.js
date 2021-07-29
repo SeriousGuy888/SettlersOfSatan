@@ -11,12 +11,13 @@ const { Socket } = require("socket.io")
   1 = regular hex
   2 = fake hex with only south vertex
   3 = fake hex with only north vertex
+  4 = fake hex without vertexes (only manages harbours)
 */
 const boardLayout = [
   [0,0,2,2,2,2,0,0],
   [0,2,1,1,1,2,0,0],
   [0,2,1,1,1,1,2,0],
-  [0,1,1,1,1,1,0,0],
+  [4,1,1,1,1,1,4,0],
   [0,3,1,1,1,1,3,0],
   [0,3,1,1,1,3,0,0],
   [0,0,3,3,3,3,0,0],
@@ -183,11 +184,11 @@ class Satan {
       }
     }
 
-    for (let y in boardLayout) {
+    for (let y = 0; y < boardLayout.length; y++) {
       const row = boardLayout[y]
 
       this.board.push([])
-      for(let x in row) {
+      for(let x = 0; x < row.length; x++) {
         const space = row[x]
 
         // at this point the variable space should be a number where...
@@ -244,25 +245,39 @@ class Satan {
             break
           case 2:
             hex.setInvisible(true)
-            hex.setHarbour(true)
             addVertex("south")
             break
           case 3:
             hex.setInvisible(true)
-            hex.setHarbour(true)
             addVertex("north")
+            break
+          case 4:
+            hex.setInvisible(true)
             break
         }
 
         this.board[this.board.length - 1].push(hex)
       }
     }
-    // this.graph.printMatrix() // prints quite a bit of false in the console
+    
+    for(let row of this.board) {
+      for(let hex of row) {
+        if(!hex?.invisible) continue
 
-    // console.log(this.board)
+        const adjHexCoords = hex.getAdjacentHexes()
+        const adjHexes = []
+        adjHexCoords.forEach(c => {
+          const loopHex = this.board[c.y]?.[c.x]
+          if(loopHex) adjHexes.push(loopHex)
+        })
+
+        if(adjHexes.every(adjHex => !adjHex.harbour)) {
+          hex.setHarbour(true)
+        }
+      }
+    }
 
     for(let row of this.board){
-      // console.log(row)
       for(let hex of row){
         if(hex && (hex.number == 8 || hex.number == 6)){
 

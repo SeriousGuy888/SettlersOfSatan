@@ -44,7 +44,7 @@ let mousePos = { x: 0, y: 0 }
 */
 
 
-const hexRadius = 100
+const hexRadius = 90
 const hexApothem = Math.sqrt(hexRadius ** 2 - (hexRadius / 2) ** 2)
 
 let drawLoop = false

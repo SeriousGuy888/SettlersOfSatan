@@ -137,6 +137,12 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
       ctx.fill()
     }
 
+    // if(this.invisible) {
+    //   ctx.fillStyle = "#0dd"
+    //   const { x, y } = this.coords
+    //   ctx.fillText(`${x},${y}`, xPos, yPos)
+    // }
+
     if(this.invisible) return
 
     // if (currentGameData.robbing) {
