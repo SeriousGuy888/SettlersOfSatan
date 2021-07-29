@@ -46,6 +46,14 @@ const refreshPlayerList = () => {
 
     const confirmTradeButton = document.createElement("button")
     confirmTradeButton.textContent = "Trade"
+    confirmTradeButton.onclick = () => {
+      socket.emit("perform_game_action", {
+        action: "confirm_trade",
+        tradeWith: user.playerId
+      }, (err, data) => {
+        if(err) notifyUser(err)
+      })
+    }
 
     if(user.host) listEntryTitleDiv.appendChild(hostBadge)
     listEntryTitleDiv.appendChild(playerNameH)

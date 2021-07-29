@@ -620,7 +620,12 @@ class Satan {
           break
         }
 
-        const tradeTakerId = this.trade.takers[0]
+        const tradeTakerId = actionData.tradeWith
+        if(!this.trade.takers.includes(tradeTakerId)) {
+          printChatErr("This player has not accepted the trade offer.")
+          break
+        }
+
         const tradeTaker = this.getPlayer(tradeTakerId)
         if(!tradeTaker) break
 
