@@ -36,6 +36,9 @@ const updateLobbyState = (data) => {
     const lobbyLink = `${protocol}//${hostname}${port && ":" + port}#lobby=${data.code}`
     lobbyLinkDisplay.textContent = lobbyLink
     lobbyLinkDisplay.href = lobbyLink
+
+    refreshPlayerList()
+    redrawColourButtons()
   }
   else {
     playerId = null
@@ -55,7 +58,7 @@ socket.on("update_lobby_state", (data) => {
   updateLobbyState(data)
 })
 
-const socketCallback = (err, data) => {
+const joinLobbyCallback = (err, data) => {
   if(err) notifyUser(err)
   else {
     updateLobbyState(data)
@@ -63,7 +66,7 @@ const socketCallback = (err, data) => {
 }
 
 const joinLobby = (code) => {
-  socket.emit("join_lobby", { code }, socketCallback)
+  socket.emit("join_lobby", { code }, joinLobbyCallback)
 }
 
 createLobbyButton.addEventListener("click", () => {
@@ -71,7 +74,7 @@ createLobbyButton.addEventListener("click", () => {
 
   socket.emit("create_lobby", {
     name: lobbyName
-  }, socketCallback)
+  }, joinLobbyCallback)
 })
 
 joinLobbyButton.addEventListener("click", () => {
@@ -81,7 +84,7 @@ joinLobbyButton.addEventListener("click", () => {
 
 leaveLobbyButton.addEventListener("click", () => {
   if(confirm("Are you sure you want to leave the lobby?")) {
-    socket.emit("leave_lobby", {}, socketCallback)
+    socket.emit("leave_lobby", {}, joinLobbyCallback)
   }
 })
 
