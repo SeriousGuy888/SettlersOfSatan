@@ -19,7 +19,15 @@ const redrawColourButtons = () => {
     colourButtonText.textContent = colour.toUpperCase()
   
     colourButton.onclick = () => {
-      if(colourButton.classList.contains("active") || colourButton.classList.contains("disabled")) return
+      if(colourButton.classList.contains("active")) {
+        printToChat([{ text: "You have already have that colour selected.", style: { colour: "red", italic: true } }])
+        return
+      }
+      if(colourButton.classList.contains("disabled")) {
+        printToChat([{ text: "Another player is using this colour.", style: { colour: "red", italic: true } }])
+        return
+      }
+
       socket.emit("select_colour", { colour }, (err, data) => {
         if(err) notifyUser(err)
       })
