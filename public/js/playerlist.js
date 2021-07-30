@@ -17,7 +17,7 @@ const refreshPlayerList = () => {
   const { users, maxPlayerCount } = currentLobbyData
   const players = currentGameData?.players
 
-  redrawColourButtons(users)
+  redrawColourButtons()
 
   let isHost = false
   users.forEach(u => {
@@ -123,15 +123,6 @@ const refreshPlayerList = () => {
 
     listEntryDiv.classList.add(["list-entry"])
     listEntryDiv.style.border = "5px solid " + user.colour
-
-    // i dont know how to fix playerId not being defined when you join a lobby
-    // i guess your selected colour is greyed out until you select a new one when you join a lobby
-    // im not fixing this lol -billzo
-    if(user.playerId === playerId) {
-      const userColourButton = document.querySelector(`#colour-button-${user.colour}`)
-      userColourButton.style.border = "4px solid rgb(100, 183, 255)"
-      userColourButton.disabled = false
-    }
     
 
     docFrag.appendChild(listEntryDiv)

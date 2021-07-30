@@ -1,0 +1,66 @@
+/* cieved from https://codepen.io/gpyne/pen/iElhp lol */
+
+.honeycomb, .honeycomb::before, .honeycomb::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.hexagon, .hexanone {
+  --hex-width: 3rem;
+  --hex-height: calc(var(--hex-width) * 1.732);
+
+  position: relative;
+  display: inline-block;
+  margin: 1px calc(var(--hex-width) / 4 + 1px);
+  transition: none;
+}
+.hexagon {
+  background-color: var(--theme-bg-3);
+  text-align: center;
+}
+.hexagon, .hexanone, .hexagon::before, .hexagon::after {
+  width: var(--hex-width);
+  height: var(--hex-height);
+}
+.hexagon::before {
+  background-color: inherit;
+  content: "";
+  position: absolute;
+  left: 0;
+  transform: rotate(-60deg);
+}
+.hexagon::after {
+  background-color: inherit;
+  content: "";
+  position: absolute;
+  left: 0;
+  transform: rotate(60deg);
+}
+.hexagon:nth-child(even), .hexanone:nth-child(even) {
+  top: calc(var(--hex-height) / 2 + 2px);
+}
+.hexagon:hover {
+  cursor: pointer;
+}
+
+.hexagon-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 140%;
+  font-size: 1rem;
+  z-index: 1;
+  color: white;
+}
+.hexagon.active { cursor: not-allowed; }
+.hexagon.active .hexagon-content { font-size: 0; }
+.hexagon.active .hexagon-content::after { font-size: 1.5rem; content: "✔"; }
+.hexagon.disabled { background-color: var(--theme-bg-4) !important; cursor: not-allowed; }
+
+.honeycomb-row {
+  font-size: 0;
+}
+.honeycomb {
+  margin: 0 auto;
+}
