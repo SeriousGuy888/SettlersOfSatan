@@ -175,7 +175,7 @@ canvasFunctions.background = (colour) => {
 }
 
 canvasFunctions.drawPiece = (piece, colour, x, y, w, h) => {
-  ctx.fillStyle = colour
+  ctx.fillStyle = colour || "#666"
   ctx.lineWidth = 3
   ctx.strokeStyle = "#fff"
 

@@ -246,7 +246,7 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
 
     if(this.data.building) {
       const { playerId, type } = this.data.building
-      const { colour } = canvasFunctions.getPlayer(playerId)
+      const colour = canvasFunctions.getPlayer(playerId)?.colour
       const { width: w, height: h } = this.getDimensions()
       canvasFunctions.drawPiece(type, colour, this.xPos - w / 2, this.yPos - h / 2, w, h)
     }
