@@ -521,10 +521,6 @@ class Satan {
           printChatErr("You are out of roads to place.")
           break
         }
-        break
-      case "buy_development_card":
-        player.inventory.addDevelopmentCard()
-        break
 
         const vertexesConnectedToEdge = coordsArr.map(e => this.getVertex(e))
         const connectedToOwnedVertex = vertexesConnectedToEdge.some(vert => vert.building && vert.building.playerId === playerId)
@@ -553,6 +549,10 @@ class Satan {
           player.inventory.addRoad(-1)
           this.refreshAllowedPlacements()
         }
+
+        break
+      case "buy_development_card":
+        player.inventory.addDevelopmentCard()
         break
       case "offer_trade":
         if(player.id !== this.turn) {
