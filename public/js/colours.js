@@ -19,6 +19,7 @@ const redrawColourButtons = () => {
     colourButtonText.textContent = colour.toUpperCase()
   
     colourButton.onclick = () => {
+      if(colourButton.classList.contains("active") || colourButton.classList.contains("disabled")) return
       socket.emit("select_colour", { colour }, (err, data) => {
         if(err) notifyUser(err)
       })
