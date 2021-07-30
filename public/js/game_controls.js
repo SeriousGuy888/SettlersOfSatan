@@ -15,6 +15,13 @@ gameControls.settlement.addEventListener("click", () => setHolding("settlement")
 gameControls.city.addEventListener("click", () => setHolding("city"))
 gameControls.road.addEventListener("click", () => setHolding("road"))
 
+gameControls.developmentCard.addEventListener("click", () => 
+  socket.emit("perform_game_action", "buy_development_card",
+  (err, data) => {
+    if(err) notifyUser(err)
+  })
+)
+
 const turnButton = document.querySelector("#end-turn-dice-button")
 
 

@@ -512,6 +512,9 @@ class Satan {
           printChatErr("You are out of roads to place.")
           break
         }
+      case "buy_development_card":
+        player.inventory.addDevelopmentCard()
+        break
 
         const vertexesConnectedToEdge = coordsArr.map(e => this.getVertex(e))
         const connectedToOwnedVertex = vertexesConnectedToEdge.some(vert => vert.building && vert.building.playerId === playerId)
@@ -747,6 +750,9 @@ class Satan {
     const nextTurnAddend = reversedCycle ? -1 : 1 // go backwards if this is a reversed turn cycle
 
     const currentIndex = sortedPlayerIds.indexOf(this.turn)
+
+    this.robbing = false
+
     if(currentIndex === -1 || !playerIds[currentIndex + nextTurnAddend]) { // there is no turn right now or the current turn is the last player
       this.turn = firstOfNextCycle
       this.turnCycle++

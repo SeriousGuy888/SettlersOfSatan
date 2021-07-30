@@ -120,6 +120,7 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
     this.robber = robber
     this.invisible = invisible
     this.harbour = harbour
+    this.glowing = glowing
   }
 
   render() {
