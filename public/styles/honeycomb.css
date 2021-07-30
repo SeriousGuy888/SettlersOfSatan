@@ -37,7 +37,7 @@
   transform: rotate(60deg);
 }
 .hexagon:nth-child(even), .hexanone:nth-child(even) {
-  top: calc(var(--hex-height) / 2 + 2px);
+  top: calc(var(--hex-height) / 2 + 1px);
 }
 .hexagon:hover {
   cursor: pointer;
