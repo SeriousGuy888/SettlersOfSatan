@@ -1,5 +1,5 @@
 let creditsLang = "english"
-if(window.location.pathname.includes("kontributeurs")) creditsLang = "billzonian"
+if(window.location.pathname.toLowerCase().includes("kontributeurs")) creditsLang = "billzonian"
 
 if(creditsLang === "billzonian") {
   document.querySelector("#contributors-page-title").textContent = "Kontributeurs"
