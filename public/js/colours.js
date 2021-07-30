@@ -25,9 +25,6 @@ const redrawColourButtons = () => {
     }
   }
 
-  // i dont know how to fix playerId not being defined when you join a lobby
-  // i guess your selected colour is greyed out until you select a new one when you join a lobby
-  // im not fixing this lol -billzo
   const users = currentLobbyData?.users || []
   for(const user of users) {
     const userColourButton = document.querySelector(`#colour-button-${user.colour}`)
