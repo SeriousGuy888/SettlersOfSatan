@@ -273,6 +273,15 @@ class Satan {
 
         if(adjHexes.every(adjHex => !adjHex.harbour)) {
           hex.setHarbour(true)
+
+          const adjVertCoords = hex.getAdjacentVertexes()
+          const adjVerts = []
+          adjVertCoords.forEach(c => {
+            const loopVert = this.getVertex(c)
+            if(loopVert) adjVerts.push(loopVert)
+          })
+
+          adjVerts.forEach(v => v.setBuilding("city"))
         }
       }
     }
