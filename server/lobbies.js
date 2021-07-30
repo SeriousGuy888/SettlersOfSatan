@@ -1,6 +1,6 @@
 const lobbies = {}
 
-exports.colourChoices = ["brown", "red", "orange", "green", "blue", "violet", "indigo"]
+exports.colourChoices = ["brown", "red", "orange", "green", "blue", "indigo", "violet"]
 
 exports.getLobby = (lobbyId) => {
   if(lobbyId in lobbies) {
