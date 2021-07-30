@@ -521,6 +521,7 @@ class Satan {
           printChatErr("You are out of roads to place.")
           break
         }
+        break
       case "buy_development_card":
         player.inventory.addDevelopmentCard()
         break
