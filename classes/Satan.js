@@ -821,6 +821,8 @@ class Satan {
 
         const adjacentHexes = vertex.getAdjacentHexes()
         const player = this.getPlayer(building.playerId)
+        if(!player) continue
+
         for(const hexCoords of adjacentHexes) {
           const hex = this.board[hexCoords.y][hexCoords.x]
 
