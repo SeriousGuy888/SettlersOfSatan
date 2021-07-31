@@ -63,24 +63,18 @@ class Satan {
   tick() {
     const lobby = lobbies.getLobby(this.lobbyId)
     
-    if(
-      !this.turn || // no turn is set
-      this.getPlayer(this.turn).disconnected || // player whose turn it is has disconnected
-      this.turnCountdownTo - Date.now() < 0 // time limit for the turn has passed
-    ) {
+    if(!this.turn || this.getPlayer(this.turn).disconnected) { // no turn is set or current player has disconnected
       this.nextTurn()
     }
-
-
-    // if(this.trade.takers.length) {
-    //   const takerId = this.trade.takers[0]
-    //   const taker = this.getPlayer(takerId)
-
-    //   if(!taker) return
-
-    //   this.finishTrade(this.trade.offer, this.getPlayer(this.turn), taker)
-    //   this.clearTrade()
-    // }
+    if(this.turnCountdownTo - Date.now() < 0) { // time limit for the turn has passed
+      lobbies.getLobby(this.lobbyId).printToChat([{
+        text: `${this.getPlayer(this.turn).name}'s turn was skipped because they took too much time.`,
+        style: {
+          colour: "green"
+        }
+      }])
+      this.nextTurn()
+    }
 
 
     let playersPublicData = {}
