@@ -292,20 +292,18 @@ class Satan {
                 adjVerts.filter(vert => vert.coords.v === (hexQuadrant.y ? "south" : "north"))[0],
               )
             }
-            else { // logic for right side
-              harbourVerts.push(
-                adjVerts.filter(vert => vert.coords.y === (hexQuadrant.y ? y - 1    : y     ))[0],
-                adjVerts.filter(vert => vert.coords.y === y + 1)[0],
-                // adjVerts.filter(vert => vert.coords.v === (hexQuadrant.y ? "south" : "north"))[0],
-              )
+            else {
+              // logic for right side (very nice variable names ahead :D)
+              // all of this will probably break with any other board layout which would be fun
 
-              /*
-                There is currently an issue with the harbours on the top and the bottom
-                edges where they have multiple neighbouring vertexes that match the rule.
-                It works for the top edge because the first vertexes just happens to be the one
-                on the right, but it is also the one on the right for the bottom harbour when
-                it should really be the left vertex.
-              */
+              const specialCase1 = adjVerts.filter(vert => vert.coords.y === y + 1)
+              const specialCase1B = adjVerts.filter(vert => vert.coords.y === y) // special case for the bottom harbour that messes everything up
+              harbourVerts.push(specialCase1[0] || specialCase1B[0])
+              
+              const specialCase2 = adjVerts // handles the harbours on the top and bottom edges
+                .filter(vert => vert.coords.y === (hexQuadrant.y ? y - 1 : y))
+                .sort((a, b) => a.coords.x - b.coords.x)
+              harbourVerts.push(specialCase2[0])
             }
           }
 
