@@ -63,5 +63,5 @@
   --hex-height: calc(var(--hex-width) * 1.732);
 
   margin: calc(var(--hex-height) * -0.25) auto var(--hex-height);
-  position: relative;
+  user-select: none;
 }
