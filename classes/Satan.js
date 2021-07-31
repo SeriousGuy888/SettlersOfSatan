@@ -254,7 +254,7 @@ class Satan {
       }
     }
     
-    for(let row of this.board) {
+    for(let row of this.board) { // calculate harbours
       for(let hex of row) {
         if(!hex?.invisible) continue
 
@@ -275,7 +275,16 @@ class Satan {
             if(loopVert) adjVerts.push(loopVert)
           })
 
-          adjVerts.forEach(v => v.setBuilding("city"))
+          let harbourVerts = []
+          adjVerts.forEach(v => {
+            // if(harbourVerts.length >= 2) return
+            harbourVerts.push(v)
+          })
+
+          harbourVerts.forEach(v => {
+            let rightSide = (v.coords.x >= this.board[0].length / 2)
+            v.setBuilding(rightSide ? "settlement" : "city")
+          })
         }
       }
     }
