@@ -9,8 +9,6 @@ const logoutButton = document.querySelector("#logout-button")
 
 const playingAs = document.querySelector("#playing-as")
 
-let creditsLang
-
 const updateLoggedInState = (loggedIn, data) => {
   if(loggedIn) {
     loggedOutSection.style.display = "none"

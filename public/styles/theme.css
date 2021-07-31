@@ -33,6 +33,8 @@ body.dark-theme {
   --theme-red-button-hover: #f04c40;
 }
 
+#dark-theme-toggle { cursor: pointer; user-select: none; }
+
 body * { transition: 250ms background-color; }
 body.dark-theme .icon-1em { filter: invert(); }
 
