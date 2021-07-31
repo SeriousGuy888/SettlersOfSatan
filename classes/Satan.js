@@ -266,6 +266,12 @@ class Satan {
         })
 
         if(adjHexes.every(adjHex => !adjHex.harbour)) {
+          const { x, y } = hex.coords
+          const hexQuadrant = {
+            x: (x >= this.board[0].length / 2), // values are true if in positive quadrant, false otherwise
+            y: (y >= this.board.length / 2), // also the positive y quadrant is the bottom one i will definitely forget that if i dont comment this
+          }
+
           hex.setHarbour(true)
 
           const adjVertCoords = hex.getAdjacentVertexes()
@@ -276,14 +282,36 @@ class Satan {
           })
 
           let harbourVerts = []
-          adjVerts.forEach(v => {
-            // if(harbourVerts.length >= 2) return
-            harbourVerts.push(v)
-          })
+          if(adjVerts.length <= 2) { // if there are already only two verts adjacent
+            harbourVerts = adjVerts // just use those two and skip the logic in the else below
+          }
+          else {
+            if(!hexQuadrant.x) { // logic for left side of board
+              harbourVerts.push(
+                adjVerts.filter(vert => vert.coords.y === (hexQuadrant.y ? y       : y - 1  ))[0],
+                adjVerts.filter(vert => vert.coords.v === (hexQuadrant.y ? "south" : "north"))[0],
+              )
+            }
+            else { // logic for right side
+              harbourVerts.push(
+                adjVerts.filter(vert => vert.coords.y === (hexQuadrant.y ? y - 1    : y     ))[0],
+                adjVerts.filter(vert => vert.coords.y === y + 1)[0],
+                // adjVerts.filter(vert => vert.coords.v === (hexQuadrant.y ? "south" : "north"))[0],
+              )
 
-          harbourVerts.forEach(v => {
-            let rightSide = (v.coords.x >= this.board[0].length / 2)
-            v.setBuilding(rightSide ? "settlement" : "city")
+              /*
+                There is currently an issue with the harbours on the top and the bottom
+                edges where they have multiple neighbouring vertexes that match the rule.
+                It works for the top edge because the first vertexes just happens to be the one
+                on the right, but it is also the one on the right for the bottom harbour when
+                it should really be the left vertex.
+              */
+            }
+          }
+
+          harbourVerts.forEach(vert => {
+            if(!vert) return
+            vert.setBuilding("settlement")
           })
         }
       }
