@@ -6,9 +6,6 @@
   box-sizing: border-box;
 }
 .hexagon, .hexanone {
-  --hex-width: 3rem;
-  --hex-height: calc(var(--hex-width) * 1.732);
-
   position: relative;
   display: inline-block;
   margin: 1px calc(var(--hex-width) / 4 + 1px);
@@ -62,5 +59,9 @@
   font-size: 0;
 }
 .honeycomb {
-  margin: 0 auto;
+  --hex-width: 3rem;
+  --hex-height: calc(var(--hex-width) * 1.732);
+
+  margin: calc(var(--hex-height) * -0.25) auto var(--hex-height);
+  position: relative;
 }
