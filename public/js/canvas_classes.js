@@ -379,37 +379,3 @@ canvasClasses.Edge = class extends canvasClasses.Hoverable {
     holding = null
   }
 }
-
-canvasClasses.UnplacedPiece = class extends canvasClasses.Hoverable {
-  constructor (piece, colour, x, y) {
-
-    super()
-
-    this.piece = piece
-    this.colour = colour
-    this.xPos = x
-    this.yPos = y
-  }
-
-  render() {
-    const { width: w, height: h } = this.getDimensions()
-    canvasFunctions.drawPiece(this.piece, this.colour, this.xPos, this.yPos, w, h)
-  }
-
-  getDimensions() {
-    return {
-      width: 32,
-      height: 32
-    }
-  }
-
-  onClick() {
-    if(!this.isHovered()) return
-
-    if(holding === this.piece) holding = null
-    else holding = this.piece
-    
-    this.colour = lighterShades[this.colour]
-    console.log("yoooooooooooooo")
-  }
-}
