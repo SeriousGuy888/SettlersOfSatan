@@ -2,9 +2,10 @@ const Hex = require("./Hex.js")
 const Vertex = require("./Vertex.js")
 const Edge = require("./Edge.js")
 const Graph = require("./Graph.js")
+const Harbour = require("./Harbour.js")
+
 const lobbies = require("../server/lobbies.js")
 const users = require("../server/users.js")
-const { Socket } = require("socket.io")
 
 /*
   0 = no hex
@@ -272,8 +273,6 @@ class Satan {
             y: (y >= this.board.length / 2), // also the positive y quadrant is the bottom one i will definitely forget that if i dont comment this
           }
 
-          hex.setHarbour(true)
-
           const adjVertCoords = hex.getAdjacentVertexes()
           const adjVerts = []
           adjVertCoords.forEach(c => {
@@ -307,10 +306,15 @@ class Satan {
             }
           }
 
-          harbourVerts.forEach(vert => {
-            if(!vert) return
-            vert.setBuilding("settlement")
-          })
+
+
+
+          const harbourVertCoords = harbourVerts
+            .filter(v => v) // find all vertexes that are defined
+            .map(v => v.coords) // convert everything to coordinates
+
+          const harbour = new Harbour(harbourVertCoords)
+          hex.setHarbour(harbour)
         }
       }
     }

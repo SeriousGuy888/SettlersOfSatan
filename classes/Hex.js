@@ -6,7 +6,7 @@ class Hex {
     this.resource = null
 
     this.invisible = false
-    this.harbour = false
+    this.harbour = null
     this.glowing = false
   }
 
