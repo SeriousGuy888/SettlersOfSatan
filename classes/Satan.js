@@ -309,11 +309,10 @@ class Satan {
 
 
 
-          const harbourVertCoords = harbourVerts
-            .filter(v => v) // find all vertexes that are defined
-            .map(v => v.coords) // convert everything to coordinates
+          const finalHarbourVerts = harbourVerts.filter(v => v) // find all vertexes that are defined
+          finalHarbourVerts.forEach(vert => vert.harbour = hex.coords) // define in the vertexes the coords of the harbour hex
 
-          const harbour = new Harbour(harbourVertCoords)
+          const harbour = new Harbour(finalHarbourVerts.map(v => v.coords))
           hex.setHarbour(harbour)
         }
       }

@@ -2,6 +2,7 @@ class Vertex {
   constructor(coords) {
     this.coords = coords
     this.building = null
+    this.harbour = false
     this.allowPlacement = false // whether the player whose turn it is is allowed to place anything here
     this.adjacentHexes = this.getAdjacentHexes()
   }

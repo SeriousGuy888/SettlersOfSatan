@@ -124,16 +124,17 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
   }
 
   render() {
-    const { xPos, yPos, resource, number, glowing} = this
+    const { xPos, yPos, resource, number, harbour, glowing } = this
 
     ctx.lineWidth = 1
     ctx.strokeStyle = "#000"
 
-    if(this.harbour) {
+    if(harbour) {
       ctx.fillStyle = "#666"
 
       ctx.beginPath()
-      ctx.arc(xPos, yPos, hexRadius / 4, 0, 2 * Math.PI)
+      // ctx.arc(xPos, yPos, hexRadius / 4, 0, 2 * Math.PI)
+      ctx.fillText("une bateau", xPos, yPos)
       ctx.closePath()
       ctx.fill()
     }
@@ -249,6 +250,19 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
       const colour = canvasFunctions.getPlayer(playerId)?.colour
       const { width: w, height: h } = this.getDimensions()
       canvasFunctions.drawPiece(type, colour, this.xPos - w / 2, this.yPos - h / 2, w, h)
+    }
+
+    if(this.data.harbour) {
+      const harbourCoords = this.data.harbour
+      const harbourHex = boardHexes.filter(hex => hex.coords.x === harbourCoords.x && hex.coords.y === harbourCoords.y)[0]
+
+      ctx.beginPath()
+      ctx.moveTo(this.xPos, this.yPos)
+      ctx.lineTo(harbourHex.xPos, harbourHex.yPos)
+      ctx.lineWidth = 10
+      ctx.strokeStyle = "#000"
+      ctx.stroke()
+      ctx.closePath()
     }
     
     if(!this.data.allowPlacement) return
