@@ -256,11 +256,14 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
       const harbourCoords = this.data.harbour
       const harbourHex = boardHexes.filter(hex => hex.coords.x === harbourCoords.x && hex.coords.y === harbourCoords.y)[0]
 
+      const fromPos = [this.xPos, this.yPos]
+      const toPos = [harbourHex.xPos + (this.xPos - harbourHex.xPos) / 3.5, harbourHex.yPos + (this.yPos - harbourHex.yPos) / 3.5]
+
       ctx.beginPath()
-      ctx.moveTo(this.xPos, this.yPos)
-      ctx.lineTo(harbourHex.xPos, harbourHex.yPos)
-      ctx.lineWidth = 10
-      ctx.strokeStyle = "#0008"
+      ctx.moveTo(...fromPos.map(e => Math.round(e)))
+      ctx.lineTo(...toPos.map(e => Math.round(e)))
+      ctx.lineWidth = 15
+      ctx.strokeStyle = "#b87a1d"
       ctx.stroke()
       ctx.closePath()
     }
