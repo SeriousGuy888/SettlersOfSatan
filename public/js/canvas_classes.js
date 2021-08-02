@@ -134,7 +134,7 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
 
       ctx.beginPath()
       // ctx.arc(xPos, yPos, hexRadius / 4, 0, 2 * Math.PI)
-      ctx.fillText("une bateau", xPos, yPos)
+      ctx.fillText(`${harbour.deal.amount} ${harbour.deal.resource} for 1`, xPos, yPos)
       ctx.closePath()
       ctx.fill()
     }
@@ -260,7 +260,7 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
       ctx.moveTo(this.xPos, this.yPos)
       ctx.lineTo(harbourHex.xPos, harbourHex.yPos)
       ctx.lineWidth = 10
-      ctx.strokeStyle = "#000"
+      ctx.strokeStyle = "#0008"
       ctx.stroke()
       ctx.closePath()
     }

@@ -23,6 +23,7 @@ const boardLayout = [
   [0,3,1,1,1,3,0,0],
   [0,0,3,3,3,3,0,0],
 ]
+
 const hexTypesResources = {
   mud: "bricks",
   forest: "lumber",
@@ -254,6 +255,18 @@ class Satan {
         this.board[this.board.length - 1].push(hex)
       }
     }
+
+
+
+
+    let harbourTypeCounts = {
+      ore: 1,
+      wheat: 1,
+      bricks: 1,
+      wool: 1,
+      lumber: 1,
+      any: 4
+    }
     
     for(let row of this.board) { // calculate harbours
       for(let hex of row) {
@@ -312,7 +325,14 @@ class Satan {
           const finalHarbourVerts = harbourVerts.filter(v => v) // find all vertexes that are defined
           finalHarbourVerts.forEach(vert => vert.harbour = hex.coords) // define in the vertexes the coords of the harbour hex
 
+
           const harbour = new Harbour(finalHarbourVerts.map(v => v.coords))
+
+          const possibleHarbours = Object.keys(harbourTypeCounts).filter(k => harbourTypeCounts[k] > 0)
+          const harbourType = possibleHarbours[Math.floor(Math.random() * possibleHarbours.length)]
+          harbourTypeCounts[harbourType]--
+          harbour.setDeal(harbourType, harbourType === "any" ? 3 : 2)
+
           hex.setHarbour(harbour)
         }
       }
