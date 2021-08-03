@@ -75,6 +75,7 @@ socket.on("game_update", gData => {
       refreshTradeMenu()
       refreshTurnDisplay()
       refreshPlayerList()
+      refreshDevelopmentCards()
 
       document.getElementById("inv-list").innerHTML = `Settlements: ${currentGameData.me.inventory.settlements}, Roads: ${currentGameData.me.inventory.roads}, Cities: ${currentGameData.me.inventory.cities}`
     }
