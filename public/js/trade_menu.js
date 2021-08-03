@@ -3,7 +3,7 @@ const tradeButton = document.querySelector("#trade-button")
 const tradeOffererInputs = document.querySelector("#trade-offerer-inputs")
 const tradeTakerInputs = document.querySelector("#trade-taker-inputs")
 const offererNameP = document.querySelector("#trade-offerer-name")
-const takerNameP = document.querySelector("#trade-taker-name")
+const takerSelect = document.querySelector("#trade-taker-select")
 const tradeTakersList = document.querySelector("#trade-takers")
 
 const turnControls = document.querySelector("#turn-controls")
@@ -41,7 +41,7 @@ const refreshTradeMenu = () => {
 
   offererNameP.textContent = currentGameData.players[currentGameData.turn].name
   offererNameP.style.color = currentGameData.players[currentGameData.turn].colour
-  takerNameP.textContent = "Anyone"
+  // takerNameP.textContent = "Anyone"
 
   tradeTakersList.style.display = "none"
 
