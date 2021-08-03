@@ -471,6 +471,14 @@ class Satan {
             break
           }
         }
+        if(this.robbing) {
+          printChatErr("You must move the robber first.")
+          break
+        }
+        if(Object.values(this.players).some(p => p.canBeRobbed)) {
+          printChatErr("You must choose a player to rob in the playerlist first.")
+          break
+        }
 
         this.nextTurn()
         break
