@@ -7,6 +7,7 @@ const DevelopmentCard = require("./DevelopmentCard.js")
 
 const lobbies = require("../server/lobbies.js")
 const users = require("../server/users.js")
+const constants = require("../constants.js")
 
 /*
   0 = no hex
@@ -430,27 +431,7 @@ class Satan {
       }])
     }
 
-    const buildingCosts = {
-      road: {
-        bricks: 1,
-        lumber: 1,
-      },
-      settlement: {
-        bricks: 1,
-        lumber: 1,
-        wheat: 1,
-        wool: 1,
-      },
-      city: {
-        wheat: 2,
-        ore: 3,
-      },
-      developmentCard: {
-        wool: 1,
-        wheat: 1,
-        ore: 1
-      }
-    }
+    const { buildingCosts } = constants
     
     const spendResourcesOn = (p, item) => {
       const playerResources = p.resources
