@@ -11,6 +11,7 @@ class Player {
     this.userId = userId
 
     this.disconnected = false
+    this.canBeRobbed = false
     this.points = 0
     this.inventory = new Inventory(5, 4, 15)
     this.resources = {
@@ -34,9 +35,9 @@ class Player {
   }
 
   getPublicData() {
-    const { id, name, colour, inventory, points, resources } = this
+    const { id, name, colour, inventory, canBeRobbed, points, resources } = this
     const resourceCardCount = Object.values(resources).reduce((acc, cur) => acc += cur)
-    return { id, name, colour, inventory, points, resourceCardCount }
+    return { id, name, colour, inventory, canBeRobbed, points, resourceCardCount }
   }
 
   getColour() {

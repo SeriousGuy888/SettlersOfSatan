@@ -44,6 +44,17 @@ const refreshPlayerList = () => {
     const playerVpDisplay = document.createElement("p")
     if(players) playerVpDisplay.textContent = `${players[user.playerId]?.points}VP`
 
+    const robButton = document.createElement("button")
+    robButton.textContent = "Rob"
+    robButton.onclick = () => {
+      socket.emit("perform_game_action", {
+        action: "rob_player",
+        toRob: user.playerId
+      }, (err, data) => {
+        if(err) notifyUser(err)
+      })
+    }
+
     const confirmTradeButton = document.createElement("button")
     confirmTradeButton.textContent = "Trade"
     confirmTradeButton.onclick = () => {
@@ -59,8 +70,13 @@ const refreshPlayerList = () => {
     listEntryTitleDiv.appendChild(playerNameH)
     if(currentGameData) {
       listEntryTitleDiv.appendChild(playerVpDisplay)
-      if(currentGameData.turn === currentGameData.me.id && currentGameData.trade.takers?.includes(user.playerId)) {
-        listEntryTitleDiv.appendChild(confirmTradeButton)
+      if(currentGameData.turn === currentGameData.me.id) {
+        if(currentGameData.players[user.playerId].canBeRobbed) {
+          listEntryTitleDiv.appendChild(robButton)
+        }
+        if(currentGameData.trade.takers?.includes(user.playerId)) {
+          listEntryTitleDiv.appendChild(confirmTradeButton)
+        }
       }
     }
 

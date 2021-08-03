@@ -637,12 +637,23 @@ class Satan {
           if(currentRobberHex) return
         })
 
-        if(currentRobberHex) {
-          currentRobberHex.robber = false
-        }
-
-        this.board[coords.y][coords.x].robber = true
+        const newRobberHex = this.board[coords.y][coords.x]
+        if(currentRobberHex) currentRobberHex.robber = false
+        newRobberHex.robber = true
         this.robbing = false
+
+
+        const adjPlayerIds = new Set(         // set removes all duplicates
+          newRobberHex                        // get the new hex
+            .getAdjacentVertexes()            // get its vertex coordinates
+            .map(c => this.getVertex(c))      // get the vertex objects
+            .map(v => v?.building?.playerId)  // find the owners of the buildings on the vertexes
+            .filter(pid => pid)               // filter out any vertexes that don't have a player owned building
+        )
+        
+        adjPlayerIds.forEach(pid => {
+          this.getPlayer(pid).canBeRobbed = true
+        })
         break
       case "buy_development_card":
 
@@ -889,6 +900,8 @@ class Satan {
       this.turnCountdownTo = new Date().setTime(new Date().getTime() + 120 * 1000)
 
       this.clearTrade()
+
+      Object.values(this.players).forEach(p => p.canBeRobbed = false)
 
       if(this.inSetupTurnCycle()) {
         this.setupTurnPlaced.settlement = null
