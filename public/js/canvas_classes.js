@@ -212,7 +212,7 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
       else ctx.fillText(number.toString(), xPos, yPos)
 
 
-      if(currentGameData.robbing) {
+      if(currentGameData.turn === currentGameData.me.id && currentGameData.robbing) {
         drawSelectCircle(xPos, yPos, this)
       }
     }
@@ -229,7 +229,7 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
     if(!this.isHovered(true)) return
     console.log(`Clicked on hex ${JSON.stringify(this.coords)}`)
 
-    if(currentGameData.robbing && !this.robber) {
+    if(currentGameData.turn === currentGameData.me.id && currentGameData.robbing && !this.robber) {
       socket.emit("perform_game_action", {
         action: "move_robber",
         coords: this.coords,
