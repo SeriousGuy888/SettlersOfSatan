@@ -604,6 +604,27 @@ class Satan {
 
         break
       case "move_robber":
+        if(player.id !== this.turn) {
+          printChatErr("It is not your turn.")
+          break
+        }
+        if(this.turnStage !== 1) {
+          printChatErr("The dice have not been rolled this turn.")
+          break
+        }
+        if(!this.robbing) {
+          printChatErr("The robber cannot be moved this turn or has already been moved.")
+          break
+        }
+        if(!this.board[coords.y]?.[coords.x]) {
+          printChatErr("Invalid coordinates provided.")
+          break
+        }
+        if(this.board[coords.y][coords.x].robber) {
+          printChatErr("The robber must be moved to a different hex.")
+          break
+        }
+
         printChatErr("moving robber not supported yet")
         break
       case "buy_development_card":
