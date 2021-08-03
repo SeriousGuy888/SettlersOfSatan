@@ -26,6 +26,7 @@ const parseChatLine = (line) => {
       for(const num of line.dice) {
         const imgElem = document.createElement("img")
         imgElem.src = `/images/dice/${num}.svg`
+        imgElem.alt = `dice ${num}`
 
         contentDice.appendChild(imgElem)
       }
