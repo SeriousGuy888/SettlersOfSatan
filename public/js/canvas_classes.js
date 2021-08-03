@@ -220,8 +220,8 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
 
   getDimensions() {
     return {
-      width: hexApothem * 2,
-      height: hexApothem * 2,
+      width: hexApothem * 1.5,
+      height: hexApothem * 1.5,
     }
   }
 
