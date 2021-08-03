@@ -656,7 +656,7 @@ class Satan {
         }
 
         this.board[coords.y][coords.x].robber = true
-
+        this.robbing = false
         break
       case "buy_development_card":
         let card = this.developmentCardDeck[Math.floor(Math.random()*this.developmentCardDeck.length)]
