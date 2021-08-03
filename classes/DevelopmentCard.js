@@ -1,6 +1,13 @@
 class DevelopmentCard {
     constructor(type) {
       this.type = type
-      this.victoryPoint = ["Library", "Market", "Chapel", "Great Hall", "University"].includes(type)
+      this.victoryPoint = ["library", "market", "chapel", "great Hall", "university"].includes(type)
+
+    }
+
+    use() {
+      
     }
 }
+
+module.exports = DevelopmentCard

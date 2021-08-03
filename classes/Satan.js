@@ -3,6 +3,7 @@ const Vertex = require("./Vertex.js")
 const Edge = require("./Edge.js")
 const Graph = require("./Graph.js")
 const Harbour = require("./Harbour.js")
+const DevelopmentCard = require("./DevelopmentCard.js")
 
 const lobbies = require("../server/lobbies.js")
 const users = require("../server/users.js")
@@ -60,6 +61,21 @@ class Satan {
     }
 
     this.robbing = false
+
+    const developmentCardAmounts = {
+      "knight": 14,
+      "road building": 2,
+      "year of plenty": 2,
+      "monopoly": 2,
+    }
+
+    this.developmentCardDeck = ["library", "market", "chapel", "great hall", "university"]
+
+    for(const card in developmentCardAmounts) {
+      for(let i = 0; i < developmentCardAmounts[card]; i++){
+        this.developmentCardDeck.push(card)
+      }
+    }
   }
 
   tick() {
@@ -96,6 +112,7 @@ class Satan {
       turnCountdownTo: this.turnCountdownTo,
       trade: this.trade,
       robbing: this.robbing,
+      developmentCardDeck: this.developmentCardDeck
     }
 
     if(JSON.stringify(tickData) !== this.prevTickData) {
@@ -603,9 +620,14 @@ class Satan {
         }
 
         break
+
       case "buy_development_card":
-        player.inventory.addDevelopmentCard()
+        let card = this.developmentCardDeck[Math.floor(Math.random()*this.developmentCardDeck.length)]
+        player.inventory.addDevelopmentCard(new DevelopmentCard(card))
+        this.developmentCardDeck.splice(this.developmentCardDeck.indexOf(card), 1)
+        console.log(player.inventory)
         break
+
       case "offer_trade":
         if(player.id !== this.turn) {
           printChatErr("It is not your turn.")
