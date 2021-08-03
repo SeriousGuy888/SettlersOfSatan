@@ -49,7 +49,7 @@ const refreshPlayerList = () => {
     robButton.onclick = () => {
       socket.emit("perform_game_action", {
         action: "rob_player",
-        toRob: user.playerId
+        robFrom: user.playerId
       }, (err, data) => {
         if(err) notifyUser(err)
       })

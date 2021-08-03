@@ -471,6 +471,14 @@ class Satan {
             break
           }
         }
+        if(this.robbing) {
+          printChatErr("You must move the robber first.")
+          break
+        }
+        if(Object.values(this.players).some(p => p.canBeRobbed)) {
+          printChatErr("You must choose a player to rob in the playerlist first.")
+          break
+        }
 
         this.nextTurn()
         break
@@ -652,8 +660,40 @@ class Satan {
         )
         
         adjPlayerIds.forEach(pid => {
-          this.getPlayer(pid).canBeRobbed = true
+          if(pid === player.id) return
+          
+          const robberyCandidate = this.getPlayer(pid)
+          const resourceCardCount = Object.values(robberyCandidate.resources).reduce((prev, accu) => prev += accu)
+          if(resourceCardCount <= 0) return
+          robberyCandidate.canBeRobbed = true
         })
+        break
+      case "rob_player":
+        if(player.id !== this.turn) {
+          printChatErr("It is not your turn.")
+          break
+        }
+        if(this.turnStage !== 1) {
+          printChatErr("The dice have not been rolled this turn.")
+          break
+        }
+
+        const robFromId = actionData.robFrom
+        const robFrom = this.getPlayer(robFromId)
+        if(!robFrom || !robFrom.canBeRobbed) {
+          printChatErr("Invalid player.")
+          break
+        }
+
+        const stealables = Object.keys(robFrom.resources).filter(k => robFrom.resources[k] > 0)
+        const stealResource = stealables[Math.floor(Math.random() * stealables.length)]
+        robFrom.resources[stealResource]--
+        player.resources[stealResource]++
+        this.clearRobbable()
+
+        lobbies.getLobby(this.lobbyId).printToChat([{ // temp
+          text: `${player.name} stole 1 ${stealResource} from ${robFrom.name}`
+        }])
         break
       case "buy_development_card":
 
@@ -814,6 +854,13 @@ class Satan {
     }
   }
 
+  clearRobbable() {
+    Object.values(this.players)
+      .forEach(p => {
+        p.canBeRobbed = false
+      })
+  }
+
   clearTrade() {
     this.trade.offer = null
     this.trade.takers = []
@@ -900,8 +947,7 @@ class Satan {
       this.turnCountdownTo = new Date().setTime(new Date().getTime() + 120 * 1000)
 
       this.clearTrade()
-
-      Object.values(this.players).forEach(p => p.canBeRobbed = false)
+      this.clearRobbable()
 
       if(this.inSetupTurnCycle()) {
         this.setupTurnPlaced.settlement = null
@@ -924,8 +970,8 @@ class Satan {
 
 
   rollDice() {
-    let dice1 = Math.floor(Math.random() * 6) + 1
-    let dice2 = Math.floor(Math.random() * 6) + 1
+    let dice1 = 7 //Math.floor(Math.random() * 6) + 1
+    let dice2 = 0 //Math.floor(Math.random() * 6) + 1
     let number = dice1 + dice2
 
     lobbies.getLobby(this.lobbyId).printToChat([{
