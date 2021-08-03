@@ -642,7 +642,21 @@ class Satan {
           break
         }
 
-        printChatErr("moving robber not supported yet")
+        let currentRobberHex
+        this.board.forEach(row => {
+          row.forEach(hex => {
+            if(hex?.robber) currentRobberHex = hex
+            if(currentRobberHex) return
+          })
+          if(currentRobberHex) return
+        })
+
+        if(currentRobberHex) {
+          currentRobberHex.robber = false
+        }
+
+        this.board[coords.y][coords.x].robber = true
+        this.robbing = false
         break
       case "buy_development_card":
         let card = this.developmentCardDeck[Math.floor(Math.random()*this.developmentCardDeck.length)]

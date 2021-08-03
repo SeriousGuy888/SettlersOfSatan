@@ -251,12 +251,6 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
   render() {
     const { xPos, yPos } = this
 
-    if(this.data.building) {
-      const { playerId, type } = this.data.building
-      const colour = canvasFunctions.getPlayer(playerId)?.colour
-      const { width: w, height: h } = this.getDimensions()
-      canvasFunctions.drawPiece(type, colour, this.xPos - w / 2, this.yPos - h / 2, w, h)
-    }
 
     if(this.data.harbour) {
       const harbourCoords = this.data.harbour
@@ -273,6 +267,14 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
       ctx.stroke()
       ctx.closePath()
     }
+
+    if(this.data.building) {
+      const { playerId, type } = this.data.building
+      const colour = canvasFunctions.getPlayer(playerId)?.colour
+      const { width: w, height: h } = this.getDimensions()
+      canvasFunctions.drawPiece(type, colour, this.xPos - w / 2, this.yPos - h / 2, w, h)
+    }
+    
     
     if(!this.data.allowPlacement) return
 
