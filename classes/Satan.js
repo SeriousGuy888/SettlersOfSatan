@@ -646,9 +646,8 @@ class Satan {
         break
       case "buy_development_card":
         let card = this.developmentCardDeck[Math.floor(Math.random()*this.developmentCardDeck.length)]
-        player.inventory.addDevelopmentCard(new DevelopmentCard(card))
+        player.inventory.addDevelopmentCard(new DevelopmentCard(card, this.lobbyId, player.id))
         this.developmentCardDeck.splice(this.developmentCardDeck.indexOf(card), 1)
-        console.log(player.inventory)
         break
 
       case "offer_trade":
