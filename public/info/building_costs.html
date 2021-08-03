@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
-    <main class="center">
+    <main>
       <div class="title-container">
         <div class="title-container-top">
           <h1 class="page-title" id="contributors-page-title">Building Costs</h1>
@@ -24,7 +24,18 @@
         </div>
       </div>
 
-      <p>billzo beed too lazeful tu manufakture cis</p>
+      <div id="info-container">
+        <h4>raw json data because dukk yu</h4>
+        <pre id="json"></pre>
+      </div>
+      <script>
+        (async () => {
+          const infoContainer = document.querySelector("#json")
+          const response = await fetch("/info/building_costs/get")
+          const serverData = await response.json()
+          infoContainer.textContent = JSON.stringify(serverData, null, 2)
+        })()
+      </script>
     </main>
   </body>
 </html>
