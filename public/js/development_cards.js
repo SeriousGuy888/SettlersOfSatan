@@ -1,4 +1,15 @@
+const cardDescriptions = {
+    "knight": "Move the robber",
+    "road building": "Place two free roads",
+    "year of plenty": "Take two resources of your choice from the stockpile",
+    "monopoly": "Steal all of a specified resource from players",
+    "victory point": "Free victory point"
+}
+
 function refreshDevelopmentCards() {
+
+    document.getElementById("development-card-list").innerHTML = ""
+
     for(developmentCard of currentGameData.me.inventory.developmentCards){
         console.log("card")
         let cardImg = document.createElement("img")
@@ -24,7 +35,8 @@ function refreshDevelopmentCards() {
         headerDiv.appendChild(cardImg)
 
         let description = document.createElement("p")
-        let descriptionNode = document.createTextNode("robbery")
+        if (developmentCard.victoryPoint) let descriptionNode = document.createTextNode(cardDescriptions["victory point"])
+        else let descriptionNode = document.createTextNode(cardDescriptions[developmentCard.type])
 
         description.appendChild(descriptionNode)
 
