@@ -662,8 +662,8 @@ class Satan {
           break
         }
 
-        let card = this.developmentCardDeck[Math.floor(Math.random()*this.developmentCardDeck.length)]
-        player.inventory.addDevelopmentCard(new DevelopmentCard(card, this.lobbyId, player.id))
+        let card = this.developmentCardDeck[Math.floor(Math.random() * this.developmentCardDeck.length)]
+        player.inventory.addDevelopmentCard(new DevelopmentCard(card, this.lobbyId, player.id, lobbies.getLobby(this.lobbyId).game.turnCycle))
         this.developmentCardDeck.splice(this.developmentCardDeck.indexOf(card), 1)
 
         spendResourcesOn(player, "developmentCard")

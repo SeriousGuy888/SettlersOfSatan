@@ -11,12 +11,12 @@ function refreshDevelopmentCards() {
     document.getElementById("development-card-list").innerHTML = ""
 
     for(developmentCard of currentGameData.me.inventory.developmentCards){
-        console.log("card")
+        console.log(developmentCard)
         let cardImg = document.createElement("img")
         cardImg.alt = "card icon"
         cardImg.className = "card-icon"
 
-        if(developmentCard.type = "knight") {
+        if(developmentCard.type == "knight") {
             cardImg.src = `../images/development_cards/knight_${developmentCard.knightType}.png`
         }
         else {
@@ -35,8 +35,14 @@ function refreshDevelopmentCards() {
         headerDiv.appendChild(cardImg)
 
         let description = document.createElement("p")
-        if (developmentCard.victoryPoint) let descriptionNode = document.createTextNode(cardDescriptions["victory point"])
-        else let descriptionNode = document.createTextNode(cardDescriptions[developmentCard.type])
+
+        if (developmentCard.victoryPoint){
+            var descriptionNode = document.createTextNode(cardDescriptions["victory point"])
+        }
+
+        else {
+            var descriptionNode = document.createTextNode(cardDescriptions[developmentCard.type])
+        }
 
         description.appendChild(descriptionNode)
 
