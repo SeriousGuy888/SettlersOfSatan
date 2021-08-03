@@ -17,7 +17,7 @@ class Inventory {
   addSettlement(amt = 1) { this.settlements += amt }
   addCity(amt = 1) { this.cities += amt }
   addRoad(amt = 1) { this.roads += amt }
-  addDevelopmentCard(amt = 1) { this.developmentCards.push("hi") }
+  addDevelopmentCard(card) { this.developmentCards.push(card) }
 }
 
 module.exports = Inventory
