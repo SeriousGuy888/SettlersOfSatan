@@ -445,6 +445,11 @@ class Satan {
         wheat: 2,
         ore: 3,
       },
+      developmentCard: {
+        wool: 1,
+        wheat: 1,
+        ore: 1
+      }
     }
     
     const spendResourcesOn = (p, item) => {
@@ -659,9 +664,17 @@ class Satan {
         this.robbing = false
         break
       case "buy_development_card":
+
+        if(!player.canAfford(buildingCosts.developmentCard)) {
+          printChatErr("You cannot afford this.")
+          break
+        }
+
         let card = this.developmentCardDeck[Math.floor(Math.random()*this.developmentCardDeck.length)]
         player.inventory.addDevelopmentCard(new DevelopmentCard(card, this.lobbyId, player.id))
         this.developmentCardDeck.splice(this.developmentCardDeck.indexOf(card), 1)
+
+        spendResourcesOn(player, "developmentCard")
         break
 
       case "offer_trade":
