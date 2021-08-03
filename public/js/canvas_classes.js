@@ -22,6 +22,18 @@ const selectionTargetDims = {
   height: hexRadius / 6 * 2,
 }
 
+
+
+
+const drawSelectCircle = (xPos, yPos, self) => {
+  ctx.fillStyle = "#08f8"
+  ctx.beginPath()
+  ctx.arc(xPos, yPos, self.getDimensions().width / 2, 0, 2 * Math.PI)
+  ctx.fill()
+}
+
+
+
 canvasClasses.Hoverable = class {
   isHovered(centeredPos) {
     let { xPos, yPos } = this
@@ -134,21 +146,12 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
 
       ctx.beginPath()
       // ctx.arc(xPos, yPos, hexRadius / 4, 0, 2 * Math.PI)
-      ctx.fillText(`${harbour.deal.amount} ${harbour.deal.resource} for 1`, xPos, yPos)
+      ctx.fillText(`${harbour.deal.amount} ${harbour.deal.resource}`, xPos, yPos)
       ctx.closePath()
       ctx.fill()
     }
 
-    // if(this.invisible) {
-    //   ctx.fillStyle = "#0dd"
-    //   const { x, y } = this.coords
-    //   ctx.fillText(`${x},${y}`, xPos, yPos)
-    // }
-
     if(this.invisible) return
-
-    // if (currentGameData.robbing) {
-    // }
 
     const angle = 2 * Math.PI / 6
     ctx.beginPath()
@@ -178,18 +181,7 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
         ctx.fillStyle = this.coords.y % 2 === 0 ? axisCols[0] : axisCols[1]
         break
       default:
-        let fillStyle = resourceColours[resource]
-        // console.log(glowing)
-        // if(glowing){
-        //   for(numberIndex in fillStyle){
-        //     console.log(fillStyle[numberIndex])
-        //     newNumber = parseInt("0x" + fillStyle[numberIndex]) + 4
-        //     if (newNumber >= 16) newNumber = 15
-        //     fillStyle[numberIndex] = newNumber.toString(16)
-        //   }
-        // }
-
-        ctx.fillStyle = fillStyle
+        ctx.fillStyle = resourceColours[resource]
         break
     }
 
@@ -218,19 +210,33 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
 
       if(devSettings.hexCoords) ctx.fillText(`${this.coords.x},${this.coords.y}`, xPos, yPos)
       else ctx.fillText(number.toString(), xPos, yPos)
+
+
+      if(currentGameData.robbing) {
+        drawSelectCircle(xPos, yPos, this)
+      }
     }
   }
 
   getDimensions() {
     return {
-      width: hexApothem * 2,
-      height: hexApothem * 2,
+      width: hexApothem * 1.5,
+      height: hexApothem * 1.5,
     }
   }
 
   onClick() {
     if(!this.isHovered(true)) return
     console.log(`Clicked on hex ${JSON.stringify(this.coords)}`)
+
+    if(currentGameData.robbing && !this.robber) {
+      socket.emit("perform_game_action", {
+        action: "move_robber",
+        coords: this.coords,
+      }, (err, data) => {
+        if(err) notifyUser(err)
+      })
+    }
   }
 }
 canvasClasses.Vertex = class extends canvasClasses.Hoverable {
@@ -270,26 +276,18 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
     
     if(!this.data.allowPlacement) return
 
-
-    const drawCircle = () => {
-      ctx.fillStyle = "#08f8"
-      ctx.beginPath()
-      ctx.arc(xPos, yPos, this.getDimensions().width / 2, 0, 2 * Math.PI)
-      ctx.fill()
-    }
-
     if(holding === "settlement") {
       if(!this.data.allowPlacement) return
       if(this.data.building) return
 
-      drawCircle()
+      drawSelectCircle(xPos, yPos, this)
     }
     if(holding === "city") {
       if(!this.data.building) return
       if(this.data.building.playerId !== currentGameData.me.id) return
       if(this.data.building.type !== "settlement") return
 
-      drawCircle()
+      drawSelectCircle(xPos, yPos, this)
     }
   }
   
