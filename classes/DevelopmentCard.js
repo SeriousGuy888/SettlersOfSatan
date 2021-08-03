@@ -7,6 +7,9 @@ class DevelopmentCard {
       this.lobbyId = lobbyId
       this.playerId = playerId
       this.cycleBought = cycleBought
+      
+      if (this.type = "knight") this.knightType = Math.floor(Math.random() * 3) + 1
+      else this.knightType = null
     }
 
     use() {
