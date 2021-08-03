@@ -603,6 +603,9 @@ class Satan {
         }
 
         break
+      case "move_robber":
+        printChatErr("moving robber not supported yet")
+        break
       case "buy_development_card":
         player.inventory.addDevelopmentCard()
         break
