@@ -20,8 +20,8 @@
   justify-content: center;
 }
 .game-control-button.active {
-  border: 3px solid var(--theme-game-select-1);
-  background-color: var(--theme-game-select-2);
+  border: 3px solid var(--theme-select-1);
+  background-color: var(--theme-select-2);
 }
 .game-control-button > img {
   height: 2.5em;

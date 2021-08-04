@@ -11,8 +11,8 @@ body {
   --theme-game-display-2: #e4c18e;
   --theme-game-display-attention-1: #c4b878;
   --theme-game-display-attention-2: #faeb96;
-  --theme-game-select-1: #57f;
-  --theme-game-select-2: #a9baff;
+  --theme-select-1: #57f;
+  --theme-select-2: #a9baff;
   --theme-red-button-border: #c90d00;
   --theme-red-button-bg: #ff7167;
   --theme-red-button-hover: #ff9e97;
@@ -30,8 +30,8 @@ body.dark-theme {
   --theme-game-display-2: #a68759;
   --theme-game-display-attention-1: #867c42;
   --theme-game-display-attention-2: #b6a858;
-  --theme-game-select-1: #708dff;
-  --theme-game-select-2: #b8c6ff;
+  --theme-select-1: #708dff;
+  --theme-select-2: #b8c6ff;
   --theme-red-button-border: #92150d;
   --theme-red-button-bg: #e4291c;
   --theme-red-button-hover: #f04c40;
