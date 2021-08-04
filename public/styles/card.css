@@ -24,8 +24,8 @@
     height: max-content;
     padding: 0.25em 1.5em;
     border-radius: 16px;
-    background: #e4c18e;
-    border: 3px solid #bb9662;
+    border: 3px solid var(--theme-game-display-1);
+    background-color: var(--theme-game-display-2);
 
     display: flex;
     flex-direction: column;
