@@ -46,11 +46,26 @@ function refreshDevelopmentCards() {
 
         description.appendChild(descriptionNode)
 
+        description.style = "flex: 2 0 0;"
+
+        let useButton = document.createElement("button")
+        let useButtonText = document.createTextNode("Use")
+        useButton.appendChild(useButtonText)
+
+        useButton.style = "flex: 1 0 0; height: 2rem;"
+
         let card = document.createElement("div")
         card.className = "card"
     
+        let mainCardDiv = document.createElement("div")
+
+        mainCardDiv.style = "display: flex;"
+
+        mainCardDiv.appendChild(description)
+        mainCardDiv.appendChild(useButton)
+
         card.appendChild(headerDiv)
-        card.appendChild(description)
+        card.appendChild(mainCardDiv)
 
         document.getElementById("development-card-list").appendChild(card)
     }

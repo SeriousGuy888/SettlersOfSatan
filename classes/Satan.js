@@ -697,16 +697,16 @@ class Satan {
         break
       case "buy_development_card":
 
-        if(!player.canAfford(buildingCosts.developmentCard)) {
-          printChatErr("You cannot afford this.")
-          break
-        }
+        // if(!player.canAfford(buildingCosts.developmentCard)) {
+        //   printChatErr("You cannot afford this.")
+        //   break
+        // }
 
         let card = this.developmentCardDeck[Math.floor(Math.random() * this.developmentCardDeck.length)]
         player.inventory.addDevelopmentCard(new DevelopmentCard(card, this.lobbyId, player.id, lobbies.getLobby(this.lobbyId).game.turnCycle))
         this.developmentCardDeck.splice(this.developmentCardDeck.indexOf(card), 1)
 
-        spendResourcesOn(player, "developmentCard")
+        // spendResourcesOn(player, "developmentCard")
         break
 
       case "offer_trade":
