@@ -19,6 +19,9 @@
   align-items: center;
   justify-content: center;
 }
+.game-control-button.active {
+  border: 5px solid #47f;
+}
 .game-control-button > img {
   height: 2.5em;
   width: 2.5em;

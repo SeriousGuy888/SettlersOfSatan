@@ -4,28 +4,39 @@ const gameControls = {
   road: document.querySelector("#road-button"),
   developmentCard: document.querySelector("#development-card-button"),
 }
+const turnButton = document.querySelector("#end-turn-dice-button")
 
 let holding = null
 const setHolding = name => {
   if(holding === name) holding = null
   else holding = name
+  refreshControlsOutline()
 }
 
-gameControls.settlement.addEventListener("click", () => setHolding("settlement"))
-gameControls.city.addEventListener("click", () => setHolding("city"))
-gameControls.road.addEventListener("click", () => setHolding("road"))
+for(let i in gameControls) {
+  if(i === "developmentCard") continue
+  gameControls[i].addEventListener("click", () => setHolding(i))
+}
 
-gameControls.developmentCard.addEventListener("click", () => 
-  socket.emit("perform_game_action", {action: "buy_development_card"},
-  (err, data) => {
+gameControls.developmentCard.addEventListener("click", () => {
+  setHolding(null)
+  socket.emit("perform_game_action", {
+    action: "buy_development_card"
+  }, (err, data) => {
     if(err) notifyUser(err)
   })
-)
-
-const turnButton = document.querySelector("#end-turn-dice-button")
+})
 
 
+
+const refreshControlsOutline = () => {
+  for(let i in gameControls) {
+    gameControls[i].classList.toggle("active", holding === i)
+  }
+}
 const refreshControls = () => {
+  refreshControlsOutline()
+
   if(currentGameData.turn !== currentGameData.me.id) {
     for(let i in gameControls) gameControls[i].disabled = true
 
