@@ -316,7 +316,7 @@ canvasClasses.Vertex = class extends canvasClasses.Hoverable {
     
     
     if(holding === "settlement" && currentGameData.turnCycle <= 2) holding = "road"
-    else holding = null
+    else setHolding(null)
   }
 }
 
@@ -393,6 +393,6 @@ canvasClasses.Edge = class extends canvasClasses.Hoverable {
       if(err) notifyUser(err)
     })
 
-    holding = null
+    setHolding(null)
   }
 }

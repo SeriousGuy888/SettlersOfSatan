@@ -30,6 +30,10 @@ gameControls.developmentCard.addEventListener("click", () => {
 
 
 const refreshControlsOutline = () => {
+  if(currentGameData.turnTick) { // clear holding when turn changes
+    setHolding(null)
+  }
+
   for(let i in gameControls) {
     gameControls[i].classList.toggle("active", holding === i)
   }
@@ -58,7 +62,7 @@ const refreshControls = () => {
 }
 
 turnButton.addEventListener("click", () => {
-  holding = null
+  setHolding(null)
   const action = currentGameData.turnStage === 0 ? "roll_dice" : "end_turn"
 
   socket.emit("perform_game_action", { action },
