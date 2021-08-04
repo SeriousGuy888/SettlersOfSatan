@@ -3,7 +3,7 @@ const lobbies = require("../server/lobbies.js")
 class DevelopmentCard {
     constructor(type, lobbyId, playerId, cycleBought) {
       this.type = type
-      this.victoryPoint = ["library", "market", "chapel", "great Hall", "university"].includes(type)
+      this.victoryPoint = ["library", "market", "chapel", "great hall", "university"].includes(type)
       this.lobbyId = lobbyId
       this.playerId = playerId
       this.cycleBought = cycleBought
