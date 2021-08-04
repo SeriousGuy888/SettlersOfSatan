@@ -212,7 +212,7 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
       else ctx.fillText(number.toString(), xPos, yPos)
 
 
-      if(currentGameData.turn === currentGameData.me.id && currentGameData.robbing) {
+      if(currentGameData && currentGameData.turn === currentGameData.me?.id && currentGameData.robbing) {
         drawSelectCircle(xPos, yPos, this)
       }
     }
