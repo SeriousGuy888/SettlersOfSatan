@@ -41,11 +41,9 @@ const setStatusMessage = (msg) => {
 
 const refreshTurnDisplay = () => {
   const turnPlayer = document.querySelector("#turn-player")
-  const turnCycleStage = document.querySelector("#turn-cycle-stage")
 
   turnPlayer.textContent = currentGameData.players[currentGameData.turn].name
   turnPlayer.style.color = currentGameData.players[currentGameData.turn].colour
-  turnCycleStage.textContent = `C${currentGameData.turnCycle} | S${currentGameData.turnStage}`
 }
 setInterval(() => {
   if(!currentGameData?.turnCountdownTo) return

@@ -75,10 +75,6 @@ body.dark-theme #lobby-chat-messages > div p  { filter: brightness(175%); }
   border: 3px solid var(--theme-game-display-1);
   background-color: var(--theme-game-display-2);
 }
-#turn-data-display > div {
-  border: 3px solid var(--theme-game-display-1);
-  background-color: var(--theme-game-display-2);
-}
 
 
 @keyframes give-me-attention {
