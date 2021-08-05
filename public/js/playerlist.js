@@ -71,7 +71,7 @@ const refreshPlayerList = () => {
     if(currentGameData) {
       listEntryTitleDiv.appendChild(playerVpDisplay)
       if(currentGameData.turn === currentGameData.me.id) {
-        if(currentGameData.players[user.playerId].canBeRobbed) {
+        if(currentGameData.players[user.playerId]?.canBeRobbed) {
           listEntryTitleDiv.appendChild(robButton)
         }
         if(currentGameData.trade.takers?.includes(user.playerId)) {
