@@ -12,23 +12,6 @@ const constants = require("../constants.js")
 
 const { buildingCosts } = constants
 
-/*
-  0 = no hex
-  1 = regular hex
-  2 = fake hex with only south vertex
-  3 = fake hex with only north vertex
-  4 = fake hex without vertexes (only manages harbours)
-*/
-const boardLayout = [
-  [0,0,2,2,2,2,0,0],
-  [0,2,1,1,1,2,0,0],
-  [0,2,1,1,1,1,2,0],
-  [4,1,1,1,1,1,4,0],
-  [0,3,1,1,1,1,3,0],
-  [0,3,1,1,1,3,0,0],
-  [0,0,3,3,3,3,0,0],
-]
-
 const hexTypesResources = {
   mud: "bricks",
   forest: "lumber",
@@ -44,9 +27,6 @@ class Satan {
     this.players = {}
     
     this.board = null
-    this.vertexes = null
-    this.edges = null
-    this.graph = null
 
     this.turn = null // stores the player id of the currently playing playeur
     this.turnCycle = 0 // how many times every player has been given a turn
@@ -105,9 +85,9 @@ class Satan {
     }
     
     const tickData = {
-      board: this.board.hexMatrix,
-      vertexes: this.vertexes,
-      edges: this.edges,
+      board: this.board.hexes,
+      vertexes: this.board.vertexes,
+      edges: this.board.edges,
       players: playersPublicData,
       turn: this.turn,
       turnCycle: this.turnCycle,
@@ -142,11 +122,11 @@ class Satan {
 
   getVertex(coords) {
     if(coords == undefined || coords.x == undefined || coords.y == undefined || coords.v == undefined) return null
-    return this.vertexes.filter(e => e.coords.x === coords.x && e.coords.y === coords.y && e.coords.v === coords.v)[0]
+    return this.board.vertexes.filter(e => e.coords.x === coords.x && e.coords.y === coords.y && e.coords.v === coords.v)[0]
   }
 
   getEdge(coordsArr) { // i dont know how efficient this is but it does work without requiring the coords to be in a specific order
-    return this.edges.filter(e => {
+    return this.board.edges.filter(e => {
       const coordsArrStringified = coordsArr.map(f => JSON.stringify(f))
       const elemCoordsArrStringified = e.coordsArr.map(f => JSON.stringify(f))
       return elemCoordsArrStringified.every(f => coordsArrStringified.includes(f))
@@ -168,111 +148,10 @@ class Satan {
     }])
   }
 
-  setUpBoard(players){
+  setUpBoard(playerCount){
     this.board = new Board()
-    this.vertexes = []
-    this.edges = []
-    this.graph = new Graph()
 
-    let hexTypeCounts = {
-      mud: 3,
-      forest: 4,
-      mountain: 3,
-      farm: 4,
-      pasture: 4,
-      desert: 1
-    }
-
-    let numberCounts = {}
-
-    for (let i = 2; i < 13; i++){
-      if (i !== 7){
-        if (![2,12].includes(i)) numberCounts[i] = 2
-        else numberCounts[i] = 1
-      }
-    }
-
-    // console.log(numberCounts)
-
-    if ([5,6].includes(players)) {
-      for (let key in hexTypeCounts) { 
-        hexTypeCounts[key] += 2
-        if (key == "desert") hexTypeCounts[key] -= 2
-      }
-    }
-
-    for (let y = 0; y < boardLayout.length; y++) {
-      const templateRow = boardLayout[y]
-      this.board.addRow()
-
-      for(let x = 0; x < templateRow.length; x++) {
-        const space = templateRow[x]
-
-        if(space === 0)  {
-          this.board.getRow(-1).push(null)
-          continue
-        }
-
-
-        let hex = new Hex({
-          x: parseInt(x),
-          y: parseInt(y)
-        })
-
-        const addVertex = (v) => {
-          const vertex = new Vertex({
-            ...hex.coords,
-            v,
-          })
-          
-          const vertCoords = JSON.stringify(vertex.coords)
-          
-          this.vertexes.push(vertex)
-          this.graph.addVertex(vertCoords)
-
-          const adjacentVertexes = vertex.getAdjacentVertexes()
-          for(let adjCoordsObj of adjacentVertexes) {
-            this.graph.addEdge(vertCoords, JSON.stringify(adjCoordsObj))
-          }
-        }
-        switch(space) {
-          case 1:
-            hex.resource = Object.keys(hexTypeCounts)[Math.floor(Math.random() * Object.keys(hexTypeCounts).length)]
-            hexTypeCounts[hex.resource]--
-
-            if(!hexTypeCounts[hex.resource]) delete hexTypeCounts[hex.resource]
-  
-            if(hex.resource === "desert") {
-              hex.robber = true
-            }
-            else {
-              hex.number = parseInt(Object.keys(numberCounts)[Math.floor(Math.random() * Object.keys(numberCounts).length)])
-              numberCounts[hex.number]--
-              if(!numberCounts[hex.number]) delete numberCounts[hex.number]
-            }
-
-            addVertex("north")
-            addVertex("south")
-            break
-          case 2:
-            hex.setInvisible(true)
-            addVertex("south")
-            break
-          case 3:
-            hex.setInvisible(true)
-            addVertex("north")
-            break
-          case 4:
-            hex.setInvisible(true)
-            break
-        }
-
-        this.board.getRow(-1).push(hex)
-        if(hex.robber) this.board.setRobber(x, y)
-      }
-    }
-
-
+    this.board.setup(playerCount)
 
 
     let harbourTypeCounts = {
@@ -284,7 +163,7 @@ class Satan {
       any: 4
     }
     
-    for(let row of this.board.hexMatrix) { // calculate harbours
+    for(let row of this.board.hexes) { // calculate harbours
       for(let hex of row) {
         if(!hex?.invisible) continue
 
@@ -298,8 +177,8 @@ class Satan {
         if(adjHexes.every(adjHex => !adjHex.harbour)) {
           const { x, y } = hex.coords
           const hexQuadrant = {
-            x: (x >= this.board.hexMatrix[0].length / 2), // values are true if in positive quadrant, false otherwise
-            y: (y >= this.board.hexMatrix.length / 2), // also the positive y quadrant is the bottom one i will definitely forget that if i dont comment this
+            x: (x >= this.board.hexes[0].length / 2), // values are true if in positive quadrant, false otherwise
+            y: (y >= this.board.hexes.length / 2), // also the positive y quadrant is the bottom one i will definitely forget that if i dont comment this
           }
 
           const adjVertCoords = hex.getAdjacentVertexes()
@@ -354,36 +233,36 @@ class Satan {
       }
     }
 
-    for(let row of this.board.hexMatrix){
+    for(let row of this.board.hexes){
       for(let hex of row){
         if(hex && (hex.number == 8 || hex.number == 6)){
 
           let needToMoveHex = false
 
           for(let adjacentHex of hex.getAdjacentHexes()) {
-            if(this.board.hexMatrix[adjacentHex.y][adjacentHex.x] && [8, 6].includes(this.board.hexMatrix[adjacentHex.y][adjacentHex.x].number)) {
+            if(this.board.hexes[adjacentHex.y][adjacentHex.x] && [8, 6].includes(this.board.hexes[adjacentHex.y][adjacentHex.x].number)) {
                 needToMoveHex = true
                 break
             }
           }
           
           while(needToMoveHex){
-            let randomRowIndex = Math.floor(Math.random() * this.board.hexMatrix.length)
-            let randomHexIndex = Math.floor(Math.random() * this.board.hexMatrix[randomRowIndex].length)
-            let randomHex = this.board.hexMatrix[randomRowIndex][randomHexIndex]
+            let randomRowIndex = Math.floor(Math.random() * this.board.hexes.length)
+            let randomHexIndex = Math.floor(Math.random() * this.board.hexes[randomRowIndex].length)
+            let randomHex = this.board.hexes[randomRowIndex][randomHexIndex]
 
             let moveHex = true
 
             if(randomHex && randomHex.number){
               for(let adjacentHex of randomHex.getAdjacentHexes()) {
-                if(this.board.hexMatrix[adjacentHex.y][adjacentHex.x] && [8, 6].includes(this.board.hexMatrix[adjacentHex.y][adjacentHex.x].number)) {
+                if(this.board.hexes[adjacentHex.y][adjacentHex.x] && [8, 6].includes(this.board.hexes[adjacentHex.y][adjacentHex.x].number)) {
                   moveHex = null
                 }
               }
               if(moveHex){
-                let randomHexNumber = this.board.hexMatrix[randomRowIndex][randomHexIndex].number
+                let randomHexNumber = this.board.hexes[randomRowIndex][randomHexIndex].number
 
-                this.board.hexMatrix[randomRowIndex][randomHexIndex].number = hex.number
+                this.board.hexes[randomRowIndex][randomHexIndex].number = hex.number
                 hex.number = randomHexNumber
                 needToMoveHex = false
               }
@@ -393,12 +272,12 @@ class Satan {
       }
     }
 
-    const { matrix } = this.graph
+    const { matrix } = this.board.graph
     for(let i in matrix) {
       for(let j in matrix[i]) {
         if(matrix[i][j]) { // if a connection exists between the nodes i and j,
           matrix[j][i] = false // my dumb way of nuking duplicates
-          this.edges.push(new Edge([i, j].map(e => JSON.parse(e))))
+          this.board.edges.push(new Edge([i, j].map(e => JSON.parse(e))))
         }
       }
     }
@@ -858,7 +737,7 @@ class Satan {
 
   refreshAllowedPlacements() {
     // refresh places where stuff can be placed
-    this.vertexes.forEach(vertex => {
+    this.board.vertexes.forEach(vertex => {
       vertex.allowPlacement = true
 
       const adjEdges = []
@@ -880,7 +759,7 @@ class Satan {
         }
       }
     })
-    this.edges.forEach(edge => {
+    this.board.edges.forEach(edge => {
       const connectedVertexes = edge.coordsArr.map(c => this.getVertex(c))
       if(connectedVertexes.some(v => v === undefined)) return
 
@@ -921,9 +800,9 @@ class Satan {
       }
 
       if(enable) {
-        if(buildingName === "settlement") enable = this.vertexes.some(v => v.allowPlacement && !v.building)
-        if(buildingName === "city")       enable = this.vertexes.some(v => v.building?.playerId === player.id)
-        if(buildingName === "road")       enable = this.edges.some(e => e.allowPlacement)
+        if(buildingName === "settlement") enable = this.board.vertexes.some(v => v.allowPlacement && !v.building)
+        if(buildingName === "city")       enable = this.board.vertexes.some(v => v.building?.playerId === player.id)
+        if(buildingName === "road")       enable = this.board.edges.some(e => e.allowPlacement)
       }
 
       player.enableControls[buildingName] = enable
@@ -1008,7 +887,7 @@ class Satan {
 
     else {
       this.robbing = false
-      for(const vertex of this.vertexes) {
+      for(const vertex of this.board.vertexes) {
         const building = vertex.getBuilding()
         if(!building) continue
 
