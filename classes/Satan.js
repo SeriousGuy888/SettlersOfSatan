@@ -146,45 +146,6 @@ class Satan {
 
     this.board.setup(playerCount)
 
-    for(let row of this.board.hexes){
-      for(let hex of row){
-        if(hex && (hex.number == 8 || hex.number == 6)){
-
-          let needToMoveHex = false
-
-          for(let adjacentHex of hex.getAdjacentHexes()) {
-            if(this.board.hexes[adjacentHex.y][adjacentHex.x] && [8, 6].includes(this.board.hexes[adjacentHex.y][adjacentHex.x].number)) {
-                needToMoveHex = true
-                break
-            }
-          }
-          
-          while(needToMoveHex){
-            let randomRowIndex = Math.floor(Math.random() * this.board.hexes.length)
-            let randomHexIndex = Math.floor(Math.random() * this.board.hexes[randomRowIndex].length)
-            let randomHex = this.board.hexes[randomRowIndex][randomHexIndex]
-
-            let moveHex = true
-
-            if(randomHex && randomHex.number){
-              for(let adjacentHex of randomHex.getAdjacentHexes()) {
-                if(this.board.hexes[adjacentHex.y][adjacentHex.x] && [8, 6].includes(this.board.hexes[adjacentHex.y][adjacentHex.x].number)) {
-                  moveHex = null
-                }
-              }
-              if(moveHex){
-                let randomHexNumber = this.board.hexes[randomRowIndex][randomHexIndex].number
-
-                this.board.hexes[randomRowIndex][randomHexIndex].number = hex.number
-                hex.number = randomHexNumber
-                needToMoveHex = false
-              }
-            }
-          }
-        }
-      }
-    }
-
     const { matrix } = this.board.graph
     for(let i in matrix) {
       for(let j in matrix[i]) {

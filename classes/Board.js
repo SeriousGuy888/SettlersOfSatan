@@ -131,6 +131,46 @@ class Board {
       }
     }
 
+
+    for(let row of this.hexes) {
+      for(let hex of row) {
+        if(hex && (hex.number == 8 || hex.number == 6)){
+
+          let needToMoveHex = false
+
+          for(let adjacentHex of hex.getAdjacentHexes()) {
+            if(this.hexes[adjacentHex.y][adjacentHex.x] && [8, 6].includes(this.hexes[adjacentHex.y][adjacentHex.x].number)) {
+                needToMoveHex = true
+                break
+            }
+          }
+          
+          while(needToMoveHex){
+            let randomRowIndex = Math.floor(Math.random() * this.hexes.length)
+            let randomHexIndex = Math.floor(Math.random() * this.hexes[randomRowIndex].length)
+            let randomHex = this.hexes[randomRowIndex][randomHexIndex]
+
+            let moveHex = true
+
+            if(randomHex && randomHex.number){
+              for(let adjacentHex of randomHex.getAdjacentHexes()) {
+                if(this.hexes[adjacentHex.y][adjacentHex.x] && [8, 6].includes(this.hexes[adjacentHex.y][adjacentHex.x].number)) {
+                  moveHex = null
+                }
+              }
+              if(moveHex){
+                let randomHexNumber = this.hexes[randomRowIndex][randomHexIndex].number
+
+                this.hexes[randomRowIndex][randomHexIndex].number = hex.number
+                hex.number = randomHexNumber
+                needToMoveHex = false
+              }
+            }
+          }
+        }
+      }
+    }
+
     
 
 
