@@ -210,11 +210,10 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
 
       if(devSettings.hexCoords) ctx.fillText(`${this.coords.x},${this.coords.y}`, xPos, yPos)
       else ctx.fillText(number.toString(), xPos, yPos)
+    }
 
-
-      if(currentGameData && currentGameData.turn === currentGameData.me?.id && currentGameData.robbing) {
-        drawSelectCircle(xPos, yPos, this)
-      }
+    if(currentGameData && currentGameData.turn === currentGameData.me?.id && currentGameData.robbing && !this.robber) {
+      drawSelectCircle(xPos, yPos, this)
     }
   }
 
