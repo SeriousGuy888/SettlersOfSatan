@@ -31,7 +31,7 @@ gameControls.developmentCard.addEventListener("click", () => {
 
 const refreshControlsOutline = () => {
   if(currentGameData.turnTick) { // clear holding when turn changes
-    setHolding(null)
+    holding = null
   }
 
   for(let i in gameControls) {
@@ -55,7 +55,16 @@ const refreshControls = () => {
       turnButton.textContent = "Roll Dice"
     }
     else {
-      for(let i in gameControls) gameControls[i].disabled = false
+      for(let i in gameControls) {
+        let disableButton = false
+        
+        if(i === "settlement") disableButton = !boardVertexes.some(v => v.data.allowPlacement && !v.data.building)
+        if(i === "city") disableButton = !boardVertexes.some(v => v.data.building?.playerId === currentGameData.me.id)
+        if(i === "road") disableButton = !boardEdges.some(e => e.data.allowPlacement)
+
+        gameControls[i].disabled = disableButton
+      }
+
       turnButton.textContent = "End Turn"
     }
   }
