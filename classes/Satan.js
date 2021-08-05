@@ -1,3 +1,4 @@
+const Board = require("./Board.js")
 const Hex = require("./Hex.js")
 const Vertex = require("./Vertex.js")
 const Edge = require("./Edge.js")
@@ -42,10 +43,10 @@ class Satan {
     this.lobbyId = lobbyId
     this.players = {}
     
-    this.board = []
-    this.vertexes = []
-    this.edges = []
-    this.graph = new Graph()
+    this.board = null
+    this.vertexes = null
+    this.edges = null
+    this.graph = null
 
     this.turn = null // stores the player id of the currently playing playeur
     this.turnCycle = 0 // how many times every player has been given a turn
@@ -104,7 +105,7 @@ class Satan {
     }
     
     const tickData = {
-      board: this.board,
+      board: this.board.hexMatrix,
       vertexes: this.vertexes,
       edges: this.edges,
       players: playersPublicData,
@@ -168,7 +169,7 @@ class Satan {
   }
 
   setUpBoard(players){
-    this.board = []
+    this.board = new Board()
     this.vertexes = []
     this.edges = []
     this.graph = new Graph()
@@ -201,20 +202,14 @@ class Satan {
     }
 
     for (let y = 0; y < boardLayout.length; y++) {
-      const row = boardLayout[y]
+      const templateRow = boardLayout[y]
+      this.board.addRow()
 
-      this.board.push([])
-      for(let x = 0; x < row.length; x++) {
-        const space = row[x]
-
-        // at this point the variable space should be a number where...
-        // 0 = no hex here
-        // 1 = regular hex with both vertexes
-        // 2 = invisible hex with only a south vertex
-        // 3 = invisible hex with only a north vertex
+      for(let x = 0; x < templateRow.length; x++) {
+        const space = templateRow[x]
 
         if(space === 0)  {
-          this.board[this.board.length - 1].push(null)
+          this.board.getRow(-1).push(null)
           continue
         }
 
@@ -272,7 +267,8 @@ class Satan {
             break
         }
 
-        this.board[this.board.length - 1].push(hex)
+        this.board.getRow(-1).push(hex)
+        if(hex.robber) this.board.setRobber(x, y)
       }
     }
 
@@ -288,22 +284,22 @@ class Satan {
       any: 4
     }
     
-    for(let row of this.board) { // calculate harbours
+    for(let row of this.board.hexMatrix) { // calculate harbours
       for(let hex of row) {
         if(!hex?.invisible) continue
 
         const adjHexCoords = hex.getAdjacentHexes()
         const adjHexes = []
         adjHexCoords.forEach(c => {
-          const loopHex = this.board[c.y]?.[c.x]
+          const loopHex = this.board.getRow(c.y)?.[c.x]
           if(loopHex) adjHexes.push(loopHex)
         })
 
         if(adjHexes.every(adjHex => !adjHex.harbour)) {
           const { x, y } = hex.coords
           const hexQuadrant = {
-            x: (x >= this.board[0].length / 2), // values are true if in positive quadrant, false otherwise
-            y: (y >= this.board.length / 2), // also the positive y quadrant is the bottom one i will definitely forget that if i dont comment this
+            x: (x >= this.board.hexMatrix[0].length / 2), // values are true if in positive quadrant, false otherwise
+            y: (y >= this.board.hexMatrix.length / 2), // also the positive y quadrant is the bottom one i will definitely forget that if i dont comment this
           }
 
           const adjVertCoords = hex.getAdjacentVertexes()
@@ -358,36 +354,36 @@ class Satan {
       }
     }
 
-    for(let row of this.board){
+    for(let row of this.board.hexMatrix){
       for(let hex of row){
         if(hex && (hex.number == 8 || hex.number == 6)){
 
           let needToMoveHex = false
 
           for(let adjacentHex of hex.getAdjacentHexes()) {
-            if(this.board[adjacentHex.y][adjacentHex.x] && [8, 6].includes(this.board[adjacentHex.y][adjacentHex.x].number)) {
+            if(this.board.hexMatrix[adjacentHex.y][adjacentHex.x] && [8, 6].includes(this.board.hexMatrix[adjacentHex.y][adjacentHex.x].number)) {
                 needToMoveHex = true
                 break
             }
           }
           
           while(needToMoveHex){
-            let randomRowIndex = Math.floor(Math.random() * this.board.length)
-            let randomHexIndex = Math.floor(Math.random() * this.board[randomRowIndex].length)
-            let randomHex = this.board[randomRowIndex][randomHexIndex]
+            let randomRowIndex = Math.floor(Math.random() * this.board.hexMatrix.length)
+            let randomHexIndex = Math.floor(Math.random() * this.board.hexMatrix[randomRowIndex].length)
+            let randomHex = this.board.hexMatrix[randomRowIndex][randomHexIndex]
 
             let moveHex = true
 
             if(randomHex && randomHex.number){
               for(let adjacentHex of randomHex.getAdjacentHexes()) {
-                if(this.board[adjacentHex.y][adjacentHex.x] && [8, 6].includes(this.board[adjacentHex.y][adjacentHex.x].number)) {
+                if(this.board.hexMatrix[adjacentHex.y][adjacentHex.x] && [8, 6].includes(this.board.hexMatrix[adjacentHex.y][adjacentHex.x].number)) {
                   moveHex = null
                 }
               }
               if(moveHex){
-                let randomHexNumber = this.board[randomRowIndex][randomHexIndex].number
+                let randomHexNumber = this.board.hexMatrix[randomRowIndex][randomHexIndex].number
 
-                this.board[randomRowIndex][randomHexIndex].number = hex.number
+                this.board.hexMatrix[randomRowIndex][randomHexIndex].number = hex.number
                 hex.number = randomHexNumber
                 needToMoveHex = false
               }
@@ -514,7 +510,7 @@ class Satan {
             if(this.turnCycle === 2) {
               const adjacentHexes = vertex.getAdjacentHexes()
               for(const hexCoords of adjacentHexes) {
-                const hex = this.board[hexCoords.y][hexCoords.x]
+                const hex = this.board.getHex(hexCoords.x, hexCoords.y)
                 const resource = hexTypesResources[hex.resource]
                 if(resource) {
                   player.resources[resource]++
@@ -627,25 +623,18 @@ class Satan {
           printChatErr("The robber cannot be moved this turn or has already been moved.")
           break
         }
-        if(!this.board[coords.y]?.[coords.x]) {
+        if(!this.board.getHex(coords.x, coords.y)) {
           printChatErr("Invalid coordinates provided.")
           break
         }
-        if(this.board[coords.y][coords.x].robber) {
+        if(this.board.getHex(coords.x, coords.y).robber) {
           printChatErr("The robber must be moved to a different hex.")
           break
         }
 
-        let currentRobberHex
-        this.board.forEach(row => {
-          row.forEach(hex => {
-            if(hex?.robber) currentRobberHex = hex
-            if(currentRobberHex) return
-          })
-          if(currentRobberHex) return
-        })
+        const currentRobberHex = this.board.getRobberHex()
+        const newRobberHex = this.board.getHex(coords.x, coords.y)
 
-        const newRobberHex = this.board[coords.y][coords.x]
         if(currentRobberHex) currentRobberHex.robber = false
         newRobberHex.robber = true
         this.robbing = false
@@ -1028,7 +1017,7 @@ class Satan {
         if(!player) continue
 
         for(const hexCoords of adjacentHexes) {
-          const hex = this.board[hexCoords.y][hexCoords.x]
+          const hex = this.board.getRow(hexCoords.y)[hexCoords.x]
 
           if(hex.robber) continue
 
