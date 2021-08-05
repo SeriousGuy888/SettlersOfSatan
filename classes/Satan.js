@@ -9,6 +9,8 @@ const lobbies = require("../server/lobbies.js")
 const users = require("../server/users.js")
 const constants = require("../constants.js")
 
+const { buildingCosts } = constants
+
 /*
   0 = no hex
   1 = regular hex
@@ -430,8 +432,6 @@ class Satan {
         }
       }])
     }
-
-    const { buildingCosts } = constants
     
     const spendResourcesOn = (p, item) => {
       const playerResources = p.resources
@@ -868,6 +868,7 @@ class Satan {
   }
 
   refreshAllowedPlacements() {
+    // refresh places where stuff can be placed
     this.vertexes.forEach(vertex => {
       vertex.allowPlacement = true
 
@@ -879,8 +880,15 @@ class Satan {
         adjEdges.push(this.getEdge([vertex.coords, adjVertCoords]))
       }
 
-      if(!this.inSetupTurnCycle() && adjEdges.every(loopEdge => loopEdge.road !== this.turn)) {
-        vertex.allowPlacement = false
+      if(this.inSetupTurnCycle()) {
+        if(this.setupTurnPlaced.settlement) {
+          vertex.allowPlacement = false
+        }
+      }
+      else {
+        if(adjEdges.every(loopEdge => loopEdge.road !== this.turn)) {
+          vertex.allowPlacement = false
+        }
       }
     })
     this.edges.forEach(edge => {
@@ -890,7 +898,7 @@ class Satan {
       edge.allowPlacement = false
 
       if(this.inSetupTurnCycle()) {
-        if(connectedVertexes.some(v => v.coords === this.setupTurnPlaced.settlement)) {
+        if(!this.setupTurnPlaced.road && connectedVertexes.some(v => v.coords === this.setupTurnPlaced.settlement)) {
           edge.allowPlacement = true
         }
       }
@@ -908,6 +916,29 @@ class Satan {
         })
       }
     })
+
+    
+    // refresh whether the buttons are enabled for a player
+    // (based on whether the player can afford it and whether there is anywhere to place something)
+    const player = this.getPlayer(this.turn)
+    for(let buildingName in buildingCosts) {
+      let enable = false
+
+      if(this.inSetupTurnCycle()) {
+        enable = (["settlement", "road"].includes(buildingName))
+      }
+      else {
+        enable = player.canAfford(buildingCosts[buildingName])
+      }
+
+      if(enable) {
+        if(buildingName === "settlement") enable = this.vertexes.some(v => v.allowPlacement && !v.building)
+        if(buildingName === "city")       enable = this.vertexes.some(v => v.building?.playerId === player.id)
+        if(buildingName === "road")       enable = this.edges.some(e => e.allowPlacement)
+      }
+
+      player.enableControls[buildingName] = enable
+    }
   }
 
   nextTurn() {

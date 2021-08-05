@@ -21,6 +21,10 @@ class Player {
       wheat: 0,
       ore: 0,
     }
+    
+    // controls the frontend game controls like the place settlement button and whether they are enabled
+    // (they are disabled when the player cannot afford the cost)
+    this.enableControls = {}
   }
   
   canAfford(cost) {

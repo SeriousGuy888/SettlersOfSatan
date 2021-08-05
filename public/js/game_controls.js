@@ -49,23 +49,17 @@ const refreshControls = () => {
   }
   else {
     turnButton.disabled = false
+    turnButton.textContent = currentGameData.turnStage === 0 ? "Roll Dice" : "End Turn"
 
-    if(currentGameData.turnStage === 0) {
-      for(let i in gameControls) gameControls[i].disabled = true
-      turnButton.textContent = "Roll Dice"
-    }
-    else {
-      for(let i in gameControls) {
-        let disableButton = false
-        
-        if(i === "settlement") disableButton = !boardVertexes.some(v => v.data.allowPlacement && !v.data.building)
-        if(i === "city") disableButton = !boardVertexes.some(v => v.data.building?.playerId === currentGameData.me.id)
-        if(i === "road") disableButton = !boardEdges.some(e => e.data.allowPlacement)
-
-        gameControls[i].disabled = disableButton
+    for(let i in gameControls) {
+      if(currentGameData.turnStage === 0) {
+        gameControls[i].disabled = true
+        gameControls[i].title = "The dice have not been rolled yet."
+        continue
       }
 
-      turnButton.textContent = "End Turn"
+      if(!currentGameData.me.enableControls[i]) gameControls[i].title = "You cannot afford this or there is nowhere to place this."
+      gameControls[i].disabled = !currentGameData.me.enableControls[i]
     }
   }
 }
