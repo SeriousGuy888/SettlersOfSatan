@@ -1,5 +1,4 @@
 const Board = require("./Board.js")
-const Edge = require("./Edge.js")
 const DevelopmentCard = require("./DevelopmentCard.js")
 
 const lobbies = require("../server/lobbies.js")
@@ -22,7 +21,7 @@ class Satan {
     this.lobbyId = lobbyId
     this.players = {}
     
-    this.board = null
+    this.board = new Board()
 
     this.turn = null // stores the player id of the currently playing playeur
     this.turnCycle = 0 // how many times every player has been given a turn
@@ -139,26 +138,6 @@ class Satan {
       text: `${currentPlayer.name} has reached ten victory points and won the game 🎉 but billzo has not coded the stuff for ending a game`,
       style: { colour: "magenta", bold: true }
     }])
-  }
-
-  setUpBoard(playerCount){
-    this.board = new Board()
-
-    this.board.setup(playerCount)
-
-    const { matrix } = this.board.graph
-    for(let i in matrix) {
-      for(let j in matrix[i]) {
-        if(matrix[i][j]) { // if a connection exists between the nodes i and j,
-          matrix[j][i] = false // my dumb way of nuking duplicates
-          this.board.edges.push(new Edge([i, j].map(e => JSON.parse(e))))
-        }
-      }
-    }
-  }
-
-  moveNumbers(){
-
   }
 
   processAction(playerId, actionData) {

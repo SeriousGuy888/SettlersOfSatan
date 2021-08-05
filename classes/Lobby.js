@@ -226,7 +226,7 @@ class Lobby {
           }
           if(this.game.turnCycle !== 1) printChatErr("This command can only be used on the first turn.")
           else {
-            this.game.setUpBoard(Object.keys(this.game.players).length)
+            this.game.board.setup(Object.keys(this.game.players).length)
             this.printToChat([{
               text: `The host, ${user.name}, has reshuffled the board.`,
               style: { colour: "green" }

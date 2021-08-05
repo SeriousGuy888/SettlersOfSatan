@@ -1,5 +1,6 @@
 const Hex = require("./Hex.js")
 const Vertex = require("./Vertex.js")
+const Edge = require("./Edge.js")
 const Graph = require("./Graph.js")
 const Harbour = require("./Harbour.js")
 
@@ -249,6 +250,18 @@ class Board {
           harbour.setDeal(harbourType, harbourType === "any" ? 3 : 2)
 
           hex.setHarbour(harbour)
+        }
+      }
+    }
+
+    
+
+    const { matrix } = this.graph
+    for(let i in matrix) {
+      for(let j in matrix[i]) {
+        if(matrix[i][j]) { // if a connection exists between the nodes i and j,
+          matrix[j][i] = false // my dumb way of nuking duplicates
+          this.edges.push(new Edge([i, j].map(e => JSON.parse(e))))
         }
       }
     }
