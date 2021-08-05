@@ -354,15 +354,11 @@ class Satan {
           printChatErr("The robber must be moved to a different hex.")
           break
         }
-
-        const currentRobberHex = this.board.getRobberHex()
-        const newRobberHex = this.board.getHex(coords.x, coords.y)
-
-        if(currentRobberHex) currentRobberHex.robber = false
-        newRobberHex.robber = true
+        this.board.moveRobber(coords.x, coords.y)
         this.robbing = false
 
 
+        const newRobberHex = this.board.getHex(coords.x, coords.y)
         const adjPlayerIds = new Set(           // set removes all duplicates
           newRobberHex                          // get the new hex
             .getAdjacentVertexes()              // get its vertex coordinates

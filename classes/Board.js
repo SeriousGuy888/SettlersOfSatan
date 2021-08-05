@@ -79,6 +79,7 @@ class Board {
           x: parseInt(x),
           y: parseInt(y)
         })
+        let robber = false
 
         const addVertex = (v) => {
           const vertex = new Vertex({
@@ -104,7 +105,7 @@ class Board {
             if(!hexTypeCounts[hex.resource]) delete hexTypeCounts[hex.resource]
   
             if(hex.resource === "desert") {
-              hex.robber = true
+              robber = true
             }
             else {
               hex.number = parseInt(Object.keys(numberCounts)[Math.floor(Math.random() * Object.keys(numberCounts).length)])
@@ -129,7 +130,7 @@ class Board {
         }
 
         this.getRow(-1).push(hex)
-        if(hex.robber) this.setRobber(x, y)
+        if(robber) this.moveRobber(x, y)
       }
     }
 
@@ -287,7 +288,19 @@ class Board {
     if(!this.robberCoords) return null
     return this.getHex(...this.robberCoords)
   }
-  setRobber(x, y) { this.robberCoords = [x, y] }
+  setRobber(x, y) {
+    this.robberCoords = [x, y]
+  }
+  moveRobber(x, y) { // move robber to...
+    const currentRobberHex = this.getRobberHex()
+    const newRobberHex = this.getHex(x, y)
+
+    if(currentRobberHex) {
+      currentRobberHex.robber = false
+    }
+    newRobberHex.robber = true
+    this.setRobber(newRobberHex.coords.x, newRobberHex.coords.y)
+  }
 
 
 
