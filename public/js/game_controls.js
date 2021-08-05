@@ -31,7 +31,12 @@ gameControls.developmentCard.addEventListener("click", () => {
 
 const refreshControlsOutline = () => {
   if(currentGameData.turnTick) { // clear holding when turn changes
-    holding = null
+    if(currentGameData.turnCycle <= 2) {
+      holding = "settlement"
+    }
+    else {
+      holding = null
+    }
   }
 
   for(let i in gameControls) {
