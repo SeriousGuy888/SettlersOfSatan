@@ -35,7 +35,8 @@ class Player {
     if(JSON.stringify(tickData) === this.prevTickData) return
 
     const user = users.getUser(this.userId)
-    const socket = user.socket
+    const socket = user?.socket
+    if(!socket) return
     socket.emit("player_update", tickData)
     // this.prevTickData = tickData
   }
