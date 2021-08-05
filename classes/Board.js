@@ -23,7 +23,7 @@ const boardLayout = [
 
 class Board {
   constructor() {
-    this.hexes = []
+    this.hexes = null
     this.vertexes = null
     this.edges = null
     this.graph = null
@@ -32,6 +32,7 @@ class Board {
   }
 
   setup(playerCount) {
+    this.hexes = []
     this.vertexes = []
     this.edges = []
     this.graph = new Graph()
