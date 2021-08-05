@@ -1,4 +1,5 @@
 const Inventory = require("./Inventory.js")
+const users = require("../server/users.js")
 
 class Player {
   constructor(id, data) {
@@ -25,6 +26,18 @@ class Player {
     // controls the frontend game controls like the place settlement button and whether they are enabled
     // (they are disabled when the player cannot afford the cost)
     this.enableControls = {}
+  }
+
+  tick() {
+    let tickData = this
+    delete tickData.prevTickData // no circular json :D
+
+    if(JSON.stringify(tickData) === this.prevTickData) return
+
+    const user = users.getUser(this.userId)
+    const socket = user.socket
+    socket.emit("player_update", tickData)
+    // this.prevTickData = tickData
   }
   
   canAfford(cost) {

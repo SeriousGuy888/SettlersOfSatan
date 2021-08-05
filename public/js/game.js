@@ -62,20 +62,17 @@ setInterval(() => {
 let currentGameData
 socket.on("game_update", gData => {
   currentGameData = gData
+})
 
-  socket.emit("request_player_data_update", {}, (err, pData) => {
-    if(err) notifyUser(err)
-    else {
-      currentGameData.me = pData
-      canvasFunctions.refreshBoard()
-      refreshResourceCards()
-      refreshControls()
-      refreshTradeMenu()
-      refreshTurnDisplay()
-      refreshPlayerList()
-      refreshDevelopmentCards()
+socket.on("player_update", pData => {
+  currentGameData.me = pData
+  canvasFunctions.refreshBoard()
+  refreshResourceCards()
+  refreshControls()
+  refreshTradeMenu()
+  refreshTurnDisplay()
+  refreshPlayerList()
+  refreshDevelopmentCards()
 
-      document.getElementById("inv-list").innerHTML = `Settlements: ${currentGameData.me.inventory.settlements}, Roads: ${currentGameData.me.inventory.roads}, Cities: ${currentGameData.me.inventory.cities}`
-    }
-  })
+  document.getElementById("inv-list").innerHTML = `Settlements: ${currentGameData.me.inventory.settlements}, Roads: ${currentGameData.me.inventory.roads}, Cities: ${currentGameData.me.inventory.cities}`
 })

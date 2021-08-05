@@ -255,21 +255,6 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     lobby.setUserColour(user.id, data.colour)
   })
 
-  socket.on("request_player_data_update", (data, callback) => {
-    const requestValidation = helpers.validateRequest(callback, socket, {
-      requireCallback: true,
-      requireUser: true,
-      requireLobby: true,
-    })
-    if(!requestValidation) return
-    const { user, lobby } = requestValidation
-
-    if(!lobby.getInGame()) return callback("not_playing")
-    const playerId = lobby.getUser(user.id).playerId
-
-    callback(null, lobby.game.getPlayer(playerId))
-  })
-
   socket.on("perform_game_action", (data, callback) => {
     const requestValidation = helpers.validateRequest(callback, socket, {
       requireCallback: true,

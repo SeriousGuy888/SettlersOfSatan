@@ -96,8 +96,11 @@ class Satan {
       lobby.broadcast("game_update", tickData)
       this.prevTickData = JSON.stringify(tickData)
     }
-
     if(this.turnTick) this.turnTick = false
+
+    for(const i in this.players) {
+      this.players[i].tick() // tick all players individually to update them on their private data
+    }
   }
 
   getPlayers() {
