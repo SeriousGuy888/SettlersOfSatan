@@ -80,9 +80,7 @@ class Satan {
     }
     
     const tickData = {
-      board: this.board.hexes, // legacy data format (by which i mean i dont want to rewrite the frontend right now)
-      vertexes: this.board.vertexes,
-      edges: this.board.edges,
+      board: this.board,
       players: playersPublicData,
       turn: this.turn,
       turnCycle: this.turnCycle,

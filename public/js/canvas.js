@@ -75,9 +75,7 @@ canvasFunctions.stop = () => {
 
 
 canvasFunctions.refreshBoard = () => {
-  let board = currentGameData.board
-  let vertexes = currentGameData.vertexes
-  let edges = currentGameData.edges
+  const { hexes, vertexes, edges } = currentGameData.board
   
   boardHexes.splice(0, boardHexes.length)
   boardVertexes.splice(0, boardVertexes.length)
@@ -85,10 +83,10 @@ canvasFunctions.refreshBoard = () => {
 
   const startY = hexRadius / 2
   const yOffsetPerRow = hexRadius * 2 - hexRadius / 2
-  if(board) {
+  if(hexes) {
     let y = startY
-    for(let i in board) {
-      const row = board[i]
+    for(let i in hexes) {
+      const row = hexes[i]
   
       const rowWidth = (row.length - 1) * hexApothem
       const xCenter = canvasWidth / 2 - rowWidth
@@ -130,17 +128,6 @@ canvasFunctions.refreshBoard = () => {
 
   if(currentGameData.robbing && currentGameData.turn === currentGameData.me.id) {
     robberImgSrc = "/images/glowing_robber.png"
-    let buildings = []
-
-    let hexesAdjacentToBuildings = []
-    console.log(vertexes)
-    for(let vertex of currentGameData.vertexes) {
-      if(vertex.building){
-        for(let adjacentHex of vertex.adjacentHexes) {
-          
-        }
-      }
-    }
   }
   else {
     robberImgSrc = "/images/robber.png"
