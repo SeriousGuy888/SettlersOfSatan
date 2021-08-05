@@ -115,16 +115,6 @@ class Satan {
     else this.players[playerId] = data
   }
 
-  getVertex(coords) { return this.board.getVertex(coords) }
-
-  getEdge(coordsArr) { // i dont know how efficient this is but it does work without requiring the coords to be in a specific order
-    return this.board.edges.filter(e => {
-      const coordsArrStringified = coordsArr.map(f => JSON.stringify(f))
-      const elemCoordsArrStringified = e.coordsArr.map(f => JSON.stringify(f))
-      return elemCoordsArrStringified.every(f => coordsArrStringified.includes(f))
-    })[0]
-  }
-
   getBoard() {
     return this.board
   }
@@ -146,7 +136,7 @@ class Satan {
 
     const coords = actionData.coords
     const coordsArr = actionData.coordsArr
-    const vertex = this.getVertex(coords)
+    const vertex = this.board.getVertex(coords)
     const player = this.getPlayer(playerId)
     const user = users.getUser(player.userId)
     const lobby = lobbies.getLobby(user.lobbyId)
@@ -284,7 +274,7 @@ class Satan {
         }
         break
       case "place_road":
-        const edge = this.getEdge(coordsArr)
+        const edge = this.board.getEdge(coordsArr)
         if(!edge) break
 
         if(this.inSetupTurnCycle()) {
@@ -313,15 +303,15 @@ class Satan {
           break
         }
 
-        const vertexesConnectedToEdge = coordsArr.map(e => this.getVertex(e))
+        const vertexesConnectedToEdge = coordsArr.map(e => this.board.getVertex(e))
         const connectedToOwnedVertex = vertexesConnectedToEdge.some(vert => vert.building && vert.building.playerId === playerId)
         let connectedToOwnedEdge = false
 
         for(const vert of vertexesConnectedToEdge) {
-          const adjacentVertexes = vert.getAdjacentVertexes().map(v => this.getVertex(v))
+          const adjacentVertexes = vert.getAdjacentVertexes().map(v => this.board.getVertex(v))
           const adjacentEdges = adjacentVertexes.map(vert2 => {
             if(!vert || !vert2) return
-            return this.getEdge([vert.coords, vert2.coords])
+            return this.board.getEdge([vert.coords, vert2.coords])
           })
           connectedToOwnedEdge = adjacentEdges.some(loopEdge => loopEdge?.road === playerId)
           if(connectedToOwnedEdge) break
@@ -372,12 +362,12 @@ class Satan {
         this.robbing = false
 
 
-        const adjPlayerIds = new Set(         // set removes all duplicates
-          newRobberHex                        // get the new hex
-            .getAdjacentVertexes()            // get its vertex coordinates
-            .map(c => this.getVertex(c))      // get the vertex objects
-            .map(v => v?.building?.playerId)  // find the owners of the buildings on the vertexes
-            .filter(pid => pid)               // filter out any vertexes that don't have a player owned building
+        const adjPlayerIds = new Set(           // set removes all duplicates
+          newRobberHex                          // get the new hex
+            .getAdjacentVertexes()              // get its vertex coordinates
+            .map(c => this.board.getVertex(c))  // get the vertex objects
+            .map(v => v?.building?.playerId)    // find the owners of the buildings on the vertexes
+            .filter(pid => pid)                 // filter out any vertexes that don't have a player owned building
         )
         
         adjPlayerIds.forEach(pid => {
@@ -595,10 +585,10 @@ class Satan {
 
       const adjEdges = []
       for(let adjVertCoords of vertex.getAdjacentVertexes()) {
-        const adjVert = this.getVertex(adjVertCoords)
+        const adjVert = this.board.getVertex(adjVertCoords)
         if(!adjVert) continue
         if(adjVert.getBuilding()) vertex.allowPlacement = false // distance rule
-        adjEdges.push(this.getEdge([vertex.coords, adjVertCoords]))
+        adjEdges.push(this.board.getEdge([vertex.coords, adjVertCoords]))
       }
 
       if(this.inSetupTurnCycle()) {
@@ -613,7 +603,7 @@ class Satan {
       }
     })
     this.board.edges.forEach(edge => {
-      const connectedVertexes = edge.coordsArr.map(c => this.getVertex(c))
+      const connectedVertexes = edge.coordsArr.map(c => this.board.getVertex(c))
       if(connectedVertexes.some(v => v === undefined)) return
 
       edge.allowPlacement = false
@@ -630,7 +620,7 @@ class Satan {
 
         connectedVertexes.forEach(vertex => {
           for(let adjVertCoords of vertex.getAdjacentVertexes()) {
-            const adjEdge = this.getEdge([vertex.coords, adjVertCoords])
+            const adjEdge = this.board.getEdge([vertex.coords, adjVertCoords])
             if(!adjEdge) continue
             if(adjEdge.getRoad() === this.turn) edge.allowPlacement = true
           }

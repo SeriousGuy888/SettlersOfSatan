@@ -296,6 +296,14 @@ class Board {
     return this.vertexes.filter(e => e.coords.x === coords.x && e.coords.y === coords.y && e.coords.v === coords.v)[0]
   }
 
+  getEdge(coordsArr) { // i dont know how efficient this is but it does work without requiring the coords to be in a specific order
+    return this.edges.filter(e => {
+      const coordsArrStringified = coordsArr.map(f => JSON.stringify(f))
+      const elemCoordsArrStringified = e.coordsArr.map(f => JSON.stringify(f))
+      return elemCoordsArrStringified.every(f => coordsArrStringified.includes(f))
+    })[0]
+  }
+
 
   getHeight() { return this.hexes.length }
 }
