@@ -81,22 +81,6 @@ body.dark-theme #lobby-chat-messages > div p  { filter: brightness(175%); }
 }
 
 
-@keyframes give-me-attention {
-  0% {
-    border: 3px solid var(--theme-game-display-1);
-    background-color: var(--theme-game-display-2);
-  }
-  50% {
-    border: 3px solid var(--theme-game-display-attention-1);
-    background-color: var(--theme-game-display-attention-2);
-  }
-  100% {
-    border: 3px solid var(--theme-game-display-1);
-    background-color: var(--theme-game-display-2);
-  }
-}
-
-
 .collapsible {
   border: 3px solid var(--theme-game-display-1);
   background-color: var(--theme-game-display-2);
