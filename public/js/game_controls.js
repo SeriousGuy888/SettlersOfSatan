@@ -59,6 +59,7 @@ const refreshControls = () => {
       }
 
       if(!currentGameData.me.enableControls[i]) gameControls[i].title = "You cannot afford this or there is nowhere to place this."
+      else gameControls[i].title = ""
       gameControls[i].disabled = !currentGameData.me.enableControls[i]
     }
   }
