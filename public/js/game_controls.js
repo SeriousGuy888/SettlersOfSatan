@@ -44,8 +44,6 @@ const refreshControlsOutline = () => {
   }
 }
 const refreshControls = () => {
-  refreshControlsOutline()
-
   if(currentGameData.turn !== currentGameData.me.id) {
     for(let i in gameControls) gameControls[i].disabled = true
 
@@ -68,6 +66,8 @@ const refreshControls = () => {
       gameControls[i].disabled = !currentGameData.me.enableControls[i]
     }
   }
+
+  refreshControlsOutline()
 }
 
 turnButton.addEventListener("click", () => {
