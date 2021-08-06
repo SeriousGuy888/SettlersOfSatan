@@ -48,6 +48,7 @@ const refreshResourceCards = () => {
       if(currentAmt > prevAmt) displayCard.classList.add("green-pulse")
       if(currentAmt < prevAmt) displayCard.classList.add("red-pulse")
     }
+    setTimeout(() => displayCard.classList.remove("green-pulse", "red-pulse"), 3000)
 
     const amtDisplay = displayCard.querySelector(".resource")
     amtDisplay.textContent = currentGameData.me.resources[divKey]
