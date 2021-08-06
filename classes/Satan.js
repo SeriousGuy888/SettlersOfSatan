@@ -23,6 +23,8 @@ class Satan {
     
     this.board = new Board()
 
+    this.gameEnd = false
+
     this.turn = null // stores the player id of the currently playing playeur
     this.turnCycle = 0 // how many times every player has been given a turn
     this.turnStage = 0 // turn stage manages whether the dice have been rolled
@@ -59,6 +61,8 @@ class Satan {
 
   tick() {
     const lobby = lobbies.getLobby(this.lobbyId)
+      
+    this.handleWin()
     this.refreshAllowedPlacements()
     
     if(!this.turn || this.getPlayer(this.turn).disconnected) { // no turn is set or current player has disconnected
@@ -123,6 +127,9 @@ class Satan {
   }
 
   handleWin() {
+    if(!this.turn) return
+    if(this.gameEnd) return
+
     const lobby = lobbies.getLobby(this.lobbyId)
     const currentPlayer = this.getPlayer(this.turn)
     if(currentPlayer.points < 10) return
@@ -131,6 +138,8 @@ class Satan {
       text: `${currentPlayer.name} has reached ten victory points and won the game 🎉 but billzo has not coded the stuff for ending a game`,
       style: { colour: "magenta", bold: true }
     }])
+
+    this.gameEnd = true
   }
 
   processAction(playerId, actionData) {
@@ -707,8 +716,6 @@ class Satan {
         this.setupTurnPlaced.road = null
         this.turnStage = 1
       }
-      
-      this.handleWin()
 
       lobbies.getLobby(this.lobbyId).printToChat([{
         text: `It is now ${this.players[this.turn].name}'s turn.`,
