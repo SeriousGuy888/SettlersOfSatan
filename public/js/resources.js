@@ -15,6 +15,7 @@ const createResourceImg = (resourceName) => {
   return img
 }
 
+let prevResourceData = {}
 const refreshResourceCards = () => {
   if(!resourceCardsDiv.childElementCount) {
     const frag = document.createDocumentFragment()
@@ -34,22 +35,23 @@ const refreshResourceCards = () => {
       frag.appendChild(resourceCard)
     }
 
-    // const developmentCardToggle = document.createElement("div")
-    // developmentCardToggle.className = "resource-card"
-    // developmentCardToggle.id = "development-card-toggle"
-    // developmentCardToggle.textContent = "Toggle Development Cards"
-    // developmentCardToggle.onclick = () => {
-    //   const developmentCardListDiv = document.querySelector("#development-card-list")
-    //   if(!developmentCardListDiv.style.display) developmentCardListDiv.style.display = "none"
-    //   else developmentCardListDiv.style.display = null
-    // }
-    // frag.appendChild(developmentCardToggle)
-
     resourceCardsDiv.appendChild(frag)
   }
 
   for(let divKey in resourceDivNames) {
-    const amtDisplay = document.getElementById(resourceDivNames[divKey]).querySelector(".resource")
+    const currentAmt = currentGameData.me.resources[divKey]
+    const prevAmt = prevResourceData[divKey]
+
+    const displayCard = document.getElementById(resourceDivNames[divKey])
+    displayCard.classList.remove("green-pulse", "red-pulse")
+    if(currentAmt !== prevAmt) {
+      if(currentAmt > prevAmt) displayCard.classList.add("green-pulse")
+      if(currentAmt < prevAmt) displayCard.classList.add("red-pulse")
+    }
+
+    const amtDisplay = displayCard.querySelector(".resource")
     amtDisplay.textContent = currentGameData.me.resources[divKey]
   }
+
+  prevResourceData = currentGameData.me.resources
 }

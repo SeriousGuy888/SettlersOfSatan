@@ -12,3 +12,33 @@
     background-color: var(--theme-game-display-2);
   }
 }
+
+@keyframes green-pulse {
+  0% {
+    border: 3px solid var(--theme-game-display-1);
+    background-color: var(--theme-game-display-2);
+  }
+  50% {
+    border: 3px solid #080;
+    background-color: #0d0;
+  }
+  100% {
+    border: 3px solid var(--theme-game-display-1);
+    background-color: var(--theme-game-display-2);
+  }
+}
+
+@keyframes red-pulse {
+  0% {
+    border: 3px solid var(--theme-game-display-1);
+    background-color: var(--theme-game-display-2);
+  }
+  50% {
+    border: 3px solid #800;
+    background-color: #d00;
+  }
+  100% {
+    border: 3px solid var(--theme-game-display-1);
+    background-color: var(--theme-game-display-2);
+  }
+}
