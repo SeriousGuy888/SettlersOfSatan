@@ -28,17 +28,23 @@ class Player {
     this.enableControls = {}
   }
 
-  tick() {
-    let tickData = this
-    delete tickData.prevTickData // no circular json :D
+  tick(force) {
+    let tickData = {
+      id: this.id,
+      name: this.name,
+      colour: this.colour,
+      inventory: this.inventory,
+      resources: this.resources,
+      enableControls: this.enableControls,
+    }
 
-    if(JSON.stringify(tickData) === this.prevTickData) return
+    if(!force && JSON.stringify(tickData) === JSON.stringify(this.prevTickData)) return
 
     const user = users.getUser(this.userId)
     const socket = user?.socket
     if(!socket) return
     socket.emit("player_update", tickData)
-    // this.prevTickData = tickData
+    this.prevTickData = tickData
   }
   
   canAfford(cost) {

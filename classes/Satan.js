@@ -92,14 +92,15 @@ class Satan {
       developmentCardDeck: this.developmentCardDeck
     }
 
-    if(JSON.stringify(tickData) !== this.prevTickData) {
+    let shouldTick = JSON.stringify(tickData) !== this.prevTickData
+    if(shouldTick) {
       lobby.broadcast("game_update", tickData)
       this.prevTickData = JSON.stringify(tickData)
     }
     if(this.turnTick) this.turnTick = false
 
     for(const i in this.players) {
-      this.players[i].tick() // tick all players individually to update them on their private data
+      this.players[i].tick(shouldTick) // tick all players individually to update them on their private data
     }
   }
 
