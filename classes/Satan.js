@@ -59,6 +59,7 @@ class Satan {
 
   tick() {
     const lobby = lobbies.getLobby(this.lobbyId)
+    this.refreshAllowedPlacements()
     
     if(!this.turn || this.getPlayer(this.turn).disconnected) { // no turn is set or current player has disconnected
       this.nextTurn()
@@ -249,7 +250,6 @@ class Satan {
           vertex.setBuilding("settlement", playerId)
           player.points++
           player.inventory.addSettlement(-1)
-          this.refreshAllowedPlacements()
         }
         break
       case "place_city":
@@ -272,7 +272,6 @@ class Satan {
           player.points++
           player.inventory.addCity(-1)
           player.inventory.addSettlement()
-          this.refreshAllowedPlacements()
         }
         break
       case "place_road":
@@ -330,7 +329,6 @@ class Satan {
           if(this.inSetupTurnCycle()) this.setupTurnPlaced.road = edge.coordsArr
           else                        spendResourcesOn(player, "road")
           player.inventory.addRoad(-1)
-          this.refreshAllowedPlacements()
         }
 
         break
@@ -579,6 +577,8 @@ class Satan {
   }
 
   refreshAllowedPlacements() {
+    if(!this.turn) return
+
     // refresh places where stuff can be placed
     this.board.vertexes.forEach(vertex => {
       vertex.allowPlacement = true
@@ -696,8 +696,7 @@ class Satan {
         this.setupTurnPlaced.road = null
         this.turnStage = 1
       }
-
-      this.refreshAllowedPlacements()
+      
       this.handleWin()
 
       lobbies.getLobby(this.lobbyId).printToChat([{
