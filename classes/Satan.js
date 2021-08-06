@@ -134,10 +134,22 @@ class Satan {
     const currentPlayer = this.getPlayer(this.turn)
     if(currentPlayer.points < 10) return
 
-    lobby.printToChat([{
-      text: `${currentPlayer.name} has reached ten victory points and won the game 🎉 but billzo has not coded the stuff for ending a game`,
-      style: { colour: "magenta", bold: true }
-    }])
+    const leaderboard = Object.keys(this.players).sort((a, b) => this.players[b].points - this.players[a].points)
+
+    lobby.printToChat([
+      {
+        text: `🎉 Game over!`,
+        style: { colour: "magenta", bold: true }
+      },
+      {
+        text: `1st Place: ${leaderboard.map(pid => this.players[pid].name).join(", followed by ")}`,
+        style: { colour: "magenta" }
+      },
+      {
+        text: "billzo still has not written any win handling code though",
+        style: { colour: "violet" }
+      }
+    ])
 
     this.gameEnd = true
   }
