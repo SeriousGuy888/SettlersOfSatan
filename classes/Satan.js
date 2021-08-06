@@ -644,7 +644,7 @@ class Satan {
 
       if(enable) {
         if(buildingName === "settlement") enable = this.board.vertexes.some(v => v.allowPlacement && !v.building)
-        if(buildingName === "city")       enable = this.board.vertexes.some(v => v.building?.playerId === player.id)
+        if(buildingName === "city")       enable = this.board.vertexes.some(v => v.building?.type === "settlement" && v.building?.playerId === player.id)
         if(buildingName === "road")       enable = this.board.edges.some(e => e.allowPlacement)
       }
 
