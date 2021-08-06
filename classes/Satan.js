@@ -396,7 +396,18 @@ class Satan {
           break
         }
 
-        const stealables = Object.keys(robFrom.resources).filter(k => robFrom.resources[k] > 0)
+        console.log(robFrom.resources)
+
+        const stealables = []
+
+        for(let resource in robFrom.resources){
+          for(let i = 0; i < robFrom.resources[resource]; i++){
+            stealables.push(resource)
+          }
+        }
+
+        console.log(stealables)
+        
         const stealResource = stealables[Math.floor(Math.random() * stealables.length)]
         robFrom.resources[stealResource]--
         player.resources[stealResource]++
