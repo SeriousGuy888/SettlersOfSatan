@@ -7,7 +7,6 @@ class Hex {
 
     this.invisible = false
     this.harbour = null
-    this.glowing = false
   }
 
   getAdjacentHexes() {

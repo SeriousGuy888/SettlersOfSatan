@@ -122,7 +122,7 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
   constructor(xPos, yPos, data) {
     super()
 
-    const { coords, resource, number, robber, invisible, harbour, glowing } = data
+    const { coords, resource, number, robber, invisible, harbour } = data
 
     this.xPos = xPos
     this.yPos = yPos
@@ -132,11 +132,10 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
     this.robber = robber
     this.invisible = invisible
     this.harbour = harbour
-    this.glowing = glowing
   }
 
   render() {
-    const { xPos, yPos, resource, number, harbour, glowing } = this
+    const { xPos, yPos, resource, number, harbour } = this
 
     ctx.lineWidth = 1
     ctx.strokeStyle = "#000"
