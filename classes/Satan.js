@@ -347,11 +347,14 @@ class Satan {
           printChatErr("The robber cannot be moved this turn or has already been moved.")
           break
         }
-        if(!this.board.getHex(coords.x, coords.y)) {
+
+        const newRobberHex = this.board.getHex(coords.x, coords.y)
+
+        if(!newRobberHex || newRobberHex.invisible) {
           printChatErr("Invalid coordinates provided.")
           break
         }
-        if(this.board.getHex(coords.x, coords.y).robber) {
+        if(newRobberHex.robber) {
           printChatErr("The robber must be moved to a different hex.")
           break
         }
@@ -359,7 +362,6 @@ class Satan {
         this.robbing = false
 
 
-        const newRobberHex = this.board.getHex(coords.x, coords.y)
         const adjPlayerIds = new Set(           // set removes all duplicates
           newRobberHex                          // get the new hex
             .getAdjacentVertexes()              // get its vertex coordinates

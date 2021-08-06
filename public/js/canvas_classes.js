@@ -228,7 +228,7 @@ canvasClasses.Hex = class extends canvasClasses.Hoverable {
     if(!this.isHovered(true)) return
     console.log(`Clicked on hex ${JSON.stringify(this.coords)}`)
 
-    if(currentGameData.turn === currentGameData.me.id && currentGameData.robbing && !this.robber) {
+    if(currentGameData.turn === currentGameData.me.id && currentGameData.robbing && !this.robber && !this.invisible) {
       socket.emit("perform_game_action", {
         action: "move_robber",
         coords: this.coords,
