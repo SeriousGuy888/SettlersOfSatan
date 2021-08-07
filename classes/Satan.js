@@ -50,6 +50,7 @@ class Satan {
 
     this.robbing = false
     this.roadBuilding = 0
+    this.developmentCardUsed = false
 
     const developmentCardAmounts = {
       "knight": 14,
@@ -474,7 +475,7 @@ class Satan {
       case "buy_development_card":
 
         // if(!player.canAfford(buildingCosts.developmentCard)) {
-        //   this.printChatErr("You cannot afford this.")
+        //   this.printChatErr("You cannot afford this.", playerId)
         //   break
         // }
 
@@ -486,11 +487,16 @@ class Satan {
         break
 
       case "use_development_card":
-
-        console.log(actionData)
-        console.log(player.inventory.developmentCards)
-        console.log()
-        player.inventory.developmentCards[player.inventory.developmentCards.map(function(e){return e.id}).indexOf(actionData.card.id)].use()
+        if (this.turnStage == 0) {
+          this.printChatErr("You need to roll the dice before doing this.", playerId)
+        }
+        else if(this.developmentCardUsed) {
+          this.printChatErr("You can only use one development card per turn", playerId)
+        }
+        else {
+          player.inventory.developmentCards[player.inventory.developmentCards.map(function(e){return e.id}).indexOf(actionData.card.id)].use()
+          this.developmentCardUsed = true
+        }
         break
       case "harbour_trade":
         if(player.id !== this.turn) {
@@ -762,6 +768,7 @@ class Satan {
     const currentIndex = sortedPlayerIds.indexOf(this.turn)
 
     this.robbing = false
+    this.developmentCardUsed = false
 
     if(currentIndex === -1 || !playerIds[currentIndex + nextTurnAddend]) { // there is no turn right now or the current turn is the last player
       this.turn = firstOfNextCycle
