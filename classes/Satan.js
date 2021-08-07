@@ -35,6 +35,13 @@ class Satan {
       road: null,
     }
 
+    this.stockpile = {
+      bricks: 20,
+      lumber: 20,
+      wool: 20,
+      wheat: 20,
+      ore: 20,
+    }
     this.trade = {
       offer: null,
       takers: [],
@@ -92,6 +99,7 @@ class Satan {
       turnStage: this.turnStage,
       turnTick: this.turnTick,
       turnCountdownTo: this.turnCountdownTo,
+      stockpile: this.stockpile,
       trade: this.trade,
       robbing: this.robbing,
       developmentCardDeck: this.developmentCardDeck
@@ -259,7 +267,7 @@ class Satan {
                 const hex = this.board.getHex(hexCoords.x, hexCoords.y)
                 const resource = hexTypesResources[hex.resource]
                 if(resource) {
-                  player.resources[resource]++
+                  this.giveResources(player.id, resource, 1)
                 }
               }
             }
@@ -608,6 +616,11 @@ class Satan {
     this.trade.idempotency = null
   }
 
+  giveResources(playerId, resource, amount) {
+    this.getPlayer(playerId).resources[resource] += amount
+    this.stockpile[resource] -= amount
+  }
+
   refreshAllowedPlacements() {
     if(!this.turn) return
 
@@ -774,12 +787,7 @@ class Satan {
 
           const resource = hexTypesResources[hex.resource]
           if(resource && hex.number === number) {
-            if(building.type === "city") {
-              player.resources[resource] += 2
-            }
-            else {
-              player.resources[resource]++
-            }
+            giveResources(player.id, resource, building.type === "city" ? 2 : 1)
           }
         }
       }
