@@ -195,6 +195,28 @@ class Satan {
       Object.keys(cost).forEach(resource => playerResources[resource] -= cost[resource])
     }
 
+    const sanitiseTradeOffer = (unsanitisedOffer) => {
+      // sanitise the incoming offer data to make sure everything is a number
+      const resourceNames = ["bricks", "lumber", "wool", "wheat", "ore"]
+      if(!unsanitisedOffer) return
+      const { offerer, taker } = unsanitisedOffer
+
+      const sanitised = {
+        offerer: {},
+        taker: {}
+      }
+
+      for(let resource of resourceNames) {
+        const minAmt = 0
+        sanitised.offerer[resource] = Math.max(parseInt(offerer[resource]) || 0, minAmt)
+        sanitised.taker[resource] = Math.max(parseInt(taker[resource]) || 0, minAmt)
+      }
+
+      return sanitised
+    }
+
+    const sanitisedOffer = sanitiseTradeOffer(actionData.offer)
+
     if(action.startsWith("place_")) {
       if(player.id !== this.turn) {
         printChatErr("It is not your turn.")
@@ -470,7 +492,25 @@ class Satan {
         console.log()
         player.inventory.developmentCards[player.inventory.developmentCards.map(e => e.id).indexOf(actionData.card.id)].use()
         break
+      case "harbour_trade":
+        if(player.id !== this.turn) {
+          printChatErr("It is not your turn.")
+          break
+        }
+        if(this.inSetupTurnCycle()) {
+          printChatErr("Trading is not allowed during setup turns.")
+          break
+        }
+        if(this.turnStage !== 1) {
+          printChatErr("The dice have not been rolled this turn.")
+          break
+        }
+        if(!player.canAfford(sanitisedOffer.offerer)) {
+          printChatErr("You do not have the resources necessary for this trade.")
+          break
+        }
 
+        break
       case "offer_trade":
         if(player.id !== this.turn) {
           printChatErr("It is not your turn.")
@@ -484,31 +524,10 @@ class Satan {
           printChatErr("The dice have not been rolled this turn.")
           break
         }
-
-
-
-        // sanitise the incoming offer data to make sure everything is a number
-        const resourceNames = ["bricks", "lumber", "wool", "wheat", "ore"]
-        const unsanitisedOffer = actionData.offer
-        const { offerer, taker } = unsanitisedOffer
-
-        const sanitisedOffer = {
-          offerer: {},
-          taker: {}
-        }
-
-        for(let resource of resourceNames) {
-          const maxAmt = 7
-          const minAmt = 0
-          sanitisedOffer.offerer[resource] = Math.max(Math.min(parseInt(offerer[resource]) || 0, maxAmt), minAmt)
-          sanitisedOffer.taker[resource] = Math.max(Math.min(parseInt(taker[resource]) || 0, maxAmt), minAmt)
-        }
-
         if(!player.canAfford(sanitisedOffer.offerer)) {
           printChatErr("You do not have the resources necessary for this trade.")
           break
         }
-
 
         this.trade.offer = sanitisedOffer
         this.trade.takers = []
@@ -641,6 +660,10 @@ class Satan {
 
     this.handleWin()
     
+    Object.values(this.players).forEach(p => {
+      p.deals = [{ resource: "any", amount: 4 }]
+    })
+
     // refresh places where stuff can be placed
     this.board.vertexes.forEach(vertex => {
       vertex.allowPlacement = true
@@ -661,6 +684,17 @@ class Satan {
       else {
         if(adjEdges.every(loopEdge => loopEdge.road !== this.turn)) {
           vertex.allowPlacement = false
+        }
+      }
+
+
+      const buildingOwner = this.getPlayer(vertex.getBuilding()?.playerId)
+      if(buildingOwner) {
+        const harbourCoords = vertex.harbour
+        if(harbourCoords) {
+          const harbourHex = this.board.getHex(harbourCoords.x, harbourCoords.y)
+          const harbour = harbourHex.harbour
+          buildingOwner.deals.push(harbour.deal)
         }
       }
     })

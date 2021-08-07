@@ -25,15 +25,17 @@
       "weight": 5,
       "contributions": [
         "art",
-        "participation"
+        "participation",
+        "readme"
       ]
     },
     {
       "name": "Jakob",
-      "weight": -10,
+      "weight": -15,
       "contributions": [
         "distract_liam",
-        "jakob_criticism"
+        "jakob_criticism",
+        "going_missing"
       ]
     }
   ],
@@ -54,7 +56,9 @@
       "catan": "Knowing the Rules of Catan",
       "background": "Stealing the Background Image",
       "distract_liam": "Distracting Liam",
-      "jakob_criticism": "Criticism of Billzo's Web Design"
+      "jakob_criticism": "Criticism of Billzo's Web Design",
+      "readme": "ReadMe File",
+      "going_missing": "Disappearing for a Long Time"
     },
     "billzonian": {
       "web_design": "Web Designment",
@@ -65,7 +69,9 @@
       "catan": "Koqqing Hautu Catan·ise",
       "background": "Cieving ce Bakkground Image",
       "distract_liam": "Distrakting Liam",
-      "jakob_criticism": "Bullying Billzo Ceir Web Designment"
+      "jakob_criticism": "Bullying Billzo Ceir Web Designment",
+      "readme": "ReadMe File",
+      "going_missing": "Exiting for Many Suns"
     }
   }
 }

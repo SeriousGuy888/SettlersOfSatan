@@ -8,7 +8,10 @@ const tradeTakersList = document.querySelector("#trade-takers")
 
 const turnControls = document.querySelector("#turn-controls")
 
+let tradeMode
 const refreshTradeMenu = () => {
+  tradeMode = takerSelect.value // humans, stockpile, or discard
+  
   const createTradeInputs = (container, rightColumn) => {
     if(!container.childElementCount) {
       const frag = document.createDocumentFragment()
@@ -22,7 +25,6 @@ const refreshTradeMenu = () => {
         const inputElem = document.createElement("input")
         inputElem.type = "number"
         inputElem.min = 0
-        inputElem.max = 7
         inputElem.value = 0
         inputElem.id = `trade-amount-input-${resourceName}`
         
@@ -52,7 +54,17 @@ const refreshTradeMenu = () => {
         tradeTakersList.style.display = null
       }
       else {
-        tradeButton.textContent = "Propose Trade"
+        switch(tradeMode) {
+          case "humans":
+            tradeButton.textContent = "Propose Trade"
+            break
+          case "stockpile":
+            tradeButton.textContent = "Trade With Harbour"
+            break
+          case "discard":
+            tradeButton.textContent = "Discard Selected"
+            break
+        }
       }
     }
     else {
@@ -104,6 +116,11 @@ const refreshTradeMenu = () => {
 }
 
 
+takerSelect.addEventListener("change", () => {
+  refreshTradeMenu()
+})
+
+
 tradeButton.addEventListener("click", () => {
   if(currentGameData.turn === currentGameData.me.id) {
     if(currentGameData.trade.offer) {
@@ -128,12 +145,33 @@ tradeButton.addEventListener("click", () => {
         taker: takerAmounts
       }
     
-      socket.emit("perform_game_action", {
-        action: "offer_trade",
-        offer,
-      }, (err, data) => {
-        if(err) notifyUser(err)
-      })
+      
+      switch(tradeMode) {
+        case "humans":
+          socket.emit("perform_game_action", {
+            action: "offer_trade",
+            offer,
+          }, (err, data) => {
+            if(err) notifyUser(err)
+          })
+          break
+        case "stockpile":
+          socket.emit("perform_game_action", {
+            action: "harbour_trade",
+            offer,
+          }, (err, data) => {
+            if(err) notifyUser(err)
+          })
+          break
+        // case "discard":
+        //   socket.emit("perform_game_action", {
+        //     action: "discard_trade",
+        //     offer,
+        //   }, (err, data) => {
+        //     if(err) notifyUser(err)
+        //   })
+        //   break
+      }
     }
   }
   else {
