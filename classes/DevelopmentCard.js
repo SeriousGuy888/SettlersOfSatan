@@ -21,12 +21,13 @@ class DevelopmentCard {
         player.inventory.removeDevelopmentCard(this.invIndex)
         switch(this.type) {
           case "knight":
-            // currentGame.robbing = true
-            // currentGame.processAction(this.playerId, { action: "move_robber" })
+            currentGame.robbing = true
+            currentGame.processAction(this.playerId, { action: "move_robber" })
             break
           
           case "library": case "market": case "chapel": case "great hall": case "university":
             player.points++
+            break
         }
       }
     }
