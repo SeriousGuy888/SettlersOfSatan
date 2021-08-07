@@ -16,7 +16,6 @@ class DevelopmentCard {
     use() {
       let currentGame = lobbies.getLobby(this.lobbyId).game
       let player = currentGame.players[this.playerId]
-      console.log("using dCard")
       if(currentGame.turnCycle != this.cycleBought){
         player.inventory.removeDevelopmentCard(this)
         switch(this.type) {
