@@ -22,6 +22,8 @@ class Player {
       wheat: 0,
       ore: 0,
     }
+
+    this.deals = []
     
     // controls the frontend game controls like the place settlement button and whether they are enabled
     // (they are disabled when the player cannot afford the cost)
@@ -36,6 +38,7 @@ class Player {
       inventory: this.inventory,
       resources: this.resources,
       enableControls: this.enableControls,
+      deals: this.deals,
     }
 
     if(!force && JSON.stringify(tickData) === JSON.stringify(this.prevTickData)) return

@@ -657,6 +657,10 @@ class Satan {
 
     this.handleWin()
     
+    Object.values(this.players).forEach(p => {
+      p.deals = [{ resource: "any", amount: 4 }]
+    })
+
     // refresh places where stuff can be placed
     this.board.vertexes.forEach(vertex => {
       vertex.allowPlacement = true
@@ -677,6 +681,17 @@ class Satan {
       else {
         if(adjEdges.every(loopEdge => loopEdge.road !== this.turn)) {
           vertex.allowPlacement = false
+        }
+      }
+
+
+      const buildingOwner = this.getPlayer(vertex.getBuilding()?.playerId)
+      if(buildingOwner) {
+        const harbourCoords = vertex.harbour
+        if(harbourCoords) {
+          const harbourHex = this.board.getHex(harbourCoords.x, harbourCoords.y)
+          const harbour = harbourHex.harbour
+          buildingOwner.deals.push(harbour.deal)
         }
       }
     })
