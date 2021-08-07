@@ -67,7 +67,7 @@ class Satan {
   }
 
   tick() {
-    const lobby = lobbies.getLobby(this.lobbyId)
+    const lobby = this.getLobby()
       
     this.handleWin()
     this.refreshAllowedPlacements()
@@ -76,7 +76,7 @@ class Satan {
       this.nextTurn()
     }
     if(this.turnCountdownTo - Date.now() < 0) { // time limit for the turn has passed
-      lobbies.getLobby(this.lobbyId).printToChat([{
+      this.getLobby().printToChat([{
         text: `${this.getPlayer(this.turn).name}'s turn was skipped because they took too much time.`,
         style: {
           colour: "green"
@@ -117,6 +117,10 @@ class Satan {
     }
   }
 
+  getLobby() {
+    return lobbies.getLobby(this.lobbyId)
+  }
+
   getPlayers() {
     return this.players
   }
@@ -138,7 +142,7 @@ class Satan {
     if(!this.turn) return
     if(this.gameEnd) return
 
-    const lobby = lobbies.getLobby(this.lobbyId)
+    const lobby = this.getLobby()
     const currentPlayer = this.getPlayer(this.turn)
     if(currentPlayer.points < 10) return
 
@@ -440,7 +444,7 @@ class Satan {
         player.resources[stealResource]++
         this.clearRobbable()
 
-        lobbies.getLobby(this.lobbyId).printToChat([{ // temp
+        this.getLobby().printToChat([{ // temp
           text: `${player.name} stole 1 ${stealResource} from ${robFrom.name}`
         }])
         break
@@ -452,7 +456,7 @@ class Satan {
         // }
 
         let card = this.developmentCardDeck[Math.floor(Math.random() * this.developmentCardDeck.length)]
-        player.inventory.addDevelopmentCard(new DevelopmentCard(card, this.lobbyId, player.id, lobbies.getLobby(this.lobbyId).game.turnCycle))
+        player.inventory.addDevelopmentCard(new DevelopmentCard(card, this.lobbyId, player.id, this.getLobby().game.turnCycle))
         this.developmentCardDeck.splice(this.developmentCardDeck.indexOf(card), 1)
 
         // spendResourcesOn(player, "developmentCard")
@@ -578,7 +582,7 @@ class Satan {
     const { offerer, taker } = deal
 
     const printNoRes = (human) => {
-      lobbies.getLobby(this.lobbyId).printToChat([{
+      this.getLobby().printToChat([{
         text: `${human.name} did not have the resources needed for the trade.`,
         style: { colour: "red", italic: true }
       }])
@@ -716,7 +720,7 @@ class Satan {
       this.turn = firstOfNextCycle
       this.turnCycle++
 
-      if(reversedCycleIsNext) lobbies.getLobby(this.lobbyId).printToChat([{
+      if(reversedCycleIsNext) this.getLobby().printToChat([{
         text: "This setup round is played in reverse. The last player gets to place another settlement and road.",
         style: { colour: "green" },
       }])
@@ -742,7 +746,7 @@ class Satan {
         this.turnStage = 1
       }
 
-      lobbies.getLobby(this.lobbyId).printToChat([{
+      this.getLobby().printToChat([{
         text: `It is now ${this.players[this.turn].name}'s turn.`,
         style: { colour: "green" },
       }])
@@ -758,7 +762,7 @@ class Satan {
     let dice2 = Math.floor(Math.random() * 6) + 1
     let number = dice1 + dice2
 
-    lobbies.getLobby(this.lobbyId).printToChat([{
+    this.getLobby().printToChat([{
       text: `${this.players[this.turn].name} rolled ${number}`,
       dice: [dice1, dice2],
       style: {
@@ -800,7 +804,7 @@ class Satan {
         const totalHandout = Object.values(resourceHandouts[resource]).reduce((acc, cur) => acc + cur)
 
         if(totalHandout > this.stockpile[resource]) {
-          lobbies.getLobby(this.lobbyId).printToChat([{
+          this.getLobby().printToChat([{
             text: `${resource.toUpperCase()} could not be handed out because there were not enough cards in the stockpile.`,
             style: { colour: "brown" }
           }])
