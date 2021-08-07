@@ -34,13 +34,11 @@ const refreshControlsOutline = () => {
     if(currentGameData.turn === currentGameData.me.id && currentGameData.turnCycle <= 2) {
       holding = "settlement"
     }
-
-    else if(currentGameData.roadBuilding){
-      setHolding("road")
+    else if(currentGameData.roadBuilding) {
+      holding = "road"
     }
-
     else {
-      setHolding(null)
+      holding = null
     }
   }
 
