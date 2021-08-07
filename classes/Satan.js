@@ -766,36 +766,52 @@ class Satan {
       },
     }])
 
-    if (number == 7) {
-      this.moveRobber()
+    if(number === 7) {
+      this.robbing = true
     }
-
     else {
       this.robbing = false
+
+      const resourceHandouts = {}
+
       for(const vertex of this.board.vertexes) {
         const building = vertex.getBuilding()
         if(!building) continue
-
         const adjacentHexes = vertex.getAdjacentHexes()
-        const player = this.getPlayer(building.playerId)
-        if(!player) continue
+        if(!building.playerId) continue
 
         for(const hexCoords of adjacentHexes) {
           const hex = this.board.getRow(hexCoords.y)[hexCoords.x]
-
-          if(hex.robber) continue
+          if(hex.robber) {
+            continue
+          }
 
           const resource = hexTypesResources[hex.resource]
           if(resource && hex.number === number) {
-            giveResources(player.id, resource, building.type === "city" ? 2 : 1)
+            if(!resourceHandouts[resource]) resourceHandouts[resource] = {}
+            if(!resourceHandouts[resource][building.playerId]) resourceHandouts[resource][building.playerId] = 0
+            resourceHandouts[resource][building.playerId] += (building.type === "city" ? 2 : 1)
           }
         }
       }
-    }
-  }
+      
+      for(const resource in resourceHandouts) {
+        // total amount of this resource being handed out
+        const totalHandout = Object.values(resourceHandouts[resource]).reduce((acc, cur) => acc + cur)
 
-  moveRobber() {
-    this.robbing = true
+        if(totalHandout > this.stockpile[resource]) {
+          lobbies.getLobby(this.lobbyId).printToChat([{
+            text: `${resource.toUpperCase()} could not be handed out because there were not enough cards in the stockpile.`,
+            style: { colour: "brown" }
+          }])
+          continue
+        }
+
+        for(const playerId in resourceHandouts[resource]) {
+          this.giveResources(playerId, resource, resourceHandouts[resource][playerId])
+        }
+      }
+    }
   }
 }
 
