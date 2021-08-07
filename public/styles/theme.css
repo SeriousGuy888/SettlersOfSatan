@@ -60,13 +60,6 @@ code, pre  { background-color: var(--theme-bg-3); }
 pre        { border: 2px solid var(--theme-bg-4); }
 
 
-button           { background-color: var(--theme-bg); border: 2px solid var(--theme-border); color: var(--theme-text); }
-button:hover     { background-color: var(--theme-bg-2); }
-button:disabled  { background-color: var(--theme-bg-3); }
-button.red-button           { background-color: var(--theme-red-button-bg); border: 2px solid var(--theme-red-button-border); color: var(--theme-text); }
-button.red-button:hover     { background-color: var(--theme-red-button-hover); }
-
-
 .list-entry { background-color: var(--theme-bg-2); border: 2px solid var(--theme-border); }
 
 
