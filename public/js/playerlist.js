@@ -41,9 +41,6 @@ const refreshPlayerList = () => {
     const playerNameH = document.createElement("h4")
     playerNameH.textContent = user.name
 
-    const playerVpDisplay = document.createElement("p")
-    if(players) playerVpDisplay.textContent = `${players[user.playerId]?.points}VP`
-
     const robButton = document.createElement("button")
     robButton.textContent = "Rob"
     robButton.onclick = () => {
@@ -69,7 +66,6 @@ const refreshPlayerList = () => {
     if(user.host) listEntryTitleDiv.appendChild(hostBadge)
     listEntryTitleDiv.appendChild(playerNameH)
     if(currentGameData) {
-      listEntryTitleDiv.appendChild(playerVpDisplay)
       if(currentGameData.turn === currentGameData.me.id) {
         if(currentGameData.players[user.playerId]?.canBeRobbed) {
           listEntryTitleDiv.appendChild(robButton)
@@ -135,7 +131,22 @@ const refreshPlayerList = () => {
     }
 
     listEntryTitleDiv.appendChild(playerMenuButton)
+
     listEntryDiv.appendChild(listEntryTitleDiv)
+
+    if(players) {
+      const bottomInfoDiv = document.createElement("div")
+      bottomInfoDiv.classList.add("list-entry-line")
+  
+      const playerVpDisplay = document.createElement("p")
+      playerVpDisplay.textContent = `${players[user.playerId]?.points}VP`
+      const playerCardCountDisplay = document.createElement("p")
+      playerCardCountDisplay.textContent = `${players[user.playerId]?.resourceCardCount} ResCards`
+      bottomInfoDiv.appendChild(playerVpDisplay)
+      bottomInfoDiv.appendChild(playerCardCountDisplay)
+    
+      listEntryDiv.appendChild(bottomInfoDiv)
+    }
 
     listEntryDiv.classList.add(["list-entry"])
     listEntryDiv.style.border = "5px solid " + user.colour

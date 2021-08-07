@@ -79,13 +79,36 @@ pre {
 button {
   padding: 0.4em;
   cursor: pointer;
-  color: #000;
+  color: var(--theme-text);
   font-size: 16px;
+  background-color: var(--theme-bg);
+  border: 2px solid var(--theme-border);
 }
+button:hover { background-color: var(--theme-bg-2); }
 button:disabled {
   opacity: 0.75;
   cursor: not-allowed;
+  background-color: var(--theme-bg-3);
 }
+button.red-button {
+  background-color: var(--theme-red-button-bg);
+  border: 2px solid var(--theme-red-button-border);
+  color: var(--theme-text);
+}
+button.red-button:hover { background-color: var(--theme-red-button-hover); }
+
+
+select {
+  padding: 0 1em;
+  margin: 0.4em 0;
+  cursor: pointer;
+  color: var(--theme-text);
+  font-size: 0.8rem;
+  background-color: var(--theme-bg);
+  border: 2px solid var(--theme-border);
+}
+select:hover { background-color: var(--theme-bg-2); }
+
 
 a[target="_blank"]::after {
   display: inline-block;

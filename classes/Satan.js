@@ -35,6 +35,13 @@ class Satan {
       road: null,
     }
 
+    this.stockpile = {
+      bricks: 20,
+      lumber: 20,
+      wool: 20,
+      wheat: 20,
+      ore: 20,
+    }
     this.trade = {
       offer: null,
       takers: [],
@@ -60,16 +67,14 @@ class Satan {
   }
 
   tick() {
-    const lobby = lobbies.getLobby(this.lobbyId)
-      
-    this.handleWin()
-    this.refreshAllowedPlacements()
+    const lobby = this.getLobby()
     
     if(!this.turn || this.getPlayer(this.turn).disconnected) { // no turn is set or current player has disconnected
       this.nextTurn()
+      this.refreshAllowedPlacements()
     }
     if(this.turnCountdownTo - Date.now() < 0) { // time limit for the turn has passed
-      lobbies.getLobby(this.lobbyId).printToChat([{
+      this.getLobby().printToChat([{
         text: `${this.getPlayer(this.turn).name}'s turn was skipped because they took too much time.`,
         style: {
           colour: "green"
@@ -92,6 +97,7 @@ class Satan {
       turnStage: this.turnStage,
       turnTick: this.turnTick,
       turnCountdownTo: this.turnCountdownTo,
+      stockpile: this.stockpile,
       trade: this.trade,
       robbing: this.robbing,
       developmentCardDeck: this.developmentCardDeck
@@ -107,6 +113,10 @@ class Satan {
     for(const i in this.players) {
       this.players[i].tick(shouldTick) // tick all players individually to update them on their private data
     }
+  }
+
+  getLobby() {
+    return lobbies.getLobby(this.lobbyId)
   }
 
   getPlayers() {
@@ -130,7 +140,7 @@ class Satan {
     if(!this.turn) return
     if(this.gameEnd) return
 
-    const lobby = lobbies.getLobby(this.lobbyId)
+    const lobby = this.getLobby()
     const currentPlayer = this.getPlayer(this.turn)
     if(currentPlayer.points < 10) return
 
@@ -259,7 +269,7 @@ class Satan {
                 const hex = this.board.getHex(hexCoords.x, hexCoords.y)
                 const resource = hexTypesResources[hex.resource]
                 if(resource) {
-                  player.resources[resource]++
+                  this.giveResources(player.id, resource, 1)
                 }
               }
             }
@@ -432,7 +442,7 @@ class Satan {
         player.resources[stealResource]++
         this.clearRobbable()
 
-        lobbies.getLobby(this.lobbyId).printToChat([{ // temp
+        this.getLobby().printToChat([{ // temp
           text: `${player.name} stole 1 ${stealResource} from ${robFrom.name}`
         }])
         break
@@ -444,7 +454,7 @@ class Satan {
         // }
 
         let card = this.developmentCardDeck[Math.floor(Math.random() * this.developmentCardDeck.length)]
-        player.inventory.addDevelopmentCard(new DevelopmentCard(card, this.lobbyId, player.id, lobbies.getLobby(this.lobbyId).game.turnCycle))
+        player.inventory.addDevelopmentCard(new DevelopmentCard(card, this.lobbyId, player.id, this.getLobby().game.turnCycle))
         this.developmentCardDeck.splice(this.developmentCardDeck.indexOf(card), 1)
 
         // spendResourcesOn(player, "developmentCard")
@@ -571,13 +581,15 @@ class Satan {
       default:
         return
     }
+    
+    this.refreshAllowedPlacements()
   }
 
   finishTrade(deal, party1, party2) {
     const { offerer, taker } = deal
 
     const printNoRes = (human) => {
-      lobbies.getLobby(this.lobbyId).printToChat([{
+      this.getLobby().printToChat([{
         text: `${human.name} did not have the resources needed for the trade.`,
         style: { colour: "red", italic: true }
       }])
@@ -615,9 +627,16 @@ class Satan {
     this.trade.idempotency = null
   }
 
+  giveResources(playerId, resource, amount) {
+    this.getPlayer(playerId).resources[resource] += amount
+    this.stockpile[resource] -= amount
+  }
+
   refreshAllowedPlacements() {
     if(!this.turn) return
 
+    this.handleWin()
+    
     // refresh places where stuff can be placed
     this.board.vertexes.forEach(vertex => {
       vertex.allowPlacement = true
@@ -710,7 +729,7 @@ class Satan {
       this.turn = firstOfNextCycle
       this.turnCycle++
 
-      if(reversedCycleIsNext) lobbies.getLobby(this.lobbyId).printToChat([{
+      if(reversedCycleIsNext) this.getLobby().printToChat([{
         text: "This setup round is played in reverse. The last player gets to place another settlement and road.",
         style: { colour: "green" },
       }])
@@ -736,7 +755,7 @@ class Satan {
         this.turnStage = 1
       }
 
-      lobbies.getLobby(this.lobbyId).printToChat([{
+      this.getLobby().printToChat([{
         text: `It is now ${this.players[this.turn].name}'s turn.`,
         style: { colour: "green" },
       }])
@@ -752,7 +771,7 @@ class Satan {
     let dice2 = Math.floor(Math.random() * 6) + 1
     let number = dice1 + dice2
 
-    lobbies.getLobby(this.lobbyId).printToChat([{
+    this.getLobby().printToChat([{
       text: `${this.players[this.turn].name} rolled ${number}`,
       dice: [dice1, dice2],
       style: {
@@ -760,41 +779,52 @@ class Satan {
       },
     }])
 
-    if (number == 7) {
-      this.moveRobber()
+    if(number === 7) {
+      this.robbing = true
     }
-
     else {
       this.robbing = false
+
+      const resourceHandouts = {}
+
       for(const vertex of this.board.vertexes) {
         const building = vertex.getBuilding()
         if(!building) continue
-
         const adjacentHexes = vertex.getAdjacentHexes()
-        const player = this.getPlayer(building.playerId)
-        if(!player) continue
+        if(!building.playerId) continue
 
         for(const hexCoords of adjacentHexes) {
           const hex = this.board.getRow(hexCoords.y)[hexCoords.x]
-
-          if(hex.robber) continue
+          if(hex.robber) {
+            continue
+          }
 
           const resource = hexTypesResources[hex.resource]
           if(resource && hex.number === number) {
-            if(building.type === "city") {
-              player.resources[resource] += 2
-            }
-            else {
-              player.resources[resource]++
-            }
+            if(!resourceHandouts[resource]) resourceHandouts[resource] = {}
+            if(!resourceHandouts[resource][building.playerId]) resourceHandouts[resource][building.playerId] = 0
+            resourceHandouts[resource][building.playerId] += (building.type === "city" ? 2 : 1)
           }
         }
       }
-    }
-  }
+      
+      for(const resource in resourceHandouts) {
+        // total amount of this resource being handed out
+        const totalHandout = Object.values(resourceHandouts[resource]).reduce((acc, cur) => acc + cur)
 
-  moveRobber() {
-    this.robbing = true
+        if(totalHandout > this.stockpile[resource]) {
+          this.getLobby().printToChat([{
+            text: `${resource.toUpperCase()} could not be handed out because there were not enough cards in the stockpile.`,
+            style: { colour: "brown" }
+          }])
+          continue
+        }
+
+        for(const playerId in resourceHandouts[resource]) {
+          this.giveResources(playerId, resource, resourceHandouts[resource][playerId])
+        }
+      }
+    }
   }
 }
 

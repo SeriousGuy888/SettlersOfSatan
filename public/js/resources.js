@@ -51,7 +51,7 @@ const refreshResourceCards = () => {
     setTimeout(() => displayCard.classList.remove("green-pulse", "red-pulse"), 3000)
 
     const amtDisplay = displayCard.querySelector(".resource")
-    amtDisplay.textContent = currentGameData.me.resources[divKey]
+    amtDisplay.textContent = `${currentGameData.me.resources[divKey]} [${currentGameData.stockpile[divKey]}]`
   }
 
   prevResourceData = currentGameData.me.resources

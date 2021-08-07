@@ -102,13 +102,17 @@ html {
 .list-entry-title button {
   padding: 0.1em 0.6em;
 }
+.list-entry-line {
+    display: flex;
+    flex-direction: row;
+}
 
 .list-entry .player-list-modal-button {
     display: none;
 }
 .list-entry:hover .player-list-modal-button {
     display: block;
-    height: 1.2em;
+    height: 1em;
 }
 
 .icon-1em {
