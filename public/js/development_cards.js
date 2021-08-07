@@ -1,4 +1,4 @@
-const cardDescriptions = {
+    const cardDescriptions = {
     "knight": "Move the robber",
     "road building": "Place two free roads",
     "year of plenty": "Take two resources of your choice from the stockpile",
@@ -10,7 +10,9 @@ function refreshDevelopmentCards() {
 
     document.getElementById("development-card-list").innerHTML = ""
 
-    for(developmentCard of currentGameData.me.inventory.developmentCards){
+    let i = 0   
+
+    for(let developmentCard of currentGameData.me.inventory.developmentCards){
         console.log(developmentCard)
         let cardImg = document.createElement("img")
         cardImg.alt = "card icon"
@@ -55,6 +57,15 @@ function refreshDevelopmentCards() {
         useButton.style = "flex: 1 0 0; height: 2rem;"
         useButton.id = "use-card-button"
 
+        useButton.addEventListener("click",  () => {
+            socket.emit("perform_game_action", {
+                action: "use_development_card",
+                card: developmentCard
+            }, (err, data) => {
+                if(err) notifyUser(err)
+            })
+        }
+        )
         let card = document.createElement("div")
         card.className = "card"
     
@@ -69,6 +80,8 @@ function refreshDevelopmentCards() {
         card.appendChild(mainCardDiv)
 
         document.getElementById("development-card-list").appendChild(card)
+        i++
     }
 
+//     function useCard(card){
 }

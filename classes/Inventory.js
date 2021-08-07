@@ -9,16 +9,20 @@ class Inventory {
   getSettlements() { return this.settlements }
   getCities() { return this.cities }
   getRoads() { return this.roads }
+  getDevelopmentCards() { return this.developmentCards }
 
   setSettlements(count) { this.settlements = count }
   setCities(count) { this.cities = count }
   setRoads(count) { this.roads = count }
-  removeDevelopmentCard(card) { this.developmentCards.splice(this.developmentCards.indexOf(card), 1) }
+  removeDevelopmentCard(index) { this.developmentCards.splice(index, 1) }
 
   addSettlement(amt = 1) { this.settlements += amt }
   addCity(amt = 1) { this.cities += amt }
   addRoad(amt = 1) { this.roads += amt }
-  addDevelopmentCard(card) { this.developmentCards.push(card) }
+  addDevelopmentCard(card) {
+    card.invIndex = this.developmentCards.length
+    this.developmentCards.push(card)
+  }
 }
 
 module.exports = Inventory

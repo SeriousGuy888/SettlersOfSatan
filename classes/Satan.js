@@ -450,6 +450,13 @@ class Satan {
         // spendResourcesOn(player, "developmentCard")
         break
 
+      case "use_development_card":
+
+        console.log(actionData)
+
+        player.inventory.developmentCards[actionData.card.invIndex].use()
+        break
+
       case "offer_trade":
         if(player.id !== this.turn) {
           printChatErr("It is not your turn.")
