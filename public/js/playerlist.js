@@ -140,10 +140,18 @@ const refreshPlayerList = () => {
   
       const playerVpDisplay = document.createElement("p")
       playerVpDisplay.textContent = `${players[user.playerId]?.points}VP`
+
       const playerCardCountDisplay = document.createElement("p")
-      playerCardCountDisplay.textContent = `${players[user.playerId]?.resourceCardCount} ResCards`
+      playerCardCountDisplay.textContent = `${players[user.playerId]?.resourceCardCount}`
+
+      const playerCardCountIcon = document.createElement("img")
+      playerCardCountIcon.classList.add("icon-1em")
+      playerCardCountIcon.src = "/images/icons/resource_cards.svg"
+      playerCardCountIcon.alt = "resource cards"
+
       bottomInfoDiv.appendChild(playerVpDisplay)
       bottomInfoDiv.appendChild(playerCardCountDisplay)
+      bottomInfoDiv.appendChild(playerCardCountIcon)
     
       listEntryDiv.appendChild(bottomInfoDiv)
     }
