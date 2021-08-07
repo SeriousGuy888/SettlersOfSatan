@@ -138,6 +138,16 @@ class Satan {
     return this.board
   }
 
+  printChatErr(msg, playerId){
+    this.getLobby().printToUserChat(this.getPlayer(playerId).userId, [{
+      text: msg,
+      style: {
+        colour: "red",
+        italic: true,
+      }
+    }])
+  }
+
   handleWin() {
     if(!this.turn) return
     if(this.gameEnd) return
@@ -176,16 +186,6 @@ class Satan {
     const player = this.getPlayer(playerId)
     const user = users.getUser(player.userId)
     const lobby = lobbies.getLobby(user.lobbyId)
-
-    const printChatErr = (msg) => {
-      lobby.printToUserChat(user.id, [{
-        text: msg,
-        style: {
-          colour: "red",
-          italic: true,
-        }
-      }])
-    }
     
     const spendResourcesOn = (p, item) => {
       const playerResources = p.resources
@@ -219,11 +219,11 @@ class Satan {
 
     if(action.startsWith("place_")) {
       if(player.id !== this.turn) {
-        printChatErr("It is not your turn.")
+        this.printChatErr("It is not your turn.", playerId)
         return
       }
       if(this.turnStage === 0) {
-        printChatErr("You need to roll the dice before doing this.")
+        this.printChatErr("You need to roll the dice before doing this.", playerId)
         return
       }
     }
@@ -239,20 +239,20 @@ class Satan {
         if(this.turnStage !== 1) break
         if(this.inSetupTurnCycle()) {
           if(!this.setupTurnPlaced.settlement) {
-            printChatErr("This is a setup turn. You must place a settlement before ending your turn.")
+            this.printChatErr("This is a setup turn. You must place a settlement before ending your turn.", playerId)
             break
           }
           if(!this.setupTurnPlaced.road) {
-            printChatErr("This is a setup turn. You must place a road before ending your turn.")
+            this.printChatErr("This is a setup turn. You must place a road before ending your turn.", playerId)
             break
           }
         }
         if(this.robbing) {
-          printChatErr("You must move the robber first.")
+          this.printChatErr("You must move the robber first.", playerId)
           break
         }
         if(Object.values(this.players).some(p => p.canBeRobbed)) {
-          printChatErr("You must choose a player to rob in the playerlist first.")
+          this.printChatErr("You must choose a player to rob in the playerlist first.", playerId)
           break
         }
 
@@ -262,25 +262,25 @@ class Satan {
         if(!vertex) break
         if(this.inSetupTurnCycle()) {
           if(this.setupTurnPlaced.settlement) {
-            printChatErr("This is a setup turn. You have already placed a settlement this turn.")
+            this.printChatErr("This is a setup turn. You have already placed a settlement this turn.", playerId)
             break
           }
         }
         else {
           if(!player.canAfford(buildingCosts.settlement)) {
-            printChatErr("You cannot afford this.")
+            this.printChatErr("You cannot afford this.", playerId)
             break
           }
         }
 
         if(player.inventory.getSettlements() <= 0) {
-          printChatErr("You are out of settlements to place. You will need to upgrade some settlements to cities to get some settlements back.")
+          this.printChatErr("You are out of settlements to place. You will need to upgrade some settlements to cities to get some settlements back.", playerId)
           break
         }
 
         if(vertex.getBuilding()?.type !== "settlement") {
           if(!vertex.allowPlacement) {
-            printChatErr("A settlement must be placed connected to one of your roads and at least two edges from any other settlement.")
+            this.printChatErr("A settlement must be placed connected to one of your roads and at least two edges from any other settlement.", playerId)
             break
           }
 
@@ -310,11 +310,11 @@ class Satan {
       case "place_city":
         if(!vertex) break
         if(!player.canAfford(buildingCosts.city)) {
-          printChatErr("You cannot afford this.")
+          this.printChatErr("You cannot afford this.", playerId)
           break
         }
         if(player.inventory.getCities() <= 0) {
-          printChatErr("You are out of cities to place.")
+          this.printChatErr("You are out of cities to place.", playerId)
           break
         }
         
@@ -335,27 +335,27 @@ class Satan {
 
         if(this.inSetupTurnCycle()) {
           if(this.setupTurnPlaced.road) {
-            printChatErr("This is a setup turn. You have already placed a road this turn.")
+            this.printChatErr("This is a setup turn. You have already placed a road this turn.", playerId)
             break
           }
           if(!this.setupTurnPlaced.settlement) {
-            printChatErr("This is a setup turn. You must place a settlement first.")
+            this.printChatErr("This is a setup turn. You must place a settlement first.", playerId)
             break
           }
           if(!coordsArr.map(e => JSON.stringify(e)).includes(JSON.stringify(this.setupTurnPlaced.settlement))) {
-            printChatErr("This is a setup turn. Your road must be connected to the settlement you placed this turn.")
+            this.printChatErr("This is a setup turn. Your road must be connected to the settlement you placed this turn.", playerId)
             break
           }
         }
         else {
           if(!player.canAfford(buildingCosts.road) && !this.roadBuilding) {
-            printChatErr("You cannot afford this.")
+            this.printChatErr("You cannot afford this.", playerId)
             break
           }
         }
 
         if(player.inventory.getRoads() <= 0) {
-          printChatErr("You are out of roads to place.")
+          this.printChatErr("You are out of roads to place.", playerId)
           break
         }
 
@@ -375,7 +375,7 @@ class Satan {
 
         // if the road is neither connected to an owned settlement nor connected to an owned edge
         if(!(connectedToOwnedVertex || connectedToOwnedEdge)) {
-          printChatErr("You can only place a road where it is connected to a settlement, city, or road that you own.")
+          this.printChatErr("You can only place a road where it is connected to a settlement, city, or road that you own.", playerId)
           break
         }
         
@@ -390,26 +390,26 @@ class Satan {
         break
       case "move_robber":
         if(player.id !== this.turn) {
-          printChatErr("It is not your turn.")
+          this.printChatErr("It is not your turn.", playerId)
           break
         }
         if(this.turnStage !== 1) {
-          printChatErr("The dice have not been rolled this turn.")
+          this.printChatErr("The dice have not been rolled this turn.", playerId)
           break
         }
         if(!this.robbing) {
-          printChatErr("The robber cannot be moved this turn or has already been moved.")
+          this.printChatErr("The robber cannot be moved this turn or has already been moved.", playerId)
           break
         }
 
         const newRobberHex = this.board.getHex(coords.x, coords.y)
 
         if(!newRobberHex || newRobberHex.invisible) {
-          printChatErr("Invalid coordinates provided.")
+          this.printChatErr("Invalid coordinates provided.", playerId)
           break
         }
         if(newRobberHex.robber) {
-          printChatErr("The robber must be moved to a different hex.")
+          this.printChatErr("The robber must be moved to a different hex.", playerId)
           break
         }
         this.board.moveRobber(coords.x, coords.y)
@@ -435,18 +435,18 @@ class Satan {
         break
       case "rob_player":
         if(player.id !== this.turn) {
-          printChatErr("It is not your turn.")
+          this.printChatErr("It is not your turn.", playerId)
           break
         }
         if(this.turnStage !== 1) {
-          printChatErr("The dice have not been rolled this turn.")
+          this.printChatErr("The dice have not been rolled this turn.", playerId)
           break
         }
 
         const robFromId = actionData.robFrom
         const robFrom = this.getPlayer(robFromId)
         if(!robFrom || !robFrom.canBeRobbed) {
-          printChatErr("Invalid player.")
+          this.printChatErr("Invalid player.", playerId)
           break
         }
 
@@ -474,7 +474,7 @@ class Satan {
       case "buy_development_card":
 
         // if(!player.canAfford(buildingCosts.developmentCard)) {
-        //   printChatErr("You cannot afford this.")
+        //   this.printChatErr("You cannot afford this.")
         //   break
         // }
 
@@ -490,42 +490,42 @@ class Satan {
         console.log(actionData)
         console.log(player.inventory.developmentCards)
         console.log()
-        player.inventory.developmentCards[player.inventory.developmentCards.map(e => e.id).indexOf(actionData.card.id)].use()
+        player.inventory.developmentCards[player.inventory.developmentCards.map(function(e){return e.id}).indexOf(actionData.card.id)].use()
         break
       case "harbour_trade":
         if(player.id !== this.turn) {
-          printChatErr("It is not your turn.")
+          this.printChatErr("It is not your turn.", playerId)
           break
         }
         if(this.inSetupTurnCycle()) {
-          printChatErr("Trading is not allowed during setup turns.")
+          this.printChatErr("Trading is not allowed during setup turns.", playerId)
           break
         }
         if(this.turnStage !== 1) {
-          printChatErr("The dice have not been rolled this turn.")
+          this.printChatErr("The dice have not been rolled this turn.", playerId)
           break
         }
         if(!player.canAfford(sanitisedOffer.offerer)) {
-          printChatErr("You do not have the resources necessary for this trade.")
+          this.printChatErr("You do not have the resources necessary for this trade.", playerId)
           break
         }
 
         break
       case "offer_trade":
         if(player.id !== this.turn) {
-          printChatErr("It is not your turn.")
+          this.printChatErr("It is not your turn.", playerId)
           break
         }
         if(this.inSetupTurnCycle()) {
-          printChatErr("Trading is not allowed during setup turns.")
+          this.printChatErr("Trading is not allowed during setup turns.", playerId)
           break
         }
         if(this.turnStage !== 1) {
-          printChatErr("The dice have not been rolled this turn.")
+          this.printChatErr("The dice have not been rolled this turn.", playerId)
           break
         }
         if(!player.canAfford(sanitisedOffer.offerer)) {
-          printChatErr("You do not have the resources necessary for this trade.")
+          this.printChatErr("You do not have the resources necessary for this trade.", playerId)
           break
         }
 
@@ -542,19 +542,19 @@ class Satan {
         if(this.inSetupTurnCycle()) break
 
         if(!this.trade.offer || actionData.idempotency !== this.trade.idempotency) {
-          printChatErr("This trade offer does not exist or has expired.")
+          this.printChatErr("This trade offer does not exist or has expired.", playerId)
           break
         }
         if(playerId === this.turn) {
-          printChatErr("You cannot accept your own trade.")
+          this.printChatErr("You cannot accept your own trade.", playerId)
           break
         }
         if(this.trade.takers.includes(playerId)) {
-          printChatErr("You've already accepted this trade. Please wait for the offerer to decide.")
+          this.printChatErr("You've already accepted this trade. Please wait for the offerer to decide.", playerId)
           break
         }
         if(!this.getPlayer(playerId).canAfford(this.trade.offer.taker)){
-          printChatErr("You cannot afford this trade.")
+          this.printChatErr("You cannot afford this trade.", playerId)
           break
         }
         
@@ -565,17 +565,17 @@ class Satan {
         break
       case "confirm_trade":
         if(player.id !== this.turn) {
-          printChatErr("It is not your turn.")
+          this.printChatErr("It is not your turn.", playerId)
           break
         }
         if(!this.trade.offer) {
-          printChatErr("There is no trade to confirm.")
+          this.printChatErr("There is no trade to confirm.", playerId)
           break
         }
 
         const tradeTakerId = actionData.tradeWith
         if(!this.trade.takers.includes(tradeTakerId)) {
-          printChatErr("This player has not accepted the trade offer.")
+          this.printChatErr("This player has not accepted the trade offer.", playerId)
           break
         }
 
@@ -587,11 +587,11 @@ class Satan {
         break
       case "cancel_trade":
         if(player.id !== this.turn) {
-          printChatErr("It is not your turn.")
+          this.printChatErr("It is not your turn.", playerId)
           break
         }
         if(!this.trade.offer) {
-          printChatErr("There is no trade to cancel.")
+          this.printChatErr("There is no trade to cancel.", playerId)
           break
         }
 

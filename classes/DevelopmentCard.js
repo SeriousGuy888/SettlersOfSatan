@@ -34,6 +34,9 @@ class DevelopmentCard {
             break
         }
       }
+      else {
+        currentGame.printChatErr("You can't use a development card on the turn you bought it", this.playerId)
+      }
     }
 }
 
