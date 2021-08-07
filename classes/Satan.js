@@ -463,8 +463,9 @@ class Satan {
       case "use_development_card":
 
         console.log(actionData)
-
-        player.inventory.developmentCards[actionData.card.invIndex].use()
+        console.log(player.inventory.developmentCards)
+        console.log()
+        player.inventory.developmentCards[player.inventory.developmentCards.map(function(e) { return e.id; }).indexOf(actionData.card.id)].use()
         break
 
       case "offer_trade":
