@@ -8,7 +8,7 @@ const turnButton = document.querySelector("#end-turn-dice-button")
 
 let holding = null
 const setHolding = name => {
-  if(holding === name) holding = null
+  if(holding === name && !currentGameData.roadBuilding) holding = null
   else holding = name
   refreshControlsOutline()
 }
@@ -34,8 +34,13 @@ const refreshControlsOutline = () => {
     if(currentGameData.turn === currentGameData.me.id && currentGameData.turnCycle <= 2) {
       holding = "settlement"
     }
+
+    else if(currentGameData.roadBuilding){
+      setHolding("road")
+    }
+
     else {
-      holding = null
+      setHolding(null)
     }
   }
 

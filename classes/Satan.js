@@ -49,6 +49,7 @@ class Satan {
     }
 
     this.robbing = false
+    this.roadBuilding = 0
 
     const developmentCardAmounts = {
       "knight": 14,
@@ -100,7 +101,8 @@ class Satan {
       stockpile: this.stockpile,
       trade: this.trade,
       robbing: this.robbing,
-      developmentCardDeck: this.developmentCardDeck
+      developmentCardDeck: this.developmentCardDeck,
+      roadBuilding: this.roadBuilding,
     }
 
     let shouldTick = JSON.stringify(tickData) !== this.prevTickData
@@ -324,7 +326,7 @@ class Satan {
           }
         }
         else {
-          if(!player.canAfford(buildingCosts.road)) {
+          if(!player.canAfford(buildingCosts.road) && !this.roadBuilding) {
             printChatErr("You cannot afford this.")
             break
           }
@@ -358,8 +360,9 @@ class Satan {
         if(!edge.getRoad()) {
           edge.setRoad(playerId)
           if(this.inSetupTurnCycle()) this.setupTurnPlaced.road = edge.coordsArr
-          else                        spendResourcesOn(player, "road")
+          else if(!this.roadBuilding) spendResourcesOn(player, "road")
           player.inventory.addRoad(-1)
+          if(this.roadBuilding) this.roadBuilding--
         }
 
         break
@@ -465,7 +468,7 @@ class Satan {
         console.log(actionData)
         console.log(player.inventory.developmentCards)
         console.log()
-        player.inventory.developmentCards[player.inventory.developmentCards.map(function(e) { return e.id; }).indexOf(actionData.card.id)].use()
+        player.inventory.developmentCards[player.inventory.developmentCards.map(e => e.id).indexOf(actionData.card.id)].use()
         break
 
       case "offer_trade":

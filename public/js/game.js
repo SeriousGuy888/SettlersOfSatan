@@ -74,5 +74,9 @@ socket.on("player_update", pData => {
   refreshPlayerList()
   refreshDevelopmentCards()
 
+  if(currentGameData.roadBuilding){
+    setHolding("road")
+  }
+
   document.getElementById("inv-list").innerHTML = `Settlements: ${currentGameData.me.inventory.settlements}, Roads: ${currentGameData.me.inventory.roads}, Cities: ${currentGameData.me.inventory.cities}`
 })

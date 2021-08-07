@@ -391,6 +391,6 @@ canvasClasses.Edge = class extends canvasClasses.Hoverable {
       if(err) notifyUser(err)
     })
 
-    setHolding(null)
+    if(!currentGameData.roadBuilding) setHolding(null)
   }
 }

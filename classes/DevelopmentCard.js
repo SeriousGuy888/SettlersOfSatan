@@ -27,6 +27,11 @@ class DevelopmentCard {
           case "library": case "market": case "chapel": case "great hall": case "university":
             player.points++
             break
+
+          case "road building":
+            currentGame.roadBuilding = 2
+            // currentGame.processAction(this.playerId, { action: "place_road" })
+            break
         }
       }
     }
