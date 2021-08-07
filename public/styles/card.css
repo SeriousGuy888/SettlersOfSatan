@@ -45,6 +45,14 @@
     z-index: 2;
 }
 
+.card:not(:hover) #use-card-button {
+    display: none;
+}
+
+.card:last-child #use-card-button {
+    display: block;
+}
+
 .card:not(:first-child) {
     margin-top: -3em;
 }

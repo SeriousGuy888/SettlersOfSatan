@@ -53,6 +53,7 @@ function refreshDevelopmentCards() {
         useButton.appendChild(useButtonText)
 
         useButton.style = "flex: 1 0 0; height: 2rem;"
+        useButton.id = "use-card-button"
 
         let card = document.createElement("div")
         card.className = "card"
