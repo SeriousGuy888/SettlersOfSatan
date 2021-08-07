@@ -105,6 +105,11 @@ html {
 .list-entry-line {
     display: flex;
     flex-direction: row;
+    gap: 1.25em;
+}
+.list-entry-line > div {
+    display: flex;
+    flex-direction: row;
 }
 
 .list-entry .player-list-modal-button {

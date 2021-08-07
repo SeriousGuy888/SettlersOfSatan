@@ -138,20 +138,28 @@ const refreshPlayerList = () => {
       const bottomInfoDiv = document.createElement("div")
       bottomInfoDiv.classList.add("list-entry-line")
   
+      const playerVpDisplayDiv = document.createElement("div")
       const playerVpDisplay = document.createElement("p")
-      playerVpDisplay.textContent = `${players[user.playerId]?.points}VP`
+      playerVpDisplay.textContent = players[user.playerId]?.points
+      const playerVpIcon = document.createElement("img")
+      playerVpIcon.classList.add("icon-1em")
+      playerVpIcon.src = "/images/icons/victory_point.svg"
+      playerVpIcon.alt = "VP"
+      playerVpDisplayDiv.appendChild(playerVpDisplay)
+      playerVpDisplayDiv.appendChild(playerVpIcon)
 
+      const playerCardCountDisplayDiv = document.createElement("div")
       const playerCardCountDisplay = document.createElement("p")
       playerCardCountDisplay.textContent = `${players[user.playerId]?.resourceCardCount}`
-
       const playerCardCountIcon = document.createElement("img")
       playerCardCountIcon.classList.add("icon-1em")
       playerCardCountIcon.src = "/images/icons/resource_cards.svg"
       playerCardCountIcon.alt = "resource cards"
-
-      bottomInfoDiv.appendChild(playerVpDisplay)
-      bottomInfoDiv.appendChild(playerCardCountDisplay)
-      bottomInfoDiv.appendChild(playerCardCountIcon)
+      playerCardCountDisplayDiv.appendChild(playerCardCountDisplay)
+      playerCardCountDisplayDiv.appendChild(playerCardCountIcon)
+      
+      bottomInfoDiv.appendChild(playerVpDisplayDiv)
+      bottomInfoDiv.appendChild(playerCardCountDisplayDiv)
     
       listEntryDiv.appendChild(bottomInfoDiv)
     }
