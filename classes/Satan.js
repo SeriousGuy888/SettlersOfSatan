@@ -68,12 +68,10 @@ class Satan {
 
   tick() {
     const lobby = this.getLobby()
-      
-    this.handleWin()
-    this.refreshAllowedPlacements()
     
     if(!this.turn || this.getPlayer(this.turn).disconnected) { // no turn is set or current player has disconnected
       this.nextTurn()
+      this.refreshAllowedPlacements()
     }
     if(this.turnCountdownTo - Date.now() < 0) { // time limit for the turn has passed
       this.getLobby().printToChat([{
@@ -576,6 +574,8 @@ class Satan {
       default:
         return
     }
+    
+    this.refreshAllowedPlacements()
   }
 
   finishTrade(deal, party1, party2) {
@@ -628,6 +628,8 @@ class Satan {
   refreshAllowedPlacements() {
     if(!this.turn) return
 
+    this.handleWin()
+    
     // refresh places where stuff can be placed
     this.board.vertexes.forEach(vertex => {
       vertex.allowPlacement = true
