@@ -34,16 +34,22 @@ const refreshTradeMenu = () => {
 
 
         inputElem.addEventListener("input", () => {
-          if(tradeMode !== "stockpile") return
-      
-          (rightColumn ? tradeTakerInputs : tradeOffererInputs).querySelectorAll("input").forEach(n => {
-            if(inputElem === n) return
-            if(inputElem.value === "0") n.disabled = false
-            else {
-              n.disabled = true
-              n.value = "0"
-            }
-          })
+          const isZero = inputElem.value === "0"
+
+          if(tradeMode === "humans") {
+            const oppositeInput = (rightColumn ? tradeOffererInputs : tradeTakerInputs).querySelector(`input#${inputElem.id}`)
+            oppositeInput.disabled = !isZero
+          }
+          if(tradeMode === "stockpile") {
+            (rightColumn ? tradeTakerInputs : tradeOffererInputs).querySelectorAll("input").forEach(n => {
+              if(inputElem === n) return
+              if(isZero) n.disabled = false
+              else {
+                n.disabled = true
+                n.value = "0"
+              }
+            })
+          }
         })
       }
   
