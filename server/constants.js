@@ -19,3 +19,12 @@ module.exports.buildingCosts = {
     ore: 1
   }
 }
+
+module.exports.hexTypesResources = {
+  mud: "bricks",
+  forest: "lumber",
+  mountain: "ore",
+  farm: "wheat",
+  pasture: "wool",
+  desert: null
+}
