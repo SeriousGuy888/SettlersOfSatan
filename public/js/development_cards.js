@@ -22,7 +22,7 @@ function refreshDevelopmentCards() {
             cardImg.src = `../images/development_cards/knight_${developmentCard.knightType}.png`
         }
         else {
-            cardImg.src = "../images/resource_cards/wool.png"
+            cardImg.src = `../images/development_cards/${developmentCard.type.replaceAll(" ", "_")}.png`
         }
 
         let headerH2 = document.createElement("h2")
