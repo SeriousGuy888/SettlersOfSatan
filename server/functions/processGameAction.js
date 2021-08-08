@@ -363,6 +363,10 @@ const handleTradeActions = (satan, playerId, actionData) => {
         satan.printChatErr("Trade amounts ung kan bea zero.", playerId)
         break
       }
+      if(playerResource === stockpileResource) {
+        satan.printChatErr("Qwat? Qwy dz yu wishtu trade for ce same resourse qwich yu bea offering?????????", playerId)
+        break
+      }
 
       console.log(playerResource, stockpileResource, player.deals)
       break
