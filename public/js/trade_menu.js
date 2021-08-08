@@ -122,8 +122,9 @@ const refreshTradeMenu = () => {
       takerResourceInput.disabled = true
       const offererVal = currentGameData.trade.offer.offerer[resourceName] ?? 0
       const takerVal = currentGameData.trade.offer.taker[resourceName] ?? 0
-      offererResourceInput.value = offererVal
-      takerResourceInput.value = takerVal
+
+      offererResourceInput.value = offererVal || null
+      takerResourceInput.value = takerVal || null
     }
     else if(currentGameData.turn === currentGameData.me.id) {
       offererResourceInput.disabled = false
