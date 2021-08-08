@@ -3,7 +3,7 @@ const DevelopmentCard = require("./DevelopmentCard.js")
 
 const lobbies = require("../server/lobbies.js")
 const users = require("../server/users.js")
-const constants = require("../constants.js")
+const constants = require("../server/constants.js")
 
 const { buildingCosts } = constants
 

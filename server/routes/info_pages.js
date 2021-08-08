@@ -4,7 +4,7 @@ const router = express.Router()
 const routingUtil = require("./routing_util.js")
 const { pathTo } = routingUtil
 
-const constants = require("../../constants.js")
+const constants = require("../constants.js")
 
 
 router.get("/info/building_costs", (req, res) => res.sendFile(pathTo("/info/building_costs.html")))
