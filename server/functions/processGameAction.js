@@ -5,15 +5,12 @@ const constants = require("../constants.js")
 const { buildingCosts, hexTypesResources } = constants
 
 module.exports = (satan, playerId, actionData) => {
-  const action = actionData.action
-  if(!action) return
+  if(!actionData.action) return
 
   const coords = actionData.coords
   const coordsArr = actionData.coordsArr
   const vertex = satan.board.getVertex(coords)
   const player = satan.getPlayer(playerId)
-  const user = users.getUser(player.userId)
-  const lobby = lobbies.getLobby(user.lobbyId)
   
   const spendResourcesOn = (p, item) => {
     const playerResources = p.resources
@@ -23,29 +20,7 @@ module.exports = (satan, playerId, actionData) => {
     Object.keys(cost).forEach(resource => playerResources[resource] -= cost[resource])
   }
 
-  const sanitiseTradeOffer = (unsanitisedOffer) => {
-    // sanitise the incoming offer data to make sure everything is a number
-    const resourceNames = ["bricks", "lumber", "wool", "wheat", "ore"]
-    if(!unsanitisedOffer) return
-    const { offerer, taker } = unsanitisedOffer
-
-    const sanitised = {
-      offerer: {},
-      taker: {}
-    }
-
-    for(let resource of resourceNames) {
-      const minAmt = 0
-      sanitised.offerer[resource] = Math.max(parseInt(offerer[resource]) || 0, minAmt)
-      sanitised.taker[resource] = Math.max(parseInt(taker[resource]) || 0, minAmt)
-    }
-
-    return sanitised
-  }
-
-  const sanitisedOffer = sanitiseTradeOffer(actionData.offer)
-
-  if(action.startsWith("place_")) {
+  if(actionData.action.startsWith("place_")) {
     if(player.id !== satan.turn) {
       satan.printChatErr("It is not your turn.", playerId)
       return
@@ -56,7 +31,7 @@ module.exports = (satan, playerId, actionData) => {
     }
   }
 
-  switch(action) {
+  switch(actionData.action) {
     case "roll_dice":
       if(satan.turnStage !== 0) break
       satan.rollDice()
@@ -312,7 +287,6 @@ module.exports = (satan, playerId, actionData) => {
 
       // spendResourcesOn(player, "developmentCard")
       break
-
     case "use_development_card":
       if (satan.turnStage == 0) {
         satan.printChatErr("You need to roll the dice before doing satan.", playerId)
@@ -325,6 +299,43 @@ module.exports = (satan, playerId, actionData) => {
         satan.developmentCardUsed = true
       }
       break
+    case "harbour_trade":
+    case "offer_trade":
+    case "accept_trade":
+    case "confirm_trade":
+    case "cancel_trade":
+      handleTradeActions(satan, playerId, actionData)
+      break
+    default:
+      return
+  }
+  
+  satan.refreshAllowedPlacements()
+}
+
+const handleTradeActions = (satan, playerId, actionData) => {
+  const player = satan.getPlayer(playerId)
+  
+  const sanitiseTradeOffer = (unsanitisedOffer) => {
+    // sanitise the incoming offer data to make sure everything is a number
+    const resourceNames = ["bricks", "lumber", "wool", "wheat", "ore"]
+    if(!unsanitisedOffer) return
+    const { offerer, taker } = unsanitisedOffer
+    const sanitised = {
+      offerer: {},
+      taker: {}
+    }
+    for(let resource of resourceNames) {
+      const minAmt = 0
+      sanitised.offerer[resource] = Math.max(parseInt(offerer[resource]) || 0, minAmt)
+      sanitised.taker[resource] = Math.max(parseInt(taker[resource]) || 0, minAmt)
+    }
+    return sanitised
+  }
+
+  const sanitisedOffer = sanitiseTradeOffer(actionData.offer)
+
+  switch(actionData.action) {
     case "harbour_trade":
       if(player.id !== satan.turn) {
         satan.printChatErr("It is not your turn.", playerId)
@@ -366,7 +377,7 @@ module.exports = (satan, playerId, actionData) => {
       satan.trade.takers = []
       satan.trade.idempotency = Date.now()
 
-      lobby.printToChat([{
+      satan.getLobby().printToChat([{
         text: JSON.stringify(satan.trade),
         style: { colour: "brown" }
       }])
@@ -394,7 +405,7 @@ module.exports = (satan, playerId, actionData) => {
       if(satan.turnStage !== 1) break
 
       satan.trade.takers.push(playerId)
-      lobby.printToUserChat(player.userId, [{text: ":D"}])
+      satan.getLobby().printToUserChat(player.userId, [{text: ":D"}])
       break
     case "confirm_trade":
       if(player.id !== satan.turn) {
@@ -429,7 +440,7 @@ module.exports = (satan, playerId, actionData) => {
       }
 
       satan.clearTrade()
-      lobby.printToChat([{
+      satan.getLobby().printToChat([{
         text: `${player.name} has cancelled their trade offer.`,
         style: { colour: "brown" }
       }])
@@ -437,6 +448,4 @@ module.exports = (satan, playerId, actionData) => {
     default:
       return
   }
-  
-  satan.refreshAllowedPlacements()
 }
