@@ -335,18 +335,20 @@ const handleTradeActions = (satan, playerId, actionData) => {
 
   const sanitisedOffer = sanitiseTradeOffer(actionData.offer)
 
+
+  if(satan.inSetupTurnCycle()) {
+    satan.printChatErr("Trading is not allowed during setup turns.", playerId)
+    return
+  }
+  if(satan.turnStage !== 1) {
+    satan.printChatErr("The dice have not been rolled this turn.", playerId)
+    return
+  }
+
   switch(actionData.action) {
     case "harbour_trade":
       if(player.id !== satan.turn) {
         satan.printChatErr("It is not your turn.", playerId)
-        break
-      }
-      if(satan.inSetupTurnCycle()) {
-        satan.printChatErr("Trading is not allowed during setup turns.", playerId)
-        break
-      }
-      if(satan.turnStage !== 1) {
-        satan.printChatErr("The dice have not been rolled this turn.", playerId)
         break
       }
       if(!player.canAfford(sanitisedOffer.offerer)) {
@@ -358,14 +360,6 @@ const handleTradeActions = (satan, playerId, actionData) => {
     case "offer_trade":
       if(player.id !== satan.turn) {
         satan.printChatErr("It is not your turn.", playerId)
-        break
-      }
-      if(satan.inSetupTurnCycle()) {
-        satan.printChatErr("Trading is not allowed during setup turns.", playerId)
-        break
-      }
-      if(satan.turnStage !== 1) {
-        satan.printChatErr("The dice have not been rolled this turn.", playerId)
         break
       }
       if(!player.canAfford(sanitisedOffer.offerer)) {
@@ -383,10 +377,8 @@ const handleTradeActions = (satan, playerId, actionData) => {
       }])
       break
     case "accept_trade":
-      if(satan.inSetupTurnCycle()) break
-
       if(!satan.trade.offer || actionData.idempotency !== satan.trade.idempotency) {
-        satan.printChatErr("satan trade offer does not exist or has expired.", playerId)
+        satan.printChatErr("This trade offer does not exist or has expired.", playerId)
         break
       }
       if(playerId === satan.turn) {
