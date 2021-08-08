@@ -38,7 +38,12 @@ const refreshTradeMenu = () => {
 
           if(tradeMode === "humans") {
             const oppositeInput = (rightColumn ? tradeOffererInputs : tradeTakerInputs).querySelector(`input#${inputElem.id}`)
-            oppositeInput.disabled = !isZero
+            
+            if(isZero) oppositeInput.disabled = false
+            else {
+              oppositeInput.disabled = true
+              oppositeInput.value = "0"
+            }
           }
           if(tradeMode === "stockpile") {
             (rightColumn ? tradeTakerInputs : tradeOffererInputs).querySelectorAll("input").forEach(n => {
@@ -106,8 +111,8 @@ const refreshTradeMenu = () => {
     const takerResourceInput = tradeTakerInputs.querySelector(`#trade-amount-input-${resourceName}`)
 
     if(currentGameData.turnTick) {
-      offererResourceInput.value = 0
-      takerResourceInput.value = 0
+      offererResourceInput.value = "0"
+      takerResourceInput.value = "0"
     }
 
     offererResourceInput.style.color = null
@@ -147,6 +152,14 @@ tradeButton.addEventListener("click", () => {
       }, (err, data) => {
         if(err) notifyUser(err)
       })
+
+      for(let resourceName in resourceDivNames) {
+        const offererResourceInput = tradeOffererInputs.querySelector(`#trade-amount-input-${resourceName}`)
+        const takerResourceInput = tradeTakerInputs.querySelector(`#trade-amount-input-${resourceName}`)
+    
+        offererResourceInput.value = "0"
+        takerResourceInput.value = "0"
+      }
     }
     else {
       const offererAmounts = {}
