@@ -700,7 +700,10 @@ class Satan {
         if(harbourCoords) {
           const harbourHex = this.board.getHex(harbourCoords.x, harbourCoords.y)
           const harbour = harbourHex.harbour
-          buildingOwner.deals.push(harbour.deal)
+
+          if(!buildingOwner.deals.map(d => JSON.stringify(d)).includes(JSON.stringify(harbour.deal))) {
+            buildingOwner.deals.push(harbour.deal)
+          }
         }
       }
     })
