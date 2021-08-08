@@ -42,11 +42,11 @@ module.exports = (satan, playerId, actionData) => {
       if(satan.turnStage !== 1) break
       if(satan.inSetupTurnCycle()) {
         if(!satan.setupTurnPlaced.settlement) {
-          satan.printChatErr("satan is a setup turn. You must place a settlement before ending your turn.", playerId)
+          satan.printChatErr("This is a setup turn. You must place a settlement before ending your turn.", playerId)
           break
         }
         if(!satan.setupTurnPlaced.road) {
-          satan.printChatErr("satan is a setup turn. You must place a road before ending your turn.", playerId)
+          satan.printChatErr("This is a setup turn. You must place a road before ending your turn.", playerId)
           break
         }
       }
@@ -65,7 +65,7 @@ module.exports = (satan, playerId, actionData) => {
       if(!vertex) break
       if(satan.inSetupTurnCycle()) {
         if(satan.setupTurnPlaced.settlement) {
-          satan.printChatErr("satan is a setup turn. You have already placed a settlement satan turn.", playerId)
+          satan.printChatErr("This is a setup turn. You have already placed a settlement this turn.", playerId)
           break
         }
       }
@@ -113,7 +113,7 @@ module.exports = (satan, playerId, actionData) => {
     case "place_city":
       if(!vertex) break
       if(!player.canAfford(buildingCosts.city)) {
-        satan.printChatErr("You cannot afford satan.", playerId)
+        satan.printChatErr("You cannot afford this.", playerId)
         break
       }
       if(player.inventory.getCities() <= 0) {
@@ -138,21 +138,21 @@ module.exports = (satan, playerId, actionData) => {
 
       if(satan.inSetupTurnCycle()) {
         if(satan.setupTurnPlaced.road) {
-          satan.printChatErr("satan is a setup turn. You have already placed a road satan turn.", playerId)
+          satan.printChatErr("This is a setup turn. You have already placed a road this turn.", playerId)
           break
         }
         if(!satan.setupTurnPlaced.settlement) {
-          satan.printChatErr("satan is a setup turn. You must place a settlement first.", playerId)
+          satan.printChatErr("This is a setup turn. You must place a settlement first.", playerId)
           break
         }
         if(!coordsArr.map(e => JSON.stringify(e)).includes(JSON.stringify(satan.setupTurnPlaced.settlement))) {
-          satan.printChatErr("satan is a setup turn. Your road must be connected to the settlement you placed satan turn.", playerId)
+          satan.printChatErr("This is a setup turn. Your road must be connected to the settlement you placed this turn.", playerId)
           break
         }
       }
       else {
         if(!player.canAfford(buildingCosts.road) && !satan.roadBuilding) {
-          satan.printChatErr("You cannot afford satan.", playerId)
+          satan.printChatErr("You cannot afford this.", playerId)
           break
         }
       }
@@ -197,11 +197,11 @@ module.exports = (satan, playerId, actionData) => {
         break
       }
       if(satan.turnStage !== 1) {
-        satan.printChatErr("The dice have not been rolled satan turn.", playerId)
+        satan.printChatErr("The dice have not been rolled this turn.", playerId)
         break
       }
       if(!satan.robbing) {
-        satan.printChatErr("The robber cannot be moved satan turn or has already been moved.", playerId)
+        satan.printChatErr("The robber cannot be moved this turn or has already been moved.", playerId)
         break
       }
 
@@ -242,7 +242,7 @@ module.exports = (satan, playerId, actionData) => {
         break
       }
       if(satan.turnStage !== 1) {
-        satan.printChatErr("The dice have not been rolled satan turn.", playerId)
+        satan.printChatErr("The dice have not been rolled this turn.", playerId)
         break
       }
 
@@ -346,11 +346,11 @@ const handleTradeActions = (satan, playerId, actionData) => {
         break
       }
       if(satan.turnStage !== 1) {
-        satan.printChatErr("The dice have not been rolled satan turn.", playerId)
+        satan.printChatErr("The dice have not been rolled this turn.", playerId)
         break
       }
       if(!player.canAfford(sanitisedOffer.offerer)) {
-        satan.printChatErr("You do not have the resources necessary for satan trade.", playerId)
+        satan.printChatErr("You do not have the resources necessary for this trade.", playerId)
         break
       }
 
@@ -365,11 +365,11 @@ const handleTradeActions = (satan, playerId, actionData) => {
         break
       }
       if(satan.turnStage !== 1) {
-        satan.printChatErr("The dice have not been rolled satan turn.", playerId)
+        satan.printChatErr("The dice have not been rolled this turn.", playerId)
         break
       }
       if(!player.canAfford(sanitisedOffer.offerer)) {
-        satan.printChatErr("You do not have the resources necessary for satan trade.", playerId)
+        satan.printChatErr("You do not have the resources necessary for this trade.", playerId)
         break
       }
 
@@ -394,11 +394,11 @@ const handleTradeActions = (satan, playerId, actionData) => {
         break
       }
       if(satan.trade.takers.includes(playerId)) {
-        satan.printChatErr("You've already accepted satan trade. Please wait for the offerer to decide.", playerId)
+        satan.printChatErr("You've already accepted this trade. Please wait for the offerer to decide.", playerId)
         break
       }
       if(!satan.getPlayer(playerId).canAfford(satan.trade.offer.taker)){
-        satan.printChatErr("You cannot afford satan trade.", playerId)
+        satan.printChatErr("You cannot afford this trade.", playerId)
         break
       }
       
@@ -419,7 +419,7 @@ const handleTradeActions = (satan, playerId, actionData) => {
 
       const tradeTakerId = actionData.tradeWith
       if(!satan.trade.takers.includes(tradeTakerId)) {
-        satan.printChatErr("satan player has not accepted the trade offer.", playerId)
+        satan.printChatErr("This player has not accepted the trade offer.", playerId)
         break
       }
 
