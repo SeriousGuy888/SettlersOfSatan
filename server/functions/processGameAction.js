@@ -391,7 +391,7 @@ const handleTradeActions = (satan, playerId, actionData) => {
           .map(k => `${obj[k]} ${k.toUpperCase()}`)
           .join(", ")
         const offererStr = listifyObj(satan.trade.offer.offerer) || "nothing"
-        const takerStr = listifyObj(satan.trade.offer.taker) || "nothing"
+        const takerStr = listifyObj(satan.trade.offer.taker) || "free"
 
         return `${player.name} offers ${offererStr} for ${takerStr}.`
       }
