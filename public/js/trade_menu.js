@@ -36,7 +36,7 @@ const refreshTradeMenu = () => {
         inputElem.addEventListener("input", () => {
           if(tradeMode !== "stockpile") return
       
-          tradeOffererInputs.querySelectorAll("input").forEach(n => {
+          (rightColumn ? tradeTakerInputs : tradeOffererInputs).querySelectorAll("input").forEach(n => {
             if(inputElem === n) return
             if(inputElem.value === "0") n.disabled = false
             else {

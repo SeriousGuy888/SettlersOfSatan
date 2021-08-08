@@ -356,6 +356,15 @@ const handleTradeActions = (satan, playerId, actionData) => {
         break
       }
 
+      const playerResource = Object.keys(sanitisedOffer.offerer).filter(k => sanitisedOffer.offerer[k] > 0)[0]
+      const stockpileResource = Object.keys(sanitisedOffer.taker).filter(k => sanitisedOffer.taker[k] > 0)[0]
+
+      if(!playerResource || !stockpileResource) {
+        satan.printChatErr("Trade amounts ung kan bea zero.", playerId)
+        break
+      }
+
+      console.log(playerResource, stockpileResource, player.deals)
       break
     case "offer_trade":
       if(player.id !== satan.turn) {
