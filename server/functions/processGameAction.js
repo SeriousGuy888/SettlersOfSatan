@@ -384,8 +384,20 @@ const handleTradeActions = (satan, playerId, actionData) => {
       satan.trade.takers = []
       satan.trade.idempotency = Date.now()
 
+      const getTradeChatAnnouncement = () => {
+        const listifyObj = obj => Object
+          .keys(obj)
+          .filter(k => obj[k] > 0)
+          .map(k => `${obj[k]} ${k.toUpperCase()}`)
+          .join(", ")
+        const offererStr = listifyObj(satan.trade.offer.offerer) || "nothing"
+        const takerStr = listifyObj(satan.trade.offer.taker) || "nothing"
+
+        return `${player.name} offers ${offererStr} for ${takerStr}.`
+      }
+
       satan.getLobby().printToChat([{
-        text: JSON.stringify(satan.trade),
+        text: getTradeChatAnnouncement(),
         style: { colour: "brown" }
       }])
       break
