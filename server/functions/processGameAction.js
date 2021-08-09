@@ -371,7 +371,9 @@ const handleTradeActions = (satan, playerId, actionData) => {
         break
       }
 
-      console.log(playerResource, stockpileResource, player.deals)
+      const { deals } = player
+
+      console.log(playerResource, stockpileResource, deals)
       break
     case "offer_trade":
       if(player.id !== satan.turn) {
