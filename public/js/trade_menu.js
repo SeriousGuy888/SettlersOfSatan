@@ -145,14 +145,6 @@ tradeButton.addEventListener("click", () => {
       }, (err, data) => {
         if(err) notifyUser(err)
       })
-
-      for(let resourceName in resourceDivNames) {
-        const offererResourceInput = tradeOffererInputs.querySelector(`#trade-amount-input-${resourceName}`)
-        const takerResourceInput = tradeTakerInputs.querySelector(`#trade-amount-input-${resourceName}`)
-    
-        offererResourceInput.value = "0"
-        takerResourceInput.value = "0"
-      }
     }
     else {
       const offererAmounts = {}
