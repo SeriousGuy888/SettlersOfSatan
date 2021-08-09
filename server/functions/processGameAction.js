@@ -17,7 +17,10 @@ module.exports = (satan, playerId, actionData) => {
     const cost = buildingCosts[item]
     if(!playerResources || !cost) return false
 
-    Object.keys(cost).forEach(resource => playerResources[resource] -= cost[resource])
+    Object.keys(cost).forEach(resource => {
+      playerResources[resource] -= cost[resource]
+      satan.stockpile[resource] += cost[resource]
+    })
   }
 
   if(actionData.action.startsWith("place_")) {
