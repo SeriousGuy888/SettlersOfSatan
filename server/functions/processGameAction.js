@@ -18,8 +18,7 @@ module.exports = (satan, playerId, actionData) => {
     if(!playerResources || !cost) return false
 
     Object.keys(cost).forEach(resource => {
-      playerResources[resource] -= cost[resource]
-      satan.stockpile[resource] += cost[resource]
+      satan.giveResources(p.id, resource, -cost[resource])
     })
   }
 
