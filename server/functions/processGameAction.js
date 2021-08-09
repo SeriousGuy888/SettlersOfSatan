@@ -29,7 +29,7 @@ module.exports = (satan, playerId, actionData) => {
       return
     }
     if(satan.turnStage === 0) {
-      satan.printChatErr("You need to roll the dice before doing satan.", playerId)
+      satan.printChatErr("You need to roll the dice before doing this.", playerId)
       return
     }
   }
