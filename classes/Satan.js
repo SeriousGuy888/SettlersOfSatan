@@ -412,19 +412,37 @@ class Satan {
       }
       
       for(const resource in resourceHandouts) {
-        // total amount of this resource being handed out
-        const totalHandout = Object.values(resourceHandouts[resource]).reduce((acc, cur) => acc + cur)
+        const handoutVals = Object.values(resourceHandouts[resource])
+        if(!handoutVals.length) continue // skip resources that have 0 handout
 
-        if(totalHandout > this.stockpile[resource]) {
-          this.getLobby().printToChat([{
-            text: `${resource.toUpperCase()} could not be handed out because there were not enough cards in the stockpile.`,
-            style: { colour: "brown" }
-          }])
-          continue
-        }
+        if(handoutVals.length === 1) { // special case for when there is only one player, where they still get the cards remaining
+          const playerId = Object.keys(resourceHandouts[resource])
+          const handoutAmount = Math.min(resourceHandouts[resource][playerId], this.stockpile[resource])
 
-        for(const playerId in resourceHandouts[resource]) {
-          this.giveResources(playerId, resource, resourceHandouts[resource][playerId])
+
+          if(handoutAmount < resourceHandouts[resource][playerId]) {
+            this.getLobby().printToChat([{
+              text: `The stockpile ran out of ${resource.toUpperCase()} so the one player who got it only got ${handoutAmount} instead of ${resourceHandouts[resource][playerId]}.`,
+              style: { colour: "brown" }
+            }])
+          }
+
+          this.giveResources(playerId, resource, handoutAmount)
+        } else {
+          // total amount of this resource being handed out
+          const totalHandout = handoutVals.reduce((acc, cur) => acc + cur)
+
+          if(totalHandout > this.stockpile[resource]) {
+            this.getLobby().printToChat([{
+              text: `${resource.toUpperCase()} could not be handed out because there were not enough cards in the stockpile.`,
+              style: { colour: "brown" }
+            }])
+            continue
+          }
+
+          for(const playerId in resourceHandouts[resource]) {
+            this.giveResources(playerId, resource, resourceHandouts[resource][playerId])
+          }
         }
       }
     }
