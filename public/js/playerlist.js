@@ -147,6 +147,7 @@ const refreshPlayerList = () => {
       playerVpIcon.alt = "VP"
       playerVpDisplayDiv.appendChild(playerVpDisplay)
       playerVpDisplayDiv.appendChild(playerVpIcon)
+      playerVpDisplayDiv.title = "Victory Points"
 
       const playerCardCountDisplayDiv = document.createElement("div")
       const playerCardCountDisplay = document.createElement("p")
@@ -154,9 +155,10 @@ const refreshPlayerList = () => {
       const playerCardCountIcon = document.createElement("img")
       playerCardCountIcon.classList.add("icon-1em")
       playerCardCountIcon.src = "/images/icons/resource_cards.svg"
-      playerCardCountIcon.alt = "resource cards"
+      playerCardCountIcon.alt = "Resource Cards"
       playerCardCountDisplayDiv.appendChild(playerCardCountDisplay)
       playerCardCountDisplayDiv.appendChild(playerCardCountIcon)
+      playerCardCountDisplayDiv.title = "The number of resource cards this player has"
       
       bottomInfoDiv.appendChild(playerVpDisplayDiv)
       bottomInfoDiv.appendChild(playerCardCountDisplayDiv)
