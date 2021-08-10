@@ -451,7 +451,10 @@ const handleTradeActions = (satan, playerId, actionData) => {
       if(satan.turnStage !== 1) break
 
       satan.trade.takers.push(playerId)
-      satan.getLobby().printToUserChat(player.userId, [{text: ":D"}])
+      satan.getLobby().printToUserChat(player.userId, [{
+        text: "You've accepted this trade. Please wait for the offerer to choose someone to finalise the trade with.",
+        style: { colour: "brown" }
+      }])
       break
     case "confirm_trade":
       if(player.id !== satan.turn) {
