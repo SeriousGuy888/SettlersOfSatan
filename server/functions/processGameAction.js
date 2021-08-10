@@ -371,8 +371,33 @@ const handleTradeActions = (satan, playerId, actionData) => {
       }
 
       const { deals } = player
+      const eligibleDeals = deals.filter(deal => ( // find all the deals that the offered resources would fulfill
+        (deal.resource === "any" || deal.resource === playerResource) &&
+        sanitisedOffer.offerer[playerResource] >= deal.amount
+      ))
 
-      console.log(playerResource, stockpileResource, deals)
+      if(!eligibleDeals.length) {
+        satan.printChatErr("None of your harbours were interested in your offer.", playerId)
+        break
+      }
+
+
+      const bestDeal = eligibleDeals.reduce((prev, curr) => prev.amount < curr.amount ? prev : curr) // finds deal with lowest amount
+
+      const stockpileAmount = sanitisedOffer.taker[stockpileResource]
+      const playerAmount = stockpileAmount * bestDeal.amount // reverses stockpileAmount but with the floored amount
+      
+      if(sanitisedOffer.offerer[playerResource] < playerAmount) {
+        satan.printChatErr(`You will need to offer ${playerAmount} ${playerResource.toUpperCase()} for this trade to be accepted.`, playerId)
+        break
+      }
+
+      satan.giveResources(player.id, stockpileResource, stockpileAmount)
+      satan.giveResources(player.id, playerResource, -playerAmount)
+      satan.getLobby().printToChat([{
+        text: `${player.name} traded with the bank: ${playerAmount} ${playerResource.toUpperCase()} for ${stockpileAmount} ${stockpileResource.toUpperCase()}.`,
+        style: { colour: "brown" }
+      }])
       break
     case "offer_trade":
       if(player.id !== satan.turn) {
