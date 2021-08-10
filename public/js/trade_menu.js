@@ -98,6 +98,9 @@ const refreshTradeMenu = () => {
     tradeInterfaceDiv.style.display = "none"
   }
 
+
+  takerSelect.disabled = (currentGameData.trade.offer || currentGameData.turn !== currentGameData.me.id)
+
   for(let resourceName in resourceDivNames) {
     const offererResourceInput = tradeOffererInputs.querySelector(`#trade-amount-input-${resourceName}`)
     const takerResourceInput = tradeTakerInputs.querySelector(`#trade-amount-input-${resourceName}`)
@@ -109,6 +112,7 @@ const refreshTradeMenu = () => {
 
     offererResourceInput.style.color = null
     takerResourceInput.style.color = null
+    
     if(currentGameData.trade.offer) {
       offererResourceInput.disabled = true
       takerResourceInput.disabled = true

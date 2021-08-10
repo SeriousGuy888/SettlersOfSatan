@@ -99,7 +99,7 @@ button.red-button:hover { background-color: var(--theme-red-button-hover); }
 
 
 select {
-  padding: 0 1em;
+  padding: 0 0.5em;
   margin: 0.4em 0;
   cursor: pointer;
   color: var(--theme-text);
@@ -108,6 +108,11 @@ select {
   border: 2px solid var(--theme-border);
 }
 select:hover { background-color: var(--theme-bg-2); }
+select:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+  background-color: var(--theme-bg-3);
+}
 
 
 a[target="_blank"]::after {
