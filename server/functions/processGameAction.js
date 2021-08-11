@@ -255,26 +255,17 @@ module.exports = (satan, playerId, actionData) => {
         break
       }
 
-      console.log(robFrom.resources)
-
-      const stealables = []
-
-      for(let resource in robFrom.resources){
-        for(let i = 0; i < robFrom.resources[resource]; i++){
-          stealables.push(resource)
-        }
+      const steal = robFrom.drawResourceCards(1)
+      for(const resource in steal) {
+        if(!steal[resource]) continue
+        robFrom.resources[resource] -= steal[resource]
+        player.resources[resource] += steal[resource]
       }
-
-      console.log(stealables)
-      
-      const stealResource = stealables[Math.floor(Math.random() * stealables.length)]
-      robFrom.resources[stealResource]--
-      player.resources[stealResource]++
-      satan.clearRobbable()
-
       satan.getLobby().printToChat([{ // temp
-        text: `${player.name} stole 1 ${stealResource} from ${robFrom.name}`
+        text: `${player.name} stole a card from ${robFrom.name}`
       }])
+      
+      satan.clearRobbable()
       break
     case "buy_development_card":
 
