@@ -83,6 +83,10 @@ const refreshTradeMenu = () => {
       takerResourceInput.value = "0"
     }
 
+    tradeButton.disabled = true
+    tradeButton.textContent = "No trade offer..."
+    tradeInterfaceDiv.style.display = "none"
+
     offererResourceInput.style.color = null
     takerResourceInput.style.color = null
     offererResourceInput.disabled = true
@@ -105,15 +109,10 @@ const refreshTradeMenu = () => {
       offererResourceInput.disabled = false
       takerResourceInput.disabled = false
     }
-    else {
-      tradeButton.disabled = true
-      tradeButton.textContent = "No trade offer..."
-      tradeInterfaceDiv.style.display = "none"
-    }
   }
 
 
-  
+
 
   offererNameP.textContent = currentGameData.players[currentGameData.turn].name
   offererNameP.style.color = currentGameData.players[currentGameData.turn].colour
@@ -121,8 +120,16 @@ const refreshTradeMenu = () => {
 
   tradeTakersList.style.display = "none"
 
-  if(currentGameData.diceRolled && currentGameData.turnCycle > 2) {
-    if(currentGameData.turn === currentGameData.me.id) {
+  if(
+    currentGameData.diceRolled &&
+    currentGameData.turnCycle > 2 &&
+    (
+      currentGameData.turn === currentGameData.me.id ||
+      currentGameData.trade.offer ||
+      requiredDiscardCount
+    )
+  ) {
+    if(currentGameData.turn === currentGameData.me.id || requiredDiscardCount) {
       if(currentGameData.trade.offer) {
         tradeButton.textContent = "Cancel Trade Offer"
         tradeTakersList.style.display = null
@@ -169,7 +176,7 @@ takerSelect.addEventListener("change", () => {
 
 
 tradeButton.addEventListener("click", () => {
-  if(currentGameData.turn === currentGameData.me.id) {
+  if(currentGameData.turn === currentGameData.me.id || requiredDiscardCount) {
     if(currentGameData.trade.offer) {
       socket.emit("perform_game_action", {
         action: "cancel_trade",
