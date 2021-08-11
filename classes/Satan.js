@@ -369,6 +369,8 @@ class Satan {
           text: `${player.name} did not discard in time and so ${discardCount} cards were randomly discarded on their behalf.`,
           style: { colour: "brown" },
         }])
+
+        delete this.discardingPlayers[playerId]
       }
 
       if(this.inSetupTurnCycle()) {
