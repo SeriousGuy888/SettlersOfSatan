@@ -354,7 +354,22 @@ class Satan {
 
       this.clearTrade()
       this.clearRobbable()
-      this.discardingPlayers = {}
+      
+      for(const playerId in this.discardingPlayers) {
+        const discardCount = this.discardingPlayers[playerId]
+        if(!discardCount) continue
+
+        const player = this.getPlayer(playerId)
+        const discard = player.drawResourceCards(discardCount)
+        for(const resource in discard) {
+          this.giveResources(player.id, resource, -discard[resource])
+        }
+
+        this.getLobby().printToChat([{
+          text: `${player.id} did not discard in time and so ${discardCount} cards were randomly discarded on their behalf.`,
+          style: { colour: "brown" },
+        }])
+      }
 
       if(this.inSetupTurnCycle()) {
         this.setupTurnPlaced.settlement = null
