@@ -12,9 +12,20 @@ const discardImg = document.querySelector("#discard-img")
 const turnControls = document.querySelector("#turn-controls")
 
 let tradeMode
+let requiredDiscardCount = 0
+
+const updateTradeMode = (newMode) => {
+  if(newMode) {
+    takerSelect.value = newMode
+    tradeMode = newMode
+  }
+  tradeMode = takerSelect.value
+}
+
 const refreshTradeMenu = () => {
-  tradeMode = takerSelect.value // humans, stockpile, or discard
-  
+  updateTradeMode()
+  requiredDiscardCount = currentGameData.discardingPlayers[currentGameData.me.id]
+
   const createTradeInputs = (container, rightColumn) => {
     if(!container.childElementCount) {
       const frag = document.createDocumentFragment()
@@ -60,6 +71,49 @@ const refreshTradeMenu = () => {
   createTradeInputs(tradeTakerInputs, true)
 
 
+  // disable the select menu if: there is an offer, the player is discarding, or if it is not the player's turn
+  takerSelect.disabled = (currentGameData.trade.offer || requiredDiscardCount || currentGameData.turn !== currentGameData.me.id)
+
+  for(let resourceName in resourceDivNames) {
+    const offererResourceInput = tradeOffererInputs.querySelector(`#trade-amount-input-${resourceName}`)
+    const takerResourceInput = tradeTakerInputs.querySelector(`#trade-amount-input-${resourceName}`)
+
+    if(currentGameData.turnTick) {
+      offererResourceInput.value = "0"
+      takerResourceInput.value = "0"
+    }
+
+    offererResourceInput.style.color = null
+    takerResourceInput.style.color = null
+    offererResourceInput.disabled = true
+    takerResourceInput.disabled = true
+    updateTradeMode("humans")
+    
+    if(currentGameData.trade.offer) {
+      const offererVal = currentGameData.trade.offer.offerer[resourceName] ?? 0
+      const takerVal = currentGameData.trade.offer.taker[resourceName] ?? 0
+
+      offererResourceInput.value = offererVal || null
+      takerResourceInput.value = takerVal || null
+    }
+    else if(requiredDiscardCount) {
+      offererResourceInput.disabled = false
+      takerResourceInput.disabled = false
+      updateTradeMode("discard")
+    }
+    else if(currentGameData.turn === currentGameData.me.id) {
+      offererResourceInput.disabled = false
+      takerResourceInput.disabled = false
+    }
+    else {
+      tradeButton.disabled = true
+      tradeButton.textContent = "No trade offer..."
+      tradeInterfaceDiv.style.display = "none"
+    }
+  }
+
+
+  
 
   offererNameP.textContent = currentGameData.players[currentGameData.turn].name
   offererNameP.style.color = currentGameData.players[currentGameData.turn].colour
@@ -105,42 +159,6 @@ const refreshTradeMenu = () => {
     tradeButton.textContent = currentGameData.turnCycle > 2 ? "Roll dice before trading..." : "Trading is not allowed right now..."
     tradeButton.disabled = true
     tradeInterfaceDiv.style.display = "none"
-  }
-
-
-  takerSelect.disabled = (currentGameData.trade.offer || currentGameData.turn !== currentGameData.me.id)
-
-  for(let resourceName in resourceDivNames) {
-    const offererResourceInput = tradeOffererInputs.querySelector(`#trade-amount-input-${resourceName}`)
-    const takerResourceInput = tradeTakerInputs.querySelector(`#trade-amount-input-${resourceName}`)
-
-    if(currentGameData.turnTick) {
-      offererResourceInput.value = "0"
-      takerResourceInput.value = "0"
-    }
-
-    offererResourceInput.style.color = null
-    takerResourceInput.style.color = null
-    
-    if(currentGameData.trade.offer) {
-      offererResourceInput.disabled = true
-      takerResourceInput.disabled = true
-      const offererVal = currentGameData.trade.offer.offerer[resourceName] ?? 0
-      const takerVal = currentGameData.trade.offer.taker[resourceName] ?? 0
-
-      offererResourceInput.value = offererVal || null
-      takerResourceInput.value = takerVal || null
-    }
-    else if(currentGameData.turn === currentGameData.me.id) {
-      offererResourceInput.disabled = false
-      takerResourceInput.disabled = false
-    }
-    else {
-      tradeButton.disabled = true
-      tradeButton.textContent = "No trade offer..."
-
-      tradeInterfaceDiv.style.display = "none"
-    }
   }
 }
 
