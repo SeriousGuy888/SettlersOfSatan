@@ -64,7 +64,7 @@ const refreshTradeMenu = () => {
 
   tradeTakersList.style.display = "none"
 
-  if(currentGameData.turnStage === 1 && currentGameData.turnCycle > 2) {
+  if(currentGameData.diceRolled && currentGameData.turnCycle > 2) {
     if(currentGameData.turn === currentGameData.me.id) {
       if(currentGameData.trade.offer) {
         tradeButton.textContent = "Cancel Trade Offer"

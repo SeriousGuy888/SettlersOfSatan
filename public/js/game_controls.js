@@ -55,10 +55,10 @@ const refreshControls = () => {
   }
   else {
     turnButton.disabled = false
-    turnButton.textContent = currentGameData.turnStage === 0 ? "Roll Dice" : "End Turn"
+    turnButton.textContent = currentGameData.diceRolled ? "End Turn" : "Roll Dice"
 
     for(let i in gameControls) {
-      if(currentGameData.turnStage === 0) {
+      if(!currentGameData.diceRolled) {
         gameControls[i].disabled = true
         gameControls[i].title = "The dice have not been rolled yet."
         continue
@@ -75,7 +75,7 @@ const refreshControls = () => {
 
 turnButton.addEventListener("click", () => {
   setHolding(null)
-  const action = currentGameData.turnStage === 0 ? "roll_dice" : "end_turn"
+  const action = currentGameData.diceRolled ? "end_turn" : "roll_dice"
 
   socket.emit("perform_game_action", { action },
   (err, data) => {

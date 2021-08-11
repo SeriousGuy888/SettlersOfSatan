@@ -15,7 +15,7 @@ class Satan {
 
     this.turn = null // stores the player id of the currently playing playeur
     this.turnCycle = 0 // how many times every player has been given a turn
-    this.turnStage = 0 // turn stage manages whether the dice have been rolled
+    this.diceRolled = false // whether the dice have been rolled
     this.turnTick = false // set to true when the turn has changed and set to false after the next tick (notifies clients of turn changes)
     this.turnCountdownTo = null // a timestamp that when passed, the present turn will be forcefully passed
     this.setupTurnPlaced = { // stores the coordinates of the pieces placed this setup turn
@@ -84,7 +84,7 @@ class Satan {
       players: playersPublicData,
       turn: this.turn,
       turnCycle: this.turnCycle,
-      turnStage: this.turnStage,
+      diceRolled: this.diceRolled,
       turnTick: this.turnTick,
       turnCountdownTo: this.turnCountdownTo,
       stockpile: this.stockpile,
@@ -345,7 +345,7 @@ class Satan {
       this.nextTurn()
     }
     else {
-      this.turnStage = 0
+      this.diceRolled = false
       this.turnTick = true
       this.turnCountdownTo = new Date().setTime(new Date().getTime() + 120 * 1000)
 
@@ -355,7 +355,7 @@ class Satan {
       if(this.inSetupTurnCycle()) {
         this.setupTurnPlaced.settlement = null
         this.setupTurnPlaced.road = null
-        this.turnStage = 1
+        this.diceRolled = true
       }
 
       this.getLobby().printToChat([{
