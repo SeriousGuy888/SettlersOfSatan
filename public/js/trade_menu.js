@@ -14,7 +14,7 @@ const turnControls = document.querySelector("#turn-controls")
 let tradeMode
 let requiredDiscardCount = 0
 
-const updateTradeMode = (newMode) => {
+const setTradeMode = (newMode) => {
   if(newMode) {
     takerSelect.value = newMode
     tradeMode = newMode
@@ -23,7 +23,7 @@ const updateTradeMode = (newMode) => {
 }
 
 const refreshTradeMenu = () => {
-  updateTradeMode()
+  setTradeMode()
   requiredDiscardCount = currentGameData.discardingPlayers[currentGameData.me.id]
 
   const createTradeInputs = (container, rightColumn) => {
@@ -74,6 +74,13 @@ const refreshTradeMenu = () => {
   // disable the select menu if: there is an offer, the player is discarding, or if it is not the player's turn
   takerSelect.disabled = (currentGameData.trade.offer || requiredDiscardCount || currentGameData.turn !== currentGameData.me.id)
 
+  if(requiredDiscardCount) {
+    setTradeMode("discard")
+  }
+  else {
+    if(tradeMode === "discard") setTradeMode("humans")
+  }
+
   for(let resourceName in resourceDivNames) {
     const offererResourceInput = tradeOffererInputs.querySelector(`#trade-amount-input-${resourceName}`)
     const takerResourceInput = tradeTakerInputs.querySelector(`#trade-amount-input-${resourceName}`)
@@ -91,7 +98,6 @@ const refreshTradeMenu = () => {
     takerResourceInput.style.color = null
     offererResourceInput.disabled = true
     takerResourceInput.disabled = true
-    updateTradeMode("humans")
     
     if(currentGameData.trade.offer) {
       const offererVal = currentGameData.trade.offer.offerer[resourceName] ?? 0
@@ -100,12 +106,7 @@ const refreshTradeMenu = () => {
       offererResourceInput.value = offererVal || null
       takerResourceInput.value = takerVal || null
     }
-    else if(requiredDiscardCount) {
-      offererResourceInput.disabled = false
-      takerResourceInput.disabled = false
-      updateTradeMode("discard")
-    }
-    else if(currentGameData.turn === currentGameData.me.id) {
+    else if(currentGameData.turn === currentGameData.me.id || requiredDiscardCount) {
       offererResourceInput.disabled = false
       takerResourceInput.disabled = false
     }
