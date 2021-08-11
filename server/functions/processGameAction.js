@@ -359,7 +359,7 @@ const handleTradeActions = (satan, playerId, actionData) => {
         break
       }
 
-      const requiredCardCount = Math.floor(player.getResourceCardCount() / 2)
+      const requiredCardCount = satan.discardingPlayers[player.id]
       const discardingCardCount = Object.values(sanitisedOffer.offerer).reduce((prev, curr) => prev + curr)
       if(discardingCardCount !== requiredCardCount) {
         satan.printChatErr(`You are attempting to discard ${discardingCardCount} cards, but you must discard exactly ${requiredCardCount} cards.`, playerId)
