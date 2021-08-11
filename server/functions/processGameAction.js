@@ -301,6 +301,7 @@ module.exports = (satan, playerId, actionData) => {
         satan.developmentCardUsed = true
       }
       break
+    case "discard_cards":
     case "harbour_trade":
     case "offer_trade":
     case "accept_trade":
@@ -348,6 +349,33 @@ const handleTradeActions = (satan, playerId, actionData) => {
   }
 
   switch(actionData.action) {
+    case "discard_cards":
+      if(!satan.discardingPlayers[player.id]) {
+        satan.printChatErr("You are not allowed to discard at this time.", playerId)
+        break
+      }
+      if(!player.canAfford(sanitisedOffer.offerer)) {
+        satan.printChatErr("You do not have these cards to discard.", playerId)
+        break
+      }
+
+      const requiredCardCount = Math.floor(player.getResourceCardCount() / 2)
+      const discardingCardCount = Object.values(sanitisedOffer.offerer).reduce((prev, curr) => prev + curr)
+      if(discardingCardCount !== requiredCardCount) {
+        satan.printChatErr(`You are attempting to discard ${discardingCardCount} cards, but you must discard exactly ${requiredCardCount} cards.`, playerId)
+        break
+      }
+
+      for(const resource in sanitisedOffer.offerer) {
+        satan.giveResources(player.id, resource, -sanitisedOffer.offerer[resource])
+      }
+
+      satan.getLobby().printToChat([{
+        text: `${player.name} has discarded ${discardingCardCount} cards.`,
+        style: { colour: "brown" }
+      }])
+      delete satan.discardingPlayers[player.id]
+      break
     case "harbour_trade":
       if(player.id !== satan.turn) {
         satan.printChatErr("It is not your turn.", playerId)

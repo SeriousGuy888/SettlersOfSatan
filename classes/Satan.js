@@ -23,7 +23,7 @@ class Satan {
     }
 
     this.diceRolled = false // whether the dice have been rolled
-    this.discardingPlayers = [] // if a seven was rolled this round, all players with >7 cards will be placed in this array and forced to discard
+    this.discardingPlayers = {} // if a 7 was rolled, all players with >7 cards placed in this object with the number of cards that must be discarded
 
     this.stockpile = {
       bricks: 20,
@@ -354,6 +354,7 @@ class Satan {
 
       this.clearTrade()
       this.clearRobbable()
+      this.discardingPlayers = {}
 
       if(this.inSetupTurnCycle()) {
         this.setupTurnPlaced.settlement = null
@@ -387,9 +388,13 @@ class Satan {
 
     if(number === 7) {
       this.robbing = true
-      this.discardingPlayers = Object
+      this.discardingPlayers = {}
+      Object
         .keys(this.players)
         .filter(id => this.getPlayer(id).getResourceCardCount() > 7)
+        .forEach(id => {
+          this.discardingPlayers[id] = Math.floor(this.getPlayer(id).getResourceCardCount() / 2)
+        })
     }
     else {
       this.robbing = false
