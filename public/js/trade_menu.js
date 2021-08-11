@@ -1,10 +1,13 @@
 const tradeInterfaceDiv = document.querySelector("#trade-interface")
 const tradeButton = document.querySelector("#trade-button")
-const tradeOffererInputs = document.querySelector("#trade-offerer-inputs")
-const tradeTakerInputs = document.querySelector("#trade-taker-inputs")
-const offererNameP = document.querySelector("#trade-offerer-name")
-const takerSelect = document.querySelector("#trade-taker-select")
 const tradeTakersList = document.querySelector("#trade-takers")
+const tradeOffererInputs = tradeInterfaceDiv.querySelector("#trade-offerer-inputs")
+const tradeTakerInputs = tradeInterfaceDiv.querySelector("#trade-taker-inputs")
+const offererNameP = tradeInterfaceDiv.querySelector("#trade-offerer-name")
+const takerSelect = tradeInterfaceDiv.querySelector("#trade-taker-select")
+
+const tradeImg = document.querySelector("#trade-img")
+const discardImg = document.querySelector("#discard-img")
 
 const turnControls = document.querySelector("#turn-controls")
 
@@ -71,6 +74,9 @@ const refreshTradeMenu = () => {
         tradeTakersList.style.display = null
       }
       else {
+        tradeTakerInputs.style.display = null
+        tradeImg.style.display = null
+        discardImg.style.display = "none"
         switch(tradeMode) {
           case "humans":
             tradeButton.textContent = "Propose Trade"
@@ -80,6 +86,9 @@ const refreshTradeMenu = () => {
             break
           case "discard":
             tradeButton.textContent = "Discard Selected"
+            tradeTakerInputs.style.display = "none"
+            tradeImg.style.display = "none"
+            discardImg.style.display = null
             break
         }
       }
