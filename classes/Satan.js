@@ -366,7 +366,7 @@ class Satan {
         }
 
         this.getLobby().printToChat([{
-          text: `${player.id} did not discard in time and so ${discardCount} cards were randomly discarded on their behalf.`,
+          text: `${player.name} did not discard in time and so ${discardCount} cards were randomly discarded on their behalf.`,
           style: { colour: "brown" },
         }])
       }
