@@ -61,6 +61,12 @@ const refreshTradeMenu = () => {
               }
             })
           }
+          if(tradeMode === "discard") {
+            let total = 0
+            tradeOffererInputs.querySelectorAll("input").forEach(n => total += parseInt(n.value) || 0)
+            tradeButton.textContent = `Discard ${requiredDiscardCount} Cards (${total} selected)`
+            tradeButton.disabled = total !== requiredDiscardCount
+          }
         })
       }
   
@@ -130,6 +136,9 @@ const refreshTradeMenu = () => {
       requiredDiscardCount
     )
   ) {
+    tradeButton.disabled = false
+    tradeInterfaceDiv.style.display = null
+    
     if(currentGameData.turn === currentGameData.me.id || requiredDiscardCount) {
       if(currentGameData.trade.offer) {
         tradeButton.textContent = "Cancel Trade Offer"
@@ -147,7 +156,8 @@ const refreshTradeMenu = () => {
             tradeButton.textContent = "Trade With Harbour"
             break
           case "discard":
-            tradeButton.textContent = "Discard Selected"
+            tradeButton.textContent = `Discard ${requiredDiscardCount} Cards`
+            tradeButton.disabled = true
             tradeTakerInputs.style.display = "none"
             tradeImg.style.display = "none"
             discardImg.style.display = null
@@ -158,10 +168,6 @@ const refreshTradeMenu = () => {
     else {
       tradeButton.textContent = "Accept Trade"
     }
-
-
-    tradeButton.disabled = false
-    tradeInterfaceDiv.style.display = null
   }
   else {
     tradeButton.textContent = currentGameData.turnCycle > 2 ? "Roll dice before trading..." : "Trading is not allowed right now..."
