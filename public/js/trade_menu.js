@@ -175,32 +175,13 @@ tradeButton.addEventListener("click", () => {
       }
     
       
-      switch(tradeMode) {
-        case "humans":
-          socket.emit("perform_game_action", {
-            action: "offer_trade",
-            offer,
-          }, (err, data) => {
-            if(err) notifyUser(err)
-          })
-          break
-        case "stockpile":
-          socket.emit("perform_game_action", {
-            action: "harbour_trade",
-            offer,
-          }, (err, data) => {
-            if(err) notifyUser(err)
-          })
-          break
-        // case "discard":
-        //   socket.emit("perform_game_action", {
-        //     action: "discard_trade",
-        //     offer,
-        //   }, (err, data) => {
-        //     if(err) notifyUser(err)
-        //   })
-        //   break
-      }
+
+      let action = "offer_trade"
+      if(tradeMode === "stockpile") action = "harbour_trade"
+      if(tradeMode === "discard") action = "discard_cards"
+      socket.emit("perform_game_action", { action, offer }, (err, data) => {
+        if(err) notifyUser(err)
+      })
     }
   }
   else {
