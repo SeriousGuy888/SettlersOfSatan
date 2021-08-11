@@ -15,13 +15,15 @@ class Satan {
 
     this.turn = null // stores the player id of the currently playing playeur
     this.turnCycle = 0 // how many times every player has been given a turn
-    this.diceRolled = false // whether the dice have been rolled
     this.turnTick = false // set to true when the turn has changed and set to false after the next tick (notifies clients of turn changes)
     this.turnCountdownTo = null // a timestamp that when passed, the present turn will be forcefully passed
     this.setupTurnPlaced = { // stores the coordinates of the pieces placed this setup turn
       settlement: null,
       road: null,
     }
+
+    this.diceRolled = false // whether the dice have been rolled
+    this.discardingPlayers = [] // if a seven was rolled this round, all players with >7 cards will be placed in this array and forced to discard
 
     this.stockpile = {
       bricks: 20,
@@ -84,9 +86,10 @@ class Satan {
       players: playersPublicData,
       turn: this.turn,
       turnCycle: this.turnCycle,
-      diceRolled: this.diceRolled,
       turnTick: this.turnTick,
       turnCountdownTo: this.turnCountdownTo,
+      diceRolled: this.diceRolled,
+      discardingPlayers: this.discardingPlayers,
       stockpile: this.stockpile,
       trade: this.trade,
       robbing: this.robbing,
@@ -384,6 +387,9 @@ class Satan {
 
     if(number === 7) {
       this.robbing = true
+      this.discardingPlayers = Object
+        .keys(this.players)
+        .filter(id => this.getPlayer(id).getResourceCardCount() > 7)
     }
     else {
       this.robbing = false
