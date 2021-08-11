@@ -61,6 +61,30 @@ class Player {
       })
   }
 
+  drawResourceCards(amount) { // choose a random card using an efficient weighted random function
+    const weightedRandom = (items, weights) => {
+      // https://stackoverflow.com/a/55671924
+      // adds up the weights so the last elem will have the total weight, giving each elem an area on a "number line"
+      // then picks a random number on the number line and finds the element at that point
+      // faster than adding every single element to a massive array based on the weights
+
+      for(let i = 0; i < weights.length; i++)
+        weights[i] += weights[i - 1] || 0
+      let rand = Math.random() * weights[weights.length - 1]
+      return items[weights.findIndex(e => e > rand)]
+    }
+
+    let returnItems = {}
+    for(let i = 0; i < amount; i++) {
+      const resource = weightedRandom(Object.keys(this.resources), Object.values(this.resources))
+      if(!resource) break
+      if(!returnItems[resource]) returnItems[resource] = 0
+      returnItems[resource]++
+    }
+
+    return returnItems
+  }
+
   getResourceCardCount() {
     const { resources } = this
     return Object.values(resources).reduce((acc, cur) => acc += cur)
