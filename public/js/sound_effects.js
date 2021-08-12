@@ -1,3 +1,14 @@
+const retrievedSoundSettings = localStorage.getItem("soundSettings")
+let soundSettings = JSON.parse(retrievedSoundSettings)
+if(!soundSettings) {
+  soundSettings = {
+    volume: 1
+  }
+}
+
+localStorage.setItem("soundSettings", JSON.stringify(soundSettings))
+
+
 class Sound {
   constructor(fileName) {
     this.sound = document.createElement("audio")
@@ -5,7 +16,7 @@ class Sound {
     this.sound.setAttribute("preload", "auto")
     this.sound.setAttribute("controls", "none")
     this.sound.style.display = "none"
-    this.sound.volume = 0.07
+    this.sound.volume = (soundSettings.volume * 0.07)
     document.body.appendChild(this.sound)
   }
   play() {
@@ -15,6 +26,8 @@ class Sound {
     this.sound.pause()
   }
 }
+
+
 
 let soundEffects = {
   fifteenSecondsLeft: "fifteen_seconds_left.wav"
