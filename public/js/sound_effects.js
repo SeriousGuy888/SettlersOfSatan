@@ -14,8 +14,3 @@ class Sound {
     this.sound.pause()
   }
 }
-
-document.querySelector("#your-turn").onclick = () => {
-  const sound = new Sound("/sounds/acapellayour_turn.mp3")
-  sound.play()
-}
