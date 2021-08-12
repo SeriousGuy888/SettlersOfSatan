@@ -30,7 +30,7 @@ socket.on("game_started_update", data => {
   }
   else {
     toggleInGameGui(false)
-    notifyUser("game ended")
+    printToChat([{ text: "Back to lobby. New players are now allowed to join again.", style: { colour: "magenta" } }])
     currentGameData = null
   }
 })
@@ -45,9 +45,9 @@ const refreshTurnDisplay = () => {
   const turnPlayer = document.querySelector("#turn-player")
 
   if(currentGameData.ended) {
-    turnPlayerHeader.textContent = `Winner: ${currentGameData.players[currentGameData.winner].name}`
-    turnPlayer.textContent = "Take your screenshots now."
-    turnPlayer.style.color = null
+    turnPlayerHeader.textContent = "🥇 Winner"
+    turnPlayer.textContent = currentGameData.players[currentGameData.winner].name
+    turnPlayer.style.color = currentGameData.players[currentGameData.winner].colour
   }
   else {
     turnPlayer.textContent = currentGameData.players[currentGameData.turn].name

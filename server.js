@@ -190,12 +190,15 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     const { lobby } = requestValidation
 
     if(data.started) {
-      if(lobby.getInGame()) {
-        return callback("already_playing")
-      }
+      if(lobby.inGame) return
       const satan = new Satan(lobby.code)
       satan.board.setup(4)
       lobby.setInGame(true, satan)
+    }
+    else if(data.backToLobby) {
+      if(!lobby.inGame) return
+      lobby.setInGame(false)
+      delete lobby.game
     }
   })
 

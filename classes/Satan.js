@@ -169,7 +169,6 @@ class Satan {
     ])
 
     this.ended = true
-    // this.getLobby().setInGame(false)
   }
 
   processAction(playerId, actionData) {

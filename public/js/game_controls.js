@@ -47,26 +47,32 @@ const refreshControlsOutline = () => {
   }
 }
 const refreshControls = () => {
-  if(currentGameData.turn !== currentGameData.me.id) {
-    for(let i in gameControls) gameControls[i].disabled = true
-
-    turnButton.disabled = true
-    turnButton.textContent = "It is not your turn..."
+  if(currentGameData.ended) {
+    turnButton.textContent = "Back to Lobby"
+    turnButton.disabled = !(currentLobbyData.users.filter(u => u.playerId === currentGameData.me.id)[0].host)
   }
   else {
-    turnButton.disabled = false
-    turnButton.textContent = currentGameData.diceRolled ? "End Turn" : "Roll Dice"
-
-    for(let i in gameControls) {
-      if(!currentGameData.diceRolled) {
-        gameControls[i].disabled = true
-        gameControls[i].title = "The dice have not been rolled yet."
-        continue
+    if(currentGameData.turn !== currentGameData.me.id) {
+      for(let i in gameControls) gameControls[i].disabled = true
+  
+      turnButton.disabled = true
+      turnButton.textContent = "It is not your turn..."
+    }
+    else {
+      turnButton.disabled = false
+      turnButton.textContent = currentGameData.diceRolled ? "End Turn" : "Roll Dice"
+  
+      for(let i in gameControls) {
+        if(!currentGameData.diceRolled) {
+          gameControls[i].disabled = true
+          gameControls[i].title = "The dice have not been rolled yet."
+          continue
+        }
+  
+        if(!currentGameData.me.enableControls[i]) gameControls[i].title = "You cannot afford this or there is nowhere to place this."
+        else gameControls[i].title = ""
+        gameControls[i].disabled = !currentGameData.me.enableControls[i]
       }
-
-      if(!currentGameData.me.enableControls[i]) gameControls[i].title = "You cannot afford this or there is nowhere to place this."
-      else gameControls[i].title = ""
-      gameControls[i].disabled = !currentGameData.me.enableControls[i]
     }
   }
 
@@ -74,11 +80,21 @@ const refreshControls = () => {
 }
 
 turnButton.addEventListener("click", () => {
-  setHolding(null)
-  const action = currentGameData.diceRolled ? "end_turn" : "roll_dice"
-
-  socket.emit("perform_game_action", { action },
-  (err, data) => {
-    if(err) notifyUser(err)
-  })
+  if(currentGameData.ended) {
+    socket.emit("edit_lobby_setting", {
+      backToLobby: true
+    },
+    (err, data) => {
+      if(err) notifyUser(err)
+    })
+  }
+  else {
+    setHolding(null)
+    const action = currentGameData.diceRolled ? "end_turn" : "roll_dice"
+  
+    socket.emit("perform_game_action", { action },
+    (err, data) => {
+      if(err) notifyUser(err)
+    })
+  }
 })
