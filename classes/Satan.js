@@ -10,8 +10,8 @@ class Satan {
     this.players = {}
     
     this.board = new Board()
-
-    this.gameEnd = false
+    this.ended = false
+    this.winner = null
 
     this.turn = null // stores the player id of the currently playing playeur
     this.turnCycle = 0 // how many times every player has been given a turn
@@ -65,7 +65,7 @@ class Satan {
       this.nextTurn()
       this.refreshAllowedPlacements()
     }
-    if(this.turnCountdownTo - Date.now() < 0) { // time limit for the turn has passed
+    if(this.turnCountdownTo - Date.now() < 0 && !this.ended) { // time limit for the turn has passed
       this.getLobby().printToChat([{
         text: `${this.getPlayer(this.turn).name}'s turn was skipped because they took too much time.`,
         style: {
@@ -83,6 +83,8 @@ class Satan {
     
     const tickData = {
       board: this.board,
+      ended: this.ended,
+      winner: this.winner,
       players: playersPublicData,
       turn: this.turn,
       turnCycle: this.turnCycle,
@@ -142,13 +144,14 @@ class Satan {
 
   handleWin() {
     if(!this.turn) return
-    if(this.gameEnd) return
+    if(this.ended) return
 
     const lobby = this.getLobby()
     const currentPlayer = this.getPlayer(this.turn)
-    if(currentPlayer.points < 10) return
+    if(currentPlayer.points < 2) return
 
     const leaderboard = Object.keys(this.players).sort((a, b) => this.players[b].points - this.players[a].points)
+    this.winner = leaderboard[0]
 
     lobby.printToChat([
       {
@@ -165,10 +168,15 @@ class Satan {
       }
     ])
 
-    this.gameEnd = true
+    this.ended = true
+    // this.getLobby().setInGame(false)
   }
 
   processAction(playerId, actionData) {
+    if(this.ended) {
+      this.printChatErr("The game has already ended.", playerId)
+      return
+    }
     processGameAction(this, playerId, actionData)
   }
 
