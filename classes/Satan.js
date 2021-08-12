@@ -422,7 +422,8 @@ class Satan {
         const building = vertex.getBuilding()
         if(!building) continue
         const adjacentHexes = vertex.getAdjacentHexes()
-        if(!building.playerId) continue
+        if(!building.playerId) continue // skip empty vertexes
+        if(this.getPlayer(building.playerId).disconnected) continue // skip disconnected players
 
         for(const hexCoords of adjacentHexes) {
           const hex = this.board.getRow(hexCoords.y)[hexCoords.x]
