@@ -148,16 +148,19 @@ class Satan {
 
     const lobby = this.getLobby()
     const currentPlayer = this.getPlayer(this.turn)
-    if(currentPlayer.points <= 10) return
+    if(currentPlayer.points < 10) return
 
-    const leaderboard = Object.keys(this.players).sort((a, b) => this.players[b].points - this.players[a].points)
-    this.winner = leaderboard[0]
+    const podium = Object
+      .keys(this.players)
+      .sort((a, b) => this.players[b].points - this.players[a].points)
+      .map(e => this.getPlayer(e))
+    this.winner = podium[0].id
 
     lobby.printToChat([
       {
         text: `🎉 Game over!`,
         style: { colour: "magenta", bold: true },
-        podium: leaderboard
+        podium,
       }
     ])
 
@@ -221,8 +224,6 @@ class Satan {
 
   refreshAllowedPlacements() {
     if(!this.turn) return
-
-    this.handleWin()
     
     Object.values(this.players).forEach(p => {
       p.deals = [{ resource: "any", amount: 4 }]
@@ -313,6 +314,8 @@ class Satan {
 
       player.enableControls[buildingName] = enable
     }
+
+    this.handleWin()
   }
 
   nextTurn() {

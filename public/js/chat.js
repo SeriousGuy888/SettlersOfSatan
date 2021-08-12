@@ -37,7 +37,7 @@ const parseChatLine = (line) => {
       podium.classList.add(["chat-podium"])
 
       for(let i = 0; i < 3; i++) {
-        let player = currentGameData.players[line.podium[i]]
+        let player = line.podium[i]
         if(!player) break
         const place = document.createElement("div")
         place.classList.add([`chat-podium-${i + 1}`])
