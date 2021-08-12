@@ -42,6 +42,7 @@ const updateLobbyState = (data) => {
   }
   else {
     playerId = null
+    currentGameData = null // NOSONAR
 
     loggedInSection.style.display = null
     inLobbySection.style.display = "none"
