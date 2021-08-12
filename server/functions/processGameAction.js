@@ -221,12 +221,12 @@ module.exports = (satan, playerId, actionData) => {
       satan.robbing = false
 
 
-      const adjPlayerIds = new Set(           // set removes all duplicates
-        newRobberHex                          // get the new hex
-          .getAdjacentVertexes()              // get its vertex coordinates
-          .map(c => satan.board.getVertex(c))  // get the vertex objects
-          .map(v => v?.building?.playerId)    // find the owners of the buildings on the vertexes
-          .filter(pid => pid)                 // filter out any vertexes that don't have a player owned building
+      const adjPlayerIds = new Set(                                   // set removes all duplicates
+        newRobberHex                                                  // get the new hex
+          .getAdjacentVertexes()                                      // get its vertex coordinates
+          .map(c => satan.board.getVertex(c))                         // get the vertex objects
+          .map(v => v?.building?.playerId)                            // find the owners of the buildings on the vertexes
+          .filter(pid => pid && !satan.getPlayer(pid).disconnected)   // filter out any vertexes that don't have a player owned building
       )
       
       adjPlayerIds.forEach(pid => {
