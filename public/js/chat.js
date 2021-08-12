@@ -21,7 +21,7 @@ const parseChatLine = (line) => {
     }
     if(line.dice) {
       const contentDice = document.createElement("div")
-      contentDice.classList = "chat-message-dice"
+      contentDice.classList.add(["chat-message-dice"])
       
       for(const num of line.dice) {
         const imgElem = document.createElement("img")
@@ -31,6 +31,24 @@ const parseChatLine = (line) => {
         contentDice.appendChild(imgElem)
       }
       content.appendChild(contentDice)
+    }
+    if(line.podium) {
+      const podium = document.createElement("div")
+      podium.classList.add(["chat-podium"])
+
+      for(let i = 0; i < 3; i++) {
+        let player = currentGameData.players[line.podium[i]]
+        if(!player) break
+        const place = document.createElement("div")
+        place.classList.add([`chat-podium-${i + 1}`])
+        place.innerHTML = `
+          <h4>${player.name}</h4>
+          <p>${player.points} VP</p>
+        `
+        podium.appendChild(place)
+      }
+
+      content.appendChild(podium)
     }
   }
   else {

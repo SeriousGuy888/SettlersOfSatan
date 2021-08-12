@@ -201,6 +201,27 @@
   width: 1.9em;
   height: 1.9em;
 }
+.chat-podium {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2px;
+  width: 95%;
+  margin: 3px 0;
+  font-size: 0.8em;
+}
+.chat-podium > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: 0.2rem;
+}
+.chat-podium > div > * { padding: 0; margin: 2px; }
+.chat-podium-1 { background-color: #ffd700; }
+.chat-podium-2 { background-color: #dbdbdb; }
+.chat-podium-3 { background-color: #d09664; }
 
 .attention-pls {
   animation: give-me-attention 2s infinite;

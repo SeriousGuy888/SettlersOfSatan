@@ -148,7 +148,7 @@ class Satan {
 
     const lobby = this.getLobby()
     const currentPlayer = this.getPlayer(this.turn)
-    if(currentPlayer.points < 2) return
+    if(currentPlayer.points <= 10) return
 
     const leaderboard = Object.keys(this.players).sort((a, b) => this.players[b].points - this.players[a].points)
     this.winner = leaderboard[0]
@@ -156,15 +156,8 @@ class Satan {
     lobby.printToChat([
       {
         text: `🎉 Game over!`,
-        style: { colour: "magenta", bold: true }
-      },
-      {
-        text: `1st Place: ${leaderboard.map(pid => this.players[pid].name).join(", followed by ")}`,
-        style: { colour: "magenta" }
-      },
-      {
-        text: "billzo still has not written any win handling code though",
-        style: { colour: "violet" }
+        style: { colour: "magenta", bold: true },
+        podium: leaderboard
       }
     ])
 
