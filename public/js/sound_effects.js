@@ -17,7 +17,13 @@ class Sound {
     this.sound.setAttribute("controls", "none")
     this.sound.style.display = "none"
     this.sound.volume = (soundSettings.volume * 0.07)
-    document.body.appendChild(this.sound)
+
+    if(!document.querySelector("#sound-effects-div")) {
+      const newDiv = document.createElement("div")
+      newDiv.id = "sound-effects-div"
+      document.body.appendChild(newDiv)
+    }
+    document.querySelector("#sound-effects-div").appendChild(this.sound)
   }
   play() {
     this.sound.play()
@@ -28,8 +34,13 @@ class Sound {
 }
 
 
-
 let soundEffects = {
   fifteenSecondsLeft: "fifteen_seconds_left.wav"
 }
-Object.keys(soundEffects).forEach(k => soundEffects[k] = new Sound(soundEffects[k]))
+
+const refreshSoundEffects = () => {
+  if(document.querySelector("#sound-effects-div")) document.querySelector("#sound-effects-div").innerHTML = ""
+  Object.keys(soundEffects).forEach(k => soundEffects[k] = new Sound(soundEffects[k]))
+}
+
+refreshSoundEffects()
