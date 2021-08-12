@@ -87,7 +87,7 @@ class Lobby {
       if(this.game) {
         this.game
           .getPlayer(this.users[userId].playerId)
-          .setDisconnected(true)
+          .forfeit()
       }
 
       delete this.users[userId]

@@ -88,6 +88,32 @@ class Player {
     return returnItems
   }
 
+  forfeit() {
+    const lobby = this.getLobby()
+    const satan = this.getGame()
+    const board = satan.board
+    const { vertexes, edges } = board
+
+    // clear any buildings and roads this player has
+    vertexes
+      .filter(v => v.building?.playerId === this.id)
+      .forEach(vertex => vertex.setBuilding(null))
+    edges
+      .filter(e => e.road === this.id)
+      .forEach(edge => edge.setRoad(null))
+    
+    // return all the resources this player has to the stockpile
+    for(const resource in this.resources) {
+      satan.giveResources(this.id, resource, -this.resources[resource])
+    }
+
+    satan.setPlayer(this.id, null) // delete player from satan
+    lobby.printToChat([{
+      text: `${this.name} has disconnected and forfeited the game because billzo doesnt want to write reconnection code right now`,
+      style: { colour: "red" }
+    }])
+  }
+
   getResourceCardCount() {
     const { resources } = this
     return Object.values(resources).reduce((acc, cur) => acc += cur)
@@ -112,7 +138,7 @@ class Player {
   }
 
   getGame() {
-    return this.getLobby().game()
+    return this.getLobby().game
   }
 
   setDisconnected(disconnected) {

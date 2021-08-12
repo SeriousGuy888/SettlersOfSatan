@@ -61,7 +61,7 @@ class Satan {
   tick() {
     const lobby = this.getLobby()
     
-    if(!this.turn || this.getPlayer(this.turn).disconnected) { // no turn is set or current player has disconnected
+    if(!this.turn || !this.getPlayer(this.turn) || this.getPlayer(this.turn).disconnected) { // no turn is set or current player has disconnected
       this.nextTurn()
       this.refreshAllowedPlacements()
     }
