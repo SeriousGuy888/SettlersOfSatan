@@ -31,6 +31,7 @@ socket.on("game_started_update", data => {
   else {
     toggleInGameGui(false)
     notifyUser("game ended")
+    currentGameData = null
   }
 })
 
@@ -64,11 +65,14 @@ setInterval(() => {
 
 let currentGameData
 socket.on("game_update", gData => {
+  if(!currentLobbyData.inGame) return
   currentGameData = gData
 })
 
 socket.on("player_update", pData => {
+  if(!currentLobbyData.inGame) return
   currentGameData.me = pData
+
   canvasFunctions.refreshBoard()
   refreshResourceCards()
   refreshControls()
