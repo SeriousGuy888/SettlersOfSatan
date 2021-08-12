@@ -41,25 +41,35 @@ const setStatusMessage = (msg) => {
 }
 
 const refreshTurnDisplay = () => {
+  const turnPlayerHeader = document.querySelector("#turn-player-header")
   const turnPlayer = document.querySelector("#turn-player")
 
-  turnPlayer.textContent = currentGameData.players[currentGameData.turn].name
-  turnPlayer.style.color = currentGameData.players[currentGameData.turn].colour
+  if(currentGameData.ended) {
+    turnPlayerHeader.textContent = `Winner: ${currentGameData.players[currentGameData.winner].name}`
+    turnPlayer.textContent = "Take your screenshots now."
+    turnPlayer.style.color = null
+  }
+  else {
+    turnPlayer.textContent = currentGameData.players[currentGameData.turn].name
+    turnPlayer.style.color = currentGameData.players[currentGameData.turn].colour
+  }
 }
 setInterval(() => {
   if(!currentGameData?.turnCountdownTo) return
   const turnTimer = document.querySelector("#turn-timer")
 
-  const msRemaining = currentGameData.turnCountdownTo - Date.now()
-  const secondsRemaining = Math.floor(msRemaining / 1000)
-
-  if(secondsRemaining === 15) {
-    soundEffects.fifteenSecondsLeft.play()
+  if(currentGameData.ended) {
+    turnTimer.textContent = "Game Over!"
+    turnTimer.parentElement.classList.remove(["attention-pls"])
   }
-  if(secondsRemaining <= 15) turnTimer.parentElement.classList.add(["attention-pls"])
-  else turnTimer.parentElement.classList.remove(["attention-pls"])
-
-  turnTimer.textContent = secondsRemaining
+  else {
+    const msRemaining = currentGameData.turnCountdownTo - Date.now()
+    const secondsRemaining = Math.floor(msRemaining / 1000)
+    if(secondsRemaining === 15) soundEffects.fifteenSecondsLeft.play()
+    turnTimer.parentElement.classList.toggle("attention-pls", secondsRemaining <= 15)
+  
+    turnTimer.textContent = secondsRemaining
+  }
 }, 1000)
 
 
