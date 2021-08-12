@@ -336,7 +336,7 @@ class Lobby {
       this.game = game
       for(const i in this.users) {
         const user = this.users[i]
-        this.game.setPlayer(user.playerId, new Player(user.playerId, user))
+        this.game.setPlayer(user.playerId, new Player(user.playerId, this.code, user))
       }
     }
 

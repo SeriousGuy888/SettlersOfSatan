@@ -1,9 +1,11 @@
 const Inventory = require("./Inventory.js")
+const lobbies = require("../server/lobbies.js")
 const users = require("../server/users.js")
 
 class Player {
-  constructor(id, data) {
+  constructor(id, lobbyId, data) {
     this.id = id
+    this.lobbyId = lobbyId
 
     const { name, colour, joinTimestamp, userId } = data
     this.name = name
@@ -103,6 +105,14 @@ class Player {
 
   getInventory() {
     return this.inventory
+  }
+
+  getLobby() {
+    return lobbies.getLobby(this.lobbyId)
+  }
+
+  getGame() {
+    return this.getLobby().game()
   }
 
   setDisconnected(disconnected) {
