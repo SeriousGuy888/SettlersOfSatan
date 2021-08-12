@@ -82,4 +82,8 @@ socket.on("player_update", pData => {
   }
 
   document.getElementById("inv-list").innerHTML = `Settlements: ${currentGameData.me.inventory.settlements}, Roads: ${currentGameData.me.inventory.roads}, Cities: ${currentGameData.me.inventory.cities}`
+
+  if(currentGameData.turnTick && currentGameData.turn === currentGameData.me.id) {
+    soundEffects.yourTurn.play()
+  }
 })
