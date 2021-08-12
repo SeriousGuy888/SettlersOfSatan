@@ -224,7 +224,7 @@ canvasFunctions.changeRobberAppearance = (robbing) => {
 }
 
 canvasFunctions.getPlayer = (playerId) => {
-  return currentGameData.players[playerId] || null
+  return currentGameData?.players[playerId] || null
 }
 
 

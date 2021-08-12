@@ -43,10 +43,11 @@ const updateLobbyState = (data) => {
   else {
     playerId = null
     currentGameData = null // NOSONAR
+    toggleLobbySettingsLocked(false)
+    canvasFunctions.stop()
 
     loggedInSection.style.display = null
     inLobbySection.style.display = "none"
-    toggleLobbySettingsLocked(false)
     lobbyChatMessagesDiv.innerHTML = ""
 
     if(data.notification) {
