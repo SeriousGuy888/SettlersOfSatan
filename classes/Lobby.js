@@ -309,10 +309,6 @@ class Lobby {
     return null
   }
 
-  getGame() {
-    return this.game
-  }
-
   setHost(userId) {
     for(let loopUserId in this.users) {
       if(this.users[loopUserId].host) {
