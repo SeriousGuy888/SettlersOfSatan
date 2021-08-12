@@ -82,6 +82,7 @@ class Player {
       const resource = weightedRandom(Object.keys(resourceInventoryCopy), Object.values(resourceInventoryCopy))
       if(!resource) break
       if(!returnItems[resource]) returnItems[resource] = 0
+      resourceInventoryCopy[resource]--
       returnItems[resource]++
     }
 
