@@ -52,6 +52,9 @@ setInterval(() => {
   const msRemaining = currentGameData.turnCountdownTo - Date.now()
   const secondsRemaining = Math.floor(msRemaining / 1000)
 
+  if(secondsRemaining === 15) {
+    soundEffects.fifteenSecondsLeft.play()
+  }
   if(secondsRemaining <= 15) turnTimer.parentElement.classList.add(["attention-pls"])
   else turnTimer.parentElement.classList.remove(["attention-pls"])
 
