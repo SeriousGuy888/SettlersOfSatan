@@ -286,7 +286,16 @@ class Satan {
           for(let adjVertCoords of vertex.getAdjacentVertexes()) {
             const adjEdge = this.board.getEdge([vertex.coords, adjVertCoords])
             if(!adjEdge) continue
-            if(adjEdge.getRoad() === this.turn) edge.allowPlacement = true
+            
+            if(adjEdge.getRoad() === this.turn) { // if the adjacent road is owned by the player
+              let connectedBuildingOwner = vertex.getBuilding()?.playerId
+
+              if(connectedBuildingOwner && connectedBuildingOwner !== this.turn) {
+                // only allow placement if the vertex is either unowned or belongs to the player
+                return
+              }
+              edge.allowPlacement = true
+            }
           }
         })
       }
