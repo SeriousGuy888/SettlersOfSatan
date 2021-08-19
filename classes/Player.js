@@ -125,15 +125,7 @@ class Player {
     const resourceCardCount = this.getResourceCardCount()
     return { id, name, colour, inventory, canBeRobbed, points, resourceCardCount }
   }
-
-  getColour() {
-    return this.colour
-  }
-
-  getInventory() {
-    return this.inventory
-  }
-
+  
   getLobby() {
     return lobbies.getLobby(this.lobbyId)
   }
