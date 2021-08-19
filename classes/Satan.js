@@ -206,6 +206,11 @@ class Satan {
       party2.resources[i] -= taker[i]
       party2.resources[i] += offerer[i]
     }
+
+    this.getLobby().printToChat([{
+      text: `${party1.name} traded with ${party2.name}`,
+      style: { colour: "brown" },
+    }])
   }
 
   clearRobbable() {
