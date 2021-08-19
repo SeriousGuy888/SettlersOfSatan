@@ -429,8 +429,8 @@ class Satan {
 
 
   rollDice() {
-    let dice1 = 3.5 // Math.floor(Math.random() * 6) + 1
-    let dice2 = 3.5 // Math.floor(Math.random() * 6) + 1
+    let dice1 = Math.floor(Math.random() * 6) + 1
+    let dice2 = Math.floor(Math.random() * 6) + 1
     let number = dice1 + dice2
 
     this.getLobby().printToChat([{
