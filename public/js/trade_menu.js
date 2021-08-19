@@ -128,7 +128,7 @@ const refreshTradeMenu = () => {
   tradeTakersList.style.display = "none"
 
   if(
-    currentGameData.diceRolled &&
+    currentGameData.currentAction !== "roll_dice" &&
     currentGameData.turnCycle > 2 &&
     (
       currentGameData.turn === currentGameData.me.id ||

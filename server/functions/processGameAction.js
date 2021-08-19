@@ -27,7 +27,7 @@ module.exports = (satan, playerId, actionData) => {
       satan.printChatErr("It is not your turn.", playerId)
       return
     }
-    if(!satan.diceRolled) {
+    if(satan.currentAction === "roll_dice") {
       satan.printChatErr("You need to roll the dice before doing this.", playerId)
       return
     }
@@ -35,13 +35,12 @@ module.exports = (satan, playerId, actionData) => {
 
   switch(actionData.action) {
     case "roll_dice":
-      if(satan.diceRolled) break
+      if(satan.currentAction !== "roll_dice") break
       satan.rollDice()
-      satan.diceRolled = true
       break
     case "end_turn":
       if(player.id !== satan.turn) break
-      if(!satan.diceRolled) break
+      if(satan.currentAction !== "build") break
       if(satan.inSetupTurnCycle()) {
         if(!satan.setupTurnPlaced.settlement) {
           satan.printChatErr("This is a setup turn. You must place a settlement before ending your turn.", playerId)
@@ -198,7 +197,7 @@ module.exports = (satan, playerId, actionData) => {
         satan.printChatErr("It is not your turn.", playerId)
         break
       }
-      if(!satan.diceRolled) {
+      if(satan.currentAction === "roll_dice") {
         satan.printChatErr("The dice have not been rolled this turn.", playerId)
         break
       }
@@ -243,7 +242,7 @@ module.exports = (satan, playerId, actionData) => {
         satan.printChatErr("It is not your turn.", playerId)
         break
       }
-      if(!satan.diceRolled) {
+      if(satan.currentAction === "roll_dice") {
         satan.printChatErr("The dice have not been rolled this turn.", playerId)
         break
       }
@@ -281,8 +280,8 @@ module.exports = (satan, playerId, actionData) => {
       // spendResourcesOn(player, "developmentCard")
       break
     case "use_development_card":
-      if(!satan.diceRolled) {
-        satan.printChatErr("You need to roll the dice before doing satan.", playerId)
+      if(satan.currentAction === "roll_dice") {
+        satan.printChatErr("You need to roll the dice before doing this.", playerId)
       }
       else if(satan.developmentCardUsed) {
         satan.printChatErr("You can only use one development card per turn", playerId)
@@ -334,7 +333,7 @@ const handleTradeActions = (satan, playerId, actionData) => {
     satan.printChatErr("Trading is not allowed during setup turns.", playerId)
     return
   }
-  if(!satan.diceRolled) {
+  if(satan.currentAction === "roll_dice") {
     satan.printChatErr("The dice have not been rolled this turn.", playerId)
     return
   }
@@ -467,7 +466,7 @@ const handleTradeActions = (satan, playerId, actionData) => {
         break
       }
       
-      if(!satan.diceRolled) break
+      if(satan.currentAction === "roll_dice") break
 
       satan.trade.takers.push(playerId)
       satan.getLobby().printToUserChat(player.userId, [{

@@ -56,18 +56,28 @@ const refreshTurnDisplay = () => {
 }
 setInterval(() => {
   if(!currentGameData?.turnCountdownTo) return
+  const turnTimerHeader = document.querySelector("#turn-timer-header")
   const turnTimer = document.querySelector("#turn-timer")
 
   if(currentGameData.ended) {
+    turnTimerHeader.textContent = ""
     turnTimer.textContent = "Game Over!"
     turnTimer.parentElement.classList.remove(["attention-pls"])
   }
   else {
     const msRemaining = currentGameData.turnCountdownTo - Date.now()
     const secondsRemaining = Math.floor(msRemaining / 1000)
-    if(secondsRemaining === 15) soundEffects.fifteenSecondsLeft.play()
+    if(currentGameData.currentAction === "build" && secondsRemaining === 15) {
+      soundEffects.fifteenSecondsLeft.play()
+    }
     turnTimer.parentElement.classList.toggle("attention-pls", secondsRemaining <= 15)
   
+    const actionHeaders = {
+      roll_dice: "Roll Dice",
+      discard: "Discarding...",
+      build: "Build & Trade"
+    }
+    turnTimerHeader.textContent = actionHeaders[currentGameData.currentAction]
     turnTimer.textContent = secondsRemaining
   }
 }, 1000)

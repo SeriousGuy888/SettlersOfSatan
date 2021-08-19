@@ -1,4 +1,10 @@
-module.exports.buildingCosts = {
+exports.actionTimers = {
+  roll_dice: 15,
+  discard: 25,
+  build: 90,
+}
+
+exports.buildingCosts = {
   road: {
     bricks: 1,
     lumber: 1,
@@ -20,7 +26,7 @@ module.exports.buildingCosts = {
   }
 }
 
-module.exports.hexTypesResources = {
+exports.hexTypesResources = {
   mud: "bricks",
   forest: "lumber",
   mountain: "ore",

@@ -2,7 +2,7 @@ const Board = require("./Board.js")
 const lobbies = require("../server/lobbies.js")
 const constants = require("../server/constants.js")
 const processGameAction = require("../server/functions/processGameAction.js")
-const { buildingCosts, hexTypesResources } = constants
+const { actionTimers, buildingCosts, hexTypesResources } = constants
 
 class Satan {
   constructor(lobbyId) {
@@ -16,14 +16,15 @@ class Satan {
     this.turn = null // stores the player id of the currently playing playeur
     this.turnCycle = 0 // how many times every player has been given a turn
     this.turnTick = false // set to true when the turn has changed and set to false after the next tick (notifies clients of turn changes)
-    this.turnCountdownTo = null // a timestamp that when passed, the present turn will be forcefully passed
+    this.turnCountdownTo = null // a timestamp that when passed, the present action will be forcefully passed
     this.setupTurnPlaced = { // stores the coordinates of the pieces placed this setup turn
       settlement: null,
       road: null,
     }
 
-    this.diceRolled = false // whether the dice have been rolled
+    this.currentAction = "roll_dice" // roll_dice, discard, build
     this.discardingPlayers = {} // if a 7 was rolled, all players with >7 cards placed in this object with the number of cards that must be discarded
+    this.robbing = false
 
     this.stockpile = {
       bricks: 20,
@@ -38,7 +39,6 @@ class Satan {
       idempotency: null
     }
 
-    this.robbing = false
     this.roadBuilding = 0
     this.developmentCardUsed = false
 
@@ -65,14 +65,18 @@ class Satan {
       this.nextTurn()
       this.refreshAllowedPlacements()
     }
+
+    if(this.currentAction === "discard" && !Object.keys(this.discardingPlayers).length) {
+      this.nextAction()
+    }
     if(this.turnCountdownTo - Date.now() < 0 && !this.ended) { // time limit for the turn has passed
-      this.getLobby().printToChat([{
-        text: `${this.getPlayer(this.turn).name}'s turn was skipped because they took too much time.`,
-        style: {
-          colour: "green"
-        }
-      }])
-      this.nextTurn()
+      // this.getLobby().printToChat([{
+      //   text: `${this.getPlayer(this.turn).name}'s turn was skipped because they took too much time.`,
+      //   style: {
+      //     colour: "green"
+      //   }
+      // }])
+      this.nextAction()
     }
 
 
@@ -90,7 +94,7 @@ class Satan {
       turnCycle: this.turnCycle,
       turnTick: this.turnTick,
       turnCountdownTo: this.turnCountdownTo,
-      diceRolled: this.diceRolled,
+      currentAction: this.currentAction,
       discardingPlayers: this.discardingPlayers,
       stockpile: this.stockpile,
       trade: this.trade,
@@ -327,6 +331,9 @@ class Satan {
     this.handleWin()
   }
 
+  setTurnTimer(seconds) {
+    this.turnCountdownTo = new Date().setTime(new Date().getTime() + ((seconds + 1) * 1000))
+  }
   nextTurn() {
     const reversedCycle = this.turnCycle === 2
     const reversedCycleIsNext = this.turnCycle === 2 - 1
@@ -360,35 +367,19 @@ class Satan {
       this.nextTurn()
     }
     else {
-      this.diceRolled = false
+      this.currentAction = "roll_dice"
+      this.setTurnTimer(actionTimers.roll_dice)
       this.turnTick = true
-      this.turnCountdownTo = new Date().setTime(new Date().getTime() + 120 * 1000)
 
       this.clearTrade()
       this.clearRobbable()
-      
-      for(const playerId in this.discardingPlayers) {
-        const discardCount = this.discardingPlayers[playerId]
-        if(!discardCount) continue
 
-        const player = this.getPlayer(playerId)
-        const discard = player.drawResourceCards(discardCount)
-        for(const resource in discard) {
-          this.giveResources(player.id, resource, -discard[resource])
-        }
-
-        this.getLobby().printToChat([{
-          text: `${player.name} did not discard in time and so ${discardCount} cards were randomly discarded on their behalf.`,
-          style: { colour: "brown" },
-        }])
-
-        delete this.discardingPlayers[playerId]
-      }
 
       if(this.inSetupTurnCycle()) {
         this.setupTurnPlaced.settlement = null
         this.setupTurnPlaced.road = null
-        this.diceRolled = true
+        this.currentAction = "build"
+        this.setTurnTimer(actionTimers.build)
       }
 
       this.getLobby().printToChat([{
@@ -397,14 +388,49 @@ class Satan {
       }])
     }
   }
+  nextAction() {
+    switch(this.currentAction) {
+      case "roll_dice":
+        this.rollDice()
+        break
+      case "discard":
+        // discards cards for all players that did not discard in time
+        for(const playerId in this.discardingPlayers) {
+          const discardCount = this.discardingPlayers[playerId]
+          if(!discardCount) continue
+  
+          const player = this.getPlayer(playerId)
+          const discard = player.drawResourceCards(discardCount)
+          for(const resource in discard) {
+            this.giveResources(player.id, resource, -discard[resource])
+          }
+  
+          this.getLobby().printToChat([{
+            text: `${player.name} did not discard in time and so ${discardCount} cards were randomly discarded on their behalf.`,
+            style: { colour: "brown" },
+          }])
+  
+          delete this.discardingPlayers[playerId]
+        }
+
+        this.setTurnTimer(actionTimers.build)
+        this.currentAction = "build"
+        break
+      case "build":
+        this.nextTurn()
+        break
+    }
+  }
+
+
   inSetupTurnCycle() {
     return (this.turnCycle <= 2)
   }
 
 
   rollDice() {
-    let dice1 = Math.floor(Math.random() * 6) + 1
-    let dice2 = Math.floor(Math.random() * 6) + 1
+    let dice1 = 3.5 // Math.floor(Math.random() * 6) + 1
+    let dice2 = 3.5 // Math.floor(Math.random() * 6) + 1
     let number = dice1 + dice2
 
     this.getLobby().printToChat([{
@@ -415,19 +441,25 @@ class Satan {
       },
     }])
 
+    this.setTurnTimer(actionTimers.build)
+    this.currentAction = "build"
+    this.robbing = false
+
     if(number === 7) {
       this.robbing = true
+
       this.discardingPlayers = {}
       Object
         .keys(this.players)
         .filter(id => this.getPlayer(id).getResourceCardCount() > 7)
-        .forEach(id => {
-          this.discardingPlayers[id] = Math.floor(this.getPlayer(id).getResourceCardCount() / 2)
-        })
+        .forEach(id => this.discardingPlayers[id] = Math.floor(this.getPlayer(id).getResourceCardCount() / 2))
+      
+      if(Object.keys(this.discardingPlayers).length) {
+        this.setTurnTimer(actionTimers.discard)
+        this.currentAction = "discard"
+      }
     }
     else {
-      this.robbing = false
-
       const resourceHandouts = {}
 
       for(const vertex of this.board.vertexes) {
