@@ -37,6 +37,8 @@ class Sound {
 let soundEffects = {
   fifteenSecondsLeft: "fifteen_seconds_left.wav",
   yourTurn: "your_turn.mp3",
+  win1: "win_wava.wav",
+  win2: "win_hot.wav",
 }
 
 const refreshSoundEffects = () => {

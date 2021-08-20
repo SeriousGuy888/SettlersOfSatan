@@ -110,4 +110,9 @@ socket.on("player_update", pData => {
   if(currentGameData.turnTick && currentGameData.turn === currentGameData.me.id) {
     soundEffects.yourTurn.play()
   }
+
+  if(currentGameData.ended && currentGameData.winner === currentGameData.me.id) {
+    let rareWinSound = Math.floor(Math.random() * 9) === 8
+    soundEffects[rareWinSound ? "win2" : "win1"].play()
+  }
 })
