@@ -1,7 +1,7 @@
 exports.actionTimers = {
   roll_dice: 10,
-  discard: 25,
-  build: 95,
+  discard: 30,
+  build: 100,
 }
 
 exports.buildingCosts = {
