@@ -194,11 +194,13 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
       const satan = new Satan(lobby.code)
       satan.board.setup(4)
       lobby.setInGame(true, satan)
+      console.log(`${lobby.code} has started a game`)
     }
     else if(data.backToLobby) {
       if(!lobby.inGame) return
       lobby.setInGame(false)
       delete lobby.game
+      console.log(`${lobby.code} has exited a game`)
     }
   })
 
