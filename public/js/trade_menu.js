@@ -48,7 +48,7 @@ const refreshTradeMenu = () => {
 
 
         inputElem.addEventListener("input", () => {
-          const isZero = inputElem.value === "0"
+          const isZero = inputElem.value === "0" || !inputElem.value
           // const oppositeInput = (rightColumn ? tradeOffererInputs : tradeTakerInputs).querySelector(`input#${inputElem.id}`)
 
           if(tradeMode === "stockpile") {
