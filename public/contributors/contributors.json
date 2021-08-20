@@ -12,7 +12,7 @@
     },
     {
       "name": "Liam",
-      "weight": 30,
+      "weight": 20,
       "contributions": [
         "web_design",
         "back_end",
@@ -22,17 +22,19 @@
     },
     {
       "name": "Hoang",
-      "weight": 5,
+      "weight": 10,
       "contributions": [
         "art",
+        "sounds",
         "participation",
         "readme"
       ]
     },
     {
       "name": "Jakob",
-      "weight": -15,
+      "weight": -10,
       "contributions": [
+        "sounds",
         "distract_liam",
         "jakob_criticism",
         "going_missing"
@@ -45,7 +47,8 @@
       "dark_theme": "🌛",
       "back_end": "💻",
       "art": "🎨",
-      "catan": "🧾"
+      "catan": "🧾",
+      "sounds": "🔊"
     },
     "english": {
       "web_design": "Web Design",
@@ -54,6 +57,7 @@
       "art": "Art",
       "participation": "Emotional Support",
       "catan": "Knowing the Rules of Catan",
+      "sounds": "Sound Effects",
       "background": "Stealing the Background Image",
       "distract_liam": "Distracting Liam",
       "jakob_criticism": "Criticism of Billzo's Web Design",
@@ -67,6 +71,7 @@
       "art": "Vandalism",
       "participation": "Emotional Assistion",
       "catan": "Koqqing Hautu Catan·ise",
+      "sounds": "Ear Nukements",
       "background": "Cieving ce Bakkground Image",
       "distract_liam": "Distrakting Liam",
       "jakob_criticism": "Bullying Billzo Ceir Web Designment",
