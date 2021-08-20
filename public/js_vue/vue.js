@@ -5,33 +5,22 @@ const vueApp = {
         loggedIn: false,
         name: "",
       },
+      creatingLobbyName: "",
+      joiningLobbyCode: "",
+      openLobbies: null,
+      lobbyState: {},
+
     }
   },
   mounted() {
-    setInterval(() => {
-      this.counter++
-    }, 1000)
+    
   },
   methods: {
-    login(logout) {
-
-      if(logout) {
-        socket.emit("logout", null, (err, data) => {
-          console.log(err)
-          if(!err) this.loginState.loggedIn = false
-        })
-      }
-      else {
-        socket.emit("login", {
-          name: this.loginState.name
-        }, (err, data) => {
-          if(!err) {
-            this.loginState.loggedIn = true
-            this.loginState.name = data.name
-          }
-        })
-      }
-    }
+    login,
+    joinLobby,
+    createLobby,
+    refreshOpenLobbies,
+    leaveLobby,
   },
 }
 
