@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Satan in Vue</title>
+    
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" defer href="/styles/global.css">
+    <link rel="stylesheet" defer href="/styles/main.css">
+    <link rel="stylesheet" defer href="/styles/theme.css">
+
+    <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
+    <script>
+      const socket = io()
+    </script>
+
+    <script src="https://unpkg.com/vue@3.2.4"></script>
+    <script defer src="/js_vue/vue.js"></script>
+    <script defer src="/js/theme.js"></script>
+  </head>
+  <body>
+    <main>
+      <div class="title-container">
+        <div class="title-container-top">
+          <img src="/images/logo/logo.svg" alt="logo" id="home-title-logo">
+          <h1 class="page-title"><span class="title-satan">Satan</span></h1>
+        </div>
+        <div class="title-container-links">
+          <a href="/contributors" target="_blank">Contributors</a>
+          <a href="/stats" target="_blank">Server Stats</a>
+          <a href="https://scotscoop.com/wp-content/uploads/2020/06/IMG_2214-380x475.jpg" target="_blank">Building Costs</a>
+          <a href="/settings" target="_blank">Settings</a>
+          <span id="dark-theme-toggle"></span>
+        </div>
+      </div>
+      <div id="vue">
+        <p v-if="loginState.loggedIn">
+          You are playing as {{ loginState.name }}
+          <a @click="login(true)">(logout)</a>
+        </p>
+
+
+        <div v-if="!loginState.loggedIn">
+          <h2>Choose a Name</h2>
+          <div class="single-line-input">
+            <input v-model="loginState.name" placeholder="Mustacho">
+            <button @click="login()"><img src="/images/icons/check.svg" alt="Done" class="icon-1em"></button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
