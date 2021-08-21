@@ -17,31 +17,7 @@
         <button @click="editLobbySetting({ started: true })" :disabled="!this.$parent.userIsHost">Start Game</button>
       </div>
 
-      <div id="colour-choose-container">
-        <h3 id="choose-colour">Choose a Colour</h3>
-        <div id="colour-buttons-container" class="honeycomb">
-          <div class="honeycomb-row">
-            <div class="hexanone"></div>
-            <div class="hexagon"><div class="hexagon-content">a</div></div>
-            <div class="hexanone"></div>
-          </div>
-          <div class="honeycomb-row">
-            <div class="hexagon"><div class="hexagon-content">a</div></div>
-            <div class="hexagon"><div class="hexagon-content">a</div></div>
-            <div class="hexagon"><div class="hexagon-content">a</div></div>
-          </div>
-          <div class="honeycomb-row">
-            <div class="hexagon"><div class="hexagon-content">a</div></div>
-            <div class="hexagon"><div class="hexagon-content">a</div></div>
-            <div class="hexagon"><div class="hexagon-content">a</div></div>
-          </div>
-        </div>
-        <p>
-          if any of these colour names look wrong its not our fault its the
-          css standard's fault because we were too lazy to implement our own
-          colour naming system lol
-        </p>
-      </div>
+      <ColourChooser />
     </div>
     <div id="right-column">
       <div id="turn-controls" style="display: none;">
@@ -55,11 +31,13 @@
 </template>
 
 <script>
+import ColourChooser from "./ColourChooser.vue"
 import PlayerList from "./PlayerList.vue"
 import Chat from "./Chat.vue"
 
 export default {
   components: {
+    ColourChooser,
     PlayerList,
     Chat,
   },
