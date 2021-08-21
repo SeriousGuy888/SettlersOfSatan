@@ -1,7 +1,7 @@
 <template>
   <div id="lobby-chat-container">
     <h3>Chat</h3>
-    <div id="lobby-chat-messages">
+    <div ref="messagesContainer" id="lobby-chat-messages">
       <div v-for="message in messages" :key="message">
         <div v-for="line in message" :key="line" class="chat-message-content">
           <p
@@ -45,13 +45,20 @@ export default {
     print(lines) {
       if(this.messages.length > 250) this.messages.shift()
       this.messages.push(lines)
+
+      const container = this.$refs.messagesContainer
+      if(container.scrollTop + container.clientHeight === container.scrollHeight) {
+        this.$nextTick(() => {
+          container.scrollTop = container.scrollHeight
+        })
+      }
     },
     getDieSrc(die) {
       return require(`@/images/dice/${die}.svg`)
     },
     sendChat() {
       if(!this.chatInput.trim()) return
-      
+
       socket.emit("send_chat", {
         content: this.chatInput
       }, (err, _) => {
