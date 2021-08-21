@@ -15,6 +15,12 @@
           <div v-if="line.dice" class="chat-message-dice">
             <img v-for="die in line.dice" :key="die" :src="getDieSrc(die)" :alt="die">
           </div>
+          <div v-if="line.podium" class="chat-podium">
+            <div v-for="i in 3" :key="i" :class="`chat-podium-${i}`">
+              <h4>{{ line.podium[i].name }}</h4>
+              <p> {{ line.podium[i].points }} VP</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
