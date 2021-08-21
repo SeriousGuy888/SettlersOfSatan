@@ -1,11 +1,17 @@
 <template>
   <div>
-    <h2>Choose a Name</h2>
-    <div class="single-line-input">
-      <input v-model="this.$parent.loginState.name" placeholder="Mustacho">
-      <button @click="login(false)">
-        <img src="@/images/icons/check.svg" alt="Done" class="icon-1em">
-      </button>
+    <p v-if="this.$parent.loginState.loggedIn">
+      You are playing as {{ this.$parent.loginState.name }}
+      <a @click="login(this, true)">(logout)</a>
+    </p>
+    <div v-else>
+      <h2>Choose a Name</h2>
+      <div class="single-line-input">
+        <input v-model="this.$parent.loginState.name" placeholder="Mustacho">
+        <button @click="login(false)">
+          <img src="@/images/icons/check.svg" alt="Done" class="icon-1em">
+        </button>
+      </div>
     </div>
   </div>
 </template>

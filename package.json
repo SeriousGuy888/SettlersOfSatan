@@ -7,8 +7,7 @@
     "test": "nodemon .",
     "start": "node .",
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "buildstart": "npm run build && npm run start"
+    "build": "vue-cli-service build"
   },
   "repository": {
     "type": "git",
