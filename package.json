@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "nodemon .",
-    "start": "node ."
+    "start": "node .",
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
   },
   "repository": {
     "type": "git",
@@ -18,10 +20,16 @@
   },
   "homepage": "https://github.com/SeriousGuy888/SettlersOfSatan#readme",
   "dependencies": {
+    "core-js": "^3.6.5",
     "express": "^4.17.1",
-    "socket.io": "^4.1.2"
+    "socket.io": "^4.1.2",
+    "vue": "^3.0.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0",
+    "nodemon": "^2.0.7",
+    "vue-cli-plugin-svg": "~0.2.1"
   }
 }

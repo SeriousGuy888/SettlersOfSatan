@@ -1,4 +1,5 @@
 const express = require("express")
+const serveStatic = require("serve-static");
 const routingUtil = require("./routing_util.js")
 const { pathTo } = routingUtil
 
@@ -14,8 +15,9 @@ module.exports = (app) => {
   app.use(express.urlencoded({ extended: true }))
 
   app.get("/vue", (req, res) => res.sendFile(pathTo("/vue.html")))
+  app.use(express.static("dist"))
   
-  app.use(express.static("public"))
+  app.use(express.static("old_public"))
   app.use("/", serverStats)
   app.use("/", infoPages)
   

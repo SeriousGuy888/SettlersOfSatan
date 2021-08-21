@@ -1,5 +1,5 @@
 body {
-  background-image: url("/images/background-min.png");
+  background-image: url("~@/images/background-min.png");
   background-attachment: fixed;
   background-position: center;
   font-family: 'Trebuchet MS', 'Lucida Grande', 'Roboto', 'Arial', sans-serif;
@@ -118,7 +118,7 @@ select:disabled {
 a[target="_blank"]::after {
   display: inline-block;
   content: "";
-  background-image: url("/images/icons/link.svg");
+  background-image: url("~@/images/icons/link.svg");
   background-size: 1em;
   height: 1em;
   width: 1em;
