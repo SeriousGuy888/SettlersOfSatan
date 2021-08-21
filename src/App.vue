@@ -2,7 +2,6 @@
   <div>
     <Title />
     <Login />
-    {{ JSON.stringify(lobbyState) }}
     <JoinLobby v-if="loginState.loggedIn && !lobbyState.code" />
     <Lobby v-if="lobbyState.code" />
   </div>
