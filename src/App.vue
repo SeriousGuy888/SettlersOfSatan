@@ -2,7 +2,9 @@
   <div>
     <Title />
     <Login />
+    {{ JSON.stringify(lobbyState) }}
     <JoinLobby v-if="loginState.loggedIn && !lobbyState.code" />
+    <Lobby v-if="lobbyState.code" />
   </div>
 </template>
 
@@ -10,6 +12,7 @@
 import Title from "./components/Title.vue"
 import Login from "./components/Login.vue"
 import JoinLobby from "./components/JoinLobby.vue"
+import Lobby from "./components/Lobby.vue"
 
 export default {
   name: "App",
@@ -17,6 +20,7 @@ export default {
     Title,
     Login,
     JoinLobby,
+    Lobby,
   },
   data() {
     return {
