@@ -14,7 +14,7 @@
       
       <h3>Lobby Settings</h3>
       <div class="lobby-settings-panel">
-        <button @click="editLobbySetting(this, { started: true })" :disabled="!userIsHost">Start Game</button>
+        <button @click="editLobbySetting({ started: true })" :disabled="!this.$parent.userIsHost">Start Game</button>
       </div>
 
       <div id="colour-choose-container">
@@ -75,6 +75,11 @@ export default {
           }
         })
       }
+    },
+    editLobbySetting(changes) {
+      socket.emit("edit_lobby_setting", changes, (err, data) => {
+        if(err) notifyUser(err)
+      })
     }
   },
 }

@@ -49,7 +49,7 @@
 
 <script>
 export default {
-  props: ["lobby", "lobbyState", "userIsHost"],
+  props: ["lobby", "lobbyState"],
   data() {
     return {
       playerListModal: {
