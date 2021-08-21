@@ -25,9 +25,9 @@
       </div>
     </div>
     <div class="single-line-input">
-      <input placeholder="Send a message">
+      <input v-on:keyup.enter="sendChat()" v-model="chatInput" placeholder="Send a message">
       <button>
-        <img src="@/images/icons/check.svg" alt="Send" class="icon-1em">
+        <img @click="sendChat()" src="@/images/icons/check.svg" alt="Send" class="icon-1em">
       </button>
     </div>
   </div>
@@ -37,7 +37,8 @@
 export default {
   data() {
     return {
-      messages: []
+      messages: [],
+      chatInput: "",
     }
   },
   methods: {
@@ -47,6 +48,19 @@ export default {
     },
     getDieSrc(die) {
       return require(`@/images/dice/${die}.svg`)
+    },
+    sendChat() {
+      if(!this.chatInput.trim()) return
+      
+      socket.emit("send_chat", {
+        content: this.chatInput
+      }, (err, _) => {
+        if(err) this.print([{
+          text: err,
+          style: { colour: "red", italic: true }
+        }])
+      })
+      this.chatInput = ""
     },
   },
 }

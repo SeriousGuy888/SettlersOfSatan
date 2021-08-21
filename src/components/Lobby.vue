@@ -77,10 +77,5 @@ export default {
       }
     }
   },
-  mounted() {
-    setInterval(() => {
-      this.$refs.chat.print([{ text: `${Math.random()}` }])
-    }, 2000)
-  },
 }
 </script>

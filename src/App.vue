@@ -3,7 +3,7 @@
     <Title />
     <Login />
     <JoinLobby v-if="loginState.loggedIn && !lobbyState.code" />
-    <Lobby v-if="lobbyState.code" />
+    <Lobby v-if="lobbyState.code" ref="lobby" />
   </div>
 </template>
 
@@ -46,6 +46,7 @@ export default {
     socket.on("player_update", data => {
       if(this.lobby.inGame) this.player = data
     })
+    socket.on("receive_chat", data => this.$refs?.lobby?.$refs?.chat?.print(data.lines))
   },
 }
 </script>
