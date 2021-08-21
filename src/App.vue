@@ -17,7 +17,10 @@ export default {
   },
   data() {
     return {
-
+      loginState: {
+        loggedIn: false,
+        name: "",
+      },
     }
   },
 }
