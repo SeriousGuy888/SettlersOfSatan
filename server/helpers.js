@@ -10,8 +10,8 @@ const users = require("./users.js")
  */
 exports.goodifyUserInput = (input, trim, maxLength) => {
   let output = input
-  if(trim) output = output.trim()
-  if(maxLength) output = output.slice(0, maxLength)
+  if(trim) output = output?.trim()
+  if(maxLength) output = output?.slice(0, maxLength)
 
   return output
 }
