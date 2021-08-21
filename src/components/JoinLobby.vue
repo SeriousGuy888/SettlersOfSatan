@@ -38,7 +38,7 @@
           >
             <div class="list-entry-title">
               <h3>{{ loopLobby.name }}</h3>
-              <button @click="joinLobby(this, loopLobby.code)">Join</button>
+              <button @click="joinLobby(loopLobby.code)">Join</button>
             </div>
             <p>Code: <code>{{ loopLobby.code }}</code></p>
             <p>Players: <code>{{ loopLobby.playerCount }}/{{ loopLobby.maxPlayerCount }}</code></p>
@@ -55,6 +55,7 @@ export default {
     return {
       creatingLobbyName: "",
       joiningLobbyCode: "",
+      openLobbies: null,
     }
   },
   methods: {
@@ -70,6 +71,15 @@ export default {
         else this.$parent.lobbyState = data
       })
     },
+    refreshOpenLobbies(self) {
+      socket.emit("get_lobbies", { max: 9 }, (err, data) => {
+        if(err) notifyUser(err)
+        else {
+          const { lobbies } = data
+          this.openLobbies = lobbies
+        }
+      })
+    }
   }
 }
 </script>
