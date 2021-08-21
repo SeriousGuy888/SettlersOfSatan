@@ -4,8 +4,8 @@
     <button @click="leaveLobby()"><img class="icon-1em" alt="←" src="@/images/icons/leave.svg"> Leave Lobby</button>
   </div>
   <div class="flex-layout-grid">
-    <div v-if="game" id="left-column">
-    </div>
+    <LeftColumn :game="this.$parent.game" />
+
     <div id="lobby-waiting" class="flex-layout-grid-grow-2">
       <p>
         Lobby Code: <code>{{ this.$parent.lobby.code }}</code>
@@ -31,16 +31,18 @@
 </template>
 
 <script>
-import ColourChooser from "./ColourChooser.vue"
-import PlayerList from "./PlayerList.vue"
 import Chat from "./Chat.vue"
+import ColourChooser from "./ColourChooser.vue"
+import LeftColumn from "./LeftColumn.vue"
+import PlayerList from "./PlayerList.vue"
 
 export default {
   props: ["printToChat"],
   components: {
-    ColourChooser,
-    PlayerList,
     Chat,
+    ColourChooser,
+    LeftColumn,
+    PlayerList,
   },
   methods: {
     leaveLobby() {
