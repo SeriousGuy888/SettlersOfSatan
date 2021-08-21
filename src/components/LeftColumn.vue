@@ -56,7 +56,7 @@
 
 <script>
 export default {
-  props: ["game"],
+  props: ["game", "player"],
   data() {
     return {
 

@@ -4,7 +4,7 @@
     <button @click="leaveLobby()"><img class="icon-1em" alt="←" src="@/images/icons/leave.svg"> Leave Lobby</button>
   </div>
   <div class="flex-layout-grid">
-    <LeftColumn :game="this.$parent.game" />
+    <LeftColumn :game="this.$parent.game" :player="this.$parent.player" />
 
     <div id="lobby-waiting" class="flex-layout-grid-grow-2">
       <p>
