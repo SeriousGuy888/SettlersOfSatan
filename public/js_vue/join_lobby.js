@@ -16,7 +16,11 @@ const leaveLobby = (self) => {
   if(confirm("Are you sure you want to leave the lobby?")) {
     socket.emit("leave_lobby", {}, (err, data) => {
       if(err) notifyUser(err)
-      else self.lobbyState = data
+      else {
+        self.lobbyState = data
+        self.lobby = null
+        self.game = null
+      }
     })
   }
 }
