@@ -37,6 +37,7 @@
 
 <script>
 export default {
+  props: ["printToChat"],
   data() {
     return {
       colourChoices: [],
@@ -46,7 +47,7 @@ export default {
   methods: {
     chooseColour(colour) {  
       socket.emit("select_colour", { colour }, (err, data) => {
-        if(err) notifyUser(err)
+        if(err) this.printToChat([{ text: err, style: { colour: "red", italic: true } }])
       })
     },
   },

@@ -17,7 +17,7 @@
         <button @click="editLobbySetting({ started: true })" :disabled="!this.$parent.userIsHost">Start Game</button>
       </div>
 
-      <ColourChooser />
+      <ColourChooser :printToChat="printToChat" />
     </div>
     <div id="right-column">
       <div id="turn-controls" style="display: none;">
@@ -36,6 +36,7 @@ import PlayerList from "./PlayerList.vue"
 import Chat from "./Chat.vue"
 
 export default {
+  props: ["printToChat"],
   components: {
     ColourChooser,
     PlayerList,
