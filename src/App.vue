@@ -28,8 +28,25 @@ export default {
         loggedIn: false,
         name: "",
       },
+      userIsHost: false,
       lobbyState: {},
+      lobby: {},
+      game: null,
+      player: null,
     }
+  },
+  mounted() {
+    socket.on("lobby_update", data => this.lobby = data)
+    socket.on("host_change", data => {
+      if(data.lostHost) this.userIsHost = false
+      if(data.gainedHost) this.userIsHost = true
+    })
+    socket.on("game_update", data => {
+      if(this.lobby.inGame) this.game = data
+    })
+    socket.on("player_update", data => {
+      if(this.lobby.inGame) this.player = data
+    })
   },
 }
 </script>
