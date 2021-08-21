@@ -48,16 +48,7 @@
         <button id="end-turn-dice-button">End Turn</button>
       </div>
 
-      <div id="lobby-chat-container">
-        <h3>Chat</h3>
-        <div id="lobby-chat-messages"></div>
-        <div class="single-line-input">
-          <input id="lobby-chat-input" placeholder="Send a message">
-          <button id="lobby-chat-send-button">
-            <img src="@/images/icons/check.svg" alt="Send" class="icon-1em">
-          </button>
-        </div>
-      </div>
+      <Chat ref="chat" />
       <PlayerList :lobby="this.$parent.lobby" :lobbyState="this.$parent.lobbyState" :userIsHost="this.$parent.userIsHost" />
     </div>
   </div>
@@ -65,10 +56,12 @@
 
 <script>
 import PlayerList from "./PlayerList.vue"
+import Chat from "./Chat.vue"
 
 export default {
   components: {
-    PlayerList
+    PlayerList,
+    Chat,
   },
   methods: {
     leaveLobby() {
@@ -83,6 +76,11 @@ export default {
         })
       }
     }
-  }
+  },
+  mounted() {
+    setInterval(() => {
+      this.$refs.chat.print([{ text: `${Math.random()}` }])
+    }, 2000)
+  },
 }
 </script>
