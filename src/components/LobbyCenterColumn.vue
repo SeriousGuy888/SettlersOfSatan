@@ -10,7 +10,7 @@
         <p id="turn-timer">{{ game.ended ? "Take your screenshots!" : remainingTime }}</p>
       </div>
     </div>
-    <LobbyCenterColumnCanvas :game="this.$parent.game" :player="this.$parent.player" />
+    <LobbyCenterColumnCanvas :game="game" :player="player" />
   </div>
 </template>
 

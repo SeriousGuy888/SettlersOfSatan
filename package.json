@@ -8,7 +8,7 @@
     "start": "node .",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "watchbuild": "nodemon --watch src -e vue --exec npm run build"
+    "watchbuild": "nodemon --watch src -e vue,js --exec npm run build"
   },
   "repository": {
     "type": "git",

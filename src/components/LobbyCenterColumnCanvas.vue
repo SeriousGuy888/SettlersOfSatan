@@ -9,6 +9,12 @@
 </template>
 
 <script>
+import CanvasClasses from "./canvas/CanvasClasses.js"
+const {
+  hexRadius, hexApothem,
+  Hex, Vertex, Edge,
+} = CanvasClasses
+
 export default {
   props: {
     game: Object,
@@ -25,68 +31,80 @@ export default {
         vertexes: [],
         edges: [],
       },
-      hexRadius: 90,
-      hexApothem: Math.sqrt(this.hexRadius ** 2 - (this.hexRadius / 2) ** 2),
       robberImgSrc: null,
     }
   },
   mounted() {
     this.canvas = this.$refs.canvas
     this.ctx = this.canvas.getContext("2d")
+    CanvasClasses.ctx = this.ctx
+
+    setInterval(() => {
+      if(!this.game) return
+      if(!this.drawLoop) this.setup()
+      this.draw()
+    }, 1000 / 24)
   },
   methods: {
     setup() {
       this.canvas.width = 1000
       this.canvas.height = 1000
+
+      CanvasClasses.game = this.game
+      CanvasClasses.player = this.player
+      CanvasClasses.elems = this.elems
+
       this.refreshBoard()
       this.drawLoop = true
     },
     draw() {
       this.background()
 
-      for(const arr of this.elems) {
+      Object.values(this.elems).forEach(arr => {
         for(const elem of arr) {
           if(elem.render) elem.render()
         }
-      }
+      })
     },
     background(colour) {
-      this.ctx.clearRect(0, 0, canvasWidth, canvasHeight)
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
       this.ctx.beginPath()
-      this.ctx.rect(0, 0, canvasWidth, canvasHeight)
+      this.ctx.rect(0, 0, this.canvas.width, this.canvas.height)
       this.ctx.fillStyle = colour || "#0000"
       this.ctx.fill()
     },
     refreshBoard() {
-      const { hexes, vertexes, edges } = this.game.board
-      this.elems.forEach(arr => arr.splice(0, arr.length)) // clear elem arrays
+      if(!this?.game?.board) return
 
-      const startY = this.hexRadius / 2
-      const yOffsetPerRow = this.hexRadius * 2 - this.hexRadius / 2
+      const { hexes, vertexes, edges } = this.game.board
+      Object.values(this.elems).forEach(arr => arr.splice(0, arr.length)) // clear elem arrays
+
+      const startY = hexRadius / 2
+      const yOffsetPerRow = hexRadius * 2 - hexRadius / 2
       if(hexes) {
         let y = startY
         for(let i in hexes) {
           const row = hexes[i]
       
-          const rowWidth = (row.length - 1) * this.hexApothem
+          const rowWidth = (row.length - 1) * hexApothem
           const xCenter = this.canvas.width / 2 - rowWidth
           let x = xCenter
       
           for(const hex of row) {
             if(hex) {
-              const xOffset = i % 2 !== 0 ? this.hexApothem : 0
+              const xOffset = i % 2 !== 0 ? hexApothem : 0
 
-              this.elems.hexes.push(new canvasClasses.Hex(Math.round(x + xOffset), Math.round(y), hex))
+              this.elems.hexes.push(new Hex(this.ctx, Math.round(x + xOffset), Math.round(y), hex))
 
               const hexVertexes = vertexes.filter(e => e.coords.x === hex.coords.x && e.coords.y === hex.coords.y)
               if(hexVertexes) {
                 for(let vertex of hexVertexes) {
                   if(!vertex) continue
 
-                  this.board.vertexes.push(
-                    new canvasClasses.Vertex(
+                  this.elems.vertexes.push(
+                    new Vertex(
                       x + xOffset,
-                      y + (vertex.coords.v === "north" ? -this.hexRadius : this.hexRadius),
+                      y + (vertex.coords.v === "north" ? -hexRadius : hexRadius),
                       vertex
                     )
                   )
@@ -94,18 +112,18 @@ export default {
               }
             }
 
-            x += this.hexApothem * 2
+            x += hexApothem * 2
           }
           y += yOffsetPerRow
         }
       }
       if(edges) {
         for(let edge of edges) {
-          this.board.edges.push(new canvasClasses.Edge(edge.coordsArr, edge))
+          this.elems.edges.push(new Edge(edge.coordsArr, edge))
         }
       }
 
-      if(currentGameData.robbing && currentGameData.turn === currentGameData.me.id)
+      if(this.game.robbing && this.game.turn === this.player.id)
         this.robberImgSrc = "/images/glowing_robber.png"
       else
         this.robberImgSrc = "/images/robber.png"
@@ -169,7 +187,15 @@ export default {
     onMouseMove(e) {
       this.mousePos.x = e.offsetX
       this.mousePos.y = e.offsetY
-    }
+      CanvasClasses.mousePos = this.mousePos
+    },
+    drawSelectCircle(xPos, yPos, self) {
+      const { ctx } = this
+      ctx.fillStyle = "#08f8"
+      ctx.beginPath()
+      ctx.arc(xPos, yPos, self.getDimensions().width / 2, 0, 2 * Math.PI)
+      ctx.fill()
+    },
   },
 }
 </script>
