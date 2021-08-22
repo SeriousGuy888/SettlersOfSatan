@@ -6,19 +6,23 @@
   <div class="flex-layout-grid">
     <LeftColumn :game="this.$parent.game" :player="this.$parent.player" />
 
-    <div id="lobby-waiting" class="flex-layout-grid-grow-2">
-      <p>
-        Lobby Code: <code>{{ this.$parent.lobby.code }}</code>
-        <br>
-      </p>
-      
-      <h3>Lobby Settings</h3>
-      <div class="lobby-settings-panel">
-        <button @click="editLobbySetting({ started: true })" :disabled="!this.$parent.userIsHost">Start Game</button>
-      </div>
+    <div id="center-column" class="flex-layout-grid-grow-2">
+      <div v-if="!this.$parent.game">
+        <p>
+          Lobby Code: <code>{{ this.$parent.lobby.code }}</code>
+          <br>
+        </p>
+        
+        <h3>Lobby Settings</h3>
+        <div class="lobby-settings-panel">
+          <button @click="editLobbySetting({ started: true })" :disabled="!this.$parent.userIsHost">Start Game</button>
+        </div>
 
-      <ColourChooser :printToChat="printToChat" />
+        <ColourChooser :printToChat="printToChat" />
+      </div>
+      <LobbyCenterColumn :game="this.$parent.game" :player="this.$parent.player" v-else />
     </div>
+
     <div id="right-column">
       <LobbyTurnControls v-if="this.$parent.game" :game="this.$parent.game" :player="this.$parent.player" />
 
@@ -32,6 +36,7 @@
 import Chat from "./Chat.vue"
 import ColourChooser from "./ColourChooser.vue"
 import LeftColumn from "./LeftColumn.vue"
+import LobbyCenterColumn from "./LobbyCenterColumn.vue"
 import LobbyTurnControls from "./LobbyTurnControls.vue"
 import PlayerList from "./PlayerList.vue"
 
@@ -41,6 +46,7 @@ export default {
     Chat,
     ColourChooser,
     LeftColumn,
+    LobbyCenterColumn,
     LobbyTurnControls,
     PlayerList,
   },
