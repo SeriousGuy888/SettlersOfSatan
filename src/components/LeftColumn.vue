@@ -16,7 +16,7 @@
     </div>
     <p id="inv-list">Settlements: 2, Roads: 2, Cities: 0</p>
     
-    <div id="resource-cards"></div>
+    <ResourceCardDisplay :game="game" :player="player" />
     
     <Collapsible title="Trade Menu" :startOpen="true">
       <div id="trade-panel">
@@ -58,12 +58,14 @@
 <script>
 import Collapsible from "./Collapsible.vue"
 import DevelopmentCard from "./DevelopmentCard.vue"
+import ResourceCardDisplay from "./ResourceCardDisplay.vue"
 
 export default {
   props: ["game", "player"],
   components: {
     Collapsible,
     DevelopmentCard,
+    ResourceCardDisplay,
   },
   data() {
     return {
