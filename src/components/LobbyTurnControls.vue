@@ -28,7 +28,7 @@ export default {
   },
   computed: {
     buttonText() {
-      if(this?.game.turn !== this?.player.id) return "It is not your turn..."
+      if(this?.game?.turn !== this?.player?.id) return "It is not your turn..."
       switch(this.game.currentAction) {
         case "roll_dice":
           return "Roll Dice"
