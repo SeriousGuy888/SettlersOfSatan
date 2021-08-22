@@ -25,7 +25,7 @@
       </div>
 
       <Chat ref="chat" />
-      <PlayerList :lobby="this.$parent.lobby" :lobbyState="this.$parent.lobbyState" :userIsHost="this.$parent.userIsHost" />
+      <PlayerList :lobby="this.$parent.lobby" :lobbyState="this.$parent.lobbyState" :game="this.$parent.game" :userIsHost="this.$parent.userIsHost" />
     </div>
   </div>
 </template>
