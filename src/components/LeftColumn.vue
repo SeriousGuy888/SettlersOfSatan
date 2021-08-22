@@ -18,45 +18,51 @@
     
     <div id="resource-cards"></div>
     
-    <button class="collapsible collapsible-active">Trade Menu</button>
-    <div id="trade-panel">
-      <div id="trade-interface">
-        <p id="trade-offerer-name">offerer name</p>
-        <br>
-        <select id="trade-taker-select">
-          <option value="humans">Humans</option>
-          <option value="stockpile">Bank</option>
-          <option value="discard" style="display: none;">Discard</option>
-        </select>
+    <Collapsible title="Trade Menu" :startOpen="true">
+      <div id="trade-panel">
+        <div id="trade-interface">
+          <p id="trade-offerer-name">offerer name</p>
+          <br>
+          <select id="trade-taker-select">
+            <option value="humans">Humans</option>
+            <option value="stockpile">Bank</option>
+            <option value="discard" style="display: none;">Discard</option>
+          </select>
 
-        <div id="trade-offerer-inputs" class="trade-column"></div>
-        <div class="trade-icon">
-          <img id="trade-img" src="@/images/icons/trade.svg" alt="trade">
-          <img id="discard-img" src="@/images/icons/discard.svg" alt="discard" style="display: none;">
+          <div id="trade-offerer-inputs" class="trade-column"></div>
+          <div class="trade-icon">
+            <img id="trade-img" src="@/images/icons/trade.svg" alt="trade">
+            <img id="discard-img" src="@/images/icons/discard.svg" alt="discard" style="display: none;">
+          </div>
+          <div id="trade-taker-inputs" class="trade-column"></div>
         </div>
-        <div id="trade-taker-inputs" class="trade-column"></div>
+        <button id="trade-button">controlled with js</button>
+        <p id="trade-takers">You can click the trade buttons in the playerlist to finalise a trade.</p>
       </div>
-      <button id="trade-button">controlled with js</button>
-      <p id="trade-takers">You can click the trade buttons in the playerlist to finalise a trade.</p>
-    </div>
-
+    </Collapsible>
     <br>
-    <button class="collapsible">Development Cards</button>
-    <div id="development-card-list" style="display: none;">
-      <div class="card">
-        <div class="card-header">
-          <h2 class="card-header">Quack!</h2>
-          <img src="/images/resource_cards/bricks.png" alt="card icon" class="card-icon">
+    <Collapsible title="Development Cards">
+      <div id="development-card-list">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-header">Quack!</h2>
+            <img src="@/images/resource_cards/bricks.png" alt="card icon" class="card-icon">
+          </div>
+          <p>Instant win</p>
         </div>
-        <p>Instant win</p>
       </div>
-    </div>
+    </Collapsible>
   </div>
 </template>
 
 <script>
+import Collapsible from "./Collapsible.vue"
+
 export default {
   props: ["game", "player"],
+  components: {
+    Collapsible
+  },
   data() {
     return {
 
