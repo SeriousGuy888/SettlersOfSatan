@@ -10,16 +10,20 @@
         <p id="turn-timer">{{ game.ended ? "Take your screenshots!" : remainingTime }}</p>
       </div>
     </div>
-    <p id="game-status-message"></p>
-    <canvas id="game-canvas">Oeuf</canvas>
+    <LobbyCenterColumnCanvas :game="this.$parent.game" :player="this.$parent.player" />
   </div>
 </template>
 
 <script>
+import LobbyCenterColumnCanvas from "./LobbyCenterColumnCanvas.vue"
+
 export default {
   props: {
     game: Object,
     player: Object,
+  },
+  components: {
+    LobbyCenterColumnCanvas
   },
   data() {
     return {
