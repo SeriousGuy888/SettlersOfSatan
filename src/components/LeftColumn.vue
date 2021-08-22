@@ -43,13 +43,13 @@
     <br>
     <Collapsible title="Development Cards">
       <div id="development-card-list">
-        <div class="card">
-          <div class="card-header">
-            <h2 class="card-header">Quack!</h2>
-            <img src="@/images/resource_cards/bricks.png" alt="card icon" class="card-icon">
-          </div>
-          <p>Instant win</p>
-        </div>
+        <DevelopmentCard
+          v-for="card in player.inventory.developmentCards"
+          :key="card"
+          :card="card"
+          class="card"
+        >
+        </DevelopmentCard>
       </div>
     </Collapsible>
   </div>
@@ -57,11 +57,13 @@
 
 <script>
 import Collapsible from "./Collapsible.vue"
+import DevelopmentCard from "./DevelopmentCard.vue"
 
 export default {
   props: ["game", "player"],
   components: {
-    Collapsible
+    Collapsible,
+    DevelopmentCard,
   },
   data() {
     return {
