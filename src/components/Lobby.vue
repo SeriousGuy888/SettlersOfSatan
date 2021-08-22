@@ -20,9 +20,7 @@
       <ColourChooser :printToChat="printToChat" />
     </div>
     <div id="right-column">
-      <div id="turn-controls" style="display: none;">
-        <button id="end-turn-dice-button">End Turn</button>
-      </div>
+      <LobbyTurnControls v-if="this.$parent.game" :game="this.$parent.game" :player="this.$parent.player" />
 
       <Chat ref="chat" />
       <PlayerList :lobby="this.$parent.lobby" :lobbyState="this.$parent.lobbyState" :game="this.$parent.game" :userIsHost="this.$parent.userIsHost" />
@@ -34,6 +32,7 @@
 import Chat from "./Chat.vue"
 import ColourChooser from "./ColourChooser.vue"
 import LeftColumn from "./LeftColumn.vue"
+import LobbyTurnControls from "./LobbyTurnControls.vue"
 import PlayerList from "./PlayerList.vue"
 
 export default {
@@ -42,6 +41,7 @@ export default {
     Chat,
     ColourChooser,
     LeftColumn,
+    LobbyTurnControls,
     PlayerList,
   },
   methods: {
