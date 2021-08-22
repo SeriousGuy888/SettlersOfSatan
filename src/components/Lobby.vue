@@ -4,7 +4,7 @@
     <button @click="leaveLobby()"><img class="icon-1em" alt="←" src="@/images/icons/leave.svg"> Leave Lobby</button>
   </div>
   <div class="flex-layout-grid">
-    <LeftColumn :game="this.$parent.game" :player="this.$parent.player" />
+    <LobbyLeftColumn :game="this.$parent.game" :player="this.$parent.player" />
 
     <div id="center-column" class="flex-layout-grid-grow-2">
       <div v-if="!this.$parent.game">
@@ -35,8 +35,8 @@
 <script>
 import Chat from "./Chat.vue"
 import ColourChooser from "./ColourChooser.vue"
-import LeftColumn from "./LeftColumn.vue"
 import LobbyCenterColumn from "./LobbyCenterColumn.vue"
+import LobbyLeftColumn from "./LobbyLeftColumn.vue"
 import LobbyTurnControls from "./LobbyTurnControls.vue"
 import PlayerList from "./PlayerList.vue"
 
@@ -45,8 +45,8 @@ export default {
   components: {
     Chat,
     ColourChooser,
-    LeftColumn,
     LobbyCenterColumn,
+    LobbyLeftColumn,
     LobbyTurnControls,
     PlayerList,
   },
