@@ -1,10 +1,16 @@
 <template>
-  <canvas ref="canvas">
+  <canvas
+    @mousemove="onMouseMove"
+    ref="canvas"
+    id="game-canvas"
+  >
     your browser doesnt want to display the canvas D:
   </canvas>
 </template>
 
 <script>
+import Hex from "./classes/Hex.js"
+
 export default {
   props: {
     game: Object,
@@ -12,9 +18,108 @@ export default {
   },
   data() {
     return {
-      
+      drawLoop: !!this.game,
+      canvas: null,
+      ctx: null,
+      mousePos: {},
+      board: {
+        hexes: [],
+        vertexes: [],
+        edges: [],
+      },
+      hexRadius: 90,
     }
   },
-  methods: {},
+  computed: {
+    hexApothem() {
+      return Math.sqrt(this.hexRadius ** 2 - (this.hexRadius / 2) ** 2)
+    },
+  },
+  mounted() {
+    this.canvas = this.$refs.canvas
+    this.canvas.width = 1000
+    this.canvas.height = 1000
+    this.ctx = this.canvas.getContext("2d")
+
+    setInterval(() => {
+      if(this.drawLoop) this.draw()
+    }, 1000 / 1)
+  },
+  methods: {
+    draw() {
+      if(!this.game || !this.player) return
+
+      const { ctx } = this
+
+      this.refresh()
+      ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+      Object.values(this.board).forEach(arr => {
+        arr.forEach(elem => {
+          if(elem.render) {
+            elem.render()
+          }
+        })
+      })
+    },
+    refresh() {
+      const { hexes, vertexes, edges } = this.game.board
+      const { board, ctx, hexRadius, hexApothem } = this
+
+      Object.values(board).forEach(arr => arr.splice(0, arr.length))
+
+      const startY = hexRadius / 2
+      const yOffsetPerRow = hexRadius * 2 - hexRadius / 2
+      if(hexes) {
+        let y = startY
+        for(let i in hexes) {
+          const row = hexes[i]
+      
+          const rowWidth = (row.length - 1) * hexApothem
+          const xCenter = this.canvas.width / 2 - rowWidth
+          let x = xCenter
+      
+          for(const hex of row) {
+            if(hex) {
+              const xOffset = i % 2 !== 0 ? hexApothem : 0
+
+              board.hexes.push(new Hex(this, Math.round(x + xOffset), Math.round(y), hex))
+              
+              const hexVertexes = vertexes.filter(e => e.coords.x === hex.coords.x && e.coords.y === hex.coords.y)
+
+              if(hexVertexes) {
+                // for(let vertex of hexVertexes) {
+                //   if(!vertex) continue
+
+                //   board.vertexes.push(
+                //     new canvasClasses.Vertex(
+                //       x + xOffset,
+                //       y + (vertex.coords.v === "north" ? -hexRadius : hexRadius),
+                //       vertex
+                //     )
+                //   )
+                // }
+              }
+            }
+
+            x += hexApothem * 2
+          }
+          y += yOffsetPerRow
+        }
+      }
+    },
+    drawRobber(x, y, w, h) {
+      const { ctx } = this
+      let robberImg = new Image()
+      robberImg.src = require("../images/robber.png")
+      ctx.drawImage(robberImg, x, y, w, h)
+    },
+    onMouseMove(e) {
+      var rect = this.canvas.getBoundingClientRect()
+      const widthRatio = rect.width / this.canvas.width
+      const heightRatio = rect.height / this.canvas.width
+      this.mousePos.x = Math.round(e.offsetX / widthRatio)
+      this.mousePos.y = Math.round(e.offsetY / heightRatio)
+    }
+  },
 }
 </script>
