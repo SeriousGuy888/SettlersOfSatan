@@ -77,6 +77,27 @@ class Hex {
       // drawSelectCircle(xPos, yPos, this)
     }
   }
+
+  isHovered(mousePos) {
+    let { xPos, yPos } = this
+    const { hexApothem } = this.that
+    const width = hexApothem * 1.5
+    const height = hexApothem * 1.5
+
+    xPos -= width / 2
+    yPos -= height / 2
+    
+    return (
+      mousePos.x >= xPos &&
+      mousePos.y >= yPos &&
+      mousePos.x <= xPos + width &&
+      mousePos.y <= yPos + height
+    )
+  }
+
+  click() {
+    console.log("oeuf")
+  }
 }
 
 module.exports = Hex

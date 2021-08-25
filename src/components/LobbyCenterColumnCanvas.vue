@@ -1,6 +1,7 @@
 <template>
   <canvas
     @mousemove="onMouseMove"
+    @click="onClick"
     ref="canvas"
     id="game-canvas"
   >
@@ -46,6 +47,17 @@ export default {
     }, 1000 / 1)
   },
   methods: {
+    onClick() {
+      if(!this.game || !this.player) return
+
+      Object.values(this.board).forEach(arr => {
+        arr.forEach(elem => {
+          if(elem.isHovered && elem.isHovered(this.mousePos)) {
+            if(elem.click) elem.click()
+          }
+        })
+      })
+    },
     draw() {
       if(!this.game || !this.player) return
 
@@ -81,7 +93,7 @@ export default {
           for(const hex of row) {
             if(hex) {
               const xOffset = i % 2 !== 0 ? hexApothem : 0
-
+              
               board.hexes.push(new Hex(this, Math.round(x + xOffset), Math.round(y), hex))
               
               const hexVertexes = vertexes.filter(e => e.coords.x === hex.coords.x && e.coords.y === hex.coords.y)
