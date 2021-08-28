@@ -1,6 +1,7 @@
 import { createApp } from "vue"
-import App from "./App.vue"
+import { createStore } from "vuex"
 
+import App from "./App.vue"
 import "./styles/main.css"
 import "./styles/global.css"
 import "./styles/theme.css"
@@ -13,4 +14,16 @@ import "./styles/honeycomb.css"
 import "./styles/layouts.css"
 import "./styles/modal.css"
 
-createApp(App).mount("#app")
+const store = createStore({
+  state() {
+    return {
+      lobby: null,
+      game: null,
+      player: null,
+    }
+  },
+})
+
+const app = createApp(App)
+app.use(store)
+app.mount("#app")

@@ -15,13 +15,9 @@ import Vertex from "./classes/Vertex.js"
 import Edge from "./classes/Edge.js"
 
 export default {
-  props: {
-    game: Object,
-    player: Object,
-  },
   data() {
     return {
-      drawLoop: !!this.game,
+      state: this.$store.state,
       canvas: null,
       ctx: null,
       mousePos: {},
@@ -34,6 +30,9 @@ export default {
     }
   },
   computed: {
+    drawLoop() {
+      return !!this.state.game
+    },
     hexApothem() {
       return Math.sqrt(this.hexRadius ** 2 - (this.hexRadius / 2) ** 2)
     },
@@ -50,7 +49,7 @@ export default {
   },
   methods: {
     onClick() {
-      if(!this.game || !this.player) return
+      if(!this.state.game || !this.state.player) return
 
       Object.values(this.board).forEach(arr => {
         arr.forEach(elem => {
@@ -61,7 +60,7 @@ export default {
       })
     },
     draw() {
-      if(!this.game || !this.player) return
+      if(!this.state.game || !this.state.player) return
 
       const { ctx } = this
 
@@ -76,7 +75,7 @@ export default {
       })
     },
     refresh() {
-      const { hexes, vertexes, edges } = this.game.board
+      const { hexes, vertexes, edges } = this.state.game.board
       const { board, ctx, hexRadius, hexApothem } = this
 
       Object.values(board).forEach(arr => arr.splice(0, arr.length))

@@ -1,9 +1,9 @@
 <template>
-  <div v-if="game" id="left-column">
-    <LobbyLeftColumnTurnDisplay :game="game" :player="player" />
-    <ResourceCardDisplay :game="game" :player="player" />
+  <div id="left-column">
+    <LobbyLeftColumnTurnDisplay />
+    <ResourceCardDisplay />
     <Collapsible title="Trade Menu" :startOpen="true">
-      <TradePanel :game="game" :player="player" />
+      <TradePanel />
     </Collapsible>
 
     <br>
@@ -30,7 +30,6 @@ import ResourceCardDisplay from "./ResourceCardDisplay.vue"
 import TradePanel from "./TradePanel.vue"
 
 export default {
-  props: ["game", "player"],
   components: {
     Collapsible,
     DevelopmentCard,
@@ -40,7 +39,7 @@ export default {
   },
   data() {
     return {
-
+      state: this.$store.state,
     }
   },
 }

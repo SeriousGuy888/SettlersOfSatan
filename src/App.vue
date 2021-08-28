@@ -40,16 +40,22 @@ export default {
     },
   },
   mounted() {
-    socket.on("lobby_update", data => this.lobby = data)
+    const state = this.$store.state
+
+    socket.on("lobby_update", data => state.lobby = data)
     socket.on("host_change", data => {
       if(data.lostHost) this.userIsHost = false
       if(data.gainedHost) this.userIsHost = true
     })
     socket.on("game_update", data => {
-      if(this.lobby.inGame) this.game = data
+      if(state.lobby.inGame) {
+        state.game = data
+      }
     })
     socket.on("player_update", data => {
-      if(this.lobby.inGame) this.player = data
+      if(state.lobby.inGame) {
+        state.player = data
+      }
     })
     socket.on("receive_chat", data => this.printToChat(data.lines))
   },

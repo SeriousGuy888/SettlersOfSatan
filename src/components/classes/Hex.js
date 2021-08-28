@@ -7,7 +7,8 @@ class Hex {
   }
   render() {
     const { xPos, yPos, resource, number, harbour } = this
-    const { ctx, game, player, hexRadius, drawRobber } = this.that
+    const { ctx, state, hexRadius, drawRobber } = this.that
+    const { game, player } = state
 
     ctx.lineWidth = 1
     ctx.strokeStyle = "#000"

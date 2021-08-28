@@ -1,15 +1,15 @@
 <template>
   <div class="single-line-layout">
-    <h2>{{ this.$parent.lobby.name }}</h2>
+    <h2>{{ state.lobby.name }}</h2>
     <button @click="leaveLobby()"><img class="icon-1em" alt="←" src="@/images/icons/leave.svg"> Leave Lobby</button>
   </div>
   <div class="flex-layout-grid">
-    <LobbyLeftColumn :game="this.$parent.game" :player="this.$parent.player" />
+    <LobbyLeftColumn v-if="state.game"/>
 
     <div id="center-column" class="flex-layout-grid-grow-2">
-      <div v-if="!this.$parent.game">
+      <div v-if="!state.game">
         <p>
-          Lobby Code: <code>{{ this.$parent.lobby.code }}</code>
+          Lobby Code: <code>{{ state.lobby.code }}</code>
           <br>
         </p>
         
@@ -20,14 +20,13 @@
 
         <ColourChooser :printToChat="printToChat" />
       </div>
-      <LobbyCenterColumn :game="this.$parent.game" :player="this.$parent.player" v-else />
+      <LobbyCenterColumn v-else />
     </div>
 
     <div id="right-column">
-      <LobbyTurnControls v-if="this.$parent.game" :game="this.$parent.game" :player="this.$parent.player" />
-
+      <LobbyTurnControls v-if="state.game" />
       <Chat ref="chat" />
-      <PlayerList :lobby="this.$parent.lobby" :lobbyState="this.$parent.lobbyState" :game="this.$parent.game" :userIsHost="this.$parent.userIsHost" />
+      <PlayerList :lobbyState="this.$parent.lobbyState" :userIsHost="this.$parent.userIsHost" />
     </div>
   </div>
 </template>
@@ -50,6 +49,11 @@ export default {
     LobbyTurnControls,
     PlayerList,
   },
+  data() {
+    return {
+      state: this.$store.state,
+    }
+  },
   methods: {
     leaveLobby() {
       if(confirm("Are you sure you want to leave the lobby?")) {
@@ -57,8 +61,8 @@ export default {
           if(err) notifyUser(err)
           else {
             this.$parent.lobbyState = data
-            this.$parent.lobby = null
-            this.$parent.game = null
+            state.lobby = null
+            state.game = null
           }
         })
       }

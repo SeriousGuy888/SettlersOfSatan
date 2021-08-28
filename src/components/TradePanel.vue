@@ -17,8 +17,8 @@
     </div>
 
     <div v-if="tradingAllowed">
-      <div v-if="game && player && (game.turn === player.id || requiredDiscardCount)">
-        <button v-if="game.trade.offer">Cancel Trade Offer</button>
+      <div v-if="game && player && (state.game.turn === state.player.id || requiredDiscardCount)">
+        <button v-if="state.game.trade.offer">Cancel Trade Offer</button>
         <button v-else-if="tradeMode === 'humans'">Propose Trade</button>
         <button v-else-if="tradeMode === 'stockpile'">Trade With Harbour</button>
         <button
@@ -29,13 +29,13 @@
         </button>
       </div>
       <div v-else>
-        <button v-if="game.trade.offer">Accept Trade</button>
+        <button v-if="state.game.trade.offer">Accept Trade</button>
         <p v-else>No trade offer right now...</p>
       </div>
     </div>
-    <p v-else>{{ game.turnCycle > 2 ? "Roll dice before trading..." : "Trading is not allowed right now..." }}</p>
+    <p v-else>{{ state.game.turnCycle > 2 ? "Roll dice before trading..." : "Trading is not allowed right now..." }}</p>
 
-    <p v-if="tradingAllowed && game.trade.offer">You can click the trade buttons in the playerlist to finalise a trade.</p>
+    <p v-if="tradingAllowed && state.game.trade.offer">You can click the trade buttons in the playerlist to finalise a trade.</p>
   </div>
 </template>
 
@@ -43,15 +43,12 @@
 import TradePanelInputs from "./TradePanelInputs.vue"
 
 export default {
-  props: {
-    game: Object,
-    player: Object,
-  },
   components: {
     TradePanelInputs,
   },
   data() {
     return {
+      state: this.$store.state,
       tradeMode: "humans",
       amounts: {},
     }
@@ -69,18 +66,18 @@ export default {
   },
   computed: {
     requiredDiscardCount() {
-      let count = this.game.discardingPlayers[player.id]
+      let count = this.game.discardingPlayers[this.state.player.id]
       this.tradeMode = count ? "discard" : "humans"
       return count
     },
     tradingAllowed() {
       return (
-        this.game && this.player &&
-        this.game.currentAction !== "roll_dice" &&
-        this.game.turnCycle > 2 &&
+        this.state.game && this.state.player &&
+        this.state.game.currentAction !== "roll_dice" &&
+        this.state.game.turnCycle > 2 &&
         (
-          this.game.turn === this.player.id ||
-          this.game.trade.offer ||
+          this.state.game.turn === this.state.player.id ||
+          this.state.game.trade.offer ||
           this.requiredDiscardCount
         )
       )

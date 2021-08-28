@@ -1,9 +1,9 @@
 <template>
   <div id="lobby-player-list-container">
-    <h3>Players {{ lobby.playerCount }}/{{ lobby.maxPlayerCount }}</h3>
+    <h3>Players {{ state.lobby.playerCount }}/{{ state.lobby.maxPlayerCount }}</h3>
     <div id="lobby-player-list">
 
-      <div v-for="loopUser in lobby.users" :key="loopUser" class="list-entry" :style="`border: 3px solid ${loopUser.colour}`">
+      <div v-for="loopUser in state.lobby.users" :key="loopUser" class="list-entry" :style="`border: 3px solid ${loopUser.colour}`">
         <div class="list-entry-title">
           <img v-if="loopUser.host" src="@/images/icons/host.svg" title="Lobby Host" alt="Lobby Host" class="icon-1em">
           
@@ -12,11 +12,11 @@
         </div>
         <div v-if="game" class="list-entry-line">
           <div title="Victory Points">
-            <p>{{ game.players[loopUser.playerId].points }}</p>
+            <p>{{ state.game.players[loopUser.playerId].points }}</p>
             <img class="icon-1em" src="@/images/icons/victory_point.svg" alt="VP">
           </div>
           <div title="The number of resource cards this player has">
-            <p>{{ game.players[loopUser.playerId].resourceCardCount }}</p>
+            <p>{{ state.game.players[loopUser.playerId].resourceCardCount }}</p>
             <img class="icon-1em" src="@/images/icons/resource_cards.svg" alt="Resource Cards">
           </div>
         </div>
@@ -50,13 +50,12 @@
 <script>
 export default {
   props: {
-    lobby: Object,
     lobbyState: Object,
-    game: Object,
     userIsHost: Boolean,
   },
   data() {
     return {
+      state: this.$store.state,
       playerListModal: {
         show: false,
         data: null
