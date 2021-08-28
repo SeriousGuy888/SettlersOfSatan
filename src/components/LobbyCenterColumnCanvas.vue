@@ -12,6 +12,7 @@
 <script>
 import Hex from "./classes/Hex.js"
 import Vertex from "./classes/Vertex.js"
+import Edge from "./classes/Edge.js"
 
 export default {
   props: {
@@ -118,6 +119,11 @@ export default {
             x += hexApothem * 2
           }
           y += yOffsetPerRow
+        }
+      }
+      if(edges) {
+        for(let edge of edges) {
+          this.board.edges.push(new Edge(this, edge.coordsArr, edge))
         }
       }
     },
