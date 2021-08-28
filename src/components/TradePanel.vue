@@ -17,7 +17,7 @@
     </div>
 
     <div v-if="tradingAllowed">
-      <div v-if="game && player && (state.game.turn === state.player.id || requiredDiscardCount)">
+      <div v-if="state.game && state.player && (state.game.turn === state.player.id || requiredDiscardCount)">
         <button v-if="state.game.trade.offer">Cancel Trade Offer</button>
         <button v-else-if="tradeMode === 'humans'">Propose Trade</button>
         <button v-else-if="tradeMode === 'stockpile'">Trade With Harbour</button>
