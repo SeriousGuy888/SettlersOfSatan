@@ -11,6 +11,7 @@
 
 <script>
 import Hex from "./classes/Hex.js"
+import Vertex from "./classes/Vertex.js"
 
 export default {
   props: {
@@ -99,17 +100,18 @@ export default {
               const hexVertexes = vertexes.filter(e => e.coords.x === hex.coords.x && e.coords.y === hex.coords.y)
 
               if(hexVertexes) {
-                // for(let vertex of hexVertexes) {
-                //   if(!vertex) continue
+                for(let vertex of hexVertexes) {
+                  if(!vertex) continue
 
-                //   board.vertexes.push(
-                //     new canvasClasses.Vertex(
-                //       x + xOffset,
-                //       y + (vertex.coords.v === "north" ? -hexRadius : hexRadius),
-                //       vertex
-                //     )
-                //   )
-                // }
+                  board.vertexes.push(
+                    new Vertex(
+                      this,
+                      x + xOffset,
+                      y + (vertex.coords.v === "north" ? -hexRadius : hexRadius),
+                      vertex
+                    )
+                  )
+                }
               }
             }
 
