@@ -1,5 +1,7 @@
 <template>
   <div v-if="game" id="left-column">
+    <LobbyLeftColumnTurnDisplay :game="game" :player="player" />
+
     <div id="game-controls" class="button-group">
       <button class="game-control-button" id="settlement-button">
         <img src="@/images/game_controls/settlement.svg" alt="Settlement">
@@ -41,6 +43,7 @@
 <script>
 import Collapsible from "./Collapsible.vue"
 import DevelopmentCard from "./DevelopmentCard.vue"
+import LobbyLeftColumnTurnDisplay from "./LobbyLeftColumnTurnDisplay.vue"
 import ResourceCardDisplay from "./ResourceCardDisplay.vue"
 import TradePanel from "./TradePanel.vue"
 
@@ -49,6 +52,7 @@ export default {
   components: {
     Collapsible,
     DevelopmentCard,
+    LobbyLeftColumnTurnDisplay,
     ResourceCardDisplay,
     TradePanel,
   },
