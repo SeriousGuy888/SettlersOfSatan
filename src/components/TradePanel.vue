@@ -1,7 +1,7 @@
 <template>
   <div id="trade-panel">
     <div v-if="tradingAllowed" id="trade-interface">
-      <p id="trade-offerer-name">{{ game.players[game.turn].name }}</p>
+      <p id="trade-offerer-name">{{ state.game.players[state.game.turn].name }}</p>
       <br>
       <select v-model="tradeMode" id="trade-taker-select">
         <option value="humans">Humans</option>
