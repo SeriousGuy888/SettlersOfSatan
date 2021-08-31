@@ -129,12 +129,56 @@ export default {
         }
       }
     },
+    getDist(x1, y1, x2, y2) {
+      return Math.sqrt((x2-x1)**2 + (y2-y1)**2)
+    },
     drawSelectCircle(xPos, yPos, radius) {
       const { ctx } = this
       ctx.fillStyle = "#08f8"
       ctx.beginPath()
       ctx.arc(xPos, yPos, radius, 0, 2 * Math.PI)
       ctx.fill()
+    },
+    drawPiece(piece, colour, x, y, w, h) {
+      const { ctx } = this
+      ctx.fillStyle = colour || "#666"
+      ctx.lineWidth = 3
+      ctx.strokeStyle = "#fff"
+
+      if(piece == "settlement") {
+        ctx.beginPath()
+        ctx.moveTo(x + w / 2, y)
+        ctx.lineTo(x, y + h / 2)
+        ctx.lineTo(x + w, y + h / 2)
+        ctx.closePath()
+        ctx.moveTo(x + w, y + h / 2)
+        ctx.lineTo(x + w, y + h)
+        ctx.lineTo(x, y + h)
+        ctx.lineTo(x, y + h / 2)
+        ctx.closePath()
+        ctx.stroke()
+        ctx.fill()
+      }
+      else if(piece == "city") {
+        ctx.beginPath()
+        ctx.moveTo(x, y + h)
+        ctx.moveTo(x, y + h / 2)
+        ctx.lineTo(x + w / 2, y + h / 2)
+        ctx.lineTo(x + w / 2, y + h * 0.25)
+        ctx.lineTo(x + w * 0.75, y)
+        ctx.lineTo(x + w, y + h * 0.25)
+        ctx.lineTo(x + w, y + h)
+        ctx.lineTo(x, y + h)
+        ctx.closePath()
+        ctx.stroke()
+        ctx.fill()
+      }
+      else if(piece == "road") {
+        ctx.beginPath()
+        ctx.fillRect(x, y, 32, 32/3)
+        ctx.fill()
+        ctx.stroke()
+      }
     },
     drawRobber(x, y, w, h) {
       const { ctx } = this
@@ -148,7 +192,11 @@ export default {
       const heightRatio = rect.height / this.canvas.width
       this.mousePos.x = Math.round(e.offsetX / widthRatio)
       this.mousePos.y = Math.round(e.offsetY / heightRatio)
-    }
+    },
+    setHolding(holding) {
+      if(!holding || holding === this.holding) holding = ""
+      this.$emit("setHolding", holding)
+    },
   },
 }
 </script>

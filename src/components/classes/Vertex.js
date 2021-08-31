@@ -4,11 +4,12 @@ class Vertex {
     this.xPos = xPos
     this.yPos = yPos
     Object.assign(this, data)
+    this.radius = this.that.hexRadius / 6
   }
 
   render() {
-    const { that, xPos, yPos } = this
-    const { ctx, holding, drawSelectCircle, hexRadius } = that
+    const { that, xPos, yPos, radius } = this
+    const { ctx, holding, drawSelectCircle, drawPiece, state } = that
 
     if(this.harbour) {
       const harbourCoords = this.harbour
@@ -28,52 +29,54 @@ class Vertex {
 
     if(this.building) {
       const { playerId, type } = this.building
-      const colour = canvasFunctions.getPlayer(playerId)?.colour
-      const { width: w, height: h } = this.getDimensions()
-      canvasFunctions.drawPiece(type, colour, this.xPos - w / 2, this.yPos - h / 2, w, h)
+      const colour = state.game.players[playerId]?.colour
+      drawPiece(type, colour, this.xPos - radius, this.yPos - radius, radius * 2, radius * 2)
     }
     
     
     if(!this.allowPlacement) return
 
-    console.log(holding)
     if(holding === "settlement") {
       if(this.building) return
-      drawSelectCircle(xPos, yPos, hexRadius / 6)
+      drawSelectCircle(xPos, yPos, radius)
     }
     if(holding === "city") {
       if(!this.building) return
       if(this.building.playerId !== player.id) return
       if(this.building.type !== "settlement") return
-      drawSelectCircle(xPos, yPos, hexRadius / 6)
+      drawSelectCircle(xPos, yPos, radius)
     }
   }
-  
-  // getDimensions() {
-  //   return selectionTargetDims
-  // }
 
-  // onClick() {
-  //   if(!this.isHovered(true)) return
+  isHovered(mousePos) {
+    const { that, xPos, yPos, radius } = this
+    return that.getDist(mousePos.x, mousePos.y, xPos, yPos) <= radius
+  }
 
-  //   console.log(`Clicked on vertex ${JSON.stringify(this.data.coords)} while holding ${holding}`)
+  click() {
+    const { that } = this
+    const { holding, setHolding, state } = that
 
-  //   if(!this.allowPlacement) return
-  //   if(!["settlement", "city"].includes(holding)) return
+    console.log(`Clicked on vertex ${JSON.stringify(this.coords)} while holding ${holding}`)
 
-  //   if(holding === "city" && this.building?.type !== "settlement") return
+    if(!this.allowPlacement) return
+    if(!["settlement", "city"].includes(holding)) return
+    if(holding === "city" && this.building?.type !== "settlement") return
 
-  //   socket.emit("perform_game_action", {
-  //     action: "place_" + holding,
-  //     coords: this.coords,
-  //   }, (err, data) => {
-  //     if(err) notifyUser(err)
-  //   })
+    socket.emit("perform_game_action", {
+      action: `place_${holding}`,
+      coords: this.coords,
+    }, (err, data) => {
+      if(err) notifyUser(err)
+    })
     
     
-  //   if(holding === "settlement" && currentGameData.turnCycle <= 2) holding = "road"
-  //   else setHolding(null)
-  // }
+    if(holding === "settlement" && state.game.turnCycle <= 2) {
+      setHolding("road")
+    } else {
+      setHolding(null)
+    }
+  }
 }
 
 module.exports = Vertex
