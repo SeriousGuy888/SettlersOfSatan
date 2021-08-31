@@ -54,7 +54,11 @@ export default {
       }
     },
     getDieSrc(die) {
-      return require(`@/images/dice/${die}.svg`)
+      try {
+        return require(`@/images/dice/${die}.svg`)
+      } catch {
+        return null
+      }
     },
     sendChat() {
       if(!this.chatInput.trim()) return
