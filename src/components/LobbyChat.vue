@@ -52,7 +52,6 @@ export default {
           container.scrollTop = container.scrollHeight
         })
       }
-      console.log(lines)
     },
     getDieSrc(die) {
       try {
