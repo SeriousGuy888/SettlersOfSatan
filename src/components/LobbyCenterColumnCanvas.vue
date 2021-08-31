@@ -48,7 +48,7 @@ export default {
 
     setInterval(() => {
       if(this.drawLoop) this.draw()
-    }, 1000 / 1)
+    }, 1000 / 24)
   },
   methods: {
     onClick() {
