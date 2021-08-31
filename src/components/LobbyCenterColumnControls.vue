@@ -32,7 +32,7 @@
       <img src="@/images/game_controls/development_card.svg" alt="Development Card">
     </button>
   </div>
-  <p id="inv-list">Settlements: 2, Roads: 2, Cities: 0</p>
+  <p>Settlements: {{ state.player.inventory.settlements }}, Roads: {{ state.player.inventory.roads }}, Cities: {{ state.player.inventory.cities }}</p>
 </template>
 
 <script>
