@@ -6,8 +6,8 @@ class Hex {
     Object.assign(this, data)
   }
   render() {
-    const { xPos, yPos, resource, number, harbour } = this
-    const { ctx, state, hexRadius, drawRobber } = this.that
+    const { xPos, yPos, resource, number, harbour, that } = this
+    const { ctx, drawSelectCircle, state, hexRadius, drawRobber } = that
     const { game, player } = state
 
     ctx.lineWidth = 1
@@ -75,7 +75,7 @@ class Hex {
     }
 
     if(game.turn === player.id && game.robbing && !this.robber) {
-      // drawSelectCircle(xPos, yPos, this)
+      drawSelectCircle(xPos, yPos, hexRadius * 0.75)
     }
   }
 
@@ -97,7 +97,15 @@ class Hex {
   }
 
   click() {
-    console.log("oeuf")
+    const { state } = this.that
+
+    console.log(`Clicked on hex ${JSON.stringify(this.coords)}`)
+    if(state.game.turn === state.player.id && state.game.robbing && !this.robber && !this.invisible) {
+      socket.emit("perform_game_action", {
+        action: "move_robber",
+        coords: this.coords,
+      }, () => {})
+    }
   }
 }
 
