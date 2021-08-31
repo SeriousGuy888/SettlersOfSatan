@@ -1,5 +1,5 @@
 <template>
-  <div id="game-controls" class="button-group">
+  <div id="game-controls" class="button-group" v-if="state.player">
     <button
       class="game-control-button"
       :class="{ active: holding === 'settlement' }" 
@@ -32,7 +32,7 @@
       <img src="@/images/game_controls/development_card.svg" alt="Development Card">
     </button>
   </div>
-  <p>Settlements: {{ state.player.inventory.settlements }}, Roads: {{ state.player.inventory.roads }}, Cities: {{ state.player.inventory.cities }}</p>
+  <p id="inv-list" v-if="state.player">Settlements: {{ state.player.inventory.settlements }}, Roads: {{ state.player.inventory.roads }}, Cities: {{ state.player.inventory.cities }}</p>
 </template>
 
 <script>
