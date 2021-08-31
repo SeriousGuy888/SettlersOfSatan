@@ -3,7 +3,7 @@
     <Title />
     <Login />
     <JoinLobby v-if="loginState.loggedIn && !lobbyState.code" />
-    <Lobby v-if="lobbyState.code" ref="lobby" :printToChat="printToChat" />
+    <Lobby v-if="loginState.loggedIn && lobbyState.code" ref="lobby" :printToChat="printToChat" />
   </div>
 </template>
 

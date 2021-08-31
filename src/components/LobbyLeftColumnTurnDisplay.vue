@@ -1,5 +1,5 @@
 <template>
-  <div id="turn-data-display">
+  <div id="turn-data-display" v-if="state.game">
     <div>
       <h4 id="turn-player-header">{{ state.game.ended ? "Winner" : "Turn" }}</h4>
       <p id="turn-player">{{ state.game.players[state.game.ended ? state.game.winner : state.game.turn].name }}</p>

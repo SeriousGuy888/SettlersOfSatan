@@ -18,13 +18,23 @@
 
 <script>
 export default {
+  data() {
+    return {
+      state: this.$store.state,
+    }
+  },
   methods: {
     login(logout) {
       if(logout) {
-        socket.emit("logout", null, (err, data) => {
-          console.log(err)
-          if(!err) this.$parent.loginState.loggedIn = false
-        })
+        window.location.reload()
+        // socket.emit("logout", null, (err, data) => {
+        //   console.log(err)
+        //   if(!err) {
+        //     this.$parent.loginState.loggedIn = false
+        //     this.state.player = null
+        //     this.state.game = null
+        //   }
+        // })
       }
       else {
         socket.emit("login", {
