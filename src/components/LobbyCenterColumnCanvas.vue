@@ -129,6 +129,13 @@ export default {
         }
       }
     },
+    drawSelectCircle(xPos, yPos, radius) {
+      const { ctx } = this
+      ctx.fillStyle = "#08f8"
+      ctx.beginPath()
+      ctx.arc(xPos, yPos, radius, 0, 2 * Math.PI)
+      ctx.fill()
+    },
     drawRobber(x, y, w, h) {
       const { ctx } = this
       let robberImg = new Image()

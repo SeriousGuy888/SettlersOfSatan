@@ -8,7 +8,7 @@ class Vertex {
 
   render() {
     const { that, xPos, yPos } = this
-    const { ctx } = that
+    const { ctx, holding, drawSelectCircle, hexRadius } = that
 
     if(this.harbour) {
       const harbourCoords = this.harbour
@@ -36,19 +36,17 @@ class Vertex {
     
     if(!this.allowPlacement) return
 
-    // if(holding === "settlement") {
-    //   if(!this.allowPlacement) return
-    //   if(this.building) return
-
-    //   drawSelectCircle(xPos, yPos, this)
-    // }
-    // if(holding === "city") {
-    //   if(!this.building) return
-    //   if(this.building.playerId !== currentGameData.me.id) return
-    //   if(this.building.type !== "settlement") return
-
-    //   drawSelectCircle(xPos, yPos, this)
-    // }
+    console.log(holding)
+    if(holding === "settlement") {
+      if(this.building) return
+      drawSelectCircle(xPos, yPos, hexRadius / 6)
+    }
+    if(holding === "city") {
+      if(!this.building) return
+      if(this.building.playerId !== player.id) return
+      if(this.building.type !== "settlement") return
+      drawSelectCircle(xPos, yPos, hexRadius / 6)
+    }
   }
   
   // getDimensions() {
