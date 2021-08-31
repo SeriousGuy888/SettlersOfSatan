@@ -9,7 +9,7 @@
     <button class="game-control-button" :class="{ active: holding === 'road' }" @click="setHolding('road')">
       <img src="@/images/game_controls/road.svg" alt="Road">
     </button>
-    <button class="game-control-button">
+    <button class="game-control-button" @click="buyDevelopmentCard()">
       <img src="@/images/game_controls/development_card.svg" alt="Development Card">
     </button>
   </div>
@@ -30,6 +30,11 @@ export default {
     setHolding(holding) {
       if(!holding || holding === this.holding) holding = ""
       this.$emit("setHolding", holding)
+    },
+    buyDevelopmentCard() {
+      socket.emit("perform_game_action", {
+        action: "buy_development_card"
+      }, () => {})
     },
   },
   mounted() {
