@@ -21,11 +21,29 @@ export default {
   props: {
     holding: String,
   },
+  data() {
+    return {
+      state: this.$store.state,
+    }
+  },
   methods: {
     setHolding(holding) {
       if(!holding || holding === this.holding) holding = ""
       this.$emit("setHolding", holding)
     },
-  }
+  },
+  mounted() {
+    socket.on("game_update", data => {
+      if(data.turnTick) {
+        if(this.state.game.turn === this.state.player.id && this.state.game.turnCycle <= 2) {
+          this.setHolding("settlement")
+        } else if(this.state.game.roadBuilding) {
+          this.setHolding("road")
+        } else {
+          this.setHolding(null)
+        }
+      }
+    })
+  },
 }
 </script>
