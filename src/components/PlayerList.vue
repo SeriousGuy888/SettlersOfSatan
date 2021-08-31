@@ -10,7 +10,7 @@
           <h4>{{ loopUser.name }}</h4>
           <span @click="toggleModal(true, loopUser)" class="player-list-modal-button">⋮</span>
         </div>
-        <div v-if="game" class="list-entry-line">
+        <div v-if="state.game" class="list-entry-line">
           <div title="Victory Points">
             <p>{{ state.game.players[loopUser.playerId].points }}</p>
             <img class="icon-1em" src="@/images/icons/victory_point.svg" alt="VP">
