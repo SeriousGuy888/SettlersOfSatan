@@ -1,15 +1,34 @@
 <template>
   <div id="game-controls" class="button-group">
-    <button class="game-control-button" :class="{ active: holding === 'settlement' }" @click="setHolding('settlement')">
+    <button
+      class="game-control-button"
+      :class="{ active: holding === 'settlement' }" 
+      :disabled="!state.player.enableControls.settlement"
+      @click="setHolding('settlement')"
+    >
       <img src="@/images/game_controls/settlement.svg" alt="Settlement">
     </button>
-    <button class="game-control-button" :class="{ active: holding === 'city' }" @click="setHolding('city')">
+    <button
+      class="game-control-button"
+      :class="{ active: holding === 'city' }"
+      :disabled="!state.player.enableControls.city"
+      @click="setHolding('city')"
+    >
       <img src="@/images/game_controls/city.svg" alt="City">
     </button>
-    <button class="game-control-button" :class="{ active: holding === 'road' }" @click="setHolding('road')">
+    <button
+      class="game-control-button"
+      :class="{ active: holding === 'road' }"
+      :disabled="!state.player.enableControls.road"
+      @click="setHolding('road')"
+    >
       <img src="@/images/game_controls/road.svg" alt="Road">
     </button>
-    <button class="game-control-button" @click="buyDevelopmentCard()">
+    <button
+      class="game-control-button"
+      :disabled="!state.player.enableControls.developmentCard"
+      @click="buyDevelopmentCard()"
+    >
       <img src="@/images/game_controls/development_card.svg" alt="Development Card">
     </button>
   </div>
