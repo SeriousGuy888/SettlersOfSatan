@@ -24,13 +24,15 @@
     </div>
     <div class="row-layout">
       <div class="column-layout">
-        <h2>Open Lobbies</h2>
-        <button @click="refreshOpenLobbies(this)">
-          <img src="@/images/icons/refresh.svg" alt="Refresh" class="icon-1em">
-          Refresh
-        </button>
+        <div class="single-line-layout">
+          <h2>Open Lobbies</h2>
+          <button @click="refreshOpenLobbies(this)">
+            <img src="@/images/icons/refresh.svg" alt="Refresh" class="icon-1em">
+            Refresh
+          </button>
+        </div>
 
-        <div class="flex-layout-grid">
+        <div class="flex-layout-grid" v-if="openLobbies.length">
           <div 
             v-for="loopLobby in openLobbies"
             :key="loopLobby"
@@ -44,6 +46,9 @@
             <p>Players: <code>{{ loopLobby.playerCount }}/{{ loopLobby.maxPlayerCount }}</code></p>
           </div>
         </div>
+        <div v-else>
+          <p>No open lobbies that are queueing for a game right now :(</p>
+        </div>
       </div>
     </div>
   </div>
@@ -55,31 +60,34 @@ export default {
     return {
       creatingLobbyName: "",
       joiningLobbyCode: "",
-      openLobbies: null,
+      openLobbies: [],
     }
   },
   methods: {
     joinLobby(code) {
       socket.emit("join_lobby", { code }, (err, data) => {
-        if(err) notifyUser(err)
+        if(err) alert(err)
         else this.$parent.lobbyState = data
       })
     },
     createLobby(name) {
       socket.emit("create_lobby", { name }, (err, data) => {
-        if(err) notifyUser(err)
+        if(err) alert(err)
         else this.$parent.lobbyState = data
       })
     },
     refreshOpenLobbies(self) {
       socket.emit("get_lobbies", { max: 9 }, (err, data) => {
-        if(err) notifyUser(err)
+        if(err) alert(err)
         else {
           const { lobbies } = data
           this.openLobbies = lobbies
         }
       })
     }
+  },
+  mounted() {
+    this.refreshOpenLobbies()
   }
 }
 </script>
