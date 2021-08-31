@@ -15,6 +15,9 @@ import Vertex from "./classes/Vertex.js"
 import Edge from "./classes/Edge.js"
 
 export default {
+  props: {
+    holding: String,
+  },
   data() {
     return {
       state: this.$store.state,

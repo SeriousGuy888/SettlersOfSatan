@@ -16,3 +16,10 @@
   <p id="inv-list">Settlements: 2, Roads: 2, Cities: 0</p>
 </template>
 
+<script>
+export default {
+  props: {
+    holding: String,
+  },
+}
+</script>

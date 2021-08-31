@@ -1,7 +1,7 @@
 <template>
   <div>
-    <LobbyCenterColumnControls />
-    <LobbyCenterColumnCanvas :game="game" :player="player" />
+    <LobbyCenterColumnControls :holding="holding" @setHolding="holding = $event" />
+    <LobbyCenterColumnCanvas :holding="holding" @setHolding="holding = $event" />
   </div>
 </template>
 
@@ -13,6 +13,11 @@ export default {
   components: {
     LobbyCenterColumnCanvas,
     LobbyCenterColumnControls,
+  },
+  data() {
+    return {
+      holding: "",
+    }
   },
 }
 </script>
