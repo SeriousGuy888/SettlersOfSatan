@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     setHolding(holding) {
-      if(!holding) holding = ""
+      if(!holding || holding === this.holding) holding = ""
       this.$emit("setHolding", holding)
     },
   }
