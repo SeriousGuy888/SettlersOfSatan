@@ -69,13 +69,10 @@ export default {
 
       this.refresh()
       ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-      Object.values(this.board).forEach(arr => {
-        arr.forEach(elem => {
-          if(elem.render) {
-            elem.render()
-          }
-        })
-      })
+      const renderElems = (arr) => arr.forEach(e => { if(e.render) e.render() })
+      renderElems(this.board.hexes)
+      renderElems(this.board.edges)
+      renderElems(this.board.vertexes)
     },
     refresh() {
       const { hexes, vertexes, edges } = this.state.game.board
