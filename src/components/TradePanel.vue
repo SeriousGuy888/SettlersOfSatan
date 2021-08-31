@@ -13,7 +13,7 @@
       <div class="trade-icon">
         <img :src="getTradeIcon()" alt="trade">
       </div>
-      <TradePanelInputs @updateAmounts="updateAmounts('taker', $event)" />
+      <TradePanelInputs @updateAmounts="updateAmounts('taker', $event)" :rightSide="true" />
     </div>
 
     <div v-if="tradingAllowed">
