@@ -1,6 +1,6 @@
 <template>
   <div id="lobby-player-list-container">
-    <h3>Players {{ state.lobby.playerCount }}/{{ state.lobby.maxPlayerCount }}</h3>
+    <h3>Players ({{ state.lobby.playerCount }}/{{ state.lobby.maxPlayerCount }})</h3>
     <div id="lobby-player-list">
 
       <div v-for="loopUser in state.lobby.users" :key="loopUser" class="list-entry" :style="`border: 5px solid ${loopUser.colour}`">
