@@ -26,7 +26,7 @@
     <div id="right-column">
       <LobbyTurnControls v-if="state.game" />
       <LobbyChat ref="chat" />
-      <PlayerList :lobbyState="this.$parent.lobbyState" :userIsHost="this.$parent.userIsHost" />
+      <LobbyPlayerList :lobbyState="this.$parent.lobbyState" :userIsHost="this.$parent.userIsHost" />
     </div>
   </div>
 </template>
@@ -37,7 +37,7 @@ import ColourChooser from "./ColourChooser.vue"
 import LobbyCenterColumn from "./LobbyCenterColumn.vue"
 import LobbyLeftColumn from "./LobbyLeftColumn.vue"
 import LobbyTurnControls from "./LobbyTurnControls.vue"
-import PlayerList from "./PlayerList.vue"
+import LobbyPlayerList from "./LobbyPlayerList.vue"
 
 export default {
   props: ["printToChat"],
@@ -47,7 +47,7 @@ export default {
     LobbyChat,
     LobbyLeftColumn,
     LobbyTurnControls,
-    PlayerList,
+    LobbyPlayerList,
   },
   data() {
     return {
