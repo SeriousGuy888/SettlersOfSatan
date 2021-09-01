@@ -3,7 +3,7 @@
     <h3>Players {{ state.lobby.playerCount }}/{{ state.lobby.maxPlayerCount }}</h3>
     <div id="lobby-player-list">
 
-      <div v-for="loopUser in state.lobby.users" :key="loopUser" class="list-entry" :style="`border: 3px solid ${loopUser.colour}`">
+      <div v-for="loopUser in state.lobby.users" :key="loopUser" class="list-entry" :style="`border: 5px solid ${loopUser.colour}`">
         <div class="list-entry-title">
           <img v-if="loopUser.host" src="@/images/icons/host.svg" title="Lobby Host" alt="Lobby Host" class="icon-1em">
           
