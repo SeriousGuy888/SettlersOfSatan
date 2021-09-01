@@ -11,7 +11,7 @@
 import Title from "./components/Title.vue"
 import Login from "./components/Login.vue"
 import JoinLobby from "./components/JoinLobby.vue"
-import Lobby from "./components/Lobby.vue"
+import Lobby from "./components/lobby/Lobby.vue"
 
 export default {
   name: "App",

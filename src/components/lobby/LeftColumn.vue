@@ -1,9 +1,9 @@
 <template>
   <div id="left-column">
-    <LobbyLeftColumnTurnDisplay />
-    <LobbyLeftColumnResourceCards />
+    <TurnDisplay />
+    <ResourceCardsDisplay />
     <Collapsible title="Trade Menu" :startOpen="true">
-      <LobbyLeftColumnTradePanel />
+      <TradePanel />
     </Collapsible>
 
     <br>
@@ -23,19 +23,19 @@
 </template>
 
 <script>
-import Collapsible from "./Collapsible.vue"
+import Collapsible from "../Collapsible.vue"
 import DevelopmentCard from "./DevelopmentCard.vue"
-import LobbyLeftColumnTurnDisplay from "./LobbyLeftColumnTurnDisplay.vue"
-import LobbyLeftColumnResourceCards from "./LobbyLeftColumnResourceCards.vue"
-import LobbyLeftColumnTradePanel from "./LobbyLeftColumnTradePanel.vue"
+import TurnDisplay from "./TurnDisplay.vue"
+import ResourceCardsDisplay from "./ResourceCardsDisplay.vue"
+import TradePanel from "./TradePanel.vue"
 
 export default {
   components: {
     Collapsible,
     DevelopmentCard,
-    LobbyLeftColumnTurnDisplay,
-    LobbyLeftColumnResourceCards,
-    LobbyLeftColumnTradePanel,
+    TurnDisplay,
+    ResourceCardsDisplay,
+    TradePanel,
   },
   data() {
     return {

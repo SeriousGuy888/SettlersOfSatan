@@ -4,7 +4,7 @@
     <button @click="leaveLobby()"><img class="icon-1em" alt="←" src="@/images/icons/leave.svg"> Leave Lobby</button>
   </div>
   <div class="flex-layout-grid">
-    <LobbyLeftColumn v-if="state.game"/>
+    <LeftColumn v-if="state.game"/>
 
     <div id="center-column" class="flex-layout-grid-grow-2">
       <div v-if="!state.game">
@@ -20,34 +20,34 @@
 
         <ColourChooser :printToChat="printToChat" />
       </div>
-      <LobbyCenterColumn v-else />
+      <CenterColumn v-else />
     </div>
 
     <div id="right-column">
-      <LobbyTurnControls v-if="state.game" />
-      <LobbyChat ref="chat" />
-      <LobbyPlayerList :lobbyState="this.$parent.lobbyState" :userIsHost="this.$parent.userIsHost" />
+      <TurnControls v-if="state.game" />
+      <Chat ref="chat" />
+      <PlayerList :lobbyState="this.$parent.lobbyState" :userIsHost="this.$parent.userIsHost" />
     </div>
   </div>
 </template>
 
 <script>
-import LobbyChat from "./LobbyChat.vue"
+import Chat from "./Chat.vue"
 import ColourChooser from "./ColourChooser.vue"
-import LobbyCenterColumn from "./LobbyCenterColumn.vue"
-import LobbyLeftColumn from "./LobbyLeftColumn.vue"
-import LobbyTurnControls from "./LobbyTurnControls.vue"
-import LobbyPlayerList from "./LobbyPlayerList.vue"
+import CenterColumn from "./CenterColumn.vue"
+import LeftColumn from "./LeftColumn.vue"
+import TurnControls from "./TurnControls.vue"
+import PlayerList from "./PlayerList.vue"
 
 export default {
   props: ["printToChat"],
   components: {
     ColourChooser,
-    LobbyCenterColumn,
-    LobbyChat,
-    LobbyLeftColumn,
-    LobbyTurnControls,
-    LobbyPlayerList,
+    CenterColumn,
+    Chat,
+    LeftColumn,
+    TurnControls,
+    PlayerList,
   },
   data() {
     return {

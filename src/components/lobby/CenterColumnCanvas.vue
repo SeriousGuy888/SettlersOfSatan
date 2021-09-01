@@ -180,7 +180,7 @@ export default {
     drawRobber(x, y, w, h) {
       const { ctx } = this
       let robberImg = new Image()
-      robberImg.src = require("../images/robber.png")
+      robberImg.src = require("@/images/robber.png")
       ctx.drawImage(robberImg, x, y, w, h)
     },
     onMouseMove(e) {
