@@ -8,10 +8,7 @@
 
     <div id="center-column" class="flex-layout-grid-grow-2">
       <div v-if="!state.game">
-        <p>
-          Lobby Code: <code>{{ state.lobby.code }}</code>
-          <br>
-        </p>
+        <LobbyCodeDisplay />
         
         <h3>Lobby Settings</h3>
         <div class="lobby-settings-panel">
@@ -36,6 +33,7 @@ import Chat from "./Chat.vue"
 import ColourChooser from "./ColourChooser.vue"
 import CenterColumn from "./CenterColumn.vue"
 import LeftColumn from "./LeftColumn.vue"
+import LobbyCodeDisplay from "./LobbyCodeDisplay.vue"
 import TurnControls from "./TurnControls.vue"
 import PlayerList from "./PlayerList.vue"
 
@@ -46,6 +44,7 @@ export default {
     CenterColumn,
     Chat,
     LeftColumn,
+    LobbyCodeDisplay,
     TurnControls,
     PlayerList,
   },

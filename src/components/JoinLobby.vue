@@ -88,6 +88,10 @@ export default {
   },
   mounted() {
     this.refreshOpenLobbies()
+    
+    const hash = window.location.hash.slice(1)
+    const lobbyCode = hash.replace(/lobby=/i, "")
+    this.joinLobby(lobbyCode)
   }
 }
 </script>
