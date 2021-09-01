@@ -1,10 +1,8 @@
 <template>
-  <div>
-    <Title />
-    <Login />
-    <JoinLobby v-if="loginState.loggedIn && !lobbyState.code" />
-    <Lobby v-if="loginState.loggedIn && lobbyState.code" ref="lobby" :printToChat="printToChat" />
-  </div>
+  <Title />
+  <Login />
+  <JoinLobby v-if="loginState.loggedIn && !lobbyState.code" />
+  <Lobby v-if="loginState.loggedIn && lobbyState.code" ref="lobby" :printToChat="printToChat" />
 </template>
 
 <script>
