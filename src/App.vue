@@ -42,6 +42,14 @@ export default {
   mounted() {
     const state = this.$store.state
 
+    socket.on("kicked_from_lobby", data => {
+      state.lobby = null
+      this.lobbyState = {}
+      if(data.notification) {
+        alert(data.notification)
+      }
+    })
+
     socket.on("lobby_update", data => state.lobby = data)
     socket.on("host_change", data => {
       if(data.lostHost) this.userIsHost = false

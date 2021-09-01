@@ -29,8 +29,8 @@ class User {
     return this.lobbyId
   }
 
-  updateLobbyState(message) {
-    this.getSocket().emit("update_lobby_state", {
+  notifyOfKick(message) {
+    this.getSocket().emit("kicked_from_lobby", {
       notification: message
     })
   }

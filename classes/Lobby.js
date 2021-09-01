@@ -125,7 +125,7 @@ class Lobby {
     
     this.leave(kickedUser.id)
     kickedUser.setLobby(null)
-    kickedUser.updateLobbyState(votekick ? "You were votekicked from that lobby." : "You were kicked from the lobby by the host.")
+    kickedUser.notifyOfKick(votekick ? "You were votekicked from that lobby." : "You were kicked from the lobby by the host.")
     
     this.printToChat([{
       text: votekick ? `${kickedUser.name} was votekicked` : `${kickedUser.name} was kicked by the host`,
