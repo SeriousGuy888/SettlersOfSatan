@@ -58,7 +58,7 @@ export default {
     leaveLobby() {
       if(confirm("Are you sure you want to leave the lobby?")) {
         socket.emit("leave_lobby", {}, (err, data) => {
-          if(err) notifyUser(err)
+          if(err) alert(err)
           else {
             this.$parent.lobbyState = data
             this.state.lobby = null
@@ -69,7 +69,7 @@ export default {
     },
     editLobbySetting(changes) {
       socket.emit("edit_lobby_setting", changes, (err, data) => {
-        if(err) notifyUser(err)
+        if(err) alert(err)
       })
     }
   },
