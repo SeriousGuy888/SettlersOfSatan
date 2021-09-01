@@ -2,7 +2,7 @@
   <div id="turn-controls">
     <button
       @click="onClick()"
-      :disabled="state.game?.turn !== state.player?.id || state.game?.currentAction === 'discard'"
+      :disabled="buttonDisabled"
     >{{ buttonText }}</button>
   </div>
 </template>
@@ -17,9 +17,13 @@ export default {
   methods: {
     onClick() {
       if(this.state.game.ended) {
-        socket.emit("edit_lobby_setting", {
-          backToLobby: true
-        })
+        if(confirm("This will put everyone back in the queueing screen. (Some people might still want to take screenshots.)\nAre you sure?")) {
+          socket.emit("edit_lobby_setting", {
+            backToLobby: true
+          }, (err, data) => {
+            if(err) alert(err)
+          })
+        }
       }
       else {
         const action = this.state.game.currentAction === "roll_dice" ? "roll_dice" : "end_turn"
@@ -29,7 +33,12 @@ export default {
   },
   computed: {
     buttonText() {
-      if(this.state?.game?.turn !== this.state?.player?.id) return "It is not your turn..."
+      if(!this.state?.game) return "aaaaaaaaaaaaaaaaaaaaaa"
+      if(this.state.game.ended)
+        return "Back to Lobby"
+      if(this.state.game.turn !== this.state?.player?.id)
+        return "It is not your turn..."
+      
       switch(this.state.game.currentAction) {
         case "roll_dice":
           return "Roll Dice"
@@ -38,7 +47,12 @@ export default {
         default:
           return "End Turn"
       }
-    }
+    },
+    buttonDisabled() {
+      if(!this.state.game) return true
+      if(this.state.game.ended) return false
+      return this.state.game.turn !== this.state.player?.id || this.state.game.currentAction === 'discard'
+    },
   }
 }
 </script>

@@ -59,6 +59,11 @@ export default {
       if(data.lostHost) this.userIsHost = false
       if(data.gainedHost) this.userIsHost = true
     })
+    socket.on("game_started_update", data => {
+      if(!data.started) {
+        delete state.game
+      }
+    })
     socket.on("game_update", data => {
       if(state.lobby.inGame) {
         state.game = data
