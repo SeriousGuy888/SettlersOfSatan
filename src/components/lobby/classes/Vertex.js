@@ -66,9 +66,7 @@ class Vertex {
     socket.emit("perform_game_action", {
       action: `place_${holding}`,
       coords: this.coords,
-    }, (err, data) => {
-      if(err) notifyUser(err)
-    })
+    }, () => {})
     
     
     if(holding === "settlement" && state.game.turnCycle <= 2) {
