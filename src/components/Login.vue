@@ -9,7 +9,7 @@
       <div class="single-line-input">
         <input v-model="this.$parent.loginState.name" placeholder="Mustacho">
         <button @click="login(false)">
-          <img src="@/images/icons/check.svg" alt="Done" class="icon-1em">
+          <img src="/images/icons/check.svg" alt="Done" class="icon-1em">
         </button>
       </div>
     </div>

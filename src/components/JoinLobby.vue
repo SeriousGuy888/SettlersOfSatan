@@ -7,7 +7,7 @@
         <div class="single-line-input">
           <input v-model="creatingLobbyName" placeholder="Epic Gamer Momebt">
           <button @click="createLobby(creatingLobbyName)">
-            <img src="@/images/icons/plus.svg" alt="Create" class="icon-1em">
+            <img src="/images/icons/plus.svg" alt="Create" class="icon-1em">
           </button>
         </div>
       </div>
@@ -17,7 +17,7 @@
         <div class="single-line-input">
           <input v-model="joiningLobbyCode" placeholder="MURDER" style="text-transform: uppercase;">
           <button @click="joinLobby(joiningLobbyCode)">
-            <img src="@/images/icons/plus.svg" alt="Join" class="icon-1em">
+            <img src="/images/icons/plus.svg" alt="Join" class="icon-1em">
           </button>
         </div>
       </div>
@@ -27,7 +27,7 @@
         <div class="single-line-layout">
           <h2>Open Lobbies</h2>
           <button @click="refreshOpenLobbies(this)">
-            <img src="@/images/icons/refresh.svg" alt="Refresh" class="icon-1em">
+            <img src="/images/icons/refresh.svg" alt="Refresh" class="icon-1em">
             Refresh
           </button>
         </div>

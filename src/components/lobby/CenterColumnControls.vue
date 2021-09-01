@@ -6,7 +6,7 @@
       :disabled="!state.player.enableControls.settlement"
       @click="setHolding('settlement')"
     >
-      <img src="@/images/game_controls/settlement.svg" alt="Settlement">
+      <img src="/images/game_controls/settlement.svg" alt="Settlement">
     </button>
     <button
       class="game-control-button"
@@ -14,7 +14,7 @@
       :disabled="!state.player.enableControls.city"
       @click="setHolding('city')"
     >
-      <img src="@/images/game_controls/city.svg" alt="City">
+      <img src="/images/game_controls/city.svg" alt="City">
     </button>
     <button
       class="game-control-button"
@@ -22,14 +22,14 @@
       :disabled="!state.player.enableControls.road"
       @click="setHolding('road')"
     >
-      <img src="@/images/game_controls/road.svg" alt="Road">
+      <img src="/images/game_controls/road.svg" alt="Road">
     </button>
     <button
       class="game-control-button"
       :disabled="!state.player.enableControls.developmentCard"
       @click="buyDevelopmentCard()"
     >
-      <img src="@/images/game_controls/development_card.svg" alt="Development Card">
+      <img src="/images/game_controls/development_card.svg" alt="Development Card">
     </button>
   </div>
   <p id="inv-list" v-if="state.player">Settlements: {{ state.player.inventory.settlements }}, Roads: {{ state.player.inventory.roads }}, Cities: {{ state.player.inventory.cities }}</p>

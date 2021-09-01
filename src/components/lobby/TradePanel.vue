@@ -68,9 +68,9 @@ export default {
   methods: {
     getTradeIcon() {
       if(this.tradeMode === "discard") {
-        return require(`@/images/icons/discard.svg`)
+        return `/images/icons/discard.svg`
       }
-      return require(`@/images/icons/trade.svg`)
+      return `/images/icons/trade.svg`
     },
     updateAmounts(column, newData) {
       this.amounts[column] = newData

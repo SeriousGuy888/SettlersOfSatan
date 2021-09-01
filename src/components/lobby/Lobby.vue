@@ -1,7 +1,7 @@
 <template>
   <div class="single-line-layout">
     <h2>{{ state.lobby.name }}</h2>
-    <button @click="leaveLobby()"><img class="icon-1em" alt="←" src="@/images/icons/leave.svg"> Leave Lobby</button>
+    <button @click="leaveLobby()"><img class="icon-1em" alt="←" src="/images/icons/leave.svg"> Leave Lobby</button>
   </div>
   <div class="flex-layout-grid">
     <LeftColumn v-if="state.game"/>

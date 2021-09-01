@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     getResourceIcon(resource) {
-      return require(`@/images/resource_cards/${resource}.png`)
+      return `/images/resource_cards/${resource}.png`
     },
     updateAmounts() {
       this.$emit("updateAmounts", this.amounts)

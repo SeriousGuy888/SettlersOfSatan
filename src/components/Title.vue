@@ -1,7 +1,7 @@
 <template>
   <div class="title-container">
     <div class="title-container-top">
-      <img src="@/images/logo/logo.svg?data" alt="logo" id="home-title-logo">
+      <img src="/images/logo/logo.svg?data" alt="logo" id="home-title-logo">
       <h1 class="page-title"><span class="title-satan">Satan</span></h1>
     </div>
     <div class="title-container-links">

@@ -5,7 +5,7 @@
 
       <div v-for="loopUser in state.lobby.users" :key="loopUser" class="list-entry" :style="`border: 5px solid ${loopUser.colour}`">
         <div class="list-entry-title">
-          <img v-if="loopUser.host" src="@/images/icons/host.svg" title="Lobby Host" alt="Lobby Host" class="icon-1em">
+          <img v-if="loopUser.host" src="/images/icons/host.svg" title="Lobby Host" alt="Lobby Host" class="icon-1em">
           
           <h4>{{ loopUser.name }}</h4>
           <span @click="toggleModal(true, loopUser)" class="player-list-modal-button">⋮</span>
@@ -13,11 +13,11 @@
         <div v-if="state.game" class="list-entry-line">
           <div title="Victory Points">
             <p>{{ state.game.players[loopUser.playerId].points }}</p>
-            <img class="icon-1em" src="@/images/icons/victory_point.svg" alt="VP">
+            <img class="icon-1em" src="/icons/victory_point.svg" alt="VP">
           </div>
           <div title="The number of resource cards this player has">
             <p>{{ state.game.players[loopUser.playerId].resourceCardCount }}</p>
-            <img class="icon-1em" src="@/images/icons/resource_cards.svg" alt="Resource Cards">
+            <img class="icon-1em" src="/images/icons/resource_cards.svg" alt="Resource Cards">
           </div>
         </div>
       </div>

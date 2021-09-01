@@ -34,17 +34,9 @@ export default {
   methods: {
     getIcon() {
       if(this.card.type === "knight") {
-        try {
-          return require(`@/images/development_cards/knight_${this.card.knightType}.png`)
-        } catch {
-          return null
-        }
+        return `/images/development_cards/knight_${this.card.knightType}.png`
       }
-      try {
-        return require(`@/images/development_cards/${this.card.type.replaceAll(" ", "_")}.png`)
-      } catch {
-        return null
-      }
+      return `/images/development_cards/${this.card.type.replaceAll(" ", "_")}.png`
     },
     useCard() {
       socket.emit("perform_game_action", {

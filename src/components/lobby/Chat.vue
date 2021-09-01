@@ -27,7 +27,7 @@
     <div class="single-line-input">
       <input v-on:keyup.enter="sendChat()" v-model="chatInput" placeholder="Send a message">
       <button>
-        <img @click="sendChat()" src="@/images/icons/check.svg" alt="Send" class="icon-1em">
+        <img @click="sendChat()" src="/images/icons/check.svg" alt="Send" class="icon-1em">
       </button>
     </div>
   </div>
@@ -54,11 +54,7 @@ export default {
       }
     },
     getDieSrc(die) {
-      try {
-        return require(`@/images/dice/${die}.svg`)
-      } catch {
-        return null
-      }
+      return `/images/dice/${die}.svg`
     },
     sendChat() {
       if(!this.chatInput.trim()) return
