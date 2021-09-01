@@ -1,6 +1,6 @@
 const Inventory = require("./Inventory.js")
-const lobbies = require("../server/lobbies.js")
-const users = require("../server/users.js")
+const lobbies = require("../lobbies.js")
+const users = require("../users.js")
 
 class Player {
   constructor(id, lobbyId, data) {

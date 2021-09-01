@@ -17,9 +17,9 @@ server.listen(port, () => {
 
 const helpers = require("./server/helpers.js")
 
-const Lobby = require("./classes/Lobby.js")
-const User = require("./classes/User.js")
-const Satan = require("./classes/Satan.js")
+const Lobby = require("./server/classes/Lobby.js")
+const User = require("./server/classes/User.js")
+const Satan = require("./server/classes/Satan.js")
 
 const lobbies = require("./server/lobbies.js")
 const users = require("./server/users.js")

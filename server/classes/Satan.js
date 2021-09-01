@@ -1,7 +1,7 @@
 const Board = require("./Board.js")
-const lobbies = require("../server/lobbies.js")
-const constants = require("../server/constants.js")
-const processGameAction = require("../server/functions/processGameAction.js")
+const lobbies = require("../lobbies.js")
+const constants = require("../constants.js")
+const processGameAction = require("../functions/processGameAction.js")
 const { actionTimers, buildingCosts, hexTypesResources } = constants
 
 class Satan {

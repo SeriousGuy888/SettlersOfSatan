@@ -1,4 +1,4 @@
-const lobbies = require("../server/lobbies.js")
+const lobbies = require("../lobbies.js")
 
 class DevelopmentCard {
     constructor(type, lobbyId, playerId, cycleBought) {

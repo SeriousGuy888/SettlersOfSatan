@@ -1,8 +1,8 @@
 const Satan = require("./Satan.js")
 const Player = require("./Player.js")
 
-const users = require("../server/users.js")
-const lobbies = require("../server/lobbies.js")
+const users = require("../users.js")
+const lobbies = require("../lobbies.js")
 
 const { colourChoices } = lobbies
 
