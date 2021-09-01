@@ -14,15 +14,12 @@ module.exports = (app) => {
   app.use(express.raw())
   app.use(express.urlencoded({ extended: true }))
 
-  app.get("/vue", (req, res) => res.sendFile(pathTo("/vue.html")))
   app.use(express.static("dist"))
-  
-  app.use(express.static("old_public"))
+  app.use(express.static("public"))
+
   app.use("/", serverStats)
   app.use("/", infoPages)
-  
   app.get("/settings", (req, res) => res.sendFile(pathTo("/settings.html")))
-
   app.get("/credits", (req, res) => res.redirect("/contributors"))
   app.get("/:oeuf(contributors|kontributeurs)*", (req, res) => res.sendFile(pathTo("/contributors/contributors.html")))
 
