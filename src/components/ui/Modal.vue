@@ -1,12 +1,14 @@
 <template>
-  <div class="modal-backdrop" v-if="visible" @click.self="visible = false">
+  <div class="modal-backdrop" v-if="visible" @click.self="close()">
     <div class="modal-content">
-      <span @click="visible = false" class="modal-close">×</span>
+      <span @click="close()" class="modal-close">×</span>
 
-      <h3 class="modal-title">{{ title }}</h3>
+      <h3 v-if="title" class="modal-title">{{ title }}</h3>
       <p><slot></slot></p>
       <div class="modal-buttons">
-        <slot name="buttons"></slot>
+        <slot name="buttons">
+          <button @click="close()">Okay</button>
+        </slot>
       </div>
     </div>
   </div>
@@ -22,6 +24,11 @@ export default {
       visible: false,
     }
   },
+  methods: {
+    close() {
+      this.visible = false
+    },
+  }
 }
 </script>
 

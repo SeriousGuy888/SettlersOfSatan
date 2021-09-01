@@ -3,6 +3,9 @@
   <Login />
   <JoinLobby v-if="loginState.loggedIn && !lobbyState.code" />
   <Lobby v-if="loginState.loggedIn && lobbyState.code" ref="lobby" :printToChat="printToChat" />
+  <Modal ref="modal">
+    {{ modalMessage }}
+  </Modal>
 </template>
 
 <script>
@@ -10,6 +13,7 @@ import Title from "./components/Title.vue"
 import Login from "./components/Login.vue"
 import JoinLobby from "./components/JoinLobby.vue"
 import Lobby from "./components/lobby/Lobby.vue"
+import Modal from "./components/ui/Modal.vue"
 
 export default {
   name: "App",
@@ -18,6 +22,7 @@ export default {
     Login,
     JoinLobby,
     Lobby,
+    Modal,
   },
   data() {
     return {
@@ -30,6 +35,7 @@ export default {
       lobby: {},
       game: null,
       player: null,
+      modalMessage: "",
     }
   },
   methods: {
@@ -44,10 +50,10 @@ export default {
       state.lobby = null
       this.lobbyState = {}
       if(data.notification) {
-        alert(data.notification)
+        this.modalMessage = data.notification
+        this.$refs.modal.visible = true
       }
     })
-
     socket.on("lobby_update", data => state.lobby = data)
     socket.on("host_change", data => {
       if(data.lostHost) this.userIsHost = false
