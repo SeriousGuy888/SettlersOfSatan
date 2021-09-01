@@ -88,3 +88,15 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+  .player-list-modal-button {
+    width: 1em;
+    margin-left: auto;
+    user-select: none;
+    text-align: center;
+  }
+  .player-list-modal-button:hover {
+    cursor: pointer;
+  }
+</style>

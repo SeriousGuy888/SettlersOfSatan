@@ -12,7 +12,6 @@ import "./styles/collapsible.css"
 import "./styles/columns.css"
 import "./styles/honeycomb.css"
 import "./styles/layouts.css"
-import "./styles/modal.css"
 
 const store = createStore({
   state() {
