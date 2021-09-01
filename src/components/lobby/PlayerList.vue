@@ -13,7 +13,7 @@
         <div v-if="state.game" class="list-entry-line">
           <div title="Victory Points">
             <p>{{ state.game.players[loopUser.playerId].points }}</p>
-            <img class="icon-1em" src="/icons/victory_point.svg" alt="VP">
+            <img class="icon-1em" src="/images/icons/victory_point.svg" alt="VP">
           </div>
           <div title="The number of resource cards this player has">
             <p>{{ state.game.players[loopUser.playerId].resourceCardCount }}</p>
