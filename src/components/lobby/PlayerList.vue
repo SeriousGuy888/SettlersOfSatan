@@ -23,48 +23,49 @@
       </div>
 
 
-      <div v-if="playerListModal.show" class="modal">
-        <div class="modal-content">
-          <span @click="toggleModal(false)" class="modal-close">&times;</span>
-          <h3 class="modal-title">{{ playerListModal.data.name }}</h3>
-          <div class="modal-buttons">
-            <button
-              @click="kickPlayer(playerListModal.data.playerId, false)"
-              v-if="userIsHost && !playerListModal.data.host"
-              class="red-button">
-              Kick
-            </button>
-            <button
-              @click="kickPlayer(playerListModal.data.playerId, true)"
-              v-if="lobbyState.playerId !== playerListModal.data.playerId">
-              Votekick
-            </button>
-            <button @click="copyPlayerId($event, playerListModal.data.playerId)">Copy Player ID</button>
-          </div>
-        </div>
-      </div>
+      <Modal ref="modal" :title="playerListModal?.data?.name || 'playername here'">
+        Quack!
+        <template v-slot:buttons>
+          <button
+            @click="kickPlayer(playerListModal.data.playerId, false)"
+            v-if="userIsHost && !playerListModal.data.host"
+            class="red-button">
+            Kick
+          </button>
+          <button
+            @click="kickPlayer(playerListModal.data.playerId, true)"
+            v-if="lobbyState.playerId !== playerListModal.data.playerId">
+            Votekick
+          </button>
+          <button @click="copyPlayerId($event, playerListModal.data.playerId)">Copy Player ID</button>
+        </template>
+      </Modal>
     </div>
   </div>
 </template>
 
 <script>
+import Modal from "../ui/Modal.vue"
+
 export default {
   props: {
     lobbyState: Object,
     userIsHost: Boolean,
   },
+  components: {
+    Modal,
+  },
   data() {
     return {
       state: this.$store.state,
       playerListModal: {
-        show: false,
-        data: null
+        data: null,
       },
     }
   },
   methods: {
     toggleModal(active, data) {
-      this.playerListModal.show = active
+      this.$refs.modal.visible = active
       this.playerListModal.data = data
     },
     copyPlayerId(e, id) {
