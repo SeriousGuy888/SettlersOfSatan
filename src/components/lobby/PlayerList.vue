@@ -80,9 +80,7 @@ export default {
       if(confirm(`${votekick ? "Votekick" : "Kick"} this player?`)) {
         socket.emit(votekick ? "votekick_player" : "kick_player", {
           playerId
-        }, (err, data) => {
-          if(err) notifyUser(err)
-        })
+        }, () => {})
       }
     },
   },
