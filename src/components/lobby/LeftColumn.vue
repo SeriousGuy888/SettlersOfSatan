@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import Collapsible from "../Collapsible.vue"
+import Collapsible from "../ui/Collapsible.vue"
 import DevelopmentCard from "./DevelopmentCard.vue"
 import TurnDisplay from "./TurnDisplay.vue"
 import ResourceCardsDisplay from "./ResourceCardsDisplay.vue"
