@@ -26,7 +26,8 @@ export default {
   methods: {
     login(logout) {
       if(logout) {
-        window.location.reload()
+        if(confirm("Logout?"))
+          window.location.reload()
         // socket.emit("logout", null, (err, data) => {
         //   console.log(err)
         //   if(!err) {
