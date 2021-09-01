@@ -3,7 +3,7 @@
     <LobbyLeftColumnTurnDisplay />
     <ResourceCardDisplay />
     <Collapsible title="Trade Menu" :startOpen="true">
-      <TradePanel />
+      <LobbyLeftColumnTradePanel />
     </Collapsible>
 
     <br>
@@ -27,7 +27,7 @@ import Collapsible from "./Collapsible.vue"
 import DevelopmentCard from "./DevelopmentCard.vue"
 import LobbyLeftColumnTurnDisplay from "./LobbyLeftColumnTurnDisplay.vue"
 import ResourceCardDisplay from "./ResourceCardDisplay.vue"
-import TradePanel from "./TradePanel.vue"
+import LobbyLeftColumnTradePanel from "./LobbyLeftColumnTradePanel.vue"
 
 export default {
   components: {
@@ -35,7 +35,7 @@ export default {
     DevelopmentCard,
     LobbyLeftColumnTurnDisplay,
     ResourceCardDisplay,
-    TradePanel,
+    LobbyLeftColumnTradePanel,
   },
   data() {
     return {

@@ -26,6 +26,7 @@ export default {
   },
   mounted() {
     setInterval(() => {
+      if(!this.state.game) return
       this.remainingTime = Math.round((this.state.game.turnCountdownTo - Date.now()) / 1000)
     }, 1000)
   },

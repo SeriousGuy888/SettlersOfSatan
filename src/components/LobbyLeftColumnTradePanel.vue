@@ -93,6 +93,7 @@ export default {
   },
   computed: {
     requiredDiscardCount() {
+      if(!this.state.game) return 0
       return this.state.game.discardingPlayers[this.state.player.id]
     },
     tradingAllowed() {

@@ -61,8 +61,8 @@ export default {
           if(err) notifyUser(err)
           else {
             this.$parent.lobbyState = data
-            state.lobby = null
-            state.game = null
+            this.state.lobby = null
+            this.state.game = null
           }
         })
       }
