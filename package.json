@@ -5,10 +5,10 @@
   "main": "server.js",
   "scripts": {
     "test": "nodemon .",
-    "start": "node .",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "watchbuild": "nodemon --watch src -e vue,js --exec npm run build"
+    "watch": "nodemon --watch src -e vue,js,html,css --exec npm run build",
+    "start": "npm run build && node ."
   },
   "repository": {
     "type": "git",
