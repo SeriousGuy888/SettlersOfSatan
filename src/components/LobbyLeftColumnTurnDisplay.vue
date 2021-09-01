@@ -37,3 +37,28 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+  #turn-data-display {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25em;
+  }
+  #turn-data-display > div {
+    flex: 1 0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    border: 3px solid var(--theme-game-display-1);
+    background-color: var(--theme-game-display-2);
+    padding: 0.5em 0.25em;
+    border-radius: 3px;
+  }
+  #turn-data-display > div > * {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+  }
+</style>
