@@ -8,7 +8,7 @@
     >
       <img :src="getResourceIcon(resource)" :alt="resource">
       <h3 class="resource">
-        {{ state.player ? state.player.resources[resource] : 0 }} [{{ state.game ? state.game.stockpile[resource] : 0 }}]
+        {{ getResourcePlayerAmt(resource) }} [{{ state.game ? state.game.stockpile[resource] : 0 }}]
       </h3>
     </div>
   </div>
@@ -25,13 +25,17 @@ export default {
         "wool",
         "wheat",
         "ore",
-      ]
+      ],
     }
   },
   methods: {
     getResourceIcon(resource) {
       return `/images/resource_cards/${resource}.png`
-    }
+    },
+    getResourcePlayerAmt(resource) {
+      if(!this.state.player) return 0
+      return this.state.player.resources[resource]
+    },
   },
 }
 </script>
