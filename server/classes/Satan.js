@@ -337,7 +337,7 @@ class Satan {
   }
 
   setTurnTimer(seconds) {
-    this.turnCountdownTo = new Date().setTime(new Date().getTime() + ((seconds + 1) * 1000))
+    this.turnCountdownTo = new Date().setTime(new Date().getTime() + seconds * 1000)
   }
   nextTurn() {
     const reversedCycle = this.turnCycle === 2
