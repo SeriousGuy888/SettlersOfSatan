@@ -47,3 +47,54 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+  .card {
+    height: max-content;
+    padding: 0.25em 1.5em;
+    border-radius: 16px;
+    border: 3px solid var(--theme-game-display-1);
+    background-color: var(--theme-game-display-2);
+    display: flex;
+    flex-direction: column;
+    transition: .2s;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .card:hover ~.card { transform: translateY(0.2em); }
+  .card:hover {
+    transform: translateY(-0.4em);
+    z-index: 2;
+  }
+
+  .card:not(:hover) #use-card-button { visibility: hidden; }
+  .card:last-child #use-card-button { visibility: visible; }
+
+  .card:not(:first-child) {
+    margin-top: -3em;
+  }
+
+  .card .card-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.2em;
+  }
+  .card .card-header .card-icon {
+    width: 4em;
+    height: 4em;
+  }
+  .card p { font-size: 0.8em; }
+  .card-header h2 {
+    font-size: 20px;
+    margin: .25rem 0 auto;
+    text-decoration: none;
+    color: inherit;
+    border: 0;
+    display: inline-block;
+    cursor: pointer;
+  }
+</style>
