@@ -25,14 +25,18 @@ export default {
     }
   },
   mounted() {
-    setInterval(() => {
+    setInterval(this.updateRemainingTime, 1000)
+  },
+  methods: {
+    updateRemainingTime() {
       if(!this.state.game) return
       this.remainingTime = Math.round((this.state.game.turnCountdownTo - Date.now()) / 1000)
-    }, 1000)
+    },
   },
   computed: {
     timerHeader() {
       if(this.state.game.ended) return "Game Over"
+      this.updateRemainingTime()
       return this.actionNames[this.state.game.currentAction]
     },
   },
