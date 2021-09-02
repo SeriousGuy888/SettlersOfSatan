@@ -64,17 +64,18 @@ export default {
     }
   },
   methods: {
+    enterLobbyCallback(err, data) {
+      if(err) alert(err)
+      else {
+        this.$parent.lobbyState = data
+        window.location.hash = ""
+      }
+    },
     joinLobby(code) {
-      socket.emit("join_lobby", { code }, (err, data) => {
-        if(err) alert(err)
-        else this.$parent.lobbyState = data
-      })
+      socket.emit("join_lobby", { code }, this.enterLobbyCallback)
     },
     createLobby(name) {
-      socket.emit("create_lobby", { name }, (err, data) => {
-        if(err) alert(err)
-        else this.$parent.lobbyState = data
-      })
+      socket.emit("create_lobby", { name }, this.enterLobbyCallback)
     },
     refreshOpenLobbies(self) {
       socket.emit("get_lobbies", { max: 9 }, (err, data) => {
@@ -91,7 +92,7 @@ export default {
     
     const hash = window.location.hash.slice(1)
     const lobbyCode = hash.replace(/lobby=/i, "")
-    this.joinLobby(lobbyCode)
+    if(lobbyCode) this.joinLobby(lobbyCode)
   }
 }
 </script>
