@@ -81,6 +81,3 @@ body.dark-theme #lobby-chat-messages > div p  { filter: brightness(175%); }
 .collapsible-active, .collapsible:hover {
   background-color: var(--theme-game-display-1);
 }
-
-
-.modal-content { background-color: var(--theme-bg); }

@@ -46,6 +46,7 @@ export default {
   }
 
   .modal-content {
+    background-color: var(--theme-bg);
     margin: 15% auto;
     padding: 1em 2em 1.5em;
     border-radius: 10px;
