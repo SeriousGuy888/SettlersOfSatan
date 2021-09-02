@@ -14,9 +14,7 @@
           v-for="card in state.player.inventory.developmentCards"
           :key="card"
           :card="card"
-          class="card"
-        >
-        </DevelopmentCard>
+        />
       </div>
     </Collapsible>
   </div>
