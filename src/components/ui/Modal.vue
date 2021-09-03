@@ -1,5 +1,5 @@
 <template>
-  <transition name="modal-bounce">
+  <transition name="modal-fade">
     <div class="modal-backdrop" v-if="visible" @click.self="close()">
       <div class="modal-window">
         <span @click="close()" class="modal-close">×</span>
@@ -82,11 +82,10 @@ export default {
   }
 
   /* thieved from https://v3.vuejs.org/guide/transitions-enterleave.html#css-animations lol */
-  .modal-bounce-enter-active { animation: modal-bounce 300ms ease-out both; }
-  .modal-bounce-leave-active { animation: modal-bounce 300ms reverse ease-in both; }
-  @keyframes modal-bounce {
-    0% { transform: scale(0.95); background-color: transparent; }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); background-color: #0008; }
+  .modal-fade-enter-active { animation: modal-fade 100ms ease-out both; }
+  .modal-fade-leave-active { animation: modal-fade 100ms reverse ease-in both; }
+  @keyframes modal-fade {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
   }
 </style>
