@@ -32,9 +32,6 @@ export default {
       },
       userIsHost: false,
       lobbyState: {},
-      lobby: {},
-      game: null,
-      player: null,
       modalMessage: "",
     }
   },
