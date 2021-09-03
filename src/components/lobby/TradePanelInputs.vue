@@ -66,7 +66,7 @@ export default {
       if(this.tradeMode === "stockpile" && Object.values(this.amounts).filter(e => e > 0).length > 1) {
         this.wipe()
       }
-      if(this.state.game.trade.offer) {
+      if(this.state.game && this.state.game.trade.offer) {
         this.amounts = this.state.game.trade.offer[this.tradeParty]
       }
     }, 1000)
