@@ -12,6 +12,7 @@
       <TradePanelInputs
         @updateAmounts="updateAmounts('offerer', $event)"
         :tradeMode="tradeMode"
+        tradeParty="offerer"
       />
       <div class="trade-icon">
         <img :src="getTradeIcon()" alt="trade">
@@ -21,6 +22,7 @@
         v-if="this.tradeMode !== 'discard'"
         :tradeMode="tradeMode"
         :rightSide="true"
+        tradeParty="taker"
       />
     </div>
 

@@ -26,6 +26,7 @@
 <script>
 export default {
   props: {
+    tradeParty: String,
     rightSide: Boolean,
     tradeMode: String,
   },
@@ -64,6 +65,9 @@ export default {
     setInterval(() => {
       if(this.tradeMode === "stockpile" && Object.values(this.amounts).filter(e => e > 0).length > 1) {
         this.wipe()
+      }
+      if(this.state.game.trade.offer) {
+        this.amounts = this.state.game.trade.offer[this.tradeParty]
       }
     }, 1000)
   },
