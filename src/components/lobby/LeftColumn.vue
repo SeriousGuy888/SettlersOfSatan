@@ -2,7 +2,7 @@
   <div id="left-column">
     <TurnDisplay />
     <ResourceCardsDisplay />
-    <Collapsible title="Trade Menu" :startOpen="true">
+    <Collapsible :title="`Trade ${state.game.trade.offer ? '(Active Offer)' : ''}`" :startOpen="true">
       <TradePanel />
     </Collapsible>
 
