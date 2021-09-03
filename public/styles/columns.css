@@ -3,37 +3,6 @@
   margin-bottom: 2em;
 }
 
-#game-controls {
-  display: flex;
-  align-content: flex-start;
-  justify-content: center;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 3px;
-  padding: 0 0.5em;
-}
-.game-control-button {
-  display: flex;
-  flex: 1 0 4em;
-  height: 4em;
-  padding: 1em;
-  align-items: center;
-  justify-content: center;
-}
-.game-control-button.active {
-  border: 3px solid var(--theme-select-1);
-  background-color: var(--theme-select-2);
-}
-.game-control-button > img {
-  height: 2.5em;
-  width: 2.5em;
-}
-
-#inv-list {
-  font-size: 18px;
-  text-align: center;
-}
-
 #development-card-toggle:hover {
   cursor: pointer;
   user-select: none;
