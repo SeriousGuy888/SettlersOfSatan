@@ -26,7 +26,7 @@
       <div class="column-layout">
         <div class="single-line-layout">
           <h2>Open Lobbies</h2>
-          <button @click="refreshOpenLobbies(this)">
+          <button @click="refreshOpenLobbies(this)" :disabled="disableOpenLobbiesButton">
             <img src="/images/icons/refresh.svg" alt="Refresh" class="icon-1em">
             Refresh
           </button>
@@ -61,6 +61,7 @@ export default {
       creatingLobbyName: "",
       joiningLobbyCode: "",
       openLobbies: [],
+      disableOpenLobbiesButton: false,
     }
   },
   methods: {
@@ -77,7 +78,11 @@ export default {
     createLobby(name) {
       socket.emit("create_lobby", { name }, this.enterLobbyCallback)
     },
-    refreshOpenLobbies(self) {
+    refreshOpenLobbies() {
+      // make it look like the button is loading for a bit of time just because
+      this.disableOpenLobbiesButton = true
+      setTimeout(() => { this.disableOpenLobbiesButton = false }, 300)
+
       socket.emit("get_lobbies", { max: 9 }, (err, data) => {
         if(err) alert(err)
         else {
