@@ -4,7 +4,10 @@
       v-for="resource in resourceNames"
       :key="resource"
       class="resource-card"
-      id="resource-bricks"
+      :class="{
+        'green-pulse': shouldPulse(resource, true),
+        'red-pulse': shouldPulse(resource, false),
+      }"
     >
       <img :src="getResourceIcon(resource)" :alt="resource">
       <h3 class="resource">
@@ -36,6 +39,14 @@ export default {
       if(!this.state.player) return 0
       return this.state.player.resources[resource]
     },
+    shouldPulse(resource, green) {
+      if(!this.state.player || !this.state.playerPrev) return false
+
+      const curr = this.state.player.resources[resource]
+      const prev = this.state.playerPrev.resources[resource]
+      if(green) return (curr > prev)
+      else return (curr < prev)
+    }
   },
 }
 </script>

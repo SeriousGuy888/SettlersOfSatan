@@ -81,6 +81,7 @@ export default {
     })
     socket.on("player_update", data => {
       if(state.lobby.inGame) {
+        state.playerPrev = state.player
         state.player = data
       }
     })
