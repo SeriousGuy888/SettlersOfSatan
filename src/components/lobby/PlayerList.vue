@@ -6,8 +6,9 @@
       <div v-for="loopUser in state.lobby.users" :key="loopUser" class="list-entry" :style="`border: 5px solid ${loopUser.colour}`">
         <div class="list-entry-title">
           <HostIcon v-if="loopUser.host" />
-          
           <h4>{{ loopUser.name }}</h4>
+          <button v-if="shouldShowTradeButton(loopUser.playerId)" @click="confirmTrade(loopUser.playerId)">Trade</button>
+
           <span @click="toggleModal(true, loopUser)" class="player-list-modal-button">⋮</span>
         </div>
         <div v-if="state.game" class="list-entry-line">
@@ -89,6 +90,16 @@ export default {
         }, () => {})
       }
     },
+    shouldShowTradeButton(playerId) {
+      if(!this.state.player || !this.state.game) return false
+      return (this.state.game.turn === this.state.player.id && this.state.game.trade.offer && this.state.game.trade.takers.includes(playerId))
+    },
+    confirmTrade(playerId) {
+      socket.emit("perform_game_action", {
+        action: "confirm_trade",
+        tradeWith: playerId,
+      }, console.log)
+    }
   },
 }
 </script>

@@ -89,7 +89,7 @@ export default {
     acceptTrade() {
       socket.emit("perform_game_action", {
         action: "accept_trade",
-        idempotency: state.game.trade.idempotency,
+        idempotency: this.state.game.trade.idempotency,
       }, () => {})
     },
   },
