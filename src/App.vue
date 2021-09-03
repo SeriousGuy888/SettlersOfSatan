@@ -4,7 +4,10 @@
   <JoinLobby v-if="loginState.loggedIn && !lobbyState.code" />
   <Lobby v-if="loginState.loggedIn && lobbyState.code" ref="lobby" :printToChat="printToChat" />
   <Modal ref="modal" title="Alert">
-    {{ modalMessage }}
+    {{ modal.message }}
+    <template v-slot:buttons>
+      <button @click="reload()">Reload</button>
+    </template>
   </Modal>
 </template>
 
@@ -32,16 +35,23 @@ export default {
       },
       userIsHost: false,
       lobbyState: {},
-      modalMessage: "",
+      modal: {
+        message: "",
+        reloadButton: false,
+      },
     }
   },
   methods: {
     printToChat(lines) {
       this.$refs?.lobby?.$refs?.chat?.print(lines)
     },
-    showModal(msg) {
-      this.modalMessage = msg
+    showModal(msg, reloadButton) {
+      this.modal.message = msg
+      this.modal.reloadButton = !!reloadButton
       this.$refs.modal.visible = true
+    },
+    reload() {
+      window.location.reload()
     },
   },
   mounted() {
@@ -77,7 +87,7 @@ export default {
     socket.on("receive_chat", data => this.printToChat(data.lines))
 
     socket.on("disconnect", () => {
-      this.showModal("You were disconnected from game server! Reload to reconnect.")
+      this.showModal("You were disconnected from game server! Reload to reconnect.", true)
     })
   },
 }
