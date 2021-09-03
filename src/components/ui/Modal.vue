@@ -37,6 +37,9 @@ export default {
 <style>
   .modal-backdrop {
     position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     z-index: 1;
     left: -50%;
     top: -50%;
@@ -49,10 +52,9 @@ export default {
   .modal-window {
     background-color: var(--theme-bg);
     border: 3px solid var(--theme-border);
-    margin: 20% auto;
     padding: 1em 2em 1.5em;
     border-radius: 10px;
-    width: calc(max(50vw, 300px));
+    width: calc(max(50vw, 250px));
   }
 
   .modal-close {
