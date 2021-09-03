@@ -12,6 +12,9 @@
 </template>
 
 <script>
+import { useSound } from "@vueuse/sound"
+import fifteenSecondsLeft from "../../sounds/fifteen_seconds_left.wav"
+
 export default {
   data() {
     return {
@@ -27,10 +30,19 @@ export default {
   mounted() {
     setInterval(this.updateRemainingTime, 1000)
   },
+  setup() {
+    return {
+      fifteenSecondsLeft: useSound(fifteenSecondsLeft, { volume: 0.5 }),
+    }
+  },
   methods: {
     updateRemainingTime() {
       if(!this.state.game) return
       this.remainingTime = Math.round((this.state.game.turnCountdownTo - Date.now()) / 1000)
+      
+      if(this.state.game.currentAction === "build" && this.remainingTime === 15) {
+        this.fifteenSecondsLeft.play()
+      }
     },
   },
   computed: {
