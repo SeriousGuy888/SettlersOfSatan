@@ -5,7 +5,7 @@
   <Lobby v-if="loginState.loggedIn && lobbyState.code" ref="lobby" :printToChat="printToChat" />
   <Modal ref="modal" title="Alert">
     {{ modal.message }}
-    <template v-slot:buttons>
+    <template v-if="modal.reloadButton" v-slot:buttons>
       <button @click="reload()">Reload</button>
     </template>
   </Modal>
