@@ -42,6 +42,10 @@ export default {
     printToChat(lines) {
       this.$refs?.lobby?.$refs?.chat?.print(lines)
     },
+    showModal(msg) {
+      this.modalMessage = msg
+      this.$refs.modal.visible = true
+    },
   },
   mounted() {
     const state = this.$store.state
@@ -50,8 +54,7 @@ export default {
       state.lobby = null
       this.lobbyState = {}
       if(data.notification) {
-        this.modalMessage = data.notification
-        this.$refs.modal.visible = true
+        this.showModal(data.notification)
       }
     })
     socket.on("lobby_update", data => state.lobby = data)
@@ -75,6 +78,10 @@ export default {
       }
     })
     socket.on("receive_chat", data => this.printToChat(data.lines))
+
+    socket.on("disconnect", () => {
+      this.showModal("You were disconnected from game server! Reload to reconnect.")
+    })
   },
 }
 </script>
