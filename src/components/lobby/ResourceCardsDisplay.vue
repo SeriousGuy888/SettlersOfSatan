@@ -10,9 +10,8 @@
       }"
     >
       <img :src="getResourceIcon(resource)" :alt="resource">
-      <h3 class="resource">
-        {{ getResourcePlayerAmt(resource) }} [{{ state.game ? state.game.stockpile[resource] : 0 }}]
-      </h3>
+      <h3 :title="`You have this many ${resource} cards.`">{{ getResourcePlayerAmt(resource) }}</h3>
+      <p :title="`The bank has this many ${resource} cards.`">{{ state.game ? state.game.stockpile[resource] : 0 }}</p>
     </div>
   </div>
 </template>
