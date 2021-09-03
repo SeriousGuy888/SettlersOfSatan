@@ -6,7 +6,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test": "nodemon -e vue,js,html,css --exec npm run start",
+    "test": "nodemon --watch src --watch server --watch public -e vue,js,html,css --exec npm run start",
     "start": "npm run build && node ."
   },
   "repository": {
