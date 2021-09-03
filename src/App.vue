@@ -3,7 +3,7 @@
   <Login />
   <JoinLobby v-if="loginState.loggedIn && !lobbyState.code" />
   <Lobby v-if="loginState.loggedIn && lobbyState.code" ref="lobby" :printToChat="printToChat" />
-  <Modal ref="modal">
+  <Modal ref="modal" title="Alert">
     {{ modalMessage }}
   </Modal>
 </template>
