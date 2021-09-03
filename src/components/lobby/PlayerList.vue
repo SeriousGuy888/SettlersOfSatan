@@ -7,7 +7,8 @@
         <div class="list-entry-title">
           <HostIcon v-if="loopUser.host" />
           <h4>{{ loopUser.name }}</h4>
-          <button v-if="shouldShowTradeButton(loopUser.playerId)" @click="confirmTrade(loopUser.playerId)">Trade</button>
+          <button v-if="shouldShowButton(loopUser.playerId, 'trade')" @click="confirmTrade(loopUser.playerId)">Trade</button>
+          <button v-if="shouldShowButton(loopUser.playerId, 'rob')" @click="rob(loopUser.playerId)">Rob</button>
 
           <span @click="toggleModal(true, loopUser)" class="player-list-modal-button">⋮</span>
         </div>
@@ -90,16 +91,28 @@ export default {
         }, () => {})
       }
     },
-    shouldShowTradeButton(playerId) {
+    shouldShowButton(playerId, button) {
       if(!this.state.player || !this.state.game) return false
-      return (this.state.game.turn === this.state.player.id && this.state.game.trade.offer && this.state.game.trade.takers.includes(playerId))
+      if(this.state.game.turn !== this.state.player.id) return false
+
+      if(button === "trade") {
+        return (this.state.game.trade.offer && this.state.game.trade.takers.includes(playerId))
+      } else if(button === "rob") {
+        return (this.state.game.players[playerId].canBeRobbed)
+      }
     },
     confirmTrade(playerId) {
       socket.emit("perform_game_action", {
         action: "confirm_trade",
         tradeWith: playerId,
       }, console.log)
-    }
+    },
+    rob(playerId) {
+      socket.emit("perform_game_action", {
+        action: "rob_player",
+        robFrom: playerId,
+      }, console.log)
+    },
   },
 }
 </script>
