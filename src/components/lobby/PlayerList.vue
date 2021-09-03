@@ -5,7 +5,7 @@
 
       <div v-for="loopUser in state.lobby.users" :key="loopUser" class="list-entry" :style="`border: 5px solid ${loopUser.colour}`">
         <div class="list-entry-title">
-          <img v-if="loopUser.host" src="/images/icons/host.svg" title="Lobby Host" alt="Lobby Host" class="icon-1em">
+          <HostIcon v-if="loopUser.host" />
           
           <h4>{{ loopUser.name }}</h4>
           <span @click="toggleModal(true, loopUser)" class="player-list-modal-button">⋮</span>
@@ -24,7 +24,11 @@
 
 
       <Modal ref="modal" :title="playerListModal?.data?.name || 'playername here'">
-        Quack!
+        <div v-if="playerListModal.data.host">
+          <HostIcon />
+          Lobby Host
+        </div>
+        
         <template v-slot:buttons>
           <button
             @click="kickPlayer(playerListModal.data.playerId, false)"
@@ -46,6 +50,7 @@
 
 <script>
 import Modal from "../ui/Modal.vue"
+import HostIcon from "./HostIcon.vue"
 
 export default {
   props: {
@@ -54,6 +59,7 @@ export default {
   },
   components: {
     Modal,
+    HostIcon,
   },
   data() {
     return {
