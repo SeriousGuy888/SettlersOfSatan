@@ -7,10 +7,11 @@
         <div class="list-entry-title">
           <HostIcon v-if="loopUser.host" />
           <h4>{{ loopUser.name }}</h4>
+          <span @click="toggleModal(true, loopUser)" class="player-list-modal-button">⋮</span>
+        </div>
+        <div class="list-entry-line">
           <button v-if="shouldShowButton(loopUser.playerId, 'trade')" @click="confirmTrade(loopUser.playerId)">Trade</button>
           <button v-if="shouldShowButton(loopUser.playerId, 'rob')" @click="rob(loopUser.playerId)">Rob</button>
-
-          <span @click="toggleModal(true, loopUser)" class="player-list-modal-button">⋮</span>
         </div>
         <div v-if="state.game" class="list-entry-line">
           <div title="Victory Points">
