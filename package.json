@@ -4,10 +4,9 @@
   "description": "offbrand catan",
   "main": "server.js",
   "scripts": {
-    "test": "nodemon .",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "watch": "nodemon --watch src -e vue,js,html,css --exec npm run build",
+    "test": "nodemon --watch src -e vue,js,html,css --exec npm run start",
     "start": "npm run build && node ."
   },
   "repository": {
