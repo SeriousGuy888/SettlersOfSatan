@@ -37,8 +37,9 @@ export default {
   text-align: left;
   border: 3px solid var(--theme-game-display-1);
   background-color: var(--theme-game-display-2);
-
   margin-top: 0.5em;
+  display: flex;
+  justify-content: space-between;
 }
 .collapsible-active,
 .collapsible:hover {
@@ -46,8 +47,6 @@ export default {
 }
 .collapsible::after {
   content: "\25BC";
-  float: right;
-  margin-left: 5px;
 }
 .collapsible-active::after { content: "\25B2"; }
 .collapsible-active { border-radius: 5px 5px 0 0; }
