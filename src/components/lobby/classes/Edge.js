@@ -65,7 +65,7 @@ class Edge {
       coordsArr: this.coordsArr,
     }, () => {})
 
-    if(state.game.roadBuilding < 2) setHolding(null)
+    setHolding(null)
   }
 }
 

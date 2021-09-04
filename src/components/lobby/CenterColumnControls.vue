@@ -57,13 +57,14 @@ export default {
   mounted() {
     socket.on("game_update", data => {
       if(data.turnTick) {
-        if(this.state.game.turn === this.state.player.id && this.state.game.turnCycle <= 2) {
+        if(data.turn === this.state.player.id && data.turnCycle <= 2) {
           this.setHolding("settlement")
-        } else if(this.state.game.roadBuilding) {
-          this.setHolding("road")
         } else {
           this.setHolding(null)
         }
+      }
+      if(data.roadBuilding) {
+        this.setHolding("road")
       }
     })
   },
