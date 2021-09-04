@@ -8,7 +8,7 @@
 
     <br>
     
-    <Collapsible :title="`Development Cards (${state.player.inventory.developmentCards.length})`">
+    <Collapsible v-if="state.player" :title="`Development Cards (${state.player.inventory.developmentCards.length})`">
       <div id="development-card-list">
         <DevelopmentCard
           v-for="card in state.player.inventory.developmentCards"
