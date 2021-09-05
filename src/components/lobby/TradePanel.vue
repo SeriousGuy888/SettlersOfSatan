@@ -3,7 +3,7 @@
     <div v-if="tradingAllowed" id="trade-interface">
       <p id="trade-offerer-name">{{ state.game.players[state.game.turn].name }}</p>
       <br>
-      <select v-model="tradeMode" :disabled="tradeMode === 'discard'">
+      <select v-model="tradeMode" :disabled="tradeMode === 'discard' || tradeMode === 'year_of_plenty'">
         <option value="humans">Humans</option>
         <option value="stockpile">Bank</option>
         <option value="discard" style="display: none;">Discard</option>
@@ -41,6 +41,13 @@
           @click="makeTrade('discard_cards')"
         >
           Discard {{ requiredDiscardCount }} cards ({{ totalSelectedOfferer }} selected)
+        </button>
+        <button
+          v-else-if="tradeMode === 'year_of_plenty'"
+          :disabled="this.state.game?.yearOfPlenty !== totalSelectedTaker"
+          @click="makeTrade('take_year_of_plenty')"
+        >
+          Take {{ this.state.game?.yearOfPlenty }} cards ({{ totalSelectedTaker }} selected)
         </button>
       </div>
       <div v-else>
@@ -117,11 +124,16 @@ export default {
     totalSelectedOfferer() {
       return Object.values(this.amounts.offerer).reduce((acc, cur) => acc + cur)
     },
+    totalSelectedTaker() {
+      return Object.values(this.amounts.taker).reduce((acc, cur) => acc + cur)
+    },
   },
   mounted() {
     setInterval(() => {
       if(this.requiredDiscardCount) {
         this.tradeMode = "discard"
+      } else if (this.state.game?.yearOfPlenty) {
+        this.tradeMode = "year_of_plenty"
       } else {
         if(this.tradeMode === "discard") {
           this.tradeMode = "humans"
