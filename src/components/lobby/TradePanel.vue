@@ -128,3 +128,64 @@ export default {
   },
 }
 </script>
+
+<style>
+#trade-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.25em;
+  border-radius: 0 0 5px 5px;
+
+  height: max-content;
+  padding: 0.25em;
+}
+#trade-panel > * {
+  margin: 0;
+}
+#trade-interface {
+  display: grid;
+  grid: 1fr / 2fr 0.75fr 2fr;
+  text-align: center;
+}
+#trade-interface > div.trade-icon {
+  max-width: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+#trade-interface > div.trade-icon > img {
+  width: 100%;
+}
+.trade-column {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.trade-amount-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 3px;
+}
+.trade-amount-div > img {
+  width: 2.5em;
+}
+.trade-amount-div > input {
+  background-color: #0000;
+  width: 33%;
+  text-align: center;
+  border: 2px solid #47f;
+  border-radius: 5px;
+  transition: 500ms;
+  font-size: 1.2em;
+}
+.trade-amount-div > input:disabled {
+  border: 2px solid transparent;
+  color: var(--theme-text);
+}
+.trade-amount-div-right > img { order: 2; }
+</style>
