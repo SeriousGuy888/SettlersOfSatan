@@ -1,7 +1,7 @@
 <template>
-  <div class="card">
+  <div class="card" v-if="card.type">
     <div class="card-header">
-      <h2 class="card-header">{{ card.type }}</h2>
+      <h2>{{ card.type.toUpperCase() }}</h2>
       <img :src="getIcon()" alt="card icon" class="card-icon">
     </div>
     <div style="display: flex;">
@@ -11,6 +11,11 @@
         id="use-card-button"
         style="flex: 1 0 0; height: 2rem;"
       >Use</button>
+    </div>
+  </div>
+  <div class="card" v-else>
+    <div class="card-header">
+      <h2>Borken Card</h2>
     </div>
   </div>
 </template>
@@ -88,9 +93,9 @@ export default {
     height: 4em;
   }
   .card p { font-size: 0.8em; }
-  .card-header h2 {
+  .card-header > h2 {
     font-size: 20px;
-    margin: .25rem 0 auto;
+    margin: .25rem 0;
     text-decoration: none;
     color: inherit;
     border: 0;
