@@ -80,10 +80,14 @@ export default {
   },
   methods: {
     getTradeIcon() {
-      if(this.tradeMode === "discard") {
-        return `/images/icons/discard.svg`
+      switch(this.tradeMode) {
+        case "discard":
+          return `/images/icons/discard.svg`
+        case "year_of_plenty":
+          return `/images/development_cards/year_of_plenty.png`
+        default:
+          return `/images/icons/trade.svg`
       }
-      return `/images/icons/trade.svg`
     },
     updateAmounts(column, newData) {
       this.amounts[column] = newData
