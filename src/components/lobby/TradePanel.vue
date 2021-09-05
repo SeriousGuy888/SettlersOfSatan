@@ -12,9 +12,12 @@
 
       <TradePanelInputs
         @updateAmounts="updateAmounts('offerer', $event)"
+        v-if="this.tradeMode !== 'year_of_plenty'"
         :tradeMode="tradeMode"
         tradeParty="offerer"
-      />
+      /><div v-else>
+        <p v-if="this.tradeMode === 'year_of_plenty'">Take two cards of your choice from the bank.</p>
+      </div>
       <div class="trade-icon">
         <img :src="getTradeIcon()" alt="trade">
       </div>
