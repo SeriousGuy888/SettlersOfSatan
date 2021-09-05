@@ -40,6 +40,7 @@ class Satan {
     }
 
     this.roadBuilding = 0
+    this.yearOfPlenty = 0 // set to 2 when a year of plenty card is played, allowing the player to take two free resource cards
     this.developmentCardUsed = false
 
     const developmentCardAmounts = {
@@ -101,6 +102,7 @@ class Satan {
       robbing: this.robbing,
       developmentCardDeck: this.developmentCardDeck,
       roadBuilding: this.roadBuilding,
+      yearOfPlenty: this.yearOfPlenty,
     }
 
     let shouldTick = JSON.stringify(tickData) !== this.prevTickData

@@ -29,6 +29,7 @@ class DevelopmentCard {
           currentGame.roadBuilding = 2
           break
         case "year of plenty":
+          currentGame.yearOfPlenty = 2
           break
       }
     }
