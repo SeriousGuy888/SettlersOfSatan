@@ -13,3 +13,17 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+#home-title-logo {
+  height: calc(var(--title-height) * 1.2);
+}
+.title-satan:hover {
+  font-size: 0;
+}
+.title-satan:hover::after {
+  content: "/səˈtæn/";
+  font-family: 'Times New Roman', Times, serif;
+  font-size: calc(var(--title-height) * 0.9);
+}
+</style>
