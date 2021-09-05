@@ -83,7 +83,7 @@ export default {
   }
   #game-controls > button {
     display: flex;
-    flex: 1 0 4em;
+    flex: 1 0 0;
     height: 4em;
     padding: 1em;
     align-items: center;
@@ -94,15 +94,15 @@ export default {
     background-color: var(--theme-select-2);
   }
   #game-controls > button > img {
-    height: 2.5em;
-    width: 2.5em;
+    height: 2em;
+    width: 2em;
   }
   #game-controls > button > p {
     font-size: 18px;
     font-weight: 500;
     text-align: center;
-    width: 2em;
-    line-height: 2em;
+    width: 1.65em;
+    line-height: 1.65em;
     border: 2px solid var(--theme-text);
     border-radius: 50%;
   }
