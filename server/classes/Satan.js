@@ -232,6 +232,16 @@ class Satan {
     this.getPlayer(playerId).resources[resource] += amount
     this.stockpile[resource] -= amount
   }
+  
+  stockpileCanAfford(cost) {
+    const { stockpile } = this
+    if(!cost) return false
+    return Object
+      .keys(cost)
+      .every(resource => {
+        return stockpile[resource] >= cost[resource]
+      })
+  }
 
   refreshAllowedPlacements() {
     if(!this.turn) return

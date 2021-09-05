@@ -45,7 +45,7 @@
         <button
           v-else-if="tradeMode === 'year_of_plenty'"
           :disabled="this.state.game?.yearOfPlenty !== totalSelectedTaker"
-          @click="makeTrade('take_year_of_plenty')"
+          @click="makeTrade('year_of_plenty')"
         >
           Take {{ this.state.game?.yearOfPlenty }} cards ({{ totalSelectedTaker }} selected)
         </button>
@@ -135,7 +135,7 @@ export default {
       } else if (this.state.game?.yearOfPlenty) {
         this.tradeMode = "year_of_plenty"
       } else {
-        if(this.tradeMode === "discard") {
+        if(["discard", "year_of_plenty"].includes(this.tradeMode)) {
           this.tradeMode = "humans"
         }
       }

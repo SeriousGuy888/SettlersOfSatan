@@ -292,6 +292,7 @@ module.exports = (satan, playerId, actionData) => {
     case "discard_cards":
     case "harbour_trade":
     case "offer_trade":
+    case "year_of_plenty":
     case "accept_trade":
     case "confirm_trade":
     case "cancel_trade":
@@ -363,6 +364,32 @@ const handleTradeActions = (satan, playerId, actionData) => {
         style: { colour: "brown" }
       }])
       delete satan.discardingPlayers[player.id]
+      break
+    case "year_of_plenty":
+      if(!satan.yearOfPlenty) {
+        satan.printChatErr("im not giving you any free cards lol", playerId)
+        break
+      }
+      if(!satan.stockpileCanAfford(sanitisedOffer.taker)) {
+        satan.printChatErr("The bank does not have enough of the cards you want.", playerId)
+        break
+      }
+
+      const takingCardCount = Object.values(sanitisedOffer.taker).reduce((prev, curr) => prev + curr)
+      if(takingCardCount !== satan.yearOfPlenty) {
+        satan.printChatErr(`You are attempting to take ${takingCardCount} cards, but you must take exactly ${satan.yearOfPlenty} cards.`, playerId)
+        break
+      }
+
+      for(const resource in sanitisedOffer.offerer) {
+        satan.giveResources(player.id, resource, sanitisedOffer.taker[resource])
+      }
+
+      satan.getLobby().printToChat([{
+        text: `${player.name} has taken ${takingCardCount} cards from the bank using a year of plenty development card.`,
+        style: { colour: "brown" }
+      }])
+      satan.yearOfPlenty = 0
       break
     case "harbour_trade":
       if(player.id !== satan.turn) {
