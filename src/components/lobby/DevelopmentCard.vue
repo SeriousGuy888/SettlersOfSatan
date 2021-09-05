@@ -4,12 +4,11 @@
       <h2>{{ card.type.toUpperCase() }}</h2>
       <img :src="getIcon()" alt="card icon" class="card-icon">
     </div>
-    <div style="display: flex;">
+    <div class="card-content">
       <p style="flex: 2 0 0;">{{ card.victoryPoint ? cardDescriptions["victory point"] : cardDescriptions[card.type] }}</p>
       <button
         @click="useCard()"
         :disabled="shouldDisableCard"
-        id="use-card-button"
         style="flex: 1 0 0; height: 2rem;"
       >Use</button>
     </div>
@@ -86,21 +85,21 @@ export default {
     z-index: 2;
   }
 
-  .card:not(:hover) #use-card-button { visibility: hidden; }
-  .card:last-child #use-card-button { visibility: visible; }
+  .card-content { display: flex; }
+  .card:not(:hover):not(:last-child) .card-content { visibility: hidden; }
 
   .card:not(:first-child) {
     margin-top: -3em;
   }
 
-  .card .card-header {
+  .card-header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 0.2em;
   }
-  .card .card-header .card-icon {
+  .card-header .card-icon {
     width: 4em;
     height: 4em;
   }
