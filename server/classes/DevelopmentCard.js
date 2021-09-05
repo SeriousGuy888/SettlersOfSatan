@@ -14,27 +14,39 @@ class DevelopmentCard {
   }
 
   use() {
-    let currentGame = lobbies.getLobby(this.lobbyId).game
-    let player = currentGame.players[this.playerId]
-    if(currentGame.turnCycle != this.cycleBought){
+    const lobby = lobbies.getLobby(this.lobbyId)
+    const game = lobby.game
+    const player = game.players[this.playerId]
+
+    const printChatNotif = (text) => {
+      lobby.printToChat([{
+        text, style: { colour: "purple" },
+      }])
+    }
+
+    if(game.turnCycle != this.cycleBought){
       player.inventory.removeDevelopmentCard(this)
       switch(this.type) {
         case "knight":
-          currentGame.robbing = true
+          game.robbing = true
+          printChatNotif(`${player.name} played a ${this.type.toUpperCase()} card and is now moving the robber.`)
           break
         case "library": case "market": case "chapel": case "great hall": case "university":
           player.points++
+          printChatNotif(`${player.name} played a ${this.type.toUpperCase()} card and gained 1 victory point.`)
           break
         case "road building":
-          currentGame.roadBuilding = 2
+          game.roadBuilding = 2
+          printChatNotif(`${player.name} played a ${this.type.toUpperCase()} card and is now placing two free roads.`)
           break
         case "year of plenty":
-          currentGame.yearOfPlenty = 2
+          game.yearOfPlenty = 2
+          printChatNotif(`${player.name} played a ${this.type.toUpperCase()} card and is now taking two free resource cards.`)
           break
       }
     }
     else {
-      currentGame.printChatErr("You can't use a development card on the turn you bought it", this.playerId)
+      game.printChatErr("You can't use a development card on the turn you bought it", this.playerId)
     }
   }
 }
