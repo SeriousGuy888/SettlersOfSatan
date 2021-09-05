@@ -7,6 +7,7 @@
         <option value="humans">Humans</option>
         <option value="stockpile">Bank</option>
         <option value="discard" style="display: none;">Discard</option>
+        <option value="year_of_plenty" style="display: none;">Year of Plenty</option>
       </select>
 
       <TradePanelInputs
