@@ -72,38 +72,38 @@ export default {
 </script>
 
 <style scoped>
-  #game-controls {
-    display: flex;
-    align-content: flex-start;
-    justify-content: center;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 3px;
-    padding: 0 0.5em;
-  }
-  #game-controls > button {
-    display: flex;
-    flex: 1 0 0;
-    height: 4em;
-    padding: 1em;
-    align-items: center;
-    justify-content: space-evenly;
-  }
-  #game-controls > button.active {
-    border: 2px solid var(--theme-select-1);
-    background-color: var(--theme-select-2);
-  }
-  #game-controls > button > img {
-    height: 2em;
-    width: 2em;
-  }
-  #game-controls > button > p {
-    font-size: 18px;
-    font-weight: 500;
-    text-align: center;
-    width: 1.65em;
-    line-height: 1.65em;
-    border: 2px solid var(--theme-text);
-    border-radius: 50%;
-  }
+#game-controls {
+  display: flex;
+  align-content: flex-start;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 3px;
+  padding: 0 0.5em;
+}
+#game-controls > button {
+  display: flex;
+  flex: 1 0 0;
+  height: 4em;
+  padding: 1em;
+  align-items: center;
+  justify-content: space-evenly;
+}
+#game-controls > button.active {
+  border: 2px solid var(--theme-select-1);
+  background-color: var(--theme-select-2);
+}
+#game-controls > button > img {
+  height: 2em;
+  width: 2em;
+}
+#game-controls > button > p {
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+  width: 1.65em;
+  line-height: 1.65em;
+  border: 2px solid var(--theme-text);
+  border-radius: 50%;
+}
 </style>
