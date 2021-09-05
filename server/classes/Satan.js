@@ -103,6 +103,7 @@ class Satan {
       developmentCardDeck: this.developmentCardDeck,
       roadBuilding: this.roadBuilding,
       yearOfPlenty: this.yearOfPlenty,
+      developmentCardUsed: this.developmentCardUsed,
     }
 
     let shouldTick = JSON.stringify(tickData) !== this.prevTickData

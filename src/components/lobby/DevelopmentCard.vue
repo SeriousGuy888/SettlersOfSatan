@@ -8,6 +8,7 @@
       <p style="flex: 2 0 0;">{{ card.victoryPoint ? cardDescriptions["victory point"] : cardDescriptions[card.type] }}</p>
       <button
         @click="useCard()"
+        :disabled="shouldDisableCard"
         id="use-card-button"
         style="flex: 1 0 0; height: 2rem;"
       >Use</button>
@@ -27,6 +28,7 @@ export default {
   },
   data() {
     return {
+      state: this.$store.state,
       cardDescriptions: {
         "knight": "Move the robber",
         "road building": "Place two free roads",
@@ -49,6 +51,16 @@ export default {
         card: this.card,
       }, () => {})
     },
+  },
+  computed: {
+    shouldDisableCard() {
+      if(!this.state.game) return false
+      return (
+        this.card.cycleBought === this.state.game.turnCycle ||
+        this.state.game.developmentCardUsed ||
+        this.state.game.currentAction !== "build"
+      )
+    }
   },
 }
 </script>
