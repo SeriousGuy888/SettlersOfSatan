@@ -70,7 +70,7 @@ module.exports = (satan, playerId, actionData) => {
       }
       else {
         if(!player.canAfford(buildingCosts.settlement)) {
-          satan.printChatErr("You cannot afford satan.", playerId)
+          satan.printChatErr("You cannot afford this.", playerId)
           break
         }
       }
@@ -267,7 +267,7 @@ module.exports = (satan, playerId, actionData) => {
     case "buy_development_card":
 
       // if(!player.canAfford(buildingCosts.developmentCard)) {
-      //   satan.printChatErr("You cannot afford satan.", playerId)
+      //   satan.printChatErr("You cannot afford this.", playerId)
       //   break
       // }
 
