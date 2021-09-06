@@ -4,10 +4,6 @@
     <h2>Preferences</h2>
     <p>Volume: {{ state.prefs.volume }}%</p>
     <input type="range" min="0" max="100" v-model="state.prefs.volume">
-    
-    <div class="single-line-layout">
-      <button @click="save()" style="flex-grow: 1;">{{ saveButtonText }}</button>
-    </div>
   </Sidebar>
 </template>
 
@@ -30,12 +26,15 @@ export default {
     },
     save() {
       localStorage.setItem("prefs", JSON.stringify(this.state.prefs))
-      this.saveButtonText = "✔"
-      setTimeout(() => { this.saveButtonText = "Save" }, 3000)
     },
   },
   mounted() {
     this.state.prefs = JSON.parse(localStorage.getItem("prefs")) || {}
+    setInterval(() => {
+      if(this.$refs.sidebar.open) {
+        this.save()
+      }
+    }, 3000)
   },
   watch: {
     "state.prefs": function() {
