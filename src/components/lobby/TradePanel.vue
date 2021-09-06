@@ -153,7 +153,7 @@ export default {
       } else if (this.state.game?.monopoly) {
         this.tradeMode = "monopoly"
       } else {
-        if(["discard", "year_of_plenty"].includes(this.tradeMode)) {
+        if(["discard", "year_of_plenty", "monopoly"].includes(this.tradeMode)) {
           this.tradeMode = "humans"
         }
       }
