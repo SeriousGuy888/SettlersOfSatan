@@ -417,7 +417,7 @@ class Satan {
           const discardCount = this.discardingPlayers[playerId]
           if(!discardCount) continue
   
-          const player = this.getPlayer(playerId)
+          const discardingPlayer = this.getPlayer(playerId)
           const discard = player.drawResourceCards(discardCount)
           for(const resource in discard) {
             this.giveResources(player.id, resource, -discard[resource])
