@@ -6,8 +6,6 @@
       <TradePanel />
     </Collapsible>
 
-    <br>
-    
     <Collapsible v-if="state.player" :title="`Development Cards (${state.player.inventory.developmentCards.length})`">
       <div id="development-card-list">
         <DevelopmentCard
