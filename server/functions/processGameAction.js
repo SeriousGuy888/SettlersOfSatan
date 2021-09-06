@@ -293,6 +293,7 @@ module.exports = (satan, playerId, actionData) => {
     case "harbour_trade":
     case "offer_trade":
     case "year_of_plenty":
+    case "monopoly":
     case "accept_trade":
     case "confirm_trade":
     case "cancel_trade":
@@ -441,6 +442,30 @@ const handleTradeActions = (satan, playerId, actionData) => {
         text: `${player.name} traded with the bank: ${playerAmount} ${playerResource.toUpperCase()} for ${stockpileAmount} ${stockpileResource.toUpperCase()}.`,
         style: { colour: "brown" }
       }])
+      break
+    case "monopoly":
+      const monopolisingResource = Object.keys(sanitisedOffer.taker).filter(k => sanitisedOffer.taker[k] > 0)[0]
+
+      satan.getLobby().printToChat([{
+        text: `${player.name} has taken all ${monopolisingResource} cards from other players using a monopoly development card.`,
+        style: { colour: "brown" }
+      }])
+
+      for(const i in satan.players) {
+        const loopPlayer = satan.players[i]
+        if(loopPlayer.id === player.id) continue
+
+        const resourceAmt = loopPlayer.resources[monopolisingResource]
+        if(resourceAmt) {
+          loopPlayer.resources[monopolisingResource] -= resourceAmt
+          player.resources[monopolisingResource] += resourceAmt
+          satan.getLobby().printToChat([{
+            text: `${loopPlayer.name} handed over ${resourceAmt} ${monopolisingResource} cards.`,
+            style: { colour: "brown" }
+          }])
+        }
+      }
+      satan.monopoly = false
       break
     case "offer_trade":
       if(player.id !== satan.turn) {

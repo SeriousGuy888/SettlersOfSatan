@@ -451,6 +451,13 @@ class Satan {
           }])
           this.yearOfPlenty = 0
         }
+        if(this.monopoly) {
+          this.getLobby().printToChat([{
+            text: `${player.name} played a monopoly development card and then didn't monopolise anything. Not very good at capitalism D:`,
+            style: { colour: "brown" },
+          }])
+          this.monopoly = false
+        }
         this.nextTurn()
         break
     }
