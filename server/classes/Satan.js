@@ -418,13 +418,13 @@ class Satan {
           if(!discardCount) continue
   
           const discardingPlayer = this.getPlayer(playerId)
-          const discard = player.drawResourceCards(discardCount)
+          const discard = discardingPlayer.drawResourceCards(discardCount)
           for(const resource in discard) {
-            this.giveResources(player.id, resource, -discard[resource])
+            this.giveResources(discardingPlayer.id, resource, -discard[resource])
           }
   
           this.getLobby().printToChat([{
-            text: `${player.name} did not discard in time and so ${discardCount} cards were randomly discarded on their behalf.`,
+            text: `${discardingPlayer.name} did not discard in time and so ${discardCount} cards were randomly discarded on their behalf.`,
             style: { colour: "brown" },
           }])
   
