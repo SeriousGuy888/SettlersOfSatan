@@ -9,6 +9,7 @@ const store = createStore({
       lobby: null,
       game: null,
       player: null,
+      prefs: {},
     }
   },
 })
