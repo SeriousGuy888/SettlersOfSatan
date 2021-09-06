@@ -43,6 +43,10 @@ class DevelopmentCard {
           game.yearOfPlenty = 2
           printChatNotif(`${player.name} played a ${this.type.toUpperCase()} card and is now taking two free resource cards.`)
           break
+        case "monopoly":
+          game.monopoly = true
+          printChatNotif(`${player.name} played a ${this.type.toUpperCase()} card and is now choosing a resource to take all of.`)
+          break
       }
     }
     else {

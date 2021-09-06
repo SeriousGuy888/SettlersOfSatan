@@ -14,7 +14,7 @@
         <input
           v-model="amounts[resource]"
           @change="updateAmounts()"
-          :disabled="state.game.trade.offer || (tradeMode === 'stockpile' && total > 0 && !amounts[resource])"
+          :disabled="state.game.trade.offer || (singleSelectionMode && total > 0 && !amounts[resource])"
           type="number"
           min="0"
         >
@@ -46,6 +46,9 @@ export default {
     total() {
       return Object.values(this.amounts).reduce((acc, cur) => acc + cur)
     },
+    singleSelectionMode() {
+      return ["stockpile", "monopoly"].includes(this.tradeMode)
+    },
   },
   methods: {
     getResourceIcon(resource) {
@@ -63,9 +66,15 @@ export default {
   mounted() {
     this.updateAmounts()
     setInterval(() => {
-      if(this.tradeMode === "stockpile" && Object.values(this.amounts).filter(e => e > 0).length > 1) {
+      if(this.singleSelectionMode && Object.values(this.amounts).filter(e => e > 0).length > 1) {
         this.wipe()
       }
+      if(this.tradeMode === "monopoly") {
+        for(let i in this.amounts) {
+          if(this.amounts[i] > 1) this.amounts[i] = 1
+        }
+      }
+
       if(this.state.game && this.state.game.trade.offer) {
         this.amounts = this.state.game.trade.offer[this.tradeParty]
       }
@@ -73,3 +82,34 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.trade-column {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.trade-amount-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 3px;
+}
+.trade-amount-div > img {
+  width: 2.5em;
+}
+.trade-amount-div > input {
+  background-color: #0000;
+  width: 33%;
+  text-align: center;
+  border: 2px solid #47f;
+  border-radius: 5px;
+  transition: 500ms;
+  font-size: 1.2em;
+}
+.trade-amount-div > input:disabled {
+  border: 2px solid transparent;
+  color: var(--theme-text);
+}
+.trade-amount-div-right > img { order: 2; }
+</style>

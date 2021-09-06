@@ -3,20 +3,22 @@
     <div v-if="tradingAllowed" id="trade-interface">
       <p id="trade-offerer-name">{{ state.game.players[state.game.turn].name }}</p>
       <br>
-      <select v-model="tradeMode" :disabled="tradeMode === 'discard' || tradeMode === 'year_of_plenty'">
+      <select v-model="tradeMode" :disabled="['discard', 'year_of_plenty', 'monopoly'].includes(tradeMode)">
         <option value="humans">Humans</option>
         <option value="stockpile">Bank</option>
-        <option value="discard" style="display: none;">Discard</option>
-        <option value="year_of_plenty" style="display: none;">Year of Plenty</option>
+        <option value="discard" class="hidden-option">Discard</option>
+        <option value="year_of_plenty" class="hidden-option">Year of Plenty</option>
+        <option value="monopoly" class="hidden-option">Monopoly</option>
       </select>
 
       <TradePanelInputs
         @updateAmounts="updateAmounts('offerer', $event)"
-        v-if="this.tradeMode !== 'year_of_plenty'"
+        v-if="!['year_of_plenty', 'monopoly'].includes(tradeMode)"
         :tradeMode="tradeMode"
         tradeParty="offerer"
       /><div v-else>
         <p v-if="this.tradeMode === 'year_of_plenty'">Take two cards of your choice from the bank.</p>
+        <p v-if="this.tradeMode === 'monopoly'">Choose a resource. Every other player must give you any of that resource they have.</p>
       </div>
       <div class="trade-icon">
         <img :src="getTradeIcon()" alt="trade">
@@ -27,7 +29,9 @@
         :tradeMode="tradeMode"
         :rightSide="true"
         tradeParty="taker"
-      />
+      /><div v-else>
+        <p v-if="this.tradeMode === 'discard'">A seven was rolled while you had more than seven resource cards. Please discard half your resource cards.</p>
+      </div>
     </div>
 
     <div v-if="tradingAllowed">
@@ -48,6 +52,13 @@
           @click="makeTrade('year_of_plenty')"
         >
           Take {{ this.state.game?.yearOfPlenty }} cards ({{ totalSelectedTaker }} selected)
+        </button>
+        <button
+          v-else-if="tradeMode === 'monopoly'"
+          :disabled="totalSelectedTaker !== 1"
+          @click="makeTrade('monopoly')"
+        >
+          Monopolise
         </button>
       </div>
       <div v-else>
@@ -134,10 +145,13 @@ export default {
   },
   mounted() {
     setInterval(() => {
+      // yucky code D:
       if(this.requiredDiscardCount) {
         this.tradeMode = "discard"
       } else if (this.state.game?.yearOfPlenty) {
         this.tradeMode = "year_of_plenty"
+      } else if (this.state.game?.monopoly) {
+        this.tradeMode = "monopoly"
       } else {
         if(["discard", "year_of_plenty"].includes(this.tradeMode)) {
           this.tradeMode = "humans"
@@ -148,7 +162,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #trade-panel {
   display: flex;
   flex-direction: column;
@@ -179,32 +193,6 @@ export default {
 #trade-interface > div.trade-icon > img {
   width: 100%;
 }
-.trade-column {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-.trade-amount-div {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 3px;
-}
-.trade-amount-div > img {
-  width: 2.5em;
-}
-.trade-amount-div > input {
-  background-color: #0000;
-  width: 33%;
-  text-align: center;
-  border: 2px solid #47f;
-  border-radius: 5px;
-  transition: 500ms;
-  font-size: 1.2em;
-}
-.trade-amount-div > input:disabled {
-  border: 2px solid transparent;
-  color: var(--theme-text);
-}
-.trade-amount-div-right > img { order: 2; }
+
+.hidden-option { display: none; }
 </style>

@@ -41,6 +41,7 @@ class Satan {
 
     this.roadBuilding = 0
     this.yearOfPlenty = 0 // set to 2 when a year of plenty card is played, allowing the player to take two free resource cards
+    this.monopoly = false // set to true when a player plays a monopoly card
     this.developmentCardUsed = false
 
     const developmentCardAmounts = {
@@ -103,6 +104,7 @@ class Satan {
       developmentCardDeck: this.developmentCardDeck,
       roadBuilding: this.roadBuilding,
       yearOfPlenty: this.yearOfPlenty,
+      monopoly: this.monopoly,
       developmentCardUsed: this.developmentCardUsed,
     }
 
