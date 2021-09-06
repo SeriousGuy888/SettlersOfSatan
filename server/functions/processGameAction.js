@@ -58,7 +58,7 @@ module.exports = (satan, playerId, actionData) => {
         break
       }
 
-      satan.nextTurn()
+      satan.nextAction()
       break
     case "place_settlement":
       if(!vertex) break

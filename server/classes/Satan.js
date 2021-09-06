@@ -435,6 +435,20 @@ class Satan {
         this.currentAction = "build"
         break
       case "build":
+        const player = this.getPlayer(this.turn)
+        if(this.yearOfPlenty) {
+          for(let i = 0; i < this.yearOfPlenty; i++) {
+            const availableResources = Object.keys(this.stockpile).filter(k => this.stockpile[k] > 0)
+            const drawnResource = availableResources.length ? availableResources[Math.floor(Math.random() * availableResources.length)] : null
+            if(drawnResource) this.giveResources(player.id, drawnResource, 1)
+          }
+
+          this.getLobby().printToChat([{
+            text: `${player.name} played a year of plenty development card and then didn't draw any cards so ${this.yearOfPlenty} cards had to be randomly drawn on their behalf. :(`,
+            style: { colour: "brown" },
+          }])
+          this.yearOfPlenty = 0
+        }
         this.nextTurn()
         break
     }
