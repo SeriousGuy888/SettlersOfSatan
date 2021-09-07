@@ -82,10 +82,6 @@ export default {
 }
 
 /* thieved from https://v3.vuejs.org/guide/transitions-enterleave.html#css-animations lol */
-.modal-fade-enter-active { animation: modal-fade 100ms ease-out both; }
-.modal-fade-leave-active { animation: modal-fade 100ms reverse ease-in both; }
-@keyframes modal-fade {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-}
+.modal-fade-enter-active { animation: fade 100ms ease-out both; }
+.modal-fade-leave-active { animation: fade 100ms reverse ease-in both; }
 </style>
