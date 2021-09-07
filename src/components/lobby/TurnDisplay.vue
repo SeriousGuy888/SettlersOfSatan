@@ -15,6 +15,8 @@
 import { useStore } from "vuex"
 import { useSound } from "@vueuse/sound"
 import fifteenSecondsLeft from "../../sounds/fifteen_seconds_left.wav"
+import winHot from "../../sounds/win_hot.wav"
+import winWava from "../../sounds/win_wava.wav"
 
 export default {
   data() {
@@ -26,14 +28,18 @@ export default {
         discard: "Discarding...",
         build: "Build & Trade"
       },
+      winSoundPlayed: false,
     }
   },
   mounted() {
     setInterval(this.updateRemainingTime, 1000)
   },
   setup() {
+    const volume = useStore().state.prefs.volume / 100
     return {
-      fifteenSecondsLeft: useSound(fifteenSecondsLeft, { volume: useStore().state.prefs.volume / 100 }),
+      fifteenSecondsLeft: useSound(fifteenSecondsLeft, { volume }),
+      winHot: useSound(winHot, { volume }),
+      winWava: useSound(winWava, { volume }),
     }
   },
   methods: {
@@ -43,6 +49,16 @@ export default {
       
       if(this.state.game.currentAction === "build" && this.remainingTime === 15) {
         this.fifteenSecondsLeft.play()
+      }
+      if(this.state.game.ended && this.state.game.winner === this.state.player.id) {
+        if(!this.winSoundPlayed) {
+          if(Math.floor(Math.random() * 9) === 0) {
+            this.winHot.play()
+          } else {
+            this.winWava.play()
+          }
+          this.winSoundPlayed = true
+        }
       }
     },
   },
