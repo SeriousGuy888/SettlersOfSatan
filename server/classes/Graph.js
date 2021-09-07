@@ -21,16 +21,6 @@ class Graph {
     this.matrix[vertexA][vertexB] = true
     this.matrix[vertexB][vertexA] = true
   }
-
-  printMatrix() {
-    for(let i in this.matrix) {
-      let row = "";
-      for(let j in this.matrix[i]) {
-        row += ` ${this.matrix[i][j]}`
-      }
-      console.log(row)
-    }
-  }
 }
 
 module.exports = Graph
