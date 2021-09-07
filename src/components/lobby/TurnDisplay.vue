@@ -17,6 +17,7 @@ import { useSound } from "@vueuse/sound"
 import fifteenSecondsLeft from "../../sounds/fifteen_seconds_left.wav"
 import winHot from "../../sounds/win_hot.wav"
 import winWava from "../../sounds/win_wava.wav"
+import itsYourTurn from "../../sounds/your_turn.mp3"
 
 export default {
   data() {
@@ -33,6 +34,11 @@ export default {
   },
   mounted() {
     setInterval(this.updateRemainingTime, 1000)
+    socket.on("game_update", data => {
+      if(data.turnTick && this.state.game.turn === this.state.player.id) {
+        this.itsYourTurn.play()
+      }
+    })
   },
   setup() {
     const volume = useStore().state.prefs.volume / 100
@@ -40,6 +46,7 @@ export default {
       fifteenSecondsLeft: useSound(fifteenSecondsLeft, { volume }),
       winHot: useSound(winHot, { volume }),
       winWava: useSound(winWava, { volume }),
+      itsYourTurn: useSound(itsYourTurn, { volume }),
     }
   },
   methods: {
