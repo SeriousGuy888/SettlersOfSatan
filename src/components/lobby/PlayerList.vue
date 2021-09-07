@@ -15,12 +15,18 @@
         </div>
         <div v-if="state.game" class="list-entry-line">
           <div title="Victory Points">
-            <p>{{ state.game.players[loopUser.playerId].points }}</p>
+            <p>{{ userToPlayer(loopUser).points }}</p>
             <img class="icon-1em" src="/images/icons/victory_point.svg" alt="VP">
           </div>
           <div title="The number of resource cards this player has">
-            <p>{{ state.game.players[loopUser.playerId].resourceCardCount }}</p>
+            <p>{{ userToPlayer(loopUser).resourceCardCount }}</p>
             <img class="icon-1em" src="/images/icons/resource_cards.svg" alt="Resource Cards">
+          </div>
+          <div
+            v-if="state.game.specialCards.largestArmy === loopUser.playerId"
+            title="This player gets an extra 2 points for having the largest army card."
+          >
+            <img class="icon-1em" src="/images/icons/largest_army.svg" alt="Largest Army">
           </div>
         </div>
       </div>
@@ -112,6 +118,9 @@ export default {
         action: "rob_player",
         robFrom: playerId,
       }, console.log)
+    },
+    userToPlayer(user) {
+      return this.state.game.players[user.playerId]
     },
   },
 }

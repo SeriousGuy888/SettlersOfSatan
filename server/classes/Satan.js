@@ -43,20 +43,22 @@ class Satan {
     this.yearOfPlenty = 0 // set to 2 when a year of plenty card is played, allowing the player to take two free resource cards
     this.monopoly = false // set to true when a player plays a monopoly card
     this.developmentCardUsed = false
-
     const developmentCardAmounts = {
       "knight": 14,
       "road building": 2,
       "year of plenty": 2,
       "monopoly": 2,
     }
-
     this.developmentCardDeck = ["library", "market", "chapel", "great hall", "university"]
-
     for(const card in developmentCardAmounts) {
       for(let i = 0; i < developmentCardAmounts[card]; i++){
         this.developmentCardDeck.push(card)
       }
+    }
+
+    this.specialCards = { // stores player id of player who currently owns each special card
+      largestArmy: null,
+      longestRoad: null,
     }
   }
 
@@ -106,6 +108,7 @@ class Satan {
       yearOfPlenty: this.yearOfPlenty,
       monopoly: this.monopoly,
       developmentCardUsed: this.developmentCardUsed,
+      specialCards: this.specialCards,
     }
 
     let shouldTick = JSON.stringify(tickData) !== this.prevTickData
