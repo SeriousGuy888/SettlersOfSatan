@@ -32,14 +32,15 @@ class DevelopmentCard {
           player.knightsPlayed++
           printChatNotif(`${player.name} played a ${this.type} card and is now moving the robber. This player has now played ${player.knightsPlayed} knight cards.`)
 
-          const currentLargestArmy = game.specialCards.largestArmy
-          if(currentLargestArmy !== player.id && player.knightsPlayed >= 3) {
-            const currentHolder = game.getPlayer(currentLargestArmy)
-            if(!currentHolder || player.knightsPlayed > currentHolder.knightsPlayed) {
-              if(currentHolder) currentHolder.points -= 2
+          const previousLargestArmy = game.specialCards.largestArmy
+          if(previousLargestArmy !== player.id && player.knightsPlayed >= 3) {
+            const previousOwner = game.getPlayer(previousLargestArmy)
+            if(!previousOwner || (player.knightsPlayed > previousOwner.knightsPlayed && previousOwner.id !== player.id)) {
+              if(previousOwner)
+                previousOwner.points -= 2
               player.points += 2
               game.specialCards.largestArmy = player.id
-              printChatNotif(`${player.name} now has the largest army special card, gaining 2 victory points.${currentHolder ? " The previous holder has lost 2 victory points." : ""}`)
+              printChatNotif(`${player.name} now has the largest army special card, gaining 2 victory points.`)
             }
           }
           break
