@@ -41,7 +41,7 @@
           </button>
           <button
             @click="kickPlayer(playerListModal.data.playerId, true)"
-            v-if="lobbyState.playerId !== playerListModal.data.playerId">
+            v-if="state.playerId !== playerListModal.data.playerId">
             Votekick
           </button>
           <button @click="copyPlayerId($event, playerListModal.data.playerId)">Copy Player ID</button>
@@ -57,7 +57,6 @@ import HostIcon from "./HostIcon.vue"
 
 export default {
   props: {
-    lobbyState: Object,
     userIsHost: Boolean,
   },
   components: {

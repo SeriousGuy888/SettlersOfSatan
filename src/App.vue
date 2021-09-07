@@ -1,17 +1,12 @@
 <template>
   <Title />
   <Login />
-  <JoinLobby
-    v-if="loginState.loggedIn && !lobbyState.code"
-    @updateLobbyState="updateLobbyState"
-  />
+  <JoinLobby v-if="loginState.loggedIn && !state.lobby"/>
   <Lobby
-    v-if="loginState.loggedIn && lobbyState.code"
+    v-if="loginState.loggedIn && state.lobby"
     ref="lobby"
     :printToChat="printToChat"
-    :lobbyState="lobbyState"
     :userIsHost="userIsHost"
-    @updateLobbyState="updateLobbyState"
   />
   <Modal ref="modal" title="Alert">
     {{ modal.message }}
@@ -39,12 +34,12 @@ export default {
   },
   data() {
     return {
+      state: this.$store.state,
       loginState: {
         loggedIn: false,
         name: "",
       },
       userIsHost: false,
-      lobbyState: {},
       modal: {
         message: "",
         reloadButton: false,
@@ -63,16 +58,13 @@ export default {
     reload() {
       window.location.reload()
     },
-    updateLobbyState(e) {
-      this.lobbyState = e
-    }
   },
   mounted() {
-    const state = this.$store.state
+    const state = this.state
 
     socket.on("kicked_from_lobby", data => {
       state.lobby = null
-      this.lobbyState = {}
+      state.playerId = null
       if(data.notification) {
         this.showModal(data.notification)
       }

@@ -58,6 +58,7 @@
 export default {
   data() {
     return {
+      state: this.$store.state,
       creatingLobbyName: "",
       joiningLobbyCode: "",
       openLobbies: [],
@@ -68,7 +69,7 @@ export default {
     enterLobbyCallback(err, data) {
       if(err) alert(err)
       else {
-        this.$emit("updateLobbyState", data)
+        this.state.playerId = data.playerId
         window.location.hash = ""
       }
     },

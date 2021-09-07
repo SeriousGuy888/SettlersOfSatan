@@ -1,5 +1,4 @@
 <template>
-  <p>soidjmkldfhlgh</p>
   <div class="single-line-layout">
     <h2>{{ state.lobby.name }}</h2>
     <button @click="leaveLobby()"><img class="icon-1em" alt="←" src="/images/icons/leave.svg"> Leave Lobby</button>
@@ -24,7 +23,7 @@
     <div id="right-column">
       <TurnControls v-if="state.game" />
       <Chat ref="chat" />
-      <PlayerList :lobbyState="lobbyState" :userIsHost="userIsHost" />
+      <PlayerList :userIsHost="userIsHost" />
     </div>
   </div>
 </template>
@@ -39,7 +38,7 @@ import TurnControls from "./TurnControls.vue"
 import PlayerList from "./PlayerList.vue"
 
 export default {
-  props: ["printToChat", "lobbyState", "userIsHost"],
+  props: ["printToChat", "userIsHost"],
   components: {
     ColourChooser,
     CenterColumn,
@@ -60,7 +59,7 @@ export default {
         socket.emit("leave_lobby", {}, (err, data) => {
           if(err) alert(err)
           else {
-            this.$emit("updateLobbyState", data)
+            this.state.playerId = null
             this.state.lobby = null
             this.state.game = null
           }
