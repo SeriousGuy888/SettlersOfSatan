@@ -3,7 +3,7 @@
   <Sidebar ref="sidebar">
     <h2>Preferences</h2>
     <p>Volume: {{ state.prefs.volume }}%</p>
-    <p>May require page reload to take effect for some reason</p>
+    <p>May require page reload to take effect for some reason. Also I don't know if you will like our sound effects so maybe don't enable volume.</p>
     <input type="range" min="0" max="100" v-model="state.prefs.volume">
   </Sidebar>
 </template>
@@ -40,7 +40,7 @@ export default {
   watch: {
     "state.prefs": function() {
       this.state.prefs.volume = Number(this.state.prefs.volume)
-      if(Number.isNaN(this.state.prefs.volume)) this.state.prefs.volume = 50
+      if(Number.isNaN(this.state.prefs.volume)) this.state.prefs.volume = 0
     },
   }
 }
