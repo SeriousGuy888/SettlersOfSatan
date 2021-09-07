@@ -126,9 +126,9 @@ class Player {
   }
 
   getPublicData() {
-    const { id, name, colour, inventory, canBeRobbed, points } = this
+    const { id, name, colour, inventory, canBeRobbed, points, longestRoadLength, knightsPlayed } = this
     const resourceCardCount = this.getResourceCardCount()
-    return { id, name, colour, inventory, canBeRobbed, points, resourceCardCount }
+    return { id, name, colour, inventory, canBeRobbed, points, longestRoadLength, knightsPlayed, resourceCardCount }
   }
   
   getLobby() {

@@ -22,6 +22,11 @@
             <p>{{ userToPlayer(loopUser).resourceCardCount }}</p>
             <img class="icon-1em" src="/images/icons/resource_cards.svg" alt="Resource Cards">
           </div>
+          <div title="The length of this player's longest road.">
+            <p>{{ userToPlayer(loopUser).longestRoadLength }}</p>
+            <img v-if="state.game.specialCards.longestRoad === loopUser.playerId" class="icon-1em" src="/images/icons/longest_road.svg" alt="Longest Road">
+            <img v-else class="icon-1em" src="/images/icons/road_length.svg" alt="Road Length">
+          </div>
           <div
             v-if="state.game.specialCards.largestArmy === loopUser.playerId"
             title="This player gets an extra 2 points for having the largest army card."
