@@ -1,8 +1,18 @@
 <template>
   <Title />
   <Login />
-  <JoinLobby v-if="loginState.loggedIn && !lobbyState.code" />
-  <Lobby v-if="loginState.loggedIn && lobbyState.code" ref="lobby" :printToChat="printToChat" />
+  <JoinLobby
+    v-if="loginState.loggedIn && !lobbyState.code"
+    @updateLobbyState="updateLobbyState"
+  />
+  <Lobby
+    v-if="loginState.loggedIn && lobbyState.code"
+    ref="lobby"
+    :printToChat="printToChat"
+    :lobbyState="lobbyState"
+    :userIsHost="userIsHost"
+    @updateLobbyState="updateLobbyState"
+  />
   <Modal ref="modal" title="Alert">
     {{ modal.message }}
     <template v-if="modal.reloadButton" v-slot:buttons>
@@ -53,6 +63,9 @@ export default {
     reload() {
       window.location.reload()
     },
+    updateLobbyState(e) {
+      this.lobbyState = e
+    }
   },
   mounted() {
     const state = this.$store.state

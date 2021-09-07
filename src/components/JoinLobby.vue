@@ -68,7 +68,7 @@ export default {
     enterLobbyCallback(err, data) {
       if(err) alert(err)
       else {
-        this.$parent.lobbyState = data
+        this.$emit("updateLobbyState", data)
         window.location.hash = ""
       }
     },

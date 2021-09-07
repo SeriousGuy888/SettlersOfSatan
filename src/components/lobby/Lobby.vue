@@ -1,4 +1,5 @@
 <template>
+  <p>soidjmkldfhlgh</p>
   <div class="single-line-layout">
     <h2>{{ state.lobby.name }}</h2>
     <button @click="leaveLobby()"><img class="icon-1em" alt="←" src="/images/icons/leave.svg"> Leave Lobby</button>
@@ -12,7 +13,7 @@
         
         <h3>Lobby Settings</h3>
         <div class="lobby-settings-panel">
-          <button @click="editLobbySetting({ started: true })" :disabled="!this.$parent.userIsHost">Start Game</button>
+          <button @click="editLobbySetting({ started: true })" :disabled="!userIsHost">Start Game</button>
         </div>
 
         <ColourChooser :printToChat="printToChat" />
@@ -23,7 +24,7 @@
     <div id="right-column">
       <TurnControls v-if="state.game" />
       <Chat ref="chat" />
-      <PlayerList :lobbyState="this.$parent.lobbyState" :userIsHost="this.$parent.userIsHost" />
+      <PlayerList :lobbyState="lobbyState" :userIsHost="userIsHost" />
     </div>
   </div>
 </template>
@@ -38,7 +39,7 @@ import TurnControls from "./TurnControls.vue"
 import PlayerList from "./PlayerList.vue"
 
 export default {
-  props: ["printToChat"],
+  props: ["printToChat", "lobbyState", "userIsHost"],
   components: {
     ColourChooser,
     CenterColumn,
@@ -59,7 +60,7 @@ export default {
         socket.emit("leave_lobby", {}, (err, data) => {
           if(err) alert(err)
           else {
-            this.$parent.lobbyState = data
+            this.$emit("updateLobbyState", data)
             this.state.lobby = null
             this.state.game = null
           }
