@@ -392,31 +392,34 @@ class Satan {
     }
 
     player.longestRoadLength = topRoadLength
-    let longestRoadLengthOfPlayers = 0
-    let playerWithLongestRoad
-    for(const loopPlayer of Object.values(this.players)) {
-      if(loopPlayer.longestRoadLength > longestRoadLengthOfPlayers) {
-        longestRoadLengthOfPlayers = loopPlayer.longestRoadLength
-        playerWithLongestRoad = loopPlayer.id
-      }
-    }
-    if(playerWithLongestRoad === player.id && player.longestRoadLength >= 5) {
-      const previousOwner = this.getPlayer(this.specialCards.longestRoad)
 
-      let tie = false
-      if(previousOwner) {
-        previousOwner.points -= 2
-        if(previousOwner.longestRoadLength === player.longestRoadLength) {
-          tie = true
+    if(this.specialCards.longestRoad !== player.id) {
+      let longestRoadLengthOfPlayers = 0
+      let playerWithLongestRoad
+      for(const loopPlayer of Object.values(this.players)) {
+        if(loopPlayer.longestRoadLength > longestRoadLengthOfPlayers) {
+          longestRoadLengthOfPlayers = loopPlayer.longestRoadLength
+          playerWithLongestRoad = loopPlayer.id
         }
       }
-      if(!tie) {
-        player.points += 2
-        this.specialCards.longestRoad = player.id
-        this.getLobby().printToChat([{
-          text: `${player.name} has won the longest road special card and has gained 2 victory points.`,
-          style: { colour: "brown" },
-        }])
+      if(playerWithLongestRoad === player.id && player.longestRoadLength >= 5) {
+        const previousOwner = this.getPlayer(this.specialCards.longestRoad)
+  
+        let tie = false
+        if(previousOwner) {
+          previousOwner.points -= 2
+          if(previousOwner.longestRoadLength === player.longestRoadLength) {
+            tie = true
+          }
+        }
+        if(!tie) {
+          player.points += 2
+          this.specialCards.longestRoad = player.id
+          this.getLobby().printToChat([{
+            text: `${player.name} has won the longest road special card and has gained 2 victory points.`,
+            style: { colour: "brown" },
+          }])
+        }
       }
     }
 
