@@ -41,7 +41,7 @@ export default {
       if(!this.state.game) return
       this.remainingTime = Math.round((this.state.game.turnCountdownTo - Date.now()) / 1000)
       
-      if(this.state.game.currentAction === "build" && this.remainingTime === 95) {
+      if(this.state.game.currentAction === "build" && this.remainingTime === 15) {
         this.fifteenSecondsLeft.play()
       }
     },
