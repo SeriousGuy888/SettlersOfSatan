@@ -1,32 +1,18 @@
 <template>
   <div>
     <h3>Choose a Colour</h3>
-    <p>i was too lazy to make the hexagon colour selector work with the vue rewrite lol -billzo</p>
-    <div class="flex-layout-grid">
+    <div class="button-grid">
       <button
         v-for="colour in colourChoices"
         :key="colour"
         @click="chooseColour(colour)"
         :style="`background-color: ${colour}`"
-      >{{ colour.toUpperCase() }}</button>
+      >
+        <p :class="{ 'colour-selected': colourIsSelected(colour) }">
+          {{ colour.toUpperCase() }}
+        </p>
+      </button>
     </div>
-    <!-- <div ref="buttonContainer" class="honeycomb">
-      <div class="honeycomb-row">
-        <div class="hexanone"></div>
-        <div class="hexagon"><div class="hexagon-content"></div></div>
-        <div class="hexanone"></div>
-      </div>
-      <div class="honeycomb-row">
-        <div class="hexagon"><div class="hexagon-content"></div></div>
-        <div class="hexagon"><div class="hexagon-content"></div></div>
-        <div class="hexagon"><div class="hexagon-content"></div></div>
-      </div>
-      <div class="honeycomb-row">
-        <div class="hexagon"><div class="hexagon-content"></div></div>
-        <div class="hexagon"><div class="hexagon-content"></div></div>
-        <div class="hexagon"><div class="hexagon-content"></div></div>
-      </div>
-    </div> -->
     <p>
       if any of these colour names look wrong its not our fault its the
       css standard's fault because we were too lazy to implement our own
@@ -37,52 +23,49 @@
 
 <script>
 export default {
-  props: ["printToChat"],
   data() {
     return {
+      state: this.$store.state,
       colourChoices: [],
-      colourHexagonButtons: null,
     }
   },
   methods: {
     chooseColour(colour) {  
-      socket.emit("select_colour", { colour }, (err, data) => {
-        if(err) this.printToChat([{ text: err, style: { colour: "red", italic: true } }])
-      })
+      socket.emit("select_colour", { colour }, () => {})
+    },
+    colourIsSelected(colour) {
+      return !!this.state.lobby.users.filter(e => e.colour === colour).length
     },
   },
   mounted() {
     socket.emit("get_colour_choices", {}, (err, data) => {
       this.colourChoices = data.colourChoices
     })
-    
-    
-    // this.colourHexagonButtons = this.$refs.buttonContainer.querySelectorAll(".hexagon")
-    // for(let i = 0; i < this.colourChoices.length; i++) {
-    //   const colour = this.colourChoices[i]
-    //   const colourButton = this.colourHexagonButtons[i]
-    //   const colourButtonText = colourButton.querySelector(".hexagon-content")
-
-    //   // colourButton.classList.remove("active", "disabled")
-    //   colourButton.id = `colour-button-${colour}`
-    //   colourButton.style.backgroundColor = colour
-    //   colourButtonText.textContent = colour.toUpperCase()
-    
-    //   colourButton.onclick = () => {
-    //     // if(colourButton.classList.contains("active")) {
-    //     //   printToChat([{ text: "You have already have that colour selected.", style: { colour: "red", italic: true } }])
-    //     //   return
-    //     // }
-    //     // if(colourButton.classList.contains("disabled")) {
-    //     //   printToChat([{ text: "Another player is using this colour.", style: { colour: "red", italic: true } }])
-    //     //   return
-    //     // }
-
-    //     socket.emit("select_colour", { colour }, (err, data) => {
-    //       if(err) notifyUser(err)
-    //     })
-    //   }
-    // }
   },
 }
 </script>
+
+<style scoped>
+  .button-grid {
+    display: grid;
+    grid-template: 5rem 5rem 5rem / 5rem 5rem 5rem;
+    gap: 0.5rem;
+  }
+  .button-grid button {
+    border: none;
+  }
+  .button-grid button p {
+    background: inherit;
+    background-clip: text;
+    color: transparent;
+    filter: invert(1) grayscale(1) contrast(9);
+    font-size: 0.9rem;
+    font-weight: bold;
+  }
+
+  .colour-selected::after {
+    font-size: 1.2rem;
+    content: "✔";
+    display: block;
+  }
+</style>

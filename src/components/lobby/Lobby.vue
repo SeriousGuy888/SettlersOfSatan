@@ -15,7 +15,7 @@
           <button @click="editLobbySetting({ started: true })" :disabled="!userIsHost">Start Game</button>
         </div>
 
-        <ColourChooser :printToChat="printToChat" />
+        <ColourChooser />
       </div>
       <CenterColumn v-else />
     </div>
