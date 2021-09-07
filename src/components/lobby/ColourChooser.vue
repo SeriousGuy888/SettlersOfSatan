@@ -14,9 +14,7 @@
       </button>
     </div>
     <p>
-      if any of these colour names look wrong its not our fault its the
-      css standard's fault because we were too lazy to implement our own
-      colour naming system lol
+      do you know how hard it is to find nine colours that are different enough from each other and that look good on a catan board?
     </p>
   </div>
 </template>
