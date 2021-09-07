@@ -26,8 +26,8 @@
     </div>
     <div class="single-line-input">
       <input v-on:keyup.enter="sendChat()" v-model="chatInput" placeholder="Send a message">
-      <button>
-        <img @click="sendChat()" src="/images/icons/check.svg" alt="Send" class="icon-1em">
+      <button @click="sendChat()">
+        <img src="/images/icons/check.svg" alt="Send" class="icon-1em">
       </button>
     </div>
   </div>
