@@ -37,9 +37,13 @@ export default {
   top: 0;
   height: 100%;
   z-index: 5;
-  padding: 3rem;
+  padding: 1rem 2rem;
   width: calc(min(300px, 60%));
   text-align: left;
+}
+
+.sidebar-panel img {
+  width: 90%;
 }
 
 .sidebar-slide-enter-active { animation: sidebar-slide 250ms ease-out both; }

@@ -7,7 +7,7 @@
     <div class="title-container-links">
       <a href="/contributors" target="_blank">Contributors</a>
       <a href="/stats" target="_blank">Server Stats</a>
-      <a href="https://scotscoop.com/wp-content/uploads/2020/06/IMG_2214-380x475.jpg" target="_blank">Building Costs</a>
+      <BuildingCosts />
     <span id="dark-theme-toggle"></span>
       <PreferencesPanel />
     </div>
@@ -15,11 +15,13 @@
 </template>
 
 <script>
+import BuildingCosts from "./BuildingCosts.vue"
 import PreferencesPanel from "./PreferencesPanel.vue"
 
 export default {
   components: {
     PreferencesPanel,
+    BuildingCosts,
   },
 }
 </script>
