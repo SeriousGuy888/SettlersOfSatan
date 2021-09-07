@@ -3,6 +3,7 @@
   <Sidebar ref="sidebar">
     <h2>Preferences</h2>
     <p>Volume: {{ state.prefs.volume }}%</p>
+    <p>May require page reload to take effect for some reason</p>
     <input type="range" min="0" max="100" v-model="state.prefs.volume">
   </Sidebar>
 </template>
@@ -34,11 +35,12 @@ export default {
       if(this.$refs.sidebar.open) {
         this.save()
       }
-    }, 3000)
+    }, 1000)
   },
   watch: {
     "state.prefs": function() {
-      this.state.prefs.volume = Number(this.state.prefs.volume) || 50
+      this.state.prefs.volume = Number(this.state.prefs.volume)
+      if(Number.isNaN(this.state.prefs.volume)) this.state.prefs.volume = 50
     },
   }
 }

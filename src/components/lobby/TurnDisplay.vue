@@ -12,13 +12,14 @@
 </template>
 
 <script>
+import { useStore } from "vuex"
 import { useSound } from "@vueuse/sound"
 import fifteenSecondsLeft from "../../sounds/fifteen_seconds_left.wav"
 
 export default {
   data() {
     return {
-      state: this.$store.state,
+      state: useStore().state,
       remainingTime: 666,
       actionNames: {
         roll_dice: "Roll Dice",
@@ -32,7 +33,7 @@ export default {
   },
   setup() {
     return {
-      fifteenSecondsLeft: useSound(fifteenSecondsLeft, { volume: 0.5 }),
+      fifteenSecondsLeft: useSound(fifteenSecondsLeft, { volume: useStore().state.prefs.volume / 100 }),
     }
   },
   methods: {
@@ -40,7 +41,7 @@ export default {
       if(!this.state.game) return
       this.remainingTime = Math.round((this.state.game.turnCountdownTo - Date.now()) / 1000)
       
-      if(this.state.game.currentAction === "build" && this.remainingTime === 15) {
+      if(this.state.game.currentAction === "build" && this.remainingTime === 95) {
         this.fifteenSecondsLeft.play()
       }
     },
