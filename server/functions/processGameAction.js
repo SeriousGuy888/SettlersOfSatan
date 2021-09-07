@@ -183,12 +183,21 @@ module.exports = (satan, playerId, actionData) => {
       
       if(!edge.getRoad()) {
         edge.setRoad(playerId)
-        if(satan.inSetupTurnCycle()) satan.setupTurnPlaced.road = edge.coordsArr
-        else if(!satan.roadBuilding) spendResourcesOn(player, "road")
         player.inventory.addRoad(-1)
-        if(satan.roadBuilding) satan.roadBuilding--
-      }
+        
+        if(satan.inSetupTurnCycle()) {
+          satan.setupTurnPlaced.road = edge.coordsArr
+        } else if(!satan.roadBuilding) {
+          spendResourcesOn(player, "road")
+        }
 
+        // console.log(edge.coordsArr)
+        // console.log(edge.getAdjacentEdges())
+
+        if(satan.roadBuilding) {
+          satan.roadBuilding--
+        }
+      }
       break
     case "move_robber":
       if(player.id !== satan.turn) {

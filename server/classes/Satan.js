@@ -1,4 +1,5 @@
 const Board = require("./Board.js")
+const Graph = require("./Graph.js")
 const lobbies = require("../lobbies.js")
 const constants = require("../constants.js")
 const processGameAction = require("../functions/processGameAction.js")
@@ -337,8 +338,7 @@ class Satan {
 
       if(this.inSetupTurnCycle()) {
         enable = (["settlement", "road"].includes(buildingName))
-      }
-      else {
+      } else {
         enable = player.canAfford(buildingCosts[buildingName])
       }
 
@@ -350,6 +350,106 @@ class Satan {
 
       player.enableControls[buildingName] = enable
     }
+
+
+    // for(const player of Object.values(this.players)) {
+    //   const roadConnections = new Graph()
+    //   let firstVert
+
+    //   for(const edge of this.board.edges) {
+    //     if(edge.road === player.id) {
+    //       const coordsArr = JSON.stringify(edge.coordsArr)
+    //       roadConnections.addVertex(coordsArr)
+    //       if(!firstVert) {
+    //         firstVert = coordsArr
+    //       }
+    //     }
+    //   }
+    //   for(const edge of this.board.edges) {
+    //     const adjEdges = edge.getAdjacentEdges()
+    //     for(const adjEdge of adjEdges) {
+    //       if(this.board.getEdge(adjEdge)?.road === player.id) {
+    //         roadConnections.addEdge(JSON.stringify(edge.coordsArr), JSON.stringify(adjEdge))
+    //       }
+    //     }
+    //   }
+
+    //   roadConnections.bfs(firstVert)
+    // }
+
+
+    this.board.edges.forEach(edge => { edge.traversed = false })
+    const edgesWithRoads = this.board.edges.filter(edge => edge.road === this.turn)
+  
+    const bfs = (edgeNode) => {
+      if(!edgeNode) return
+
+      let visitedCount = 0
+      const queue = []
+      queue.push(edgeNode)
+      edgeNode.traversed = true
+
+      while(queue.length) {
+        const visiting = queue.shift()
+        const adjacents = visiting
+          .getAdjacentEdges()
+          .map(coordsArr => this.board.getEdge(coordsArr))
+        visitedCount++
+
+        for(const nextEdgeNode of adjacents) {
+          if(!nextEdgeNode || nextEdgeNode.traversed || nextEdgeNode.road !== visiting.road)
+            continue
+          nextEdgeNode.traversed = true
+          queue.push(nextEdgeNode)
+        }
+      }
+  
+      return visitedCount
+    }
+
+    let topRoadLength = 0
+    while(edgesWithRoads.find(edge => !edge.traversed)) {
+      const notTraversed = edgesWithRoads.filter(edge => !edge.traversed)
+      const startingEdge = notTraversed[Math.floor(Math.random() * notTraversed.length)]
+      
+      const roadLengthFound = bfs(startingEdge)
+      if(roadLengthFound > topRoadLength) {
+        topRoadLength = roadLengthFound
+      }
+    }
+
+    player.longestRoadLength = topRoadLength
+    let longestRoadLengthOfPlayers = 0
+    let playerWithLongestRoad
+    for(const loopPlayer of Object.values(this.players)) {
+      if(loopPlayer.longestRoadLength > longestRoadLengthOfPlayers) {
+        longestRoadLengthOfPlayers = loopPlayer.longestRoadLength
+        playerWithLongestRoad = loopPlayer.id
+      }
+    }
+    if(playerWithLongestRoad === player.id && player.longestRoadLength >= 5) {
+      const previousOwner = this.getPlayer(this.specialCards.longestRoad)
+
+      let tie = false
+      if(previousOwner) {
+        previousOwner.points -= 2
+        if(previousOwner.longestRoadLength === player.longestRoadLength) {
+          tie = true
+        }
+      }
+      if(!tie) {
+        player.points += 2
+        this.specialCards.longestRoad = player.id
+        this.getLobby().printToChat([{
+          text: `${player.name} has won the longest road special card and has gained 2 victory points.`,
+          style: { colour: "brown" },
+        }])
+      }
+    }
+
+
+
+
 
     this.handleWin()
   }

@@ -32,6 +32,7 @@ class Player {
     this.enableControls = {}
 
     this.knightsPlayed = 0 // how many knight cards this player has used; used for calculating largest army
+    this.longestRoadLength = 0 // how long this player's longest road is
   }
 
   tick(force) {
@@ -44,6 +45,7 @@ class Player {
       deals: this.deals,
       enableControls: this.enableControls,
       knightsPlayed: this.knightsPlayed,
+      longestRoadLength: this.longestRoadLength,
     }
 
     if(!force && JSON.stringify(tickData) === JSON.stringify(this.prevTickData)) return
