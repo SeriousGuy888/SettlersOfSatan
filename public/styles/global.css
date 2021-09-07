@@ -86,7 +86,6 @@ button {
 }
 button:hover { background-color: var(--theme-bg-2); }
 button:disabled {
-  opacity: 0.75;
   cursor: not-allowed;
   background-color: var(--theme-bg-3);
 }
