@@ -351,33 +351,6 @@ class Satan {
       player.enableControls[buildingName] = enable
     }
 
-
-    // for(const player of Object.values(this.players)) {
-    //   const roadConnections = new Graph()
-    //   let firstVert
-
-    //   for(const edge of this.board.edges) {
-    //     if(edge.road === player.id) {
-    //       const coordsArr = JSON.stringify(edge.coordsArr)
-    //       roadConnections.addVertex(coordsArr)
-    //       if(!firstVert) {
-    //         firstVert = coordsArr
-    //       }
-    //     }
-    //   }
-    //   for(const edge of this.board.edges) {
-    //     const adjEdges = edge.getAdjacentEdges()
-    //     for(const adjEdge of adjEdges) {
-    //       if(this.board.getEdge(adjEdge)?.road === player.id) {
-    //         roadConnections.addEdge(JSON.stringify(edge.coordsArr), JSON.stringify(adjEdge))
-    //       }
-    //     }
-    //   }
-
-    //   roadConnections.bfs(firstVert)
-    // }
-
-
     this.board.edges.forEach(edge => { edge.traversed = false })
     const edgesWithRoads = this.board.edges.filter(edge => edge.road === this.turn)
   

@@ -191,9 +191,6 @@ module.exports = (satan, playerId, actionData) => {
           spendResourcesOn(player, "road")
         }
 
-        // console.log(edge.coordsArr)
-        // console.log(edge.getAdjacentEdges())
-
         if(satan.roadBuilding) {
           satan.roadBuilding--
         }
