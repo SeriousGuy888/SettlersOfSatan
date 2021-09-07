@@ -29,23 +29,24 @@ class DevelopmentCard {
       switch(this.type) {
         case "knight":
           game.robbing = true
-          printChatNotif(`${player.name} played a ${this.type.toUpperCase()} card and is now moving the robber.`)
+          player.knightsPlayed++
+          printChatNotif(`${player.name} played a ${this.type} card and is now moving the robber. This player has now played ${player.knightsPlayed} knight cards.`)
           break
         case "library": case "market": case "chapel": case "great hall": case "university":
           player.points++
-          printChatNotif(`${player.name} played a ${this.type.toUpperCase()} card and gained 1 victory point.`)
+          printChatNotif(`${player.name} played a ${this.type} card and gained 1 victory point.`)
           break
         case "road building":
           game.roadBuilding = 2
-          printChatNotif(`${player.name} played a ${this.type.toUpperCase()} card and is now placing two free roads.`)
+          printChatNotif(`${player.name} played a ${this.type} card and is now placing two free roads.`)
           break
         case "year of plenty":
           game.yearOfPlenty = 2
-          printChatNotif(`${player.name} played a ${this.type.toUpperCase()} card and is now taking two free resource cards.`)
+          printChatNotif(`${player.name} played a ${this.type} card and is now taking two free resource cards.`)
           break
         case "monopoly":
           game.monopoly = true
-          printChatNotif(`${player.name} played a ${this.type.toUpperCase()} card and is now choosing a resource to take all of.`)
+          printChatNotif(`${player.name} played a ${this.type} card and is now choosing a resource to take all of.`)
           break
       }
     }
