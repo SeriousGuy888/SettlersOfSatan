@@ -8,7 +8,7 @@
       <a href="/contributors" target="_blank">Contributors</a>
       <a href="/stats" target="_blank">Server Stats</a>
       <BuildingCosts />
-    <span id="dark-theme-toggle"></span>
+      <span id="dark-theme-toggle"></span>
       <PreferencesPanel />
     </div>
   </div>
