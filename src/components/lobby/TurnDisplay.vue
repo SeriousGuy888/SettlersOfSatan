@@ -47,18 +47,19 @@ export default {
       if(!this.state.game) return
       this.remainingTime = Math.round((this.state.game.turnCountdownTo - Date.now()) / 1000)
       
-      if(this.state.game.currentAction === "build" && this.remainingTime === 15) {
-        this.fifteenSecondsLeft.play()
-      }
-      if(this.state.game.ended && this.state.game.winner === this.state.player.id) {
-        if(!this.winSoundPlayed) {
-          if(Math.floor(Math.random() * 9) === 0) {
-            this.winHot.play()
-          } else {
-            this.winWava.play()
+      if(this.state.game.ended) {
+        if(this.state.game.winner === this.state.player.id) {
+          if(!this.winSoundPlayed) {
+            if(Math.floor(Math.random() * 9) === 0) {
+              this.winHot.play()
+            } else {
+              this.winWava.play()
+            }
+            this.winSoundPlayed = true
           }
-          this.winSoundPlayed = true
         }
+      } else if(this.state.game.currentAction === "build" && this.remainingTime === 15) {
+        this.fifteenSecondsLeft.play()
       }
     },
   },
