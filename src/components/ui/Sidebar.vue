@@ -1,6 +1,7 @@
 <template>
-  <div class="sidebar-backdrop" @click.self="this.open = false" v-if="open">
-  </div>
+  <transition name="sidebar-backdrop-fade">
+    <div class="sidebar-backdrop" @click.self="this.open = false" v-if="open"></div>
+  </transition>
   <transition name="sidebar-slide">
     <div v-if="open" class="sidebar-panel">
       <slot></slot>
@@ -47,4 +48,7 @@ export default {
   0% { transform: translate(-100%); }
   100% { transform: translate(0); }
 }
+
+.sidebar-backdrop-fade-enter-active { animation: fade 100ms ease-out both; }
+.sidebar-backdrop-fade-leave-active { animation: fade 100ms reverse ease-in both; }
 </style>
