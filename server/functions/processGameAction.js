@@ -265,17 +265,16 @@ module.exports = (satan, playerId, actionData) => {
       satan.clearRobbable()
       break
     case "buy_development_card":
-
-      // if(!player.canAfford(buildingCosts.developmentCard)) {
-      //   satan.printChatErr("You cannot afford this.", playerId)
-      //   break
-      // }
+      if(!player.canAfford(buildingCosts.developmentCard)) {
+        satan.printChatErr("You cannot afford this.", playerId)
+        break
+      }
 
       let card = satan.developmentCardDeck[Math.floor(Math.random() * satan.developmentCardDeck.length)]
       player.inventory.addDevelopmentCard(new DevelopmentCard(card, satan.lobbyId, player.id, satan.getLobby().game.turnCycle))
       satan.developmentCardDeck.splice(satan.developmentCardDeck.indexOf(card), 1)
 
-      // spendResourcesOn(player, "developmentCard")
+      spendResourcesOn(player, "developmentCard")
       break
     case "use_development_card":
       if(satan.currentAction === "roll_dice") {
