@@ -14,6 +14,7 @@
       <button @click="reload()">Reload</button>
     </template>
   </Modal>
+  <SoundEffects />
 </template>
 
 <script>
@@ -22,6 +23,7 @@ import Login from "./components/Login.vue"
 import JoinLobby from "./components/JoinLobby.vue"
 import Lobby from "./components/lobby/Lobby.vue"
 import Modal from "./components/ui/Modal.vue"
+import SoundEffects from "./components/SoundEffects.vue"
 
 export default {
   name: "App",
@@ -31,6 +33,7 @@ export default {
     JoinLobby,
     Lobby,
     Modal,
+    SoundEffects,
   },
   data() {
     return {

@@ -262,6 +262,15 @@ class Lobby {
     this.broadcast("receive_chat", { lines })
   }
 
+  playSound(sound, userId) {
+    if(userId) {
+      const socket = users.getUser(userId).socket
+      socket.emit("play_sound", { sound })
+    } else {
+      this.broadcast("play_sound", { sound })
+    }
+  }
+
   broadcast(msg, data) {
     for(let userId in this.users) {
       const user = users.getUser(userId)

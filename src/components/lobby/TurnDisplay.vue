@@ -12,62 +12,25 @@
 </template>
 
 <script>
-import { useStore } from "vuex"
-import { useSound } from "@vueuse/sound"
-import fifteenSecondsLeft from "../../sounds/fifteen_seconds_left.wav"
-import winHot from "../../sounds/win_hot.wav"
-import winWava from "../../sounds/win_wava.wav"
-import itsYourTurn from "../../sounds/your_turn.mp3"
-
 export default {
   data() {
     return {
-      state: useStore().state,
+      state: this.$store.state,
       remainingTime: 666,
       actionNames: {
         roll_dice: "Roll Dice",
         discard: "Discarding...",
         build: "Build & Trade"
       },
-      winSoundPlayed: false,
     }
   },
   mounted() {
     setInterval(this.updateRemainingTime, 1000)
-    socket.on("game_update", data => {
-      if(data.turnTick && this.state.game.turn === this.state.player.id) {
-        this.itsYourTurn.play()
-      }
-    })
-  },
-  setup() {
-    const volume = useStore().state.prefs.volume / 100
-    return {
-      fifteenSecondsLeft: useSound(fifteenSecondsLeft, { volume }),
-      winHot: useSound(winHot, { volume }),
-      winWava: useSound(winWava, { volume }),
-      itsYourTurn: useSound(itsYourTurn, { volume }),
-    }
   },
   methods: {
     updateRemainingTime() {
       if(!this.state.game) return
       this.remainingTime = Math.round((this.state.game.turnCountdownTo - Date.now()) / 1000)
-      
-      if(this.state.game.ended) {
-        if(this.state.game.winner === this.state.player.id) {
-          if(!this.winSoundPlayed) {
-            if(Math.floor(Math.random() * 9) === 0) {
-              this.winHot.play()
-            } else {
-              this.winWava.play()
-            }
-            this.winSoundPlayed = true
-          }
-        }
-      } else if(this.state.game.currentAction === "build" && this.remainingTime === 15) {
-        this.fifteenSecondsLeft.play()
-      }
     },
   },
   computed: {

@@ -61,6 +61,8 @@ class Satan {
       largestArmy: null,
       longestRoad: null,
     }
+
+    this.soundLastPlayed = {}
   }
 
   tick() {
@@ -74,14 +76,18 @@ class Satan {
     if(this.currentAction === "discard" && !Object.keys(this.discardingPlayers).length) {
       this.nextAction()
     }
-    if(this.turnCountdownTo - Date.now() < 0 && !this.ended) { // time limit for the turn has passed
-      // this.getLobby().printToChat([{
-      //   text: `${this.getPlayer(this.turn).name}'s turn was skipped because they took too much time.`,
-      //   style: {
-      //     colour: "green"
-      //   }
-      // }])
-      this.nextAction()
+    if(!this.ended) {
+      const timeRemaining = parseInt((this.turnCountdownTo - Date.now()) / 1000)
+      if(this.currentAction === "build" && timeRemaining === 15) {
+        const soundName = "fifteen_seconds_left"
+        if(!this.soundLastPlayed[soundName] || Date.now() - this.soundLastPlayed[soundName] > 1000) {
+          this.getLobby().playSound(soundName, this.getPlayer(this.turn).userId)
+          this.soundLastPlayed[soundName] = Date.now()
+        }
+      }
+      if(timeRemaining < 0 && !this.ended) { // time limit has passed
+        this.nextAction()
+      }
     }
 
 
@@ -161,7 +167,7 @@ class Satan {
 
     const lobby = this.getLobby()
     const currentPlayer = this.getPlayer(this.turn)
-    if(currentPlayer.points < 10) return
+    if(currentPlayer.points < 2) return
 
     const podium = Object
       .keys(this.players)
@@ -176,6 +182,9 @@ class Satan {
         podium,
       }
     ])
+
+    const winSound = Math.floor(Math.random() * 9) === 1 ? "win_hot" : "win_wava"
+    lobby.playSound(winSound, this.getPlayer(this.winner).userId)
 
     this.ended = true
   }
@@ -481,10 +490,14 @@ class Satan {
         this.setTurnTimer(actionTimers.build)
       }
 
-      this.getLobby().printToChat([{
+      const lobby = this.getLobby()
+      
+      lobby.printToChat([{
         text: `It is now ${this.players[this.turn].name}'s turn.`,
         style: { colour: "green" },
       }])
+      
+      lobby.playSound("your_turn", this.getPlayer(this.turn).userId)
     }
   }
   nextAction() {

@@ -30,7 +30,6 @@ export default {
     },
   },
   mounted() {
-    this.state.prefs = JSON.parse(localStorage.getItem("prefs")) || {}
     setInterval(() => {
       if(this.$refs.sidebar.open) {
         this.save()
