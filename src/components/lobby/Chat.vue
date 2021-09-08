@@ -52,7 +52,7 @@ export default {
       this.messages.push(lines)
 
       const container = this.$refs.messagesContainer
-      if(container.scrollTop + container.clientHeight === container.scrollHeight) {
+      if(container && container.scrollTop + container.clientHeight === container.scrollHeight) {
         this.$nextTick(() => {
           container.scrollTop = container.scrollHeight
         })
