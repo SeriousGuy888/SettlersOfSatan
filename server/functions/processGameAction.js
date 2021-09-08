@@ -264,8 +264,9 @@ module.exports = (satan, playerId, actionData) => {
         robFrom.resources[resource] -= steal[resource]
         player.resources[resource] += steal[resource]
       }
-      satan.getLobby().printToChat([{ // temp
-        text: `${player.name} stole a card from ${robFrom.name}`
+      satan.getLobby().printToChat([{
+        text: `${player.name} stole a card from ${robFrom.name}`,
+        style: { colour: "brown" },
       }])
       
       satan.clearRobbable()
@@ -281,6 +282,10 @@ module.exports = (satan, playerId, actionData) => {
       satan.developmentCardDeck.splice(satan.developmentCardDeck.indexOf(card), 1)
 
       spendResourcesOn(player, "developmentCard")
+      satan.getLobby().printToChat([{
+        text: `${player.name} purchased a development card.`,
+        style: { colour: "brown" },
+      }])
       break
     case "use_development_card":
       if(satan.currentAction === "roll_dice") {
