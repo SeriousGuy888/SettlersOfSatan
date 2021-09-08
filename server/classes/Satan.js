@@ -183,8 +183,15 @@ class Satan {
       }
     ])
 
-    const winSound = Math.floor(Math.random() * 9) === 1 ? "win_hot" : "win_wava"
-    lobby.playSound(winSound, this.getPlayer(this.winner).userId)
+    for(const player of Object.values(this.players)) {
+      const userId = player.userId
+      if(this.winner === player.id) {
+        const winSound = Math.floor(Math.random() * 9) === 1 ? "win_hot" : "win_wava"
+        lobby.playSound(winSound, userId)
+      } else {
+        lobby.playSound("lost", userId)
+      }
+    }
 
     this.ended = true
   }
