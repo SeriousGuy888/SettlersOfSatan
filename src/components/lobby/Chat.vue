@@ -43,7 +43,7 @@ export default {
   },
   mounted() {
     socket.on("receive_chat", data => {
-      this.print(data.lines)
+      if(this.print) this.print(data.lines)
     })
   },
   methods: {
