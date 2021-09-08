@@ -167,7 +167,7 @@ class Satan {
 
     const lobby = this.getLobby()
     const currentPlayer = this.getPlayer(this.turn)
-    if(currentPlayer.points < 2) return
+    if(currentPlayer.points < 10) return
 
     const podium = Object
       .keys(this.players)
