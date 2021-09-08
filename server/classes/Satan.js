@@ -354,7 +354,7 @@ class Satan {
     this.board.edges.forEach(edge => { edge.traversed = false })
     const edgesWithRoads = this.board.edges.filter(edge => edge.road === this.turn)
   
-    const bfs = (edgeNode) => {
+    const traverseRoad = (edgeNode) => {
       if(!edgeNode) return
 
       let visitedCount = 0
@@ -385,7 +385,7 @@ class Satan {
       const notTraversed = edgesWithRoads.filter(edge => !edge.traversed)
       const startingEdge = notTraversed[Math.floor(Math.random() * notTraversed.length)]
       
-      const roadLengthFound = bfs(startingEdge)
+      const roadLengthFound = traverseRoad(startingEdge)
       if(roadLengthFound > topRoadLength) {
         topRoadLength = roadLengthFound
       }
