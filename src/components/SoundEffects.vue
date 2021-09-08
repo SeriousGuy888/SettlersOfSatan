@@ -4,11 +4,6 @@
 import { useStore } from "vuex"
 import { useSound } from "@vueuse/sound"
 
-import fifteenSecondsLeft from "../sounds/fifteen_seconds_left.wav"
-import winHot from "../sounds/win_hot.wav"
-import winWava from "../sounds/win_wava.wav"
-import yourTurn from "../sounds/your_turn.mp3"
-
 export default {
   setup() {
     const store = useStore()
@@ -16,12 +11,13 @@ export default {
     if(!store.state.prefs.volume) store.state.prefs.volume = 50
 
     const volume = store.state.prefs.volume / 100
-    
+    const soundOpts = { volume }
+
     return {
-      fifteen_seconds_left: useSound(fifteenSecondsLeft, { volume }),
-      win_hot: useSound(winHot, { volume }),
-      win_wava: useSound(winWava, { volume }),
-      your_turn: useSound(yourTurn, { volume }),
+      fifteen_seconds_left: useSound(require("../sounds/fifteen_seconds_left.wav"), soundOpts),
+      win_hot: useSound(require("../sounds/win_hot.wav"), soundOpts),
+      win_wava: useSound(require("../sounds/win_wava.wav"), soundOpts),
+      your_turn: useSound(require("../sounds/your_turn.mp3"), soundOpts),
     }
   },
   mounted() {
