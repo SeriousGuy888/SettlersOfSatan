@@ -90,7 +90,7 @@ export default {
         state.player = data
       }
     })
-    socket.on("receive_chat", data => this.printToChat(data.lines))
+    
 
     socket.on("disconnect", () => {
       this.showModal("You were disconnected from game server! Reload to reconnect.", true)

@@ -41,6 +41,11 @@ export default {
       chatInput: "",
     }
   },
+  mounted() {
+    socket.on("receive_chat", data => {
+      this.print(data.lines)
+    })
+  },
   methods: {
     print(lines) {
       if(this.messages.length > 250) this.messages.shift()
