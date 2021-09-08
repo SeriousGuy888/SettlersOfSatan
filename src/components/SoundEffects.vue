@@ -14,17 +14,19 @@ export default {
     const soundOpts = { volume }
 
     return {
-      fifteen_seconds_left: useSound(require("../sounds/fifteen_seconds_left.wav"), soundOpts),
-      win_hot: useSound(require("../sounds/win_hot.wav"), soundOpts),
-      win_wava: useSound(require("../sounds/win_wava.wav"), soundOpts),
-      your_turn: useSound(require("../sounds/your_turn.mp3"), soundOpts),
+      sounds: {
+        fifteen_seconds_left: useSound(require("../sounds/fifteen_seconds_left.wav"), soundOpts),
+        win_hot: useSound(require("../sounds/win_hot.wav"), soundOpts),
+        win_wava: useSound(require("../sounds/win_wava.wav"), soundOpts),
+        your_turn: useSound(require("../sounds/your_turn.mp3"), soundOpts),
+      },
     }
   },
   mounted() {
     socket.on("play_sound", data => {
       const soundName = data.sound
-      if(this[soundName].play) {
-        this[soundName].play()
+      if(this.sounds[soundName].play) {
+        this.sounds[soundName].play()
         console.log(`Played sound ${soundName}`)
       } else {
         console.log(`Sound ${soundName} does not exist.`)
