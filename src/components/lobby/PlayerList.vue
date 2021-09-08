@@ -27,11 +27,10 @@
             <img v-if="state.game.specialCards.longestRoad === loopUser.playerId" class="icon-1em" src="/images/icons/longest_road.svg" alt="Longest Road">
             <img v-else class="icon-1em" src="/images/icons/road_length.svg" alt="Road Length">
           </div>
-          <div
-            v-if="state.game.specialCards.largestArmy === loopUser.playerId"
-            title="This player gets an extra 2 points for having the largest army card."
-          >
-            <img class="icon-1em" src="/images/icons/largest_army.svg" alt="Largest Army">
+          <div title="Number of knight cards this player has played">
+            <p>{{ userToPlayer(loopUser).knightsPlayed }}</p>
+            <img v-if="state.game.specialCards.largestArmy === loopUser.playerId" class="icon-1em" src="/images/icons/largest_army.svg" alt="Largest Army">
+            <img v-else class="icon-1em" src="/images/icons/knights_played.svg" alt="Knights Played">
           </div>
         </div>
       </div>
