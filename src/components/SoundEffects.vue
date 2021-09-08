@@ -17,6 +17,7 @@ export default {
       sounds: {
         fifteen_seconds_left: useSound(require("../sounds/fifteen_seconds_left.wav"), soundOpts),
         lost: useSound(require("../sounds/lost.wav"), soundOpts),
+        place: useSound(require("../sounds/place.wav"), soundOpts),
         win_hot: useSound(require("../sounds/win_hot.wav"), soundOpts),
         win_wava: useSound(require("../sounds/win_wava.wav"), soundOpts),
         your_turn: useSound(require("../sounds/your_turn.mp3"), soundOpts),

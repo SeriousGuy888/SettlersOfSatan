@@ -107,6 +107,7 @@ module.exports = (satan, playerId, actionData) => {
         vertex.setBuilding("settlement", playerId)
         player.points++
         player.inventory.addSettlement(-1)
+        satan.getLobby().playSound("place")
       }
       break
     case "place_city":
@@ -129,6 +130,7 @@ module.exports = (satan, playerId, actionData) => {
         player.points++
         player.inventory.addCity(-1)
         player.inventory.addSettlement()
+        satan.getLobby().playSound("place")
       }
       break
     case "place_road":
@@ -194,6 +196,7 @@ module.exports = (satan, playerId, actionData) => {
         if(satan.roadBuilding) {
           satan.roadBuilding--
         }
+        satan.getLobby().playSound("place")
       }
       break
     case "move_robber":
