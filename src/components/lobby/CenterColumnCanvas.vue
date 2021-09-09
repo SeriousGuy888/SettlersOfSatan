@@ -107,12 +107,7 @@ export default {
                   if(!vertex) continue
 
                   board.vertexes.push(
-                    new Vertex(
-                      this,
-                      x + xOffset,
-                      y + (vertex.coords.v === "north" ? -hexRadius : hexRadius),
-                      vertex
-                    )
+                    new Vertex(this, Math.round(x + xOffset), Math.round(y + (vertex.coords.v === "north" ? -hexRadius : hexRadius)), vertex)
                   )
                 }
               }
