@@ -25,6 +25,8 @@ import Lobby from "./components/lobby/Lobby.vue"
 import Modal from "./components/ui/Modal.vue"
 import SoundEffects from "./components/SoundEffects.vue"
 
+import { useStore } from "vuex"
+
 export default {
   name: "App",
   components: {
@@ -61,6 +63,10 @@ export default {
     reload() {
       window.location.reload()
     },
+  },
+  setup() {
+    const store = useStore()
+    store.state.prefs = JSON.parse(localStorage.getItem("prefs")) || {}
   },
   mounted() {
     const state = this.state

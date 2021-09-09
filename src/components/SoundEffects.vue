@@ -7,10 +7,10 @@ import { useSound } from "@vueuse/sound"
 export default {
   setup() {
     const store = useStore()
-    store.state.prefs = JSON.parse(localStorage.getItem("prefs")) || {}
+    console.log(store.state.prefs)
     if(!store.state.prefs.volume) store.state.prefs.volume = 50
 
-    const volume = store.state.prefs.volume / 100
+    const volume = Number(store.state.prefs.volume) / 100
     const soundOpts = { volume }
 
     return {
