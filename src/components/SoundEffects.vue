@@ -7,7 +7,6 @@ import { useSound } from "@vueuse/sound"
 export default {
   setup() {
     const store = useStore()
-    console.log(store.state.prefs)
     if(!store.state.prefs.volume) store.state.prefs.volume = 50
 
     const volume = Number(store.state.prefs.volume) / 100
