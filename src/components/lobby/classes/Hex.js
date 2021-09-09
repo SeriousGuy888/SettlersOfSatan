@@ -14,11 +14,24 @@ class Hex {
     ctx.strokeStyle = "#000"
 
     if(harbour) {
-      ctx.fillStyle = "#666"
+      ctx.beginPath()
+      ctx.fillStyle = "#ddd"
+      ctx.strokeStyle = "#000"
+      ctx.arc(xPos, yPos, Math.round(hexRadius / 2), 0, 2 * Math.PI)
+      ctx.fill()
+      ctx.stroke()
+      ctx.closePath()
+      
+      
+      let resourceImg = new Image()
+      resourceImg.src = `/images/resource_cards/${harbour.deal.resource}.png`
+      const imgWidth = Math.round(hexRadius / 1.5)
+      const imgOffset = Math.round(imgWidth / 2.5)
+      ctx.drawImage(resourceImg, xPos - imgOffset, yPos - imgOffset, imgWidth, imgWidth)
 
       ctx.beginPath()
-      // ctx.arc(xPos, yPos, hexRadius / 4, 0, 2 * Math.PI)
-      ctx.fillText(`${harbour.deal.amount} ${harbour.deal.resource}`, xPos, yPos)
+      ctx.fillStyle = "#000"
+      ctx.fillText(`${harbour.deal.amount}`, xPos - imgOffset, yPos - imgOffset)
       ctx.closePath()
       ctx.fill()
     }

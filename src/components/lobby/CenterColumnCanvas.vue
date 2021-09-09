@@ -29,7 +29,7 @@ export default {
         vertexes: [],
         edges: [],
       },
-      hexRadius: 90,
+      hexRadius: 85,
     }
   },
   computed: {
@@ -37,7 +37,10 @@ export default {
       return !!this.state.game
     },
     hexApothem() {
-      return Math.sqrt(this.hexRadius ** 2 - (this.hexRadius / 2) ** 2)
+      return Math.sqrt(
+        this.hexRadius * this.hexRadius -
+        (this.hexRadius / 2) * (this.hexRadius / 2)
+      )
     },
   },
   mounted() {
@@ -76,11 +79,11 @@ export default {
     },
     refresh() {
       const { hexes, vertexes, edges } = this.state.game.board
-      const { board, ctx, hexRadius, hexApothem } = this
+      const { board, hexRadius, hexApothem } = this
 
       Object.values(board).forEach(arr => arr.splice(0, arr.length))
 
-      const startY = hexRadius / 2
+      const startY = hexRadius
       const yOffsetPerRow = hexRadius * 2 - hexRadius / 2
       if(hexes) {
         let y = startY
