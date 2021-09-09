@@ -2,9 +2,10 @@
   "contributors": [
     {
       "name": "Billzo",
-      "weight": 80,
+      "weight": 90,
       "contributions": [
         "web_design",
+        "vue",
         "dark_theme",
         "back_end",
         "art"
@@ -44,6 +45,7 @@
   "lang": {
     "emojis": {
       "web_design": "😵",
+      "vue": "🟩",
       "dark_theme": "🌛",
       "back_end": "💻",
       "art": "🎨",
@@ -52,6 +54,7 @@
     },
     "english": {
       "web_design": "Web Design",
+      "vue": "Vue Rewrite",
       "dark_theme": "Dark Theme CSS",
       "back_end": "Server Backend",
       "art": "Art",
@@ -66,15 +69,16 @@
     },
     "billzonian": {
       "web_design": "Web Designment",
-      "dark_theme": "Nuiht Ceme CSS",
+      "vue": "Vue Reenskribement",
+      "dark_theme": "Night Theme CSS",
       "back_end": "Serveur Bakkend",
       "art": "Vandalism",
       "participation": "Emotional Assistion",
-      "catan": "Koqqing Hautu Catan·ise",
+      "catan": "Koqqing How tu Catan·ise",
       "sounds": "Ear Nukements",
-      "background": "Cieving ce Bakkground Image",
+      "background": "Thieving c Bakkground Image",
       "distract_liam": "Distrakting Liam",
-      "jakob_criticism": "Bullying Billzo Ceir Web Designment",
+      "jakob_criticism": "Bullying Billzo Their Web Designment",
       "readme": "ReadMe File",
       "going_missing": "Exiting for Many Suns"
     }
