@@ -18,12 +18,12 @@
 </template>
 
 <script>
-import Title from "../../components/Title.vue"
-import Login from "../../components/Login.vue"
-import JoinLobby from "../../components/JoinLobby.vue"
-import Lobby from "../../components/lobby/Lobby.vue"
-import Modal from "../../components/ui/Modal.vue"
-import SoundEffects from "../../components/SoundEffects.vue"
+import Title from "@/components/Title.vue"
+import Login from "@/components/Login.vue"
+import JoinLobby from "@/components/JoinLobby.vue"
+import Lobby from "@/components/lobby/Lobby.vue"
+import Modal from "@/components/ui/Modal.vue"
+import SoundEffects from "@/components/SoundEffects.vue"
 
 import { useStore } from "vuex"
 
