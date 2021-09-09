@@ -15,8 +15,12 @@ class Vertex {
       const harbourCoords = this.harbour
       const harbourHex = that.board.hexes.filter(hex => hex.coords.x === harbourCoords.x && hex.coords.y === harbourCoords.y)[0]
 
+      const harbourLenDivisor = 2
       const fromPos = [this.xPos, this.yPos]
-      const toPos = [harbourHex.xPos + (this.xPos - harbourHex.xPos) / 3.5, harbourHex.yPos + (this.yPos - harbourHex.yPos) / 3.5]
+      const toPos = [
+        harbourHex.xPos + Math.round((this.xPos - harbourHex.xPos) / harbourLenDivisor),
+        harbourHex.yPos + Math.round((this.yPos - harbourHex.yPos) / harbourLenDivisor)
+      ]
 
       ctx.beginPath()
       ctx.moveTo(...fromPos.map(e => Math.round(e)))
