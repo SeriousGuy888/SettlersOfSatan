@@ -2,7 +2,7 @@
   <div id="game-controls" class="button-group" v-if="state.player">
     <button
       :class="{ active: holding === 'settlement' }" 
-      :disabled="!state.player.enableControls.settlement"
+      :disabled="shouldDisable('settlement')"
       @click="setHolding('settlement')"
     >
       <img src="/images/game_controls/settlement.svg" alt="Settlement">
@@ -10,7 +10,7 @@
     </button>
     <button
       :class="{ active: holding === 'city' }"
-      :disabled="!state.player.enableControls.city"
+      :disabled="shouldDisable('city')"
       @click="setHolding('city')"
     >
       <img src="/images/game_controls/city.svg" alt="City">
@@ -18,14 +18,14 @@
     </button>
     <button
       :class="{ active: holding === 'road' }"
-      :disabled="!state.player.enableControls.road"
+      :disabled="shouldDisable('road')"
       @click="setHolding('road')"
     >
       <img src="/images/game_controls/road.svg" alt="Road">
       <p>{{ state.player.inventory.roads }}</p>
     </button>
     <button
-      :disabled="!state.player.enableControls.developmentCard"
+      :disabled="shouldDisable('developmentCard')"
       @click="buyDevelopmentCard()"
     >
       <img src="/images/game_controls/development_card.svg" alt="Development Card">
@@ -52,6 +52,13 @@ export default {
       socket.emit("perform_game_action", {
         action: "buy_development_card"
       }, () => {})
+    },
+    shouldDisable(buttonName) {
+      return (
+        (!this.state.player.enableControls[buttonName]) ||
+        this.state.game.currentAction !== "build" ||
+        this.state.game.turn !== this.state.player.id
+      )
     },
   },
   mounted() {
