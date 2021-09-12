@@ -2,11 +2,9 @@
 
 <script>
 import { useStore } from "vuex"
-import { useSound } from "@vueuse/sound"
 
 export default {
   setup() {
-
     return {
       sounds: {
         buy_development_card: new Audio("/sounds/buy_development_card.wav"),
