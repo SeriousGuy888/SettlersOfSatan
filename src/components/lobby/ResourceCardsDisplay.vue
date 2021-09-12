@@ -10,7 +10,9 @@
       }"
     >
       <img :src="getResourceIcon(resource)" :alt="resource">
-      <h3 :title="`You have this many ${resource} cards.`">{{ getResourcePlayerAmt(resource) }}</h3>
+      <h3 :title="state.player ? `You have this many ${resource} cards.` : 'You don\'t have any resource cards as a spectator.'">
+        {{ getResourcePlayerAmt(resource) }}
+      </h3>
       <p :title="`The bank has this many ${resource} cards.`">{{ state.game ? state.game.stockpile[resource] : 0 }}</p>
     </div>
   </div>
@@ -35,7 +37,7 @@ export default {
       return `/images/resource_cards/${resource}.png`
     },
     getResourcePlayerAmt(resource) {
-      if(!this.state.player) return 0
+      if(!this.state.player) return "-"
       return this.state.player.resources[resource]
     },
     shouldPulse(resource, green) {
