@@ -14,8 +14,8 @@ export default {
 
     return {
       sounds: {
-        buy_development_card: useSound(require(`../sounds/buy_development_card.wav`), soundOpts),
-        fifteen_seconds_left: useSound(require(`../sounds/fifteen_seconds_left.wav`), soundOpts),
+        buy_development_card: useSound(require("../sounds/buy_development_card.wav"), soundOpts),
+        fifteen_seconds_left: useSound(require("../sounds/fifteen_seconds_left.wav"), soundOpts),
         lost: useSound(require("../sounds/lost.wav"), soundOpts),
         place: useSound(require("../sounds/place.wav"), soundOpts),
         win_hot: useSound(require("../sounds/win_hot.wav"), soundOpts),
