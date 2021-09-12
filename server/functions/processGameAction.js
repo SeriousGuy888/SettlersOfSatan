@@ -285,6 +285,7 @@ module.exports = (satan, playerId, actionData) => {
       satan.developmentCardDeck.splice(satan.developmentCardDeck.indexOf(card), 1)
 
       spendResourcesOn(player, "developmentCard")
+      satan.getLobby().playSound("buy_development_card")
       satan.getLobby().printToChat([{
         text: `${player.name} purchased a development card.`,
         style: { colour: "brown" },
