@@ -1,9 +1,14 @@
 <template>
   <div id="turn-controls">
     <button
+      v-if="state.player"
       @click="onClick()"
       :disabled="buttonDisabled"
     >{{ buttonText }}</button>
+    <p v-else class="spectator-notice">
+      <img src="/images/icons/spectate.svg" alt="" class="icon-1em">
+      You are spectating this lobby.
+    </p>
   </div>
 </template>
 
@@ -56,3 +61,18 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+#turn-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 0;
+}
+
+.spectator-notice {
+  text-align: center;
+  font-style: italic;
+  margin: 0.1em;
+}
+</style>

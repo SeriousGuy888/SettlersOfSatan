@@ -9,14 +9,6 @@
 }
 
 
-
-#turn-controls {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-
 #lobby-player-list {
   display: flex;
   flex-direction: column;
