@@ -26,6 +26,7 @@ class DevelopmentCard {
 
     if(game.turnCycle != this.cycleBought){
       player.inventory.removeDevelopmentCard(this)
+      lobby.playSound("buy_development_card")
       switch(this.type) {
         case "knight":
           game.robbing = true
