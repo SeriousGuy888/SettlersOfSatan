@@ -223,6 +223,8 @@ module.exports = (satan, playerId, actionData) => {
         satan.printChatErr("The robber must be moved to a different hex.", playerId)
         break
       }
+
+      satan.getLobby().playSound("place")
       satan.board.moveRobber(coords.x, coords.y)
       satan.robbing = false
 
