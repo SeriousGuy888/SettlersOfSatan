@@ -3,6 +3,7 @@
     <div class="player-list-title">
       <h3>Players ({{ state.lobby.playerCount }}/{{ state.lobby.maxPlayerCount }})</h3>
       <p v-if="state.lobby.spectatorCount">
+        <img src="/images/icons/spectate.svg" alt="" class="icon-1em">
         {{ state.lobby.spectatorCount }} {{ state.lobby.spectatorCount === 1 ? "person is" : "people are" }} spectating this lobby.
       </p>
     </div>
