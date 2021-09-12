@@ -5,17 +5,21 @@ import { useStore } from "vuex"
 
 export default {
   setup() {
-    return {
-      sounds: {
-        buy_development_card: new Audio("/sounds/buy_development_card.wav"),
-        fifteen_seconds_left: new Audio("../sounds/fifteen_seconds_left.wav"),
-        lost: new Audio("../sounds/lost.wav"),
-        place: new Audio("../sounds/place.wav"),
-        win_hot: new Audio("../sounds/win_hot.wav"),
-        win_wava: new Audio("../sounds/win_wava.wav"),
-        your_turn: new Audio("/sounds/your_turn.wav"),
-      },
+    const sounds = {
+      buy_development_card: "buy_development_card.wav",
+      fifteen_seconds_left: "fifteen_seconds_left.wav",
+      lost: "lost.wav",
+      place: "place.wav",
+      win_hot: "win_hot.wav",
+      win_wava: "win_wava.wav",
+      your_turn: "your_turn.wav",
     }
+    for(const soundName of Object.keys(sounds)) {
+      const filePath = `./sounds/${sounds[soundName]}`
+      sounds[soundName] = new Audio(filePath)
+    }
+
+    return { sounds }
   },
   mounted() {
     const store = useStore()
