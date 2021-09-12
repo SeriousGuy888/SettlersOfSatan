@@ -272,6 +272,7 @@ module.exports = (satan, playerId, actionData) => {
         style: { colour: "brown" },
       }])
       
+      satan.getLobby().playSound("rob")
       satan.clearRobbable()
       break
     case "buy_development_card":
