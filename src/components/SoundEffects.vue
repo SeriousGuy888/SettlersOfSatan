@@ -12,17 +12,15 @@ export default {
     const volume = Number(store.state.prefs.volume) / 100
     const soundOpts = { volume }
 
-    const dir = "../sounds/"
-
     return {
       sounds: {
-        buy_development_card: useSound(require(`${dir}buy_development_card.wav`), soundOpts),
-        fifteen_seconds_left: useSound(require(`${dir}fifteen_seconds_left.wav`), soundOpts),
-        lost: useSound(require(`${dir}lost.wav`), soundOpts),
-        place: useSound(require(`${dir}place.wav`), soundOpts),
-        win_hot: useSound(require(`${dir}win_hot.wav`), soundOpts),
-        win_wava: useSound(require(`${dir}win_wava.wav`), soundOpts),
-        your_turn: useSound(require(`${dir}your_turn.mp3`), soundOpts),
+        buy_development_card: useSound(require(`../sounds/buy_development_card.wav`), soundOpts),
+        fifteen_seconds_left: useSound(require(`../sounds/fifteen_seconds_left.wav`), soundOpts),
+        lost: useSound(require("../sounds/lost.wav"), soundOpts),
+        place: useSound(require("../sounds/place.wav"), soundOpts),
+        win_hot: useSound(require("../sounds/win_hot.wav"), soundOpts),
+        win_wava: useSound(require("../sounds/win_wava.wav"), soundOpts),
+        your_turn: useSound(require("../sounds/your_turn.mp3"), soundOpts),
       },
     }
   },
