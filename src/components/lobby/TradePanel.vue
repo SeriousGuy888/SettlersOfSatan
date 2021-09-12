@@ -3,7 +3,7 @@
     <div v-if="tradingAllowed" id="trade-interface">
       <p id="trade-offerer-name">{{ state.game.players[state.game.turn].name }}</p>
       <br>
-      <select v-model="tradeMode" :disabled="['discard', 'year_of_plenty', 'monopoly'].includes(tradeMode)">
+      <select v-model="tradeMode" :disabled="['discard', 'year_of_plenty', 'monopoly'].includes(tradeMode) || !state.player">
         <option value="humans">Humans</option>
         <option value="stockpile">Bank</option>
         <option value="discard" class="hidden-option">Discard</option>
@@ -62,13 +62,15 @@
         </button>
       </div>
       <div v-else>
-        <button v-if="state.game.trade.offer" @click="acceptTrade()">Accept Trade</button>
-        <p v-else>No trade offer right now...</p>
+        <button v-if="state.player && state.game.trade.offer" @click="acceptTrade()">Accept Trade</button>
+        <p v-else-if="!state.game.trade.offer">No trade offer right now...</p>
       </div>
     </div>
-    <p v-else>{{ state.game.turnCycle > 2 ? "Roll dice before trading..." : "Trading is not allowed right now..." }}</p>
+    <p v-else>{{ state.game.turnCycle > 2 ? "No trade happening right now..." : "Trading is not allowed right now..." }}</p>
 
-    <p v-if="tradingAllowed && state.game.trade.offer">You can click the trade buttons in the playerlist to finalise a trade.</p>
+    <p v-if="tradingAllowed && state.game.trade.offer && state.player && state.game.turn === state.player.id">
+      You can click the trade buttons in the playerlist to finalise a trade.
+    </p>
   </div>
 </template>
 
@@ -121,16 +123,16 @@ export default {
   },
   computed: {
     requiredDiscardCount() {
-      if(!this.state.game) return 0
+      if(!this.state.game || !this.state.player) return 0
       return this.state.game.discardingPlayers[this.state.player.id]
     },
     tradingAllowed() {
       return (
-        this.state.game && this.state.player &&
+        this.state.game &&
         this.state.game.currentAction !== "roll_dice" &&
         this.state.game.turnCycle > 2 &&
         (
-          this.state.game.turn === this.state.player.id ||
+          this.state.game.turn === this.state.player?.id ||
           this.state.game.trade.offer ||
           this.requiredDiscardCount
         )

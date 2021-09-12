@@ -93,9 +93,8 @@ class Lobby {
       }])
 
       if(this.game) {
-        this.game
-          .getPlayer(this.users[userId].playerId)
-          .forfeit()
+        const player = this.game.getPlayer(this.users[userId].playerId)
+        if(player) player.forfeit()
       }
 
       delete this.users[userId]
@@ -356,7 +355,7 @@ class Lobby {
     lobbyHelpers.emitLobbyUpdate(this)
     if(inGame) {
       this.game = game
-      for(const i in this.users) {
+      for(const i in this.getUsers()) {
         const user = this.users[i]
         this.game.setPlayer(user.playerId, new Player(user.playerId, this.code, user))
       }

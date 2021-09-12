@@ -87,7 +87,7 @@ class Hex {
       ctx.fillText(number.toString(), xPos, yPos)
     }
 
-    if(game.turn === player.id && game.robbing && !this.robber) {
+    if(player && game.turn === player.id && game.robbing && !this.robber) {
       drawSelectCircle(xPos, yPos, hexRadius * 0.75)
     }
   }
@@ -113,7 +113,7 @@ class Hex {
     const { state } = this.that
 
     console.log(`Clicked on hex ${JSON.stringify(this.coords)}`)
-    if(state.game.turn === state.player.id && state.game.robbing && !this.robber && !this.invisible) {
+    if(state.player && state.game.turn === state.player.id && state.game.robbing && !this.robber && !this.invisible) {
       socket.emit("perform_game_action", {
         action: "move_robber",
         coords: this.coords,

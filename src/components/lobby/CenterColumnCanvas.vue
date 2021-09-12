@@ -66,7 +66,7 @@ export default {
       })
     },
     draw() {
-      if(!this.state.game || !this.state.player) return
+      if(!this.state.game) return
 
       const { ctx } = this
 

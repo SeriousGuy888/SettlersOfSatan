@@ -1,6 +1,6 @@
 <template>
   <div>
-    <CenterColumnControls :holding="holding" @setHolding="holding = $event" />
+    <CenterColumnControls v-if="state.player" :holding="holding" @setHolding="holding = $event" />
     <CenterColumnCanvas :holding="holding" @setHolding="holding = $event" />
   </div>
 </template>
@@ -16,6 +16,7 @@ export default {
   },
   data() {
     return {
+      state: this.$store.state,
       holding: "",
     }
   },

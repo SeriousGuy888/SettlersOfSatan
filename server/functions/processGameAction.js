@@ -9,6 +9,8 @@ module.exports = (satan, playerId, actionData) => {
   const coordsArr = actionData.coordsArr
   const vertex = satan.board.getVertex(coords)
   const player = satan.getPlayer(playerId)
+
+  if(!player) return
   
   const spendResourcesOn = (p, item) => {
     const playerResources = p.resources
@@ -33,6 +35,7 @@ module.exports = (satan, playerId, actionData) => {
 
   switch(actionData.action) {
     case "roll_dice":
+      if(player.id !== satan.turn) break
       if(satan.currentAction !== "roll_dice") break
       satan.rollDice()
       break
@@ -326,6 +329,8 @@ module.exports = (satan, playerId, actionData) => {
 const handleTradeActions = (satan, playerId, actionData) => {
   const player = satan.getPlayer(playerId)
   const lobby = satan.getLobby()
+
+  if(!player || !lobby) return
   
   const sanitiseTradeOffer = (unsanitisedOffer) => {
     // sanitise the incoming offer data to make sure everything is a number

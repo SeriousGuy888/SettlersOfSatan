@@ -46,7 +46,7 @@ class Vertex {
     }
     if(holding === "city") {
       if(!this.building) return
-      if(this.building.playerId !== state.player.id) return
+      if(!state.player || this.building.playerId !== state.player.id) return
       if(this.building.type !== "settlement") return
       drawSelectCircle(xPos, yPos, radius)
     }

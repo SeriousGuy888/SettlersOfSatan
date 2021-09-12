@@ -235,6 +235,7 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     if(!requestValidation) return
     const { lobby, user } = requestValidation
 
+    if(user.spectator) return
     if(!lobby.hasUser(data.playerId, true)) return callback("Player not found.")
     lobby.votekick(data.playerId, user.id)
   })
