@@ -169,6 +169,12 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     callback(null, {})
   })
 
+  socket.on("get_lobby", (data, callback) => {
+    const requestValidation = helpers.validateRequest(callback, socket, { requireCallback: true })
+    if(!requestValidation) return
+    callback(null, lobbies.getPublicLobbyInfo(data.code.toUpperCase()))
+  })
+
   socket.on("get_lobbies", (data, callback) => {
     const requestValidation = helpers.validateRequest(callback, socket, { requireCallback: true })
     if(!requestValidation) return

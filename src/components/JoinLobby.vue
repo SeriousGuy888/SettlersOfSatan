@@ -15,9 +15,13 @@
         <h2>Join a Lobby</h2>
         <p>Enter a lobby code.</p>
         <div class="single-line-input">
-          <input v-model="joiningLobbyCode" placeholder="MURDER" style="text-transform: uppercase;">
-          <button @click="joinLobby(joiningLobbyCode)">
-            <img src="/images/icons/plus.svg" alt="Join" class="icon-1em">
+          <input v-model="joiningLobbyCode" @input="updateJoinLobbyButton" placeholder="MURDER" style="text-transform: uppercase;">
+          <button @click="joinLobby(joiningLobbyCode)" :disabled="disableJoinButton">
+            <img
+              :src="`/images/icons/${joinButtonSpectate ? 'spectate' : 'plus'}.svg`"
+              :alt="joinButtonSpectate ? 'Spectate' : 'Join'"
+              class="icon-1em"
+            >
           </button>
         </div>
       </div>
@@ -40,7 +44,9 @@
           >
             <div class="list-entry-title">
               <h3>{{ loopLobby.name }}</h3>
-              <button @click="joinLobby(loopLobby.code)">Join</button>
+              <button @click="joinLobby(loopLobby.code)">
+                <img :src="`/images/icons/${joinButtonSpectate ? 'spectate' : 'plus'}.svg`" alt="Join" class="icon-1em" > Join
+              </button>
             </div>
             <p>Code: <code>{{ loopLobby.code }}</code></p>
             <p>Players: <code>{{ loopLobby.playerCount }}/{{ loopLobby.maxPlayerCount }}</code></p>
@@ -62,6 +68,8 @@ export default {
       creatingLobbyName: "",
       joiningLobbyCode: "",
       openLobbies: [],
+      disableJoinButton: true,
+      joinButtonSpectate: false, // display spectate icon instead of plus sign
       disableOpenLobbiesButton: false,
     }
   },
@@ -78,6 +86,15 @@ export default {
     },
     createLobby(name) {
       socket.emit("create_lobby", { name }, this.enterLobbyCallback)
+    },
+    updateJoinLobbyButton() {
+      socket.emit("get_lobby", { code: this.joiningLobbyCode }, (err, data) => {
+        if(err) console.log(err)
+        else {
+          this.disableJoinButton = !data
+          this.joinButtonSpectate = data?.inGame
+        }
+      })
     },
     refreshOpenLobbies() {
       // make it look like the button is loading for a bit of time just because

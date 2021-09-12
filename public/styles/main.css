@@ -88,6 +88,8 @@ html {
 }
 .list-entry-title button {
   padding: 0.1em 0.6em;
+  display: flex;
+  align-items: center;
 }
 .list-entry-line {
     display: flex;
