@@ -23,8 +23,14 @@ class Lobby {
     this.game = null
   }
 
+  getPlayerCount() {
+    return Object.values(this.users)
+      .filter(u => !u.spectator)
+      .length
+  }
+
   isFull() {
-    return Object.keys(this.users).length >= this.maxPlayers
+    return this.getPlayerCount >= this.maxPlayers
   }
 
   hasUser(id, byPlayerId) {
@@ -291,8 +297,17 @@ class Lobby {
     }
   }
 
-  getUsers() {
-    return this.users
+  getUsers(includeSpectators) {
+    if(includeSpectators) {
+      return this.users
+    } else {
+      return Object.keys(this.users)
+        .filter(k => !this.users[k].spectator)
+        .reduce((res, key) => {
+          res[key] = this.users[key]
+          return res
+        }, {})
+    }
   }
 
   getMaxPlayers() {

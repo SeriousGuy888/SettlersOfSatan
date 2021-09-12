@@ -17,7 +17,7 @@ exports.getPublicLobbyInfo = (lobbyId) => {
     name: lobby.getName(),
     code: lobby.getCode(),
     users: JSON.parse(JSON.stringify(Object.values(lobby.getUsers()))).map(e => { delete e.userId; return e }), // do not reveal user ids
-    playerCount: Object.keys(lobby.getUsers()).length,
+    playerCount: lobby.getPlayerCount(),
     maxPlayerCount: lobby.getMaxPlayers(),
     inGame: lobby.getInGame()
   }
