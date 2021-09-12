@@ -1,6 +1,12 @@
 <template>
   <div id="lobby-player-list-container">
-    <h3>Players ({{ state.lobby.playerCount }}/{{ state.lobby.maxPlayerCount }})</h3>
+    <div class="player-list-title">
+      <h3>Players ({{ state.lobby.playerCount }}/{{ state.lobby.maxPlayerCount }})</h3>
+      <p v-if="state.lobby.spectatorCount">
+        {{ state.lobby.spectatorCount }} {{ state.lobby.spectatorCount === 1 ? "person is" : "people are" }} spectating this lobby.
+      </p>
+    </div>
+
     <div id="lobby-player-list">
 
       <div v-for="loopUser in state.lobby.users" :key="loopUser" class="list-entry" :style="`border: 5px solid ${loopUser.colour}`">
@@ -139,5 +145,19 @@ export default {
 }
 .player-list-modal-button:hover {
   cursor: pointer;
+}
+
+.player-list-title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  margin-bottom: 0.5rem;
+}
+.player-list-title > * {
+  margin: 0;
+}
+.player-list-title > p {
+  font-size: 0.8rem;
+  font-style: italic;
 }
 </style>

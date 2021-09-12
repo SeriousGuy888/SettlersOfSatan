@@ -23,9 +23,9 @@ class Lobby {
     this.game = null
   }
 
-  getPlayerCount() {
+  getPlayerCount(spectatorsOnly) {
     return Object.values(this.users)
-      .filter(u => !u.spectator)
+      .filter(u => spectatorsOnly ? u.spectator : !u.spectator)
       .length
   }
 
