@@ -16,12 +16,11 @@
         <p>Enter a lobby code.</p>
         <div class="single-line-input">
           <input v-model="joiningLobbyCode" @input="updateJoinLobbyButton" placeholder="MURDER" style="text-transform: uppercase;">
-          <button @click="joinLobby(joiningLobbyCode)" :disabled="disableJoinButton">
-            <img
-              :src="`/images/icons/${joinButtonSpectate ? 'spectate' : 'plus'}.svg`"
-              :alt="joinButtonSpectate ? 'Spectate' : 'Join'"
-              class="icon-1em"
-            >
+          <button @click="joinLobby(joiningLobbyCode, true)" :disabled="disableJoinButton" title="Join as spectator">
+            <img src="/images/icons/spectate.svg" alt="Spectate" class="icon-1em">
+          </button>
+          <button @click="joinLobby(joiningLobbyCode)" :disabled="disableJoinButton" title="Join lobby">
+            <img src="/images/icons/plus.svg" alt="Join" class="icon-1em">
           </button>
         </div>
       </div>
@@ -81,8 +80,8 @@ export default {
         window.location.hash = ""
       }
     },
-    joinLobby(code) {
-      socket.emit("join_lobby", { code }, this.enterLobbyCallback)
+    joinLobby(code, spectator) {
+      socket.emit("join_lobby", { code, spectator }, this.enterLobbyCallback)
     },
     createLobby(name) {
       socket.emit("create_lobby", { name }, this.enterLobbyCallback)

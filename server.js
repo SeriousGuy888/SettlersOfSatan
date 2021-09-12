@@ -134,16 +134,18 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     const lobby = lobbies.getLobby(lobbyCode)
     if(!lobby) return callback("This lobby could not be found.")
 
-    if(lobby.isFull()) return callback("This lobby is full.")
-    if(lobby.getInGame()) return callback("This lobby is already playing.")
+    if(!data.spectator) {
+      if(lobby.isFull()) return callback("This lobby is full.")
+      if(lobby.getInGame()) return callback("This lobby is already playing.")
+    }
     
-    const lobbyJoined = lobby.join(user.id)
+    const lobbyJoined = lobby.join(user.id, data.spectator)
     if(!lobbyJoined) {
       return callback("Lobby error.")
     }
 
     user.setLobby(lobbyCode)
-    console.log(`${user.id} joined lobby ${lobbyCode}`)
+    console.log(`${user.id} joined lobby ${lobbyCode} ${data.spectator ? "as spectator" : ""}`)
 
     callback(null, {
       name: lobby.getName(),

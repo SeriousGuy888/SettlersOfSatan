@@ -50,7 +50,7 @@ class Lobby {
     }
   }
 
-  join(userId) {
+  join(userId, spectator) {
     if(this.hasUser(userId)) return
 
     const user = users.getUser(userId)
@@ -59,16 +59,18 @@ class Lobby {
       joinTimestamp: Date.now(),
       playerId: `${Date.now()}${Math.round(Math.random() * 1000).toString().padStart(3, "0")}`,
       userId: user.id,
+      spectator,
       votekicks: [], // array of the ids of users who have votekicked this user
     }
 
-    this.printToChat([{
-      text: `${user.getName()} joined the lobby`,
-      style: { colour: "orange" }
-    }])
-
-    this.setUserColour(userId)
-
+    if(!spectator) {
+      this.printToChat([{
+        text: `${user.getName()} joined the lobby`,
+        style: { colour: "orange" }
+      }])
+      this.setUserColour(userId)
+    }
+    
     lobbyHelpers.emitLobbyUpdate(this)
     return { playerId: this.users[userId].playerId }
   }
