@@ -6,29 +6,29 @@ import { useSound } from "@vueuse/sound"
 
 export default {
   setup() {
-    const store = useStore()
-    if(!store.state.prefs.volume) store.state.prefs.volume = 50
-
-    const volume = Number(store.state.prefs.volume) / 100
-    const soundOpts = { volume }
 
     return {
       sounds: {
-        buy_development_card: useSound(require("../sounds/buy_development_card.wav"), soundOpts),
-        fifteen_seconds_left: useSound(require("../sounds/fifteen_seconds_left.wav"), soundOpts),
-        lost: useSound(require("../sounds/lost.wav"), soundOpts),
-        place: useSound(require("../sounds/place.wav"), soundOpts),
-        win_hot: useSound(require("../sounds/win_hot.wav"), soundOpts),
-        win_wava: useSound(require("../sounds/win_wava.wav"), soundOpts),
-        your_turn: useSound(require("../sounds/your_turn.wav"), soundOpts),
+        buy_development_card: new Audio("/sounds/buy_development_card.wav"),
+        fifteen_seconds_left: new Audio("../sounds/fifteen_seconds_left.wav"),
+        lost: new Audio("../sounds/lost.wav"),
+        place: new Audio("../sounds/place.wav"),
+        win_hot: new Audio("../sounds/win_hot.wav"),
+        win_wava: new Audio("../sounds/win_wava.wav"),
+        your_turn: new Audio("/sounds/your_turn.wav"),
       },
     }
   },
   mounted() {
+    const store = useStore()
+    
     socket.on("play_sound", data => {
+      const volume = Number(store.state.prefs.volume) / 100
       const soundName = data.sound
-      if(this.sounds[soundName].play) {
-        this.sounds[soundName].play()
+      const sound = this.sounds[soundName]
+      if(sound instanceof Audio) {
+        sound.volume = volume
+        sound.play()
         console.log(`Played sound ${soundName}`)
       } else {
         console.log(`Sound ${soundName} does not exist.`)
