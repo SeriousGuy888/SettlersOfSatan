@@ -322,6 +322,7 @@ module.exports = (satan, playerId, actionData) => {
 
 const handleTradeActions = (satan, playerId, actionData) => {
   const player = satan.getPlayer(playerId)
+  const lobby = satan.getLobby()
   
   const sanitiseTradeOffer = (unsanitisedOffer) => {
     // sanitise the incoming offer data to make sure everything is a number
@@ -374,7 +375,7 @@ const handleTradeActions = (satan, playerId, actionData) => {
         satan.giveResources(player.id, resource, -sanitisedOffer.offerer[resource])
       }
 
-      satan.getLobby().printToChat([{
+      lobby.printToChat([{
         text: `${player.name} has discarded ${discardingCardCount} cards.`,
         style: { colour: "brown" }
       }])
@@ -400,7 +401,7 @@ const handleTradeActions = (satan, playerId, actionData) => {
         satan.giveResources(player.id, resource, sanitisedOffer.taker[resource])
       }
 
-      satan.getLobby().printToChat([{
+      lobby.printToChat([{
         text: `${player.name} has taken ${takingCardCount} cards from the bank using a year of plenty development card.`,
         style: { colour: "brown" }
       }])
@@ -452,7 +453,7 @@ const handleTradeActions = (satan, playerId, actionData) => {
 
       satan.giveResources(player.id, stockpileResource, stockpileAmount)
       satan.giveResources(player.id, playerResource, -playerAmount)
-      satan.getLobby().printToChat([{
+      lobby.printToChat([{
         text: `${player.name} traded with the bank: ${playerAmount} ${playerResource.toUpperCase()} for ${stockpileAmount} ${stockpileResource.toUpperCase()}.`,
         style: { colour: "brown" }
       }])
@@ -460,7 +461,7 @@ const handleTradeActions = (satan, playerId, actionData) => {
     case "monopoly":
       const monopolisingResource = Object.keys(sanitisedOffer.taker).filter(k => sanitisedOffer.taker[k] > 0)[0]
 
-      satan.getLobby().printToChat([{
+      lobby.printToChat([{
         text: `${player.name} has taken all ${monopolisingResource} cards from other players using a monopoly development card.`,
         style: { colour: "brown" }
       }])
@@ -473,7 +474,7 @@ const handleTradeActions = (satan, playerId, actionData) => {
         if(resourceAmt) {
           loopPlayer.resources[monopolisingResource] -= resourceAmt
           player.resources[monopolisingResource] += resourceAmt
-          satan.getLobby().printToChat([{
+          lobby.printToChat([{
             text: `${loopPlayer.name} handed over ${resourceAmt} ${monopolisingResource} cards.`,
             style: { colour: "brown" }
           }])
@@ -507,7 +508,8 @@ const handleTradeActions = (satan, playerId, actionData) => {
         return `${player.name} offers ${offererStr} for ${takerStr}.`
       }
 
-      satan.getLobby().printToChat([{
+      lobby.playSound("trade")
+      lobby.printToChat([{
         text: getTradeChatAnnouncement(),
         style: { colour: "brown" }
       }])
@@ -533,7 +535,7 @@ const handleTradeActions = (satan, playerId, actionData) => {
       if(satan.currentAction === "roll_dice") break
 
       satan.trade.takers.push(playerId)
-      satan.getLobby().printToUserChat(player.userId, [{
+      lobby.printToUserChat(player.userId, [{
         text: "You've accepted this trade. Please wait for the offerer to choose someone to finalise the trade with.",
         style: { colour: "brown" }
       }])
@@ -559,6 +561,7 @@ const handleTradeActions = (satan, playerId, actionData) => {
 
       satan.finishTrade(satan.trade.offer, satan.getPlayer(satan.turn), tradeTaker)
       satan.clearTrade()
+      lobby.playSound("trade")
       break
     case "cancel_trade":
       if(player.id !== satan.turn) {
@@ -571,7 +574,7 @@ const handleTradeActions = (satan, playerId, actionData) => {
       }
 
       satan.clearTrade()
-      satan.getLobby().printToChat([{
+      lobby.printToChat([{
         text: `${player.name} has cancelled their trade offer.`,
         style: { colour: "brown" }
       }])

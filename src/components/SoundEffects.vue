@@ -10,6 +10,7 @@ export default {
       fifteen_seconds_left: "fifteen_seconds_left.wav",
       lost: "lost.wav",
       place: "place.wav",
+      trade: "trade.wav",
       win_hot: "win_hot.wav",
       win_wava: "win_wava.wav",
       your_turn: "your_turn.wav",
