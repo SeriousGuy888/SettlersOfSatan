@@ -20,7 +20,7 @@ export default {
         place: useSound(require("../sounds/place.wav"), soundOpts),
         win_hot: useSound(require("../sounds/win_hot.wav"), soundOpts),
         win_wava: useSound(require("../sounds/win_wava.wav"), soundOpts),
-        your_turn: useSound(require("../sounds/your_turn.mp3"), soundOpts),
+        your_turn: useSound(require("../sounds/your_turn.wav"), soundOpts),
       },
     }
   },
