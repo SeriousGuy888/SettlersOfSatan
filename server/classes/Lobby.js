@@ -30,7 +30,7 @@ class Lobby {
   }
 
   isFull() {
-    return this.getPlayerCount >= this.maxPlayers
+    return this.getPlayerCount() >= this.maxPlayers
   }
 
   hasUser(id, byPlayerId) {
