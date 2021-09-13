@@ -88,14 +88,16 @@ class Lobby {
 
       this.takenColours.delete(this.users[userId].colour)
 
-      this.printToChat([{
-        text: `${users.getUser(userId).getName()} left the lobby`,
-        style: { colour: "orange" }
-      }])
+      if(!this.users[userId].spectator) {
+        this.printToChat([{
+          text: `${users.getUser(userId).getName()} left the lobby`,
+          style: { colour: "orange" }
+        }])
 
-      if(this.game) {
-        const player = this.game.getPlayer(this.users[userId].playerId)
-        if(player) player.forfeit()
+        if(this.game) {
+          const player = this.game.getPlayer(this.users[userId].playerId)
+          if(player) player.forfeit()
+        }
       }
 
       delete this.users[userId]
