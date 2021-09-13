@@ -1,15 +1,15 @@
 <template>
-  <div class="single-line-layout">
-    <h2>{{ state.lobby.name }}</h2>
+  <h2 style="margin-bottom: 0.1em;">{{ state.lobby.name }}</h2>
+  <div class="lobby-buttons">
+    <LobbyCodeDisplay />
     <button @click="leaveLobby()"><img class="icon-1em" alt="←" src="/images/icons/leave.svg"> Leave Lobby</button>
   </div>
+
   <div class="flex-layout-grid">
     <LeftColumn v-if="state.game"/>
 
     <div id="center-column" class="flex-layout-grid-grow-2">
       <div v-if="!state.game">
-        <LobbyCodeDisplay />
-        
         <h3>Lobby Settings</h3>
         <div class="lobby-settings-panel">
           <button @click="editLobbySetting({ started: true })" :disabled="!userIsHost">Start Game</button>
@@ -74,3 +74,12 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.lobby-buttons {
+  display: flex;
+  gap: 0.2em;
+  margin-top: 0.1em;
+  margin-bottom: 0.2em;
+}
+</style>

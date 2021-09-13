@@ -16,6 +16,11 @@ export default {
       open: false,
     }
   },
+  methods: {
+    toggle() {
+      this.open = !this.open
+    },
+  },
 }
 </script>
 
