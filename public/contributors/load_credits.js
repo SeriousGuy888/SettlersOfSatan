@@ -29,6 +29,7 @@
           const link = document.createElement("a")
           link.textContent = "Github"
           link.href = `https://github.com/${contributor.github}`
+          link.target = "_blank"
           creditSection.appendChild(link)
         }
 
