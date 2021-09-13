@@ -115,9 +115,15 @@ export default {
   mounted() {
     this.refreshOpenLobbies()
     
-    const hash = window.location.hash.slice(1)
-    const lobbyCode = hash.replace(/lobby=/i, "")
-    if(lobbyCode) this.joinLobby(lobbyCode)
+    const hash = decodeURI(window.location.hash.slice(1))
+    let joinData
+    try {
+      joinData = JSON.parse(hash)
+    } catch {
+      console.log("failed to parse lobbyjoin string")
+    }
+    
+    if(joinData) this.joinLobby(joinData.lobby, joinData.spectate)
   }
 }
 </script>

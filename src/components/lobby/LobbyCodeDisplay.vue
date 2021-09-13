@@ -2,9 +2,10 @@
   <button @click="this.$refs.sidebar.toggle()">Lobby Info</button>
   <Sidebar ref="sidebar">
     <h2>Lobby Info</h2>
-    <p>Lobby Code: <code>{{ state.lobby.code }}</code><br></p>
+    <p>Lobby Code: <code>{{ state.lobby.code }}</code></p>
     <p>
-      Join Link: <a :href="link" target="_blank">{{ link }}</a>
+      <a :href="getLink(false)" target="_blank">Lobby Join Link</a><br>
+      <a :href="getLink(true)" target="_blank">Spectate Link</a>
     </p>
   </Sidebar>
 </template>
@@ -21,10 +22,15 @@ export default {
       state: this.$store.state,
     }
   },
-  computed: {
-    link() {
+  methods: {
+    getLink(spectatorLink) {
       const { protocol, host, pathname } = window.location
-      return `${protocol}//${host}${pathname}#lobby=${this.state.lobby.code}`
+      const joinData = {
+        lobby: this.state.lobby.code,
+        spectate: spectatorLink,
+      }
+
+      return `${protocol}//${host}${pathname}#${JSON.stringify(joinData)}`
     }
   }
 }
