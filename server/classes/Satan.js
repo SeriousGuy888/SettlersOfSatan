@@ -65,7 +65,7 @@ class Satan {
     this.soundLastPlayed = {}
   }
 
-  tick() {
+  tick(force) {
     const lobby = this.getLobby()
     
     if(!this.turn || !this.getPlayer(this.turn) || this.getPlayer(this.turn).disconnected) { // no turn is set or current player has disconnected
@@ -119,7 +119,7 @@ class Satan {
     }
 
     let shouldTick = JSON.stringify(tickData) !== this.prevTickData
-    if(shouldTick) {
+    if(shouldTick || force) {
       lobby.broadcast("game_update", tickData)
       this.prevTickData = JSON.stringify(tickData)
     }

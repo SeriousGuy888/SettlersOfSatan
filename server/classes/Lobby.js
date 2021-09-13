@@ -78,6 +78,7 @@ class Lobby {
     }
     
     lobbyHelpers.emitLobbyUpdate(this)
+    this.game?.tick(true)
     return { playerId: this.users[userId].playerId }
   }
 
