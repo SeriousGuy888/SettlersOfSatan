@@ -35,7 +35,7 @@
           </button>
         </div>
 
-        <div class="flex-layout-grid" v-if="openLobbies.length">
+        <div id="open-lobbies-grid" v-if="openLobbies.length">
           <div 
             v-for="loopLobby in openLobbies"
             :key="loopLobby"
@@ -121,3 +121,12 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+#open-lobbies-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-auto-rows: 1fr;
+}
+</style>
