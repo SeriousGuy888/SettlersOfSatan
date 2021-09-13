@@ -24,6 +24,15 @@
         lineH.className = "credit-section-title"
         lineH.textContent = text
         creditSection.appendChild(lineH)
+
+        if(contributor.github) {
+          const link = document.createElement("a")
+          link.textContent = "Github"
+          link.href = `https://github.com/${contributor.github}`
+          creditSection.appendChild(link)
+        }
+
+        creditSection.appendChild(document.createElement("hr"))
       }
       else {
         const lineP = document.createElement("p")
