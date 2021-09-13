@@ -170,8 +170,6 @@ class Lobby {
 
 
   handleChatMessage(user, content) {
-    const player = this.getUser(user.id)
-
     if(content.startsWith("/")) {
       content = content.substring(1)
       const args = content.split(" ")
@@ -246,13 +244,14 @@ class Lobby {
       }
     }
     else {
-      const playerColour = player.colour || "black"
+      const lobbyMember = this.getUser(user.id)
       this.printToChat([
         {
           text: user.getName(),
+          icon: lobbyMember.spectator && "/images/icons/spectate.svg",
           style: {
             bold: true,
-            colour: playerColour,
+            colour: lobbyMember.colour,
           }
         },
         { text: content }
