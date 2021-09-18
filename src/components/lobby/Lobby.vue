@@ -1,7 +1,7 @@
 <template>
   <h2 style="margin-bottom: 0.1em;">{{ state.lobby.name }}</h2>
   <div class="lobby-buttons">
-    <LobbyCodeDisplay />
+    <LobbyInfoDisplay />
     <button @click="leaveLobby()"><img class="icon-1em" alt="←" src="/images/icons/leave.svg"> Leave Lobby</button>
   </div>
 
@@ -33,7 +33,7 @@ import Chat from "./Chat.vue"
 import ColourChooser from "./ColourChooser.vue"
 import CenterColumn from "./CenterColumn.vue"
 import LeftColumn from "./LeftColumn.vue"
-import LobbyCodeDisplay from "./LobbyCodeDisplay.vue"
+import LobbyInfoDisplay from "./LobbyInfoDisplay.vue"
 import TurnControls from "./TurnControls.vue"
 import PlayerList from "./PlayerList.vue"
 
@@ -44,7 +44,7 @@ export default {
     CenterColumn,
     Chat,
     LeftColumn,
-    LobbyCodeDisplay,
+    LobbyInfoDisplay,
     TurnControls,
     PlayerList,
   },
