@@ -103,7 +103,7 @@ class Lobby {
       delete this.users[userId]
       lobbyHelpers.emitLobbyUpdate(this)
 
-      if(Object.keys(this.getUsers()).length === 0) { // if the lobby is now empty
+      if(this.getPlayerCount() === 0) { // if the lobby is now empty
         console.log(`Closed empty lobby ${this.code}`)
         this.close() // close the lobby
         return true
@@ -126,6 +126,15 @@ class Lobby {
   }
 
   close() {
+    for(const i in this.users) { // loop to kick out any remaining spectators
+      const lobbyMember = this.users[i]
+      this.leave(lobbyMember.id)
+
+      const user = users.getUser(lobbyMember.userId)
+      user.setLobby(null)
+      user.notifyOfKick("The lobby you were in has closed.")
+    }
+
     lobbies.setLobby(this.code, null)
   }
 
