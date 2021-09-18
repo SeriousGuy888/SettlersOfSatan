@@ -34,7 +34,8 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
       console.log(`${user.name} (${user.id}) disconnected.`)
 
       if(user.getLobby()) {
-        lobbies.getLobby(user.getLobby()).leave(user.id)
+        const userLobby = lobbies.getLobby(user.getLobby())
+        if(userLobby) userLobby.leave(user.id)
       }
 
       users.setUser(user.id, null)
