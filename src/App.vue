@@ -7,7 +7,7 @@
     ref="lobby"
     :printToChat="printToChat"
   />
-  <Modal ref="modal" title="Alert">
+  <Modal ref="modal" :title="modal.title">
     {{ modal.message }}
     <template v-if="modal.reloadButton" v-slot:buttons>
       <button @click="reload()">Reload</button>
@@ -44,6 +44,7 @@ export default {
         name: "",
       },
       modal: {
+        title: "Alert",
         message: "",
         reloadButton: false,
       },
@@ -53,7 +54,8 @@ export default {
     printToChat(lines) {
       this.$refs?.lobby?.$refs?.chat?.print(lines)
     },
-    showModal(msg, reloadButton) {
+    showModal(title, msg, reloadButton) {
+      this.modal.title = title
       this.modal.message = msg
       this.modal.reloadButton = !!reloadButton
       this.$refs.modal.visible = true
@@ -73,7 +75,7 @@ export default {
       state.lobby = null
       state.playerId = null
       if(data.notification) {
-        this.showModal(data.notification)
+        this.showModal("Kicked From Lobby", data.notification)
       }
     })
     socket.on("lobby_update", data => state.lobby = data)
@@ -100,7 +102,7 @@ export default {
     
 
     socket.on("disconnect", () => {
-      this.showModal("You were disconnected from game server! Reload to reconnect.", true)
+      this.showModal("Disconnected", "You were disconnected from game server. Reload to reconnect.", true)
     })
   },
 }
