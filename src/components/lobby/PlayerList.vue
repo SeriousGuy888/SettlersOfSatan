@@ -52,7 +52,7 @@
         <template v-slot:buttons>
           <button
             @click="kickPlayer(playerListModal.data.playerId, false)"
-            v-if="userIsHost && !playerListModal.data.host"
+            v-if="state.isHost && !playerListModal.data.host"
             class="red-button">
             Kick
           </button>
@@ -73,9 +73,6 @@ import Modal from "../ui/Modal.vue"
 import HostIcon from "./HostIcon.vue"
 
 export default {
-  props: {
-    userIsHost: Boolean,
-  },
   components: {
     Modal,
     HostIcon,

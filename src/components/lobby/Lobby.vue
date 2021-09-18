@@ -10,20 +10,15 @@
 
     <div id="center-column" class="flex-layout-grid-grow-2">
       <div v-if="!state.game">
-        <h3>Lobby Settings</h3>
-        <div class="lobby-settings-panel">
-          <button @click="editLobbySetting({ started: true })" :disabled="!userIsHost">Start Game</button>
-        </div>
-
         <ColourChooser />
       </div>
       <CenterColumn v-else />
     </div>
 
     <div id="right-column">
-      <TurnControls v-if="state.game" />
+      <TurnControls />
       <Chat ref="chat" />
-      <PlayerList :userIsHost="userIsHost" />
+      <PlayerList />
     </div>
   </div>
 </template>
@@ -38,7 +33,7 @@ import TurnControls from "./TurnControls.vue"
 import PlayerList from "./PlayerList.vue"
 
 export default {
-  props: ["printToChat", "userIsHost"],
+  props: ["printToChat"],
   components: {
     ColourChooser,
     CenterColumn,
@@ -66,11 +61,6 @@ export default {
         })
       }
     },
-    editLobbySetting(changes) {
-      socket.emit("edit_lobby_setting", changes, (err, data) => {
-        if(err) alert(err)
-      })
-    }
   },
 }
 </script>

@@ -1,14 +1,21 @@
 <template>
   <div id="turn-controls">
     <button
-      v-if="state.player"
+      v-if="state.game && state.player"
       @click="onClick()"
       :disabled="buttonDisabled"
     >{{ buttonText }}</button>
-    <p v-else class="spectator-notice">
+    <p v-else-if="state.game" class="spectator-notice">
       <img src="/images/icons/spectate.svg" alt="" class="icon-1em">
       You are spectating this lobby.
     </p>
+    <button
+      v-else
+      @click="startLobby()"
+      :disabled="!state.isHost"
+    >
+      {{ state.isHost ? 'Start Game' : 'Waiting for Host...' }}
+    </button>
   </div>
 </template>
 
@@ -34,7 +41,14 @@ export default {
         const action = this.state.game.currentAction === "roll_dice" ? "roll_dice" : "end_turn"
         socket.emit("perform_game_action", { action }, console.log)
       }
-    }
+    },
+    startLobby() {
+      socket.emit("edit_lobby_setting", {
+        started: true,
+      }, (err, data) => {
+        if(err) alert(err)
+      })
+    },
   },
   computed: {
     buttonText() {

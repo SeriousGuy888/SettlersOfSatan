@@ -10,6 +10,7 @@ const store = createStore({
       game: null,
       player: null,
       playerId: null,
+      isHost: null,
       prefs: {},
     }
   },

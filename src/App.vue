@@ -6,7 +6,6 @@
     v-if="loginState.loggedIn && state.lobby"
     ref="lobby"
     :printToChat="printToChat"
-    :userIsHost="userIsHost"
   />
   <Modal ref="modal" title="Alert">
     {{ modal.message }}
@@ -44,7 +43,6 @@ export default {
         loggedIn: false,
         name: "",
       },
-      userIsHost: false,
       modal: {
         message: "",
         reloadButton: false,
@@ -80,8 +78,8 @@ export default {
     })
     socket.on("lobby_update", data => state.lobby = data)
     socket.on("host_change", data => {
-      if(data.lostHost) this.userIsHost = false
-      if(data.gainedHost) this.userIsHost = true
+      if(data.lostHost) this.state.isHost = false
+      if(data.gainedHost) this.state.isHost = true
     })
     socket.on("game_started_update", data => {
       if(!data.started) {
