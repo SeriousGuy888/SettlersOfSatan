@@ -7,10 +7,10 @@ const store = createStore({
   state() {
     return {
       lobby: null,
+      member: null,
       game: null,
       player: null,
       playerId: null,
-      isHost: null,
       prefs: {},
     }
   },

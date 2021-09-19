@@ -52,7 +52,7 @@
         <template v-slot:buttons>
           <button
             @click="kickPlayer(playerListModal.data.playerId, false)"
-            v-if="state.isHost && !playerListModal.data.host"
+            v-if="state.member.host && !playerListModal.data.host"
             class="red-button">
             Kick
           </button>

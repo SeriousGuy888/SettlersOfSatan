@@ -79,10 +79,7 @@ export default {
       }
     })
     socket.on("lobby_update", data => state.lobby = data)
-    socket.on("host_change", data => {
-      if(data.lostHost) this.state.isHost = false
-      if(data.gainedHost) this.state.isHost = true
-    })
+    socket.on("member_update", data => state.member = data)
     socket.on("game_started_update", data => {
       if(!data.started) {
         delete state.game

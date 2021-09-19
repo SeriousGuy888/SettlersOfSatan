@@ -51,6 +51,19 @@ class Lobby {
   }
 
   tick() {
+    for(const i in this.members) {
+      const member = this.members[i]
+      const user = users.getUser(member.userId)
+
+      let tickData = JSON.parse(JSON.stringify(member))
+      delete tickData.prevTick
+
+      if(member.prevTick !== JSON.stringify(tickData)) {
+        user.socket.emit("member_update", tickData)
+        member.prevTick = JSON.stringify(tickData)
+      }
+    }
+
     if(this.game) {
       this.game.tick()
     }

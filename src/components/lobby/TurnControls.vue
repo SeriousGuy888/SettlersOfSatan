@@ -12,9 +12,9 @@
     <button
       v-else
       @click="startLobby()"
-      :disabled="!state.isHost"
+      :disabled="!state.member.host"
     >
-      {{ state.isHost ? 'Start Game' : 'Waiting for Host...' }}
+      {{ state.member.host ? 'Start Game' : 'Waiting for Host...' }}
     </button>
   </div>
 </template>
