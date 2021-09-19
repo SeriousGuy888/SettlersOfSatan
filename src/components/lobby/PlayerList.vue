@@ -10,33 +10,33 @@
 
     <div id="lobby-player-list">
 
-      <div v-for="loopUser in state.lobby.users" :key="loopUser" class="list-entry" :style="`border: 5px solid ${loopUser.colour}`">
+      <div v-for="member in state.lobby.members" :key="member" class="list-entry" :style="`border: 5px solid ${member.colour}`">
         <div class="list-entry-title">
-          <HostIcon v-if="loopUser.host" />
-          <h4>{{ loopUser.name }}</h4>
-          <span @click="toggleModal(true, loopUser)" class="player-list-modal-button">⋮</span>
+          <HostIcon v-if="member.host" />
+          <h4>{{ member.name }}</h4>
+          <span @click="toggleModal(true, member)" class="player-list-modal-button">⋮</span>
         </div>
         <div v-if="state.game" class="list-entry-line">
-          <button v-if="shouldShowButton(loopUser.playerId, 'trade')" @click="confirmTrade(loopUser.playerId)">Trade</button>
-          <button v-if="shouldShowButton(loopUser.playerId, 'rob')" @click="rob(loopUser.playerId)">Rob</button>
+          <button v-if="shouldShowButton(member.playerId, 'trade')" @click="confirmTrade(member.playerId)">Trade</button>
+          <button v-if="shouldShowButton(member.playerId, 'rob')" @click="rob(member.playerId)">Rob</button>
         </div>
         <div v-if="state.game" class="list-entry-line">
           <div title="Victory Points">
-            <p>{{ userToPlayer(loopUser).points }}</p>
+            <p>{{ memberToPlayer(member).points }}</p>
             <img class="icon-1em" src="/images/icons/victory_point.svg" alt="VP">
           </div>
           <div title="The number of resource cards this player has">
-            <p>{{ userToPlayer(loopUser).resourceCardCount }}</p>
+            <p>{{ memberToPlayer(member).resourceCardCount }}</p>
             <img class="icon-1em" src="/images/icons/resource_cards.svg" alt="Resource Cards">
           </div>
           <div title="The length of this player's longest road.">
-            <p>{{ userToPlayer(loopUser).longestRoadLength }}</p>
-            <img v-if="state.game.specialCards.longestRoad === loopUser.playerId" class="icon-1em" src="/images/icons/longest_road.svg" alt="Longest Road">
+            <p>{{ memberToPlayer(member).longestRoadLength }}</p>
+            <img v-if="state.game.specialCards.longestRoad === member.playerId" class="icon-1em" src="/images/icons/longest_road.svg" alt="Longest Road">
             <img v-else class="icon-1em" src="/images/icons/road_length.svg" alt="Road Length">
           </div>
           <div title="Number of knight cards this player has played">
-            <p>{{ userToPlayer(loopUser).knightsPlayed }}</p>
-            <img v-if="state.game.specialCards.largestArmy === loopUser.playerId" class="icon-1em" src="/images/icons/largest_army.svg" alt="Largest Army">
+            <p>{{ memberToPlayer(member).knightsPlayed }}</p>
+            <img v-if="state.game.specialCards.largestArmy === member.playerId" class="icon-1em" src="/images/icons/largest_army.svg" alt="Largest Army">
             <img v-else class="icon-1em" src="/images/icons/knights_played.svg" alt="Knights Played">
           </div>
         </div>
@@ -58,7 +58,7 @@
           </button>
           <button
             @click="kickPlayer(playerListModal.data.playerId, true)"
-            v-if="state.playerId !== playerListModal.data.playerId && state.lobby.users.map(u => u.playerId).includes(state.playerId)">
+            v-if="state.playerId !== playerListModal.data.playerId && state.lobby.members.map(m => m.playerId).includes(state.playerId)">
             Votekick
           </button>
           <button @click="copyPlayerId($event, playerListModal.data.playerId)">Copy Player ID</button>
@@ -127,7 +127,7 @@ export default {
         robFrom: playerId,
       }, console.log)
     },
-    userToPlayer(user) {
+    memberToPlayer(user) {
       return this.state.game.players[user.playerId]
     },
   },

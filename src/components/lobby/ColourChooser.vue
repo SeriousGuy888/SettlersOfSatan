@@ -32,7 +32,7 @@ export default {
       socket.emit("select_colour", { colour }, () => {})
     },
     colourIsSelected(colour) {
-      return !!this.state.lobby.users.filter(e => e.colour === colour).length
+      return !!this.state.lobby.members.filter(m => m.colour === colour).length
     },
   },
   mounted() {

@@ -280,7 +280,7 @@ io.on("connection", socket => { // https://dev.to/asciiden/how-to-use-socket-io-
     const { user, lobby } = requestValidation
 
     if(!lobby.getInGame()) return callback("not_playing")
-    const playerId = lobby.getUser(user.id).playerId
+    const playerId = lobby.getMember(user.id).playerId
 
     if(typeof data !== "object") return callback("invalid_action_data")
     lobby.game.processAction(playerId, data)

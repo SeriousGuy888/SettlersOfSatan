@@ -17,14 +17,14 @@ class Lobby {
     this.name = name
     this.maxPlayers = 6
     this.code = lobbyCode
-    this.users = {}
+    this.members = {}
     this.takenColours = new Set()
     this.inGame = false
     this.game = null
   }
 
   getPlayerCount(spectatorsOnly) {
-    return Object.values(this.users)
+    return Object.values(this.members)
       .filter(u => spectatorsOnly ? u.spectator : !u.spectator)
       .length
   }
@@ -35,12 +35,12 @@ class Lobby {
 
   hasUser(id, byPlayerId) {
     if(!byPlayerId) {
-      return id in this.users
+      return id in this.members
     }
     else {
       let hasPlayer = false
-      for(let i in this.users) {
-        if(this.users[i].playerId === id) {
+      for(let i in this.members) {
+        if(this.members[i].playerId === id) {
           hasPlayer = true
           break
         }
@@ -60,7 +60,7 @@ class Lobby {
     if(this.hasUser(userId)) return
 
     const user = users.getUser(userId)
-    this.users[userId] = {
+    this.members[userId] = {
       name: user.name,
       joinTimestamp: Date.now(),
       playerId: `${Date.now()}${Math.round(Math.random() * 1000).toString().padStart(3, "0")}`,
@@ -79,28 +79,28 @@ class Lobby {
     
     lobbyHelpers.emitLobbyUpdate(this)
     this.game?.tick(true)
-    return { playerId: this.users[userId].playerId }
+    return { playerId: this.members[userId].playerId }
   }
 
   leave(userId) {
     if(this.hasUser(userId)) {
-      let wasHost = this.users[userId].host
+      let wasHost = this.members[userId].host
 
-      this.takenColours.delete(this.users[userId].colour)
+      this.takenColours.delete(this.members[userId].colour)
 
-      if(!this.users[userId].spectator) {
+      if(!this.members[userId].spectator) {
         this.printToChat([{
           text: `${users.getUser(userId).getName()} left the lobby`,
           style: { colour: "orange" }
         }])
 
         if(this.game) {
-          const player = this.game.getPlayer(this.users[userId].playerId)
+          const player = this.game.getPlayer(this.members[userId].playerId)
           if(player) player.forfeit()
         }
       }
 
-      delete this.users[userId]
+      delete this.members[userId]
       lobbyHelpers.emitLobbyUpdate(this)
 
       if(this.getPlayerCount() === 0) { // if the lobby is now empty
@@ -111,8 +111,8 @@ class Lobby {
 
       if(wasHost) { // if the user who left was the lobby host
         let earliestJoinerId
-        for(let i in this.users) { // find the user in the lobby who joined earliest
-          if(!earliestJoinerId || this.users[i].joinTimestamp < this.users[earliestJoinerId].joinTimestamp) {
+        for(let i in this.members) { // find the user in the lobby who joined earliest
+          if(!earliestJoinerId || this.members[i].joinTimestamp < this.members[earliestJoinerId].joinTimestamp) {
             earliestJoinerId = i
           }
         }
@@ -126,8 +126,8 @@ class Lobby {
   }
 
   close() {
-    for(const i in this.users) { // loop to kick out any remaining spectators
-      const lobbyMember = this.users[i]
+    for(const i in this.members) { // loop to kick out any remaining spectators
+      const lobbyMember = this.members[i]
       this.leave(lobbyMember.id)
 
       const user = users.getUser(lobbyMember.userId)
@@ -139,7 +139,7 @@ class Lobby {
   }
 
   kick(playerId, votekick) {
-    const kickedUser = users.getUser(this.getUser(playerId, true).userId)
+    const kickedUser = users.getUser(this.getMember(playerId, true).userId)
     if(!kickedUser) return
     
     this.leave(kickedUser.id)
@@ -157,13 +157,13 @@ class Lobby {
       return
     }
 
-    const kickedUser = users.getUser(this.getUser(playerId, true).userId)
+    const kickedUser = users.getUser(this.getMember(playerId, true).userId)
     const votingUser = users.getUser(voterPlayerId)
     if(!kickedUser || !votingUser) return
 
-    const votesNeeded = Math.max(Object.keys(this.users).length - 1, 2)
+    const votesNeeded = Math.max(Object.keys(this.members).length - 1, 2)
 
-    let votekicks = this.users[kickedUser.id].votekicks
+    let votekicks = this.members[kickedUser.id].votekicks
     if(votekicks.includes(votingUser.id)) {
       this.printToUserChat(votingUser.id, [{ text: "You've already voted to kick this user.", style: { colour: "red" } }])
       return
@@ -256,7 +256,7 @@ class Lobby {
       }
     }
     else {
-      const lobbyMember = this.getUser(user.id)
+      const lobbyMember = this.getMember(user.id)
       this.printToChat([
         {
           text: user.getName(),
@@ -290,31 +290,30 @@ class Lobby {
   }
 
   broadcast(msg, data) {
-    for(let userId in this.users) {
+    for(let userId in this.members) {
       const user = users.getUser(userId)
       user.socket.emit(msg, data)
     }
   }
 
-  getUser(id, byPlayerId) {
+  getMember(id, byPlayerId) {
     if(!byPlayerId) {
-      return this.users[id] || null
+      return this.members[id] || null
     }
     else {
-      const foundUsers = Object.keys(this.users).filter(k => this.users[k].playerId === id)
-      if(foundUsers.length) return this.users[foundUsers[0]]
-      else return null
+      const foundMember = Object.keys(this.members).find(k => this.members[k].playerId === id)
+      return this.members[foundMember]
     }
   }
 
-  getUsers(includeSpectators) {
+  getMembers(includeSpectators) {
     if(includeSpectators) {
-      return this.users
+      return this.members
     } else {
-      return Object.keys(this.users)
-        .filter(k => !this.users[k].spectator)
+      return Object.keys(this.members)
+        .filter(k => !this.members[k].spectator)
         .reduce((res, key) => {
-          res[key] = this.users[key]
+          res[key] = this.members[key]
           return res
         }, {})
     }
@@ -337,8 +336,8 @@ class Lobby {
   }
 
   getHost() {
-    for(let userId in this.users) {
-      if(this.users[userId].host) {
+    for(let userId in this.members) {
+      if(this.members[userId].host) {
         return userId
       }
     }
@@ -346,15 +345,15 @@ class Lobby {
   }
 
   setHost(userId) {
-    for(let loopUserId in this.users) {
-      if(this.users[loopUserId].host) {
-        delete this.users[loopUserId].host
+    for(let loopUserId in this.members) {
+      if(this.members[loopUserId].host) {
+        delete this.members[loopUserId].host
         users.getUser(loopUserId).socket.emit("host_change", {
           lostHost: true
         })
       }
     }
-    this.users[userId].host = true
+    this.members[userId].host = true
     users.getUser(userId).socket.emit("host_change", {
       gainedHost: true
     })
@@ -366,8 +365,8 @@ class Lobby {
     lobbyHelpers.emitLobbyUpdate(this)
     if(inGame) {
       this.game = game
-      for(const i in this.getUsers()) {
-        const user = this.users[i]
+      for(const i in this.getMembers()) {
+        const user = this.members[i]
         this.game.setPlayer(user.playerId, new Player(user.playerId, this.code, user))
       }
     }
@@ -386,8 +385,8 @@ class Lobby {
 
     if(!colourChoices.includes(colour)) return
 
-    this.takenColours.delete(this.users[userId].colour)
-    this.users[userId].colour = colour
+    this.takenColours.delete(this.members[userId].colour)
+    this.members[userId].colour = colour
     this.takenColours.add(colour)
 
     lobbyHelpers.emitLobbyUpdate(this)
