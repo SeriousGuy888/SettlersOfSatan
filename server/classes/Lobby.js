@@ -107,7 +107,7 @@ class Lobby {
           style: { colour: "orange" }
         }])
 
-        if(this.game) {
+        if(this.game && !this.game.ended) {
           const player = this.game.getPlayer(this.members[userId].playerId)
           if(player) player.forfeit()
         }
