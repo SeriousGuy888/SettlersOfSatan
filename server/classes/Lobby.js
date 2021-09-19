@@ -1,6 +1,4 @@
-const Satan = require("./Satan.js")
 const Player = require("./Player.js")
-
 const users = require("../users.js")
 const lobbies = require("../lobbies.js")
 
@@ -15,7 +13,7 @@ class Lobby {
     }
 
     this.name = name
-    this.maxPlayers = 6
+    this.maxPlayers = 4
     this.code = lobbyCode
     this.members = {}
     this.takenColours = new Set()
