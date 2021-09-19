@@ -58,7 +58,7 @@
           </button>
           <button
             @click="kickPlayer(playerListModal.data.playerId, true)"
-            v-if="state.playerId !== playerListModal.data.playerId && state.lobby.members.map(m => m.playerId).includes(state.playerId)">
+            v-if="state.member.playerId !== playerListModal.data.playerId && state.lobby.members.map(m => m.playerId).includes(state.member.playerId)">
             Votekick
           </button>
           <button @click="copyPlayerId($event, playerListModal.data.playerId)">Copy Player ID</button>

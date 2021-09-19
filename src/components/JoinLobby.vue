@@ -77,9 +77,9 @@ export default {
   },
   methods: {
     enterLobbyCallback(err, data) {
-      if(err) alert(err)
-      else {
-        this.state.playerId = data.playerId
+      if(err) {
+        alert(err)
+      } else {
         window.location.hash = ""
       }
     },

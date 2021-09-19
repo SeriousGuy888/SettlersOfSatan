@@ -54,8 +54,8 @@ export default {
         socket.emit("leave_lobby", {}, (err, data) => {
           if(err) alert(err)
           else {
-            this.state.playerId = null
             this.state.lobby = null
+            this.state.member = null
             this.state.game = null
           }
         })

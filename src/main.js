@@ -10,7 +10,6 @@ const store = createStore({
       member: null,
       game: null,
       player: null,
-      playerId: null,
       prefs: {},
     }
   },

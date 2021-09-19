@@ -73,7 +73,7 @@ export default {
 
     socket.on("kicked_from_lobby", data => {
       state.lobby = null
-      state.playerId = null
+      state.member = null
       if(data.notification) {
         this.showModal("Kicked From Lobby", data.notification)
       }
