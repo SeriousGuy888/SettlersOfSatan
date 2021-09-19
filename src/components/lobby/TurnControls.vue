@@ -1,21 +1,21 @@
 <template>
   <div id="turn-controls">
     <button
-      v-if="state.game && state.player"
-      @click="onClick()"
-      :disabled="buttonDisabled"
-    >{{ buttonText }}</button>
-    <p v-else-if="state.game" class="spectator-notice">
-      <img src="/images/icons/spectate.svg" alt="" class="icon-1em">
-      You are spectating this lobby.
-    </p>
-    <button
-      v-else
+      v-if="!state.game"
       @click="startLobby()"
       :disabled="!state.member.host"
     >
       {{ state.member.host ? 'Start Game' : 'Waiting for Host...' }}
     </button>
+    <button
+      v-else-if="!state.member.spectator"
+      @click="onClick()"
+      :disabled="buttonDisabled"
+    >{{ buttonText }}</button>
+    <p v-if="state.member.spectator" class="spectator-notice">
+      <img src="/images/icons/spectate.svg" alt="" class="icon-1em">
+      You are spectating this lobby.
+    </p>
   </div>
 </template>
 
