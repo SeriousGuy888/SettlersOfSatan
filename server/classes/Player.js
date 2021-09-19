@@ -35,7 +35,7 @@ class Player {
     this.longestRoadLength = 0 // how long this player's longest road is
   }
 
-  tick() {
+  tick(force) {
     let tickData = {
       id: this.id,
       name: this.name,
@@ -48,7 +48,7 @@ class Player {
       longestRoadLength: this.longestRoadLength,
     }
 
-    if(JSON.stringify(tickData) === JSON.stringify(this.prevTickData)) return
+    if(!force && JSON.stringify(tickData) === JSON.stringify(this.prevTickData)) return
 
     const user = users.getUser(this.userId)
     const socket = user?.socket
