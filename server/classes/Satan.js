@@ -126,7 +126,7 @@ class Satan {
     if(this.turnTick) this.turnTick = false
 
     for(const i in this.players) {
-      this.players[i].tick(shouldTick) // tick all players individually to update them on their private data
+      this.players[i].tick() // tick all players individually to update them on their private data
     }
   }
 
