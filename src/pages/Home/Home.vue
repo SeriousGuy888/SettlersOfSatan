@@ -27,7 +27,7 @@ import SoundEffects from "@/components/SoundEffects.vue"
 import { useStore } from "vuex"
 
 export default {
-  name: "App",
+  name: "Home",
   components: {
     Title,
     Login,

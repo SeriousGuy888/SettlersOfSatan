@@ -1,7 +1,7 @@
 import { createApp } from "vue"
 import { createStore } from "vuex"
 
-import App from "./App.vue"
+import App from "./Home.vue"
 
 const store = createStore({
   state() {

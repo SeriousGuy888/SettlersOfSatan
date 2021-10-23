@@ -1,7 +1,6 @@
 const express = require("express")
-const serveStatic = require("serve-static");
 const routingUtil = require("./routing_util.js")
-const { pathTo } = routingUtil
+const { distPath } = routingUtil
 
 const serverStats = require("./server_stats.js")
 const infoPages = require("./info_pages.js")
@@ -14,13 +13,14 @@ module.exports = (app) => {
   app.use(express.raw())
   app.use(express.urlencoded({ extended: true }))
 
+
   app.use(express.static("dist"))
-  app.use(express.static("public"))
+
+  app.get("/contributors", (req, res) => res.redirect("/about"))
+  app.get("/about", (req, res) => res.sendFile(distPath("/about.html")))
 
   app.use("/", serverStats)
   app.use("/", infoPages)
-  app.get("/credits", (req, res) => res.redirect("/contributors"))
-  app.get("/:oeuf(contributors|kontributeurs)*", (req, res) => res.sendFile(pathTo("/contributors/contributors.html")))
 
-  app.use((req, res) => res.status(404).sendFile(pathTo("/404.html")))
+  app.use((req, res) => res.status(404).sendFile(distPath("/404.html")))
 }
