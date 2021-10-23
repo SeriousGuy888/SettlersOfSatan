@@ -28,27 +28,27 @@ export default {
   data() {
     return {
       contributionLang: {
-        "english": {
-          "web_design": "Frontend",
-          "back_end": "Backend",
-          "rewrites": "Vue Rewrite & Dark Theme",
-          "art": "Game Art",
-          "participation": "Emotional Support",
-          "catan": "Actually Knowing How to Play Catan",
-          "sounds": "Sound Effects",
-          "distract_liam": "Distracting Liam",
-          "jakob": "Causing Emotional Distress", // by bullying billzo's web design and disappearing for like two weeks
+        english: {
+          web_design: "Frontend",
+          back_end: "Backend",
+          rewrites: "Vue Rewrite & Dark Theme",
+          art: "Game Art",
+          participation: "Emotional Support",
+          catan: "Actually Knowing How to Play Catan",
+          sounds: "Sound Effects",
+          distract_liam: "Distracting Liam",
+          jakob: "Causing Emotional Distress", // by bullying billzo's web design and disappearing for like two weeks
         },
-        "billzonian": {
-          "web_design": "Frontend",
-          "back_end": "Bakkend",
-          "rewrites": "Vue Retypement zel Night Theme",
-          "art": "Vandalism",
-          "participation": "Sentimental Assistion",
-          "catan": "Akratly Kogging How tu Catan·ise",
-          "sounds": "Sound Effekts",
-          "distract_liam": "Distrakting Liam",
-          "jakob": "Kausing Sentimental Unowoment",
+        billzonian: {
+          web_design: "Frontend",
+          back_end: "Bakkend",
+          rewrites: "Vue Retypement zel Night Theme",
+          art: "Vandalism",
+          participation: "Sentimental Assistion",
+          catan: "Akratly Kogging How tu Catan·ise",
+          sounds: "Sound Effekts",
+          distract_liam: "Distrakting Liam",
+          jakob: "Kausing Sentimental Unowoment",
         }
       }
     }
