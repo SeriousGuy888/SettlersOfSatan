@@ -5,7 +5,7 @@
       <h1 class="page-title"><span class="title-satan">Satan</span></h1>
     </div>
     <div class="title-container-links">
-      <a href="/contributors" target="_blank">Contributors</a>
+      <a href="/about" target="_blank">About This Project / Contributors</a>
       <a href="/stats" target="_blank">Server Stats</a>
       <BuildingCosts />
       <span id="dark-theme-toggle"></span>
