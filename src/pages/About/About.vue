@@ -25,47 +25,46 @@ export default {
     return {
       contributorList: [
         {
-          "name": "Billzo",
-          "github": "SeriousGuy888",
-          "percent": 82,
-          "contributions": [
+          name: "Billzo",
+          github: "SeriousGuy888",
+          percent: 82,
+          contributions: [
             "web_design",
             "vue",
             "dark_theme",
             "back_end",
-            "art"
+            "art",
           ]
         },
         {
-          "name": "Liam",
-          "github": "RandumPerson314",
-          "percent": 15,
-          "contributions": [
+          name: "Liam",
+          github: "RandumPerson314",
+          percent: 15,
+          contributions: [
             "web_design",
             "back_end",
             "catan",
-            "background"
+            "background",
           ]
         },
         {
-          "name": "Hoang",
-          "github": "MarkieHoang",
-          "percent": 5,
-          "contributions": [
+          name: "Hoang",
+          github: "MarkieHoang",
+          percent: 5,
+          contributions: [
             "art",
             "sounds",
             "participation",
-            "readme"
           ]
         },
         {
-          "name": "Jakob",
-          "percent": -2,
-          "contributions": [
+          name: "Jakob",
+          percent: -2,
+          contributions: [
             "sounds",
             "distract_liam",
             "jakob_criticism",
-            "going_missing"
+            "going_missing",
           ]
         }
       ],

@@ -40,7 +40,6 @@ export default {
           "background": "Stealing the Background Image",
           "distract_liam": "Distracting Liam",
           "jakob_criticism": "Criticism of Billzo's Web Design",
-          "readme": "ReadMe File",
           "going_missing": "Disappearing for a Long Time"
         },
         "billzonian": {
@@ -55,7 +54,6 @@ export default {
           "background": "Thieving c Bakkground Image",
           "distract_liam": "Distrakting Liam",
           "jakob_criticism": "Bullying Billzo Their Web Designment",
-          "readme": "ReadMe File",
           "going_missing": "Exiting for Many Suns"
         }
       }
