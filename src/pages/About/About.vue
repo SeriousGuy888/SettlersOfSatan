@@ -57,6 +57,7 @@ export default {
         },
         {
           name: "Jakob",
+          github: "tardigradeaintafraid",
           percent: -2,
           contributions: [
             "sounds",
