@@ -29,32 +29,26 @@ export default {
     return {
       contributionLang: {
         "english": {
-          "web_design": "Web Design",
-          "vue": "Vue Rewrite",
-          "dark_theme": "Dark Theme CSS",
-          "back_end": "Server Backend",
-          "art": "Art",
+          "web_design": "Frontend",
+          "back_end": "Backend",
+          "rewrites": "Vue Rewrite & Dark Theme",
+          "art": "Game Art",
           "participation": "Emotional Support",
-          "catan": "Knowing the Rules of Catan",
+          "catan": "Actually Knowing How to Play Catan",
           "sounds": "Sound Effects",
-          "background": "Stealing the Background Image",
           "distract_liam": "Distracting Liam",
-          "jakob_criticism": "Criticism of Billzo's Web Design",
-          "going_missing": "Disappearing for a Long Time"
+          "jakob": "Causing Emotional Distress", // by bullying billzo's web design and disappearing for like two weeks
         },
         "billzonian": {
-          "web_design": "Web Designment",
-          "vue": "Vue Retypement",
-          "dark_theme": "Night Theme CSS",
-          "back_end": "Serveur Bakkend",
+          "web_design": "Frontend",
+          "back_end": "Bakkend",
+          "rewrites": "Vue Retypement zel Night Theme",
           "art": "Vandalism",
           "participation": "Sentimental Assistion",
-          "catan": "Kogging How tu Catan·ise",
+          "catan": "Akratly Kogging How tu Catan·ise",
           "sounds": "Sound Effekts",
-          "background": "Thieving c Bakkground Image",
           "distract_liam": "Distrakting Liam",
-          "jakob_criticism": "Bullying Billzo Their Web Designment",
-          "going_missing": "Exiting for Many Suns"
+          "jakob": "Kausing Sentimental Unowoment",
         }
       }
     }

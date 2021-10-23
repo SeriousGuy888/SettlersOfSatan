@@ -30,9 +30,8 @@ export default {
           percent: 82,
           contributions: [
             "web_design",
-            "vue",
-            "dark_theme",
             "back_end",
+            "rewrites",
             "art",
           ]
         },
@@ -44,7 +43,6 @@ export default {
             "web_design",
             "back_end",
             "catan",
-            "background",
           ]
         },
         {
@@ -63,8 +61,7 @@ export default {
           contributions: [
             "sounds",
             "distract_liam",
-            "jakob_criticism",
-            "going_missing",
+            "jakob",
           ]
         }
       ],
