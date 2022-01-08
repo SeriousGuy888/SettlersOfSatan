@@ -24,7 +24,7 @@ class DevelopmentCard {
       }])
     }
 console.log(game.turn)
-    if(game.turnCycle != this.cycleBought){
+    if(game.turnCycle != this.cycleBought && game.turn == this.playerId){
       player.inventory.removeDevelopmentCard(this)
       lobby.playSound("buy_development_card")
       switch(this.type) {
