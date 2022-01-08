@@ -23,7 +23,7 @@ class DevelopmentCard {
         text, style: { colour: "purple" },
       }])
     }
-
+console.log(game.turn)
     if(game.turnCycle != this.cycleBought){
       player.inventory.removeDevelopmentCard(this)
       lobby.playSound("buy_development_card")
