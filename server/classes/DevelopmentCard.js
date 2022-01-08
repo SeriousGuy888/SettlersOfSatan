@@ -64,7 +64,7 @@ console.log(game.turn)
       }
     }
     else {
-      game.printChatErr("You can't use a development card on the turn you bought it", this.playerId)
+      game.printChatErr("You can't use a development card on the turn you bought it or on someone else's turn", this.playerId)
     }
   }
 }
