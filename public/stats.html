@@ -31,7 +31,7 @@
       const memoryUsageBlock = document.querySelector("#memory-usage")
       const uptimeBlock = document.querySelector("#uptime")
 
-      refreshButton.addEventListener("click", async () => {
+      function refreshStats(){
         const response = await fetch("/stats/get")
         if(!response.ok) return alert("something broke lol")
 
@@ -72,7 +72,10 @@
 
         memoryUsageBlock.textContent = JSON.stringify(formattedMemoryUsageData, null, 4)
         uptimeBlock.textContent = formatTime(uptime)
-      })
+      }
+
+      refreshStats()
+      refreshButton.addEventListener("click", refreshStats())
     </script>
   </body>
 </html>
